@@ -1,0 +1,138 @@
+\chapter{Diffusion Process}
+
+Consider SDE
+\begin{equation}\label{eq:diffusion}
+    dX_t = b(t,X_t)dt + \sigma(t,X_t)dB_t,
+\end{equation}
+where $X_t \in \R^n$, $b\colon [0,\infty) \times\R^{n} \sto \R^n$, $\sigma \colon [0,\infty) \times\R^{n} \sto \R^{n\times m}$ and $B = (B_t)_{t \geq 0}$ be a $m$-dimensional Brownian motion. Any process $X = (X_t)_{t}$ satisfies (\ref{eq:diffusion}) is called a (It\^o) diffusion.
+
+\section{Markov Property}
+
+We mainly consider the time-homogeneous case, i.e.,
+\begin{equation*}
+	dX_t = b(X_t)dt + \sigma(X_t)dB_t, \quad t \geq s,~X_s = x
+\end{equation*}
+where $b,\sigma$ is time-independent. To guarantee the existence and uniqueness of solution, we only require the Lipschitz condition,
+\begin{equation*}
+	|b(x)-b(y)|+|\sigma(x)-\sigma(y)| \leq D|x-y|,\quad \forall~ x,y \in \R^n.
+\end{equation*}
+Then denote the unique solution $X_t = X_t^{s,x}$ for $t \geq 0$, and for $s = 0$, $X_t = X^x_t$. The time-homogeneity means that $\bb{X^{s,x}_{s+h}}_{h \geq 0}$ and $\bb{X^{0,x}_h}_{h \geq 0}$ have the same diffusion (by the uniqueness of weak solution). So let $\Q^x$ be the law of $X^x=(X_t^x)_{t \geq 0}$ on $(\R^n)^{[0,\infty)}$ and the $\E_{\Q^x} = \E_x$. Moreover, $\mathbb{F}^B = (\mathcal{F}^B_t)_{t\geq 0}$ be the natural filtration of $B$ and $\mathbb{F}^X$ be the natural filtration of $X$. Note that $X$ is $\mathbb{F}^B$-adapted and so $\mathcal{F}_t^X \subset \mathcal{F}^B_t$.
+
+\begin{thm}[Markov Property]
+    Let $f \colon \R^n \sto \R$ be a bounded Borel function. Then for any $t,s \geq 0$, we have
+    \begin{equation*}
+    	\E_x\bj{f(X_{t+s}) \mid \mathcal{F}^B_t} = \E_{X_t}[f(X_s)].
+    \end{equation*}
+\end{thm}
+
+\begin{thm}[Strong Markov Property]
+    Let $f \colon \R^n \sto \R$ be a bounded Borel function and $\tau < \infty$ be a stopping time w.s.t. $\mathbb{F}^B$. Then
+    \begin{equation*}
+    	\E_x\bj{f(X_{\tau+s}) \mid \mathcal{F}^B_\tau} = \E_{X_\tau}[f(X_s)].
+    \end{equation*}
+\end{thm}
+
+\section{Generator}
+
+Let $X_t$ be the It\^o diffusion
+\begin{equation*}
+	dX_t = b(X_t)dt + \sigma(X_t)dB_t.
+\end{equation*}
+Since $X$ is a Markov process, it has the corresponding transition semigroup $(Q_t)_{t \geq 0}$, i.e.,
+\begin{equation*}
+	Q_tg(x) = \E_x[g(X_t)] = \E[g(X_t) \mid X_0 = x].
+\end{equation*}
+And the generator
+\begin{equation*}
+    Lg(x) = \lim_{t \downarrow 0} \frac{Q_tg(x) - g(x)}{t}.
+\end{equation*}
+
+\begin{lem}
+    Let $g$ be a lower bounded, measurable function on $\R^n$.
+    \begin{enumerate}[label=(\arabic{*})]
+    	\item If $g$ is lower semi-continuous, then $Q_t g$ is lower semi-continuous for all $t \geq 0$.
+    	\item If $g$ is bounded and continuous, then $Q_t g$ is continuous. In other words, any It\^o diffusion $X$ is Feller-continuous.
+    \end{enumerate} 
+\end{lem}
+
+\noindent Note that by It\^o formula, for any $f \in C_c^2(\R^n)$
+\begin{align*}
+	f(X_t) &= f(X_0) + \sum_{i=1}^n\int_0^t \frac{\partial f}{\partial x_i}dX^i_s + \frac{1}{2} \sum_{i,j=1}^n \int_0^t\frac{\partial^2 f}{\partial x_i \partial x_j}d[X^i,X^j]_s \\
+	&= f(X_0) + \sum_{i=1}^n\int_0^t b^i\frac{\partial f}{\partial x_i}ds + \sum_{i,j=1}^n\int_0^t \sigma_{ij} \frac{\partial f}{\partial x_i}dB^j_s \\
+	&\quad + \frac{1}{2} \sum_{i,j=1}^n \int_0^t (\sigma \sigma^\top)_{ij} \frac{\partial^2 f}{\partial x_i \partial x_j} dt \\
+	&= f(X_0) + \int_0^t \bc{ \sum_{i=1}^n b^i\frac{\partial f}{\partial x_i} + \frac{1}{2} \sum_{i,j=1}^n (\sigma \sigma^\top)_{ij} \frac{\partial^2 f}{\partial x_i \partial x_j} }ds + \sum_{i,j=1}^n\int_0^t \sigma_{ij} \frac{\partial f}{\partial x_i}dB^j_s,
+\end{align*}
+because
+\begin{equation*}
+	d[X^i,X^j]_s = \bc{\sum_k \sigma_{ik}dB^k}\bc{\sum_\ell \sigma_{j\ell}dB^\ell} = (\sigma \sigma^\top)_{ij}dt.
+\end{equation*}
+This implies the following theorem.
+
+\begin{thm}
+    If $f \in C_c^2(\R^n)$, then $f \in \mathcal{D}(L)$ and
+    \begin{equation*}
+    	Lf(x) = \sum_i b_i(x) \frac{\partial f}{\partial x_i}+\frac{1}{2} \sum_{i, j}\left(\sigma \sigma^\top\right)_{i, j}(x) \frac{\partial^2 f}{\partial x_i \partial x_j},
+    \end{equation*}
+    where $L$ is the generator of Markov process $X$.
+\end{thm}
+
+\noindent For $f \in C_c^2(\R^n)$, we have
+\begin{equation*}
+	f(X_t) = f(X_0) + \int_0^t Lf(X_s)ds + \int_0^t \nabla f(X_s)^\top \sigma (X_s) dB_s.
+\end{equation*}
+So
+\begin{equation*}
+	M_t = f(X_t) - \int_0^t Lf(X_s)ds
+\end{equation*}
+is a martingale, which is a particular case of Theorem \ref{thm:martingale_markov}. Note that here $X_0$ is not fixed to a point. Moreover, if $f \in C^2$, then we just know $(M_t)_{t \geq 0}$ is a local martingale.
+
+\begin{rmk}
+    A Feller semigroup $(Q_t)_{t \geq 0}$ is called a Feller-Dynkin diffusion semigroup if the domain $\mathcal{D}(L)$ of its generator $L$ contains $C_c^2(\R^n)$. A A continuous Markov process $X=(X_t)_{t \geq 0}$ is said to be a Feller-Dynkin diffusion process if its associated semigroup is a Feller-Dynkin diffusion semigroup. So by above theorem, we know an It\^o diffusion is a Feller-Dynkin diffusion process.
+\end{rmk}
+
+\begin{thm}[Dynkin's formula]
+    If $f \in C_c^2(\R^n)$ and $\tau$ is a stopping time with $\E_x[\tau] < \infty$, then
+    \begin{equation*}
+    	\E_x\bj{f(X_\tau)} = f(x) + \E_x\bj{\int_0^\tau Lf(X_s)ds}.
+    \end{equation*}
+\end{thm}
+
+\begin{exam}[Bessel Process]
+    Let $B$ be a $m$-dimensional standard Brownian motion. Consider
+    \begin{equation*}
+    	R_t = \norm{B_t} = \sqrt{(B^1_t)^2 + \cdots + (B^m_t)^2},
+    \end{equation*}
+    the Bessel process. Then we know
+    \begin{equation*}
+    	dR_t = \frac{n-1}{2R_t} + \sum_{i=1}^m \frac{B^i}{R_t}dB^i.
+    \end{equation*}
+    Let
+    \begin{equation*}
+    	\tilde{B}_t =  \sum_{i=1}^m \int_0^t \frac{B^i_s}{\norm{B_s}}dB^i_s.
+    \end{equation*}
+    Then by L\'evy's theorem, $\tilde{B} = (\tilde{B}_t)_{t \geq 0}$ is a $1$-dimensional Brownian motion. Therefore,
+    \begin{equation*}
+    	dR_t = \frac{n-1}{2R_t}dt + d\tilde{B}_t.
+    \end{equation*}
+    So by the uniqueness of weak solution, $R=(R_t)_{t \geq 0}$ is also an It\^o diffusion with generator
+    \begin{equation*}
+     	Lf(x) = \frac{1}{2}f^{\prime\prime}(x) + \frac{n-1}{2x}f^\prime(x).
+     \end{equation*} 
+\end{exam}
+
+\begin{exam}
+    Let $U \in C^1(\R^n)$ and 
+    \begin{equation*}
+        L = \Delta \cdot + \inn{\nabla U,\nabla \cdot}
+    \end{equation*}
+    on $C^\infty_c(\R^n)$. Then by the divergence theorem,
+    \begin{equation*}
+        \mu(dx) = e^{U(x)}dx
+    \end{equation*}
+    is symmetric for $L$. Moreover, $L$ is essentially self-adjoint on $L^2(\R^n,\mu)$.
+\end{exam}
+
+
+
+
+

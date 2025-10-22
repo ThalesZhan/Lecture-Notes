@@ -1,0 +1,1416 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[style=authoryear,backend=bibtex,sorting=nyt,maxnames=99,maxcitenames=1]{biblatex}
+\addbibresource{reference.bib}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\Hrule}{\rule{\linewidth}{0.3mm}}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\usepackage{Mydef}
+\emergencystretch=2.5em
+
+\title{Spectral Theory}
+\author{Zhiyuan~Zhan\\ $<$\href{mailto:thaleszhan@gmail.com}%
+            {thaleszhan@gmail.com}$>$}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Adjoint Operator}
+
+\begin{defn}[Unbounded Operator]
+    $\mathcal{H}$ is a Hilbert space.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A \colon \mathcal{H} \sto \mathcal{H}$ is called a linear operator if the domain $D(A) \subset \mathcal{H}$ is a linear subspace and $A \colon D(A) \sto \mathcal{H}$ is linear, denoted by $A \in \mathcal{L}(\mathcal{H})$.
+        \item $A$ is bounded if there is a $c$ such that $\norm{Ax} \leq c\norm{x}$ for any $x \in D(A)$. In such case, $D(A)$ can be extended to $\mathcal{H}$. Then $A$ is viewed as a bounded operator on $\mathcal{H}$.
+        \item If $D(A) \subset \mathcal{H}$ is dense, $A$ is called densely defined.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    For $A,B \in \mathcal{L}(\mathcal{H})$, $A \subset B$ means that $D(A) \subset D(B)$ and $Ax = Bx$ for $x \in D(A)$. It follows that $A \subset B$ and $B \subset A$ imply $A = B$. So $A \subset B$ and $D(B) \subset D(A)$ imply $A=B$.
+\end{rmk}
+
+\begin{defn}[Adjoint Operator]
+    Let $A \colon \mathcal{H} \sto \mathcal{H}$ be densely defined. Let
+    \begin{equation*}
+        D(A^*) \defeq \bb{y \in \mathcal{H} \colon x \mapsto \inn{Ax,y} \text{ is a bounded linear functional on } D(A)}.
+    \end{equation*}
+    Because $D(A)$ is dense, it can be extended on $\mathcal{H}$ by the Hahn-Banach Theorem. Then by Riesz representation theorem, there is a $z \in \mathcal{H}$ such that
+    \begin{equation*}
+        \inn{Ax,y} = \inn{x,z} = \inn{x,A^*y},
+    \end{equation*}
+    which is defined as $A^*y$.
+\end{defn}
+\begin{rmk}
+    Note that $D(A^*)$ may be not dense.
+\end{rmk}
+
+\begin{prop}
+    For $A, B \in \mathcal{L}(\mathcal{H})$,
+    \begin{enumerate}[label=(\arabic{*})]
+        \item if $A,B$ are densely defined and $A \subset B$, then $B^* \subset A^*$.
+
+        \item if $D(A+B) = D(A)\cap D(B)$ is dense, then
+        \begin{equation*}
+            A^* + B^* \subset (A+B)^*,
+        \end{equation*}
+        where ``$=$'' if $B$ is bounded.
+
+        \item if $D(BA)$ is dense, then
+        \begin{equation*}
+            A^*B^* \subset (BA)^*,
+        \end{equation*}
+        where ``$=$'' if $B$ is bounded.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $y \in D(B^*)$, $x \in D(B) \mapsto \inn{Bx,y}$ is bounded. So $x \in D(A) \mapsto \inn{Ax,y}$ is bounded, i.e. $y \in D(A^*)$. And $\inn{Ax,y} = \inn{Bx,y}$ implies that $A^*y = B^*y$.
+
+        \item Fix $y \in D(A^*)\cap D(B^*)$. For any $x \in D(A) \cap D(B) = D(A+B)$,
+        \begin{equation*}
+            \inn{Ax,y} + \inn{Bx,y} = \inn{x,A^*y} + \inn{x,B^*y},
+        \end{equation*}
+        i.e., $\inn{(A+B)x,y} = \inn{x,(A+B)^*y}$. It follows that $y \in D\bc{(A+B)^*}$ and $(A+B)^*y = A^*y + B^*y$.
+
+        Let $B$ be bounded. Fix $y \in D\bc{(A+B)^*}$. For any $x \in D(A)$,
+        \begin{equation*}
+            \inn{Ax,y} = \inn{Ax + Bx,y} - \inn{Bx,y} = \inn{x,(A+B)^*y} - \inn{x,B^*y}.
+        \end{equation*}
+        So $y \in D(A^*) = D(A^* + B^*)$.
+
+        \item Let $y \in D(A^*B^*)$. For any $x \in D(BA)$,
+        \begin{equation*}
+            \inn{BAx,y} = \inn{x,A^*B^*y}.
+        \end{equation*}
+        So $y \in D((BA)^*)$ and $(BA)^*y = A^*B^*y$.
+
+        Let $B$ be bounded. If $y \in D\bc{(BA)^*}$, for any $x \in D(A) = D(BA)$, 
+        \begin{equation*}
+            \inn{Ax,B^*y} = \inn{BAx,y} = \inn{x,(BA)^*y}.
+        \end{equation*}
+        So $B^*y \in D(A^*)$, i.e. $y \in D(A^*B^*)$.
+    \end{enumerate}
+\end{proof}
+
+\section{Closable Operator}
+
+\begin{defn}[Closed Operator]
+    For $A \in \mathcal{L}(\mathcal{H})$, if the graph of $A$
+    \begin{equation*}
+        G(A) \defeq \bb{(x,Ax) \colon x \in D(A)} \subset \mathcal{H} \oplus \mathcal{H}
+    \end{equation*}
+    is closed, then $A$ is called closed.
+\end{defn}
+\begin{rmk}
+    \begin{enumerate}[label=(\arabic*)]
+        \item For any sequence $(x_n,Ax_n)$ in $G(A)$ such that
+        \begin{equation*}
+            (x_n,Ax_n) \sto (x,y),
+        \end{equation*}
+        because $(x,y) \in G(A)$, $Ax = y$.
+
+        \item By the closed graph theorem, if $A$ is closed and $D(A) = \mathcal{H}$, then $A$ is bounded.
+    \end{enumerate}
+\end{rmk}
+
+\begin{prop}
+    Let $A,B \in \mathcal{L}(\mathcal{H})$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $A$ is densely defined, then $A^*$ is closed.
+
+        \item If $A$ is closed and $B$ is bounded, then $A + B$ is closed.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $y_n \in D(A^*)$ such that $y_n \sto y$ and $A^*y_n \sto z$. For $x \in D(A)$,
+        \begin{equation*}
+            \inn{Ax,y_n} = \inn{x,A^*y_n}.
+        \end{equation*}
+        As $n \sto \infty$, $\inn{Ax,y} = \inn{x,z}$. Therefore, $y \in D(A^*)$ and $A^*y = z$. It follows that $G(A^*)$ is closed.
+
+        \item Let $x_n$ in $D(A+B) = D(A)$ such that $x_n \sto x$ and $(A+B)x_n \sto y$. Because $B$ is bounded, $Bx_n \sto Bx$ and $Ax_n \sto y - Bx$. Furthermore, since $A$ is closed, $x \in D(A)$ and $Ax = y - Bx$. Therefore, $x \in D(A+B)$ and $(A+B)x = y$.
+    \end{enumerate}
+\end{proof}
+
+\begin{defn}[Closable Operator]
+    Let $A \in \mathcal{L}(\mathcal{H})$. $A$ is called closable if there is a closed operator $B$ such that $A \subset B$. In such case, $B$ is called a closed extension of $A$.
+\end{defn}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$. $A$ is closable if and only if for any sequence $x_n$ in $D(A)$ such that $x_n \sto 0$ and $Ax_n \sto y$, $y = 0$.
+\end{prop}
+\begin{proof}
+    If $A$ is closable, the statements are clearly true. Conversely, it is sufficient to prove that $\clo{G(A)}$ is a graph of some linear operator. Because the linearity of $\clo{G(A)}$ is clear, it is sufficient to prove $y = y^\prime$ for any $(x,y),(x,y^\prime) \in \clo{G(A)}$. Let $x_n$ and $x_n^\prime$ be two sequences in $\clo{G(A)}$ such that
+    \begin{equation*}
+        (x_n,Ax_n) \sto (x,y),\quad (x_n^\prime,Ax_n^\prime) \sto (x,y^\prime)
+    \end{equation*}
+    Because $x_n-x_n^\prime \sto 0$ and $Ax_n - Ax_n^\prime \sto y-y^\prime$, $y = y^\prime$ by the assumption.
+\end{proof}
+
+\begin{defn}[Closure of Closable Operator]
+    By above proposition, when $A \in \mathcal{L}(\mathcal{H})$ is closable, the closed operator whose graph is $\clo{G(A)}$ is called the closure of $A$, denoted by $\clo{A}$.
+\end{defn}
+
+\begin{prop}
+    Let $A,B \in \mathcal{L}(\mathcal{H})$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A \subset B$ implies that $\clo{A} \subset \clo{B}$.
+        \item $\clo{\Img(\clo{A})} = \clo{\Img(A)}$.
+        \item If $A$ is closable and $B$ is bounded, then $A+B$ is closable and 
+        \begin{equation*}
+            \clo{A+B} = \clo{A} + B
+        \end{equation*}
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item It is clear.
+        \item Clearly, $\clo{\Img(\clo{A})} \supset \clo{\Img(A)}$. Let $y \in \Img(\clo{A})$, so by definition there is a sequence $x_n$ in $D(A)$ such that $Ax_n \sto y$, i.e., $\Img(\clo{A}) \subset \clo{\Img(A)}$. Therefore, $\clo{\Img(\clo{A})} \subset \clo{\Img(A)}$.
+        \item Let $x_n$ be a sequence in $D(A+B) = D(A)$ such that $x_n \sto 0$ and $(A+B)x_n \sto y$. Because $Bx_n \sto 0$, $Ax_n \sto y$. Because $A$ is closable, $Ax_n \sto 0 = y$. So $A+B$ is closable.
+
+        First, $A \subset \clo{A}$, so $A+B \subset \clo{A} + B$ and thus
+        \begin{equation*}
+            \clo{A + B} \subset \clo{A} + B
+        \end{equation*}
+        Conversely, let $x \in D(\clo{A}+B) = D(\clo{A})$. Choose a sequence $x_n$ in $D(A)$ such that $x_n \sto x$ and $Ax_n \sto \clo{A}x$. Then
+        \begin{equation*}
+            x_n \sto x,\quad (A+B)x_n \sto \clo{A}x + Bx.
+        \end{equation*}
+        Therefore, $x \in D(\clo{A+B})$ and $\clo{A+B} = \clo{A}+B$.
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined.
+    \begin{equation*}
+        G(A)^\perp = \bb{(-A^*y,y) \colon y \in D(A^*)}.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    For any $x \in D(A)$ and $y \in D(A^*)$,
+    \begin{equation*}
+        (-A^*y,y) \perp (x,Ax)
+    \end{equation*}
+    in $\mathcal{H} \oplus \mathcal{H}$. So
+    \begin{equation*}
+        G(A)^\perp \supset \bb{(-A^*y,y) \colon y \in D(A^*)}.
+    \end{equation*}
+    Conversely, let $(x^\prime,y^\prime) \perp G(A)$. For any $x \in D(A)$, $(x,Ax) \perp (x^\prime,y^\prime)$ implies that
+    \begin{equation*}
+        \inn{x,x^\prime} = - \inn{Ax,y^\prime}
+    \end{equation*}
+    Therefore, $y^\prime \in D(A^*)$ and $A^*y^\prime = - x^\prime$. It follows that
+    \begin{equation*}
+        G(A)^\perp \subset \bb{(-A^*y,y) \colon y \in D(A^*)}. \qedhere
+    \end{equation*}
+\end{proof}
+
+
+\begin{thm}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined. $A$ is closable if and only if $D(A^*)$ is dense. In such case, we have
+    \begin{equation*}
+        A^{**} = \clo{A},\quad \clo{A}^* = A^*.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    Assume $A$ is closable. Let $z \in D(A^*)^\perp$. Then 
+    \begin{equation*}
+        (0, z) \in\left\{\left(-A^* y, y\right) \mid y \in D\left(A^*\right)\right\}^{\perp}
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        (0, z) \in G(A)^{\perp \perp}=\overline{G(A)}=G(\bar{A}),
+    \end{equation*}
+    which implies that $z = 0$. So $D(A^*)$ is dense.
+
+    Conversely, assume $D(A^*)$ is dense. Let $(0,z) \in \clo{G(A)}$. Then
+    \begin{equation*}
+        (0,z) \in \left\{\left(-A^* y, y\right) \mid y \in D\left(A^*\right)\right\}^{\perp}
+    \end{equation*}
+    by above lemma. Therefore, $z \in D(A^*)^\perp = \bb{0}$. It follows that $A$ is closable.
+
+    In such case, $D(A^*)$ is dense, so it can consider $A^{**}$. By the similar prove of above lemma,
+    \begin{equation*}
+        G(A)^{\perp\perp} = \bb{(-A^*y,y) \colon y \in D(A^*)}^\perp = \bb{(z,A^{**}z) \colon z \in D(A^{**})} = G(A^{**})
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        G(\clo{A})=\clo{G(A)}=G(A)^{\perp \perp}=G\left(A^{* *}\right),
+    \end{equation*}
+    i.e., $\clo{A} = A^{**}$.
+
+    Because
+    \begin{equation*}
+        G(\clo{A})^\perp = G(A)^\perp
+    \end{equation*}
+    by above lemma, $G(A^*) = G(\clo{A}^*)$. So $A^* = \clo{A}^{*}$. \qedhere
+\end{proof}
+
+\section{Spectrum}
+
+\begin{defn}[Resolvent Set]
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined. For $\lambda \in \C$, if
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A - \lambda I$ is injective;
+        \item $\ran (A - \lambda I)$ is dense;
+        \item $(A - \lambda I)^{-1}$ is bounded on $\ran (A - \lambda I)$,
+    \end{enumerate}
+    then $\lambda \in \rho(A)$, which is called the resolvent set, and $\sigma(A) = \C \backslash \rho(A)$ is called the spectrum of $A$. Furthermore, $R_\lambda(A) = (A - \lambda I)^{-1}$.
+\end{defn}
+
+\begin{defn}[Spectrum]
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined. 
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $A - \lambda I$ is not injective, then $\lambda$ is called an eigenvalue of $A$, and the set $\sigma_p(A)$ of all eigenvalues is called the point spectrum of $A$.
+
+        \item If $A - \lambda I$ is injective but $\ran (A - \lambda I)$ is not dense, then the set $\sigma_r(A)$ of all such $\lambda$ is called the residual spectrum of $A$.
+
+        \item If $A - \lambda I$ is injective and $\ran (A - \lambda I)$ is dense, but $(A - \lambda I)^{-1}$ is not bounded, then the set $\sigma_c(A)$ of all such $\lambda$ is called the continuous spectrum of $A$.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    Note that the spectrum of $A$
+    \begin{equation*}
+        \sigma(A) = \sigma_p(A) \cup \sigma_c(A) \cup \sigma_r(A).
+    \end{equation*}
+\end{rmk}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\lambda \in \sigma_c(A)$.
+        \item $A-\lambda I$ is injective, $\clo{\Img(A - \lambda I)} = \mathcal{H}$ and
+        \begin{equation*}
+            \forall~c > 0,\quad \exists~ x\in D(A) \backslash \bb{0},\quad\norm{(A - \lambda I)x} \leq c\norm{x}.
+        \end{equation*}
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    $(1) \Rightarrow (2)$: Assume that there is a $c > 0$ such that $\norm{(A - \lambda I)x} \leq c\norm{x}$ for all $x \in D(A) \backslash \bb{0}$. Then for any $y \in \Img(A - \lambda I)$, let $x \in D(A)$ be $y = (A - \lambda I)x$. So
+    \begin{equation*}
+        \norm*{(A - \lambda I)^{-1}y} = \norm{x} \leq \frac{1}{c} \norm{y},
+    \end{equation*}
+    i.e., $(A - \lambda I)^{-1}$ is bounded, contradicting to $\lambda \in \sigma_c(A)$.
+
+    \noindent $(2) \Rightarrow (1)$: Similarly as above, if $(A - \lambda I)^{-1}$ is bounded, $A - \lambda I$ is bounded below.
+\end{proof}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined and closable.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item When $\lambda \in \rho(A)$, $\Img(\clo{A} - \lambda I) = \mathcal{H}$.
+        \item $\rho(A) = \rho(\clo{A})$.
+        \item When $\lambda \in \rho(A)$, $\clo{R_\lambda(A)} = R_{\lambda}(\clo{A})$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $\lambda \in \rho(A)$ and $y \in \mathcal{H}$. Choose a sequence $x_n$ in $D(A)$ such that 
+        \begin{equation*}
+            y_n = (A-\lambda I) x_n \sto y.
+        \end{equation*}
+        and so $y_n$ is Cauchy. Because $(A-\lambda I)^{-1}$ is bounded, 
+        \begin{equation*}
+            x_n = (A-\lambda I)^{-1} y_n
+        \end{equation*}
+        is also Cauchy. So $x_n \sto x$ for some $x$. Because $A - \lambda I$ is closable, $x \in D(\clo{A - \lambda I}) = D(\clo{A} - \lambda I)$. Therefore, $(\clo{A} - \lambda I)x = y$. Therefore, $\clo{A} - \lambda I$ is bijective.
+
+        \item First, fix $\lambda \in \rho(A)$. Let $x \in \ker (\clo{A} - \lambda I)$ and choose $x_n$ in $D(A)$ such that $x_n \sto x$ and $(A - \lambda I)x_n \sto 0$. Because $(A-\lambda I)^{-1}$ is bounded, $x_n \sto 0 = x$. So $\clo{A} - \lambda I$ is injective. By $(1)$, $\clo{A} - \lambda I$ is surjective. Then the closedness $G(\clo{A} - \lambda I)$ implies that the closedness of $G\bc{(\clo{A} - \lambda I)^{-1}}$. By the closed graph theorem, $(\clo{A} - \lambda I)^{-1}$ is bounded. Therefore, $\lambda \in \rho(\clo{A})$.
+
+        Conversely, for $\lambda \in \rho(\clo{A})$, by $A -\lambda I \subset \clo{A} - \lambda I$, the injectivity of $A -\lambda I$ and the boundedness of $(A - \lambda I)^{-1}$ are clear. Furthermore, $\overline{\operatorname{Im}(A-\lambda I)}=\overline{\operatorname{Im}(\bar{A}-\lambda I)}= \mathcal{H}$. So $\lambda \in \rho(A)$.
+
+        \item For $\lambda \in \rho(A)$, it is because $\clo{R_\lambda(A)}$ and $R_{\lambda}(\clo{A})$ have same graphs. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined and closed. $\lambda \in \rho(A)$ if and only if $A - \lambda I \colon D(A) \sto \mathcal{H}$ is bijective.
+\end{prop}
+\begin{proof}
+    If $\lambda \in \rho(A)$, by above $(1)$, $A - \lambda I$ is bijective.
+
+    Conversely, it is sufficient to prove $(A - \lambda I)^{-1}$ is bounded, i.e., its graph is closed by the closed graph theorem. It is because $A$ is a closed operator.
+\end{proof}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined and closed. For $\lambda,\mu \in \rho(A)$,
+    \begin{equation*}
+        R_\lambda(A) - R_\mu(A) = (\lambda - \mu)R_\lambda(A)R_\mu(A)
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    It is because
+    \begin{equation*}
+        R_\lambda(A)-R_\mu(A)=R_\lambda(A)((A-\mu I)-(A-\lambda I)) R_\mu(A). \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined and closed. Let $\lambda_0 \in \rho(A)$. For $\varepsilon = \norm*{R_{\lambda_0}(A)}^{-1}$,
+    \begin{equation*}
+        B(\lambda_0,\varepsilon) \subset \rho(A),
+    \end{equation*}
+    i.e., $\rho(A)$ is open. Moreover, if $\lambda \in B(\lambda_0, \varepsilon)$,
+    \begin{equation*}
+        R_\lambda(A) = \sum_{n=0}^\infty (\lambda - \lambda_0)^nR_{\lambda_0}(A)^{n+1}.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    For $\lambda \in B(\lambda_0, \varepsilon)$, let
+    \begin{equation*}
+        K_\lambda = (\lambda - \lambda_0)R_{\lambda_0}(A),
+    \end{equation*}
+    whose domain is $\mathcal{H}$ by the definition. So
+    \begin{equation*}
+        A - \lambda I= (I - K_\lambda)(A - \lambda_0 I)
+    \end{equation*}
+    Moreover, because $\left\|K_\lambda\right\|=\left|\lambda-\lambda_0\right|\left\|R_{\lambda_0}(A)\right\|<1$,
+    \begin{equation*}
+        \left(I-K_\lambda\right)^{-1}=\sum_{n=0}^{\infty} K_\lambda^n
+    \end{equation*}
+    in norm convergence. Therefore, $I-K_\lambda$ is bijective from $\mathcal{H}$ to $\mathcal{H}$. Because $A - \lambda_0 I$ is bijective from $D(A)$ to $\mathcal{H}$, $A - \lambda I= (I - K_\lambda)(A - \lambda_0 I)$ is also bijective from $D(A)$ to $\mathcal{H}$. So $\lambda \in \rho(A)$ by above proposition. Then
+    \begin{equation*}
+        (A-\lambda I)^{-1}=\left(A-\lambda_0 I\right)^{-1}\left(I-K_\lambda\right)^{-1}=R_{\lambda_0}(A) \sum_{n=0}^{\infty}\left(\lambda-\lambda_0\right)^n R_{\lambda_0}(A)^n. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be bounded.
+    \begin{equation*}
+        \varnothing \neq \sigma(A) \subset\{\lambda \in \mathbb{C}| | \lambda \mid \leq\|A\|\}
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    If $\abs{\lambda} > \norm{A}$,
+    \begin{equation*}
+        (A-\lambda I)^{-1}=-\lambda^{-1}\left(I-\lambda^{-1} A\right)^{-1}=-\lambda^{-1} \sum_{n=0}^{\infty} \lambda^{-n} A^n,
+    \end{equation*}
+    which implies that $\lambda \notin \sigma(A)$.
+
+    Assume $\sigma(A) = \emptyset$. For $\lambda_0 \in \C$, when $\lambda$ is closed to $\lambda_0$,
+    \begin{equation*}
+        f(\lambda) \defeq \left(R_\lambda(A) x, y\right)=\sum_{n=0}^{\infty}\left(\lambda-\lambda_0\right)^n\left(R_{\lambda_0}(A)^{n+1} x, y\right),
+    \end{equation*}
+    i.e., $f$ is regular on $\C$. Moreover, for $\lambda > \norm{A}$,
+    \begin{equation*}
+        \abs{f(\lambda)} \leq \sum_{n=0}^{\infty}|\lambda|^{-n-1}\|A\|^n\|x\|\|y\|=|\lambda|^{-1}(1-\|A\| /|\lambda|)
+    \end{equation*}
+    Therefore, $f(\lambda) \sto 0$ as $\lambda \sto \infty$. By Liouville's Theorem, $f(\lambda) = 0$, i.e., $R_\lambda(A) = 0$, which induces a contradiction.
+\end{proof}
+
+\section{Symmetric Operator}
+
+\begin{defn}[Symmetric Operator]
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined. If for any $x,y \in D(A)$,
+    \begin{equation*}
+        \inn{Ax,y} = \inn{x,Ay},
+    \end{equation*}
+    $A$ is called symmetric or Hermitian.
+\end{defn}
+\begin{rmk}
+    Note that for densely defined $A$, it is symmetric if and only if $A \subset A^*$. So symmetric operators are closable.
+\end{rmk}
+
+\begin{prop}
+    Let $A \in \mathcal{L}(\mathcal{H})$ be densely defined.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A$ is symmetric if and only if for any $x\in D(A)$, $\inn{Ax,x} \in \R$.
+        \item If $A$ is symmetric, then $A$ is closable and $\clo{A}$ is also symmetric.
+        \item If $A$ is symmetric and $D(A) = \mathcal{H}$, then $A$ is bounded.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $A$ is symmetric, $\inn{Ax,x} \in \R$ clearly. In converse, because $\inn{Ax,x} \in \R$,
+        \begin{equation*}
+            \inn{A x, y}=\sum_{k=0}^3 i^k\inn{A\left(x+i^k y\right), x+i^k y},
+        \end{equation*}
+        and
+        \begin{equation*}
+            \sum_{k=0}^3 i^k\inn{x+i^k y, A\left(x+i^k y\right)}=(x, A y).
+        \end{equation*}
+        Therefore, $\inn{Ax,y} = \inn{x,Ay}$. 
+
+        \item If $A$ is symmetric, $A \subset A^*$. Because $D(A)$ is dense, $A^*$ is closed. So $A$ is closable. Moreover,
+        \begin{equation*}
+            \clo{A} = A^{**} \subset A^* = \clo{A}^*.
+        \end{equation*}
+        So $\clo{A}$ is symmetric.
+
+        \item Because $A \subset A^*$ and $D(A) = \mathcal{H}$, $A = A^*$. Therefore, $A$ is closed. By the closed graph theorem, $A$ is bounded. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{prop}
+    Let $A$ be symmetric. 
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\sigma_p(A) \subset \R$.
+        \item For $\lambda,\mu \in \sigma_p(A)$ with $\lambda \neq \mu$, and $Ax = \lambda x$, $Ay = \mu y$, $\inn{x,y} = 0$.
+    \end{enumerate}
+\end{prop}
+
+\begin{defn}[Order]
+    Let $A$ be symmetric. For $\alpha \in \R$, if
+    \begin{equation*}
+        \alpha \norm{A}^2 \leq \inn{Ax,x},\quad \forall~x \in D(A),
+    \end{equation*}
+    then $\alpha \leq A$.
+\end{defn}
+
+\begin{defn}[Self-adjoint Operator]
+    Let $A$ be densely defined. If $A = A^*$, then $A$ is called self-adjoint.
+\end{defn}
+
+\begin{prop}
+    Let $A$ be self-adjoint. If $B$ is symmetric and $A \subset B$, then $A = B$.
+\end{prop}
+\begin{proof}
+    It is because $A \subset B \subset B^* \subset A^* = A$.
+\end{proof}
+
+\begin{prop}
+    Let $A$ be closed.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\ker A$ is closed.
+        \item If $A$ is dense, then
+        \begin{equation*}
+            \mathcal{H} = \ker A \oplus \clo{\Img A^*}
+        \end{equation*}
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $x_n$ be a sequence in $\ker A$ and $x_n \sto x$. Then $x - x_n \sto 0$ and $A(x - x_n) = Ax - Ax_n \sto Ax$. Because $A$ is closed, $Ax = 0$, i.e., $x \in \ker A$.
+
+        \item Let $x \in  \ker A$ and $y \in D(A^*)$. Because
+        \begin{equation*}
+            0 = \inn{Ax,y} = \inn{x,A^*y},
+        \end{equation*}
+        $\ker A \perp \Img A^*$. Moreover, if $z \perp \Img A^*$ and $y \in D(A^*)$, i.e., $\inn{z,A^*y} = 0$, then $z \in D(A^{**}) = D(A)$. Furthermore, because $D(A^*)$ is dense, $Az = A^{**}z = 0$, i.e., $z \in \ker A$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}
+    Let $A$ be a closed operator. The following statements are equivalent.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\Img A$ is closed.
+        \item There exists $C>0$ such that for all $x \in D(A) \cap (\ker A)^\perp$,
+        \begin{equation*}
+            \norm{Ax} \geq C\norm{x}.
+        \end{equation*}
+    \end{enumerate}
+\end{lem}
+\begin{proof}
+    Assume $(1)$. Consider $A \colon D(A) \cap (\ker A)^\perp \sto \Img A$. It is a bijection between Hilbert spaces $D(A) \cap (\ker A)^\perp$ and $\Img A$ by closedness. Then by the closed graph theorem, $A^{-1}$ is bounded.
+
+    Conversely, assume $(2)$. Choose $x_n \in D(A)$ such that $Ax_n \sto y$. Let
+    \begin{equation*}
+        x_n = x_n^\prime + x_n^{\prime \prime}
+    \end{equation*}
+    with $x_n^\prime \in D(A) \cap (\ker A)^\perp$ and $x_n^{\prime\prime} \in \ker A$. So $Ax_n^\prime \sto y$. By $(2)$, $x_n^\prime$ is Cauchy, so $x_n^\prime \sto x \in \mathcal{H}$. Because $G(A)$ is closed, $(x_n^\prime,Ax_n^\prime) \sto (x,y) \in G(A)$. It follows that $Ax = y \in \Img A$.
+\end{proof}
+
+\begin{prop}
+    Let $A$ be a symmetric operator.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $\lambda \in \C \backslash \R$ and $x \in D(A)$, 
+        \begin{equation*}
+            \norm{(A - \lambda I)x} \geq \abs{\Img \lambda} \norm{x}.
+        \end{equation*}
+
+        \item If $A \geq 0$ and $\lambda > 0$, then
+        \begin{equation*}
+            \norm{(A+\lambda I)x} \geq \lambda \norm{x}.
+        \end{equation*}
+
+        \item If $A$ is closed, for $\lambda \in \C \backslash \R$, $\Img (A - \lambda I)$ is closed.
+
+        \item If $A$ is closed and $A \geq 0$, for any $\lambda > 0$, then $\Img (A + \lambda I)$ is closed.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $\lambda = \alpha + \beta i$ for $\alpha,\beta \in \R$.
+        \begin{equation*}
+            \inn{(A-\lambda I) x,(A-\lambda I) x}=\|(A-\alpha I) x\|^2+\beta^2\|x\|^2 \geq \beta^2\|x\|^2
+        \end{equation*}
+
+        \item It is because
+        \begin{equation*}
+            \inn{(A+\lambda I) x,(A+\lambda I) x}=\|A x\|^2+2 \lambda(A x, x)+\lambda^2\|x\|^2 \geq \lambda^2\|x\|^2.
+        \end{equation*}
+
+        \item It is by above $\ker(A - \lambda I) = 0$, $(1)$, and above lemma.
+        \item It is by above $\ker(A + \lambda I) = 0$, $(2)$, and above lemma.
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}
+    Let $A$ be self-adjoint.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\sigma(A) \subset \R$.
+        \item For $\gamma \in \R$, if $A \geq \gamma$, $\sigma(A) \subset [\gamma,\infty)$.
+        \item $\sigma_r(A) = \emptyset$.
+        \item $\sigma(A) = \sigma_{ap}(A)$, where $\sigma_{ap}(A)$ is the approximated point spectrum of $A$, defined as
+        \begin{equation*}
+            \sigma_{ap}(A) = \bb{\lambda \in \C \colon \exists~x_n \text{ with } \norm{x_n} = 1 \text{ such that } (A - \lambda I)x_n \sto 0}
+        \end{equation*}
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $\lambda \in \C \backslash \R$, by $(1)$ in the above proposition, $A - \lambda I$ is injective and its inverse is bounded. Because $A = A^*$,
+        \begin{equation*}
+            \mathcal{H} = \ker (A - \clo{\lambda}I) \oplus \clo{\Img (A - \lambda I)}
+        \end{equation*}
+        So $ \mathcal{H} = \clo{\Img (A - \lambda I)}$. 
+
+        \item When $\lambda < \gamma$, by $(2)$ in the above proposition, $A - \lambda I$ is injective and its inverse is bounded. Similarly,  $ \mathcal{H} = \clo{\Img (A - \lambda I)}$.
+
+        \item For $\lambda \in \R$,
+        \begin{equation*}
+            \mathcal{H} = \ker (A - \lambda I) \oplus \clo{\Img (A - \lambda I)}
+        \end{equation*}
+        Then if $\ker (A - \lambda I) = 0$, $\Img (A - \lambda I)$ is dense.
+
+        \item Fix $\lambda \in \sigma(A)$. Assume there exits a $C > 0$ such that
+        \begin{equation*}
+            \norm{(A-\lambda I)x} \geq C \norm{x},\quad \forall~x \in D(A)
+        \end{equation*}
+        Therefore, $A - \lambda I$ is injective and its inverse is bounded. But because $\lambda \in \R$, by $(3)$, $\Img (A - \lambda I)$ is dense. $\lambda \in \rho(A)$, which induces a contradiction. So $\lambda \in \sigma_{ap}(A)$
+
+        Conversely, it is by the following remark.
+    \end{enumerate}
+\end{proof}
+\begin{rmk}
+    \begin{enumerate}[label=(\roman*)]
+        \item It is clear that $\sigma_p(A) \subset \sigma_{ap}(A)$.
+        \item $\sigma_c(A) \subset \sigma_{ap}(A)$: If $\lambda \in \sigma_c(A)$, for $1/n$, choose $x_n$ with $\norm{x_n} = 1$ such that
+        \begin{equation*}
+            \norm{(A - \lambda)x_n} \leq \frac{1}{n} \norm{x_n}.
+        \end{equation*}
+        So $\lambda \in \sigma_{ap}(A)$.
+        \item $\sigma_{ap}(A) \subset \sigma(A)$: If $\lambda \in \rho(A)$, then $(A - \lambda I)^{-1}$ is bounded, which implies that
+        \begin{equation*}
+            \exists~C > 0,\quad \forall~x\in D(A),\quad \norm{(A - \lambda I)x} \geq C\norm{x}
+        \end{equation*}
+        It follows that $\lambda \notin \sigma_{ap}(A)$.
+        \item For self-adjoint operator, $\sigma = \sigma_p \cup \sigma_c = \sigma_{ap}$.
+    \end{enumerate}
+\end{rmk}
+
+\begin{thm}
+    Let $A$ be a symmetric operator. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A$ is self-adjoint.
+        \item $A$ is closed and $\ker (A^* \pm iI) = 0$.
+        \item $\Img (A \pm iI) = \mathcal{H}$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    $(1) \Rightarrow (2)$: Clearly, $A$ is closed. $\sigma_p(A) = \sigma_p(A^*) \subset \R$, so $\ker (A^* \pm iI) = 0$.
+
+    $(2) \Rightarrow (3)$: Because $A$ is closed, $A^*$ is densely defined. And $A^*$ is closed. So 
+    \begin{equation*}
+        \mathcal{H} = \ker \bc{A^* \pm i I} \oplus \clo{\Img \bc{A^{**} \mp iI}}.
+    \end{equation*}
+    Closedness of $A$ implies that $A = \clo{A} = A^{**}$. So $\Img \bc{A\pm iI}$ is dense.
+
+    $(3) \Rightarrow (1)$: It suffices to prove $D(A^*) \subset D(A)$. For any $x \in D(A^*)$, let $y \in D(A)$ such that
+    \begin{equation*}
+        (A^* - iI)x = (A - iI)y.
+    \end{equation*}
+    Since $A \subset A^*$, $(A^* - iI)(x - y) = 0$. Because $\Img (A + iI) = \mathcal{H}$ and $\ker \bc{A^* - iI} \perp \Img (A + iI)$, $\ker \bc{A^* - iI} = 0$. Therefore, $x = y$.
+\end{proof}
+
+\begin{prop}
+    Let $A$ be a closed and symmetric operator. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A$ is self-adjoint.
+        \item $\sigma(A) \subset \R$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    $(2) \Rightarrow (1)$: Because $A$ is closed and $\pm i \in \rho(A)$, $\Img (A \pm iI) = \mathcal{H}$. By above theorem, $A$ is self-adjoint.
+\end{proof}
+
+\begin{defn}[Essentially Self-adjoint]
+    Let $A$ be a symmetric operator. If $\clo{A}$ is self-adjoint, then $A$ is called essentially self-adjoint.
+\end{defn}
+
+\begin{prop}
+    Let $A$ be essentially self-adjoint. If $A \subset B$ and $B$ is a closed symmetric operator, then $B = \clo{A}$.
+\end{prop}
+\begin{proof}
+    $A \subset B$ implies that $\clo{A} \subset B$. Then
+    \begin{equation*}
+        B \subset B^* \subset \clo{A}^* = \clo{A}
+    \end{equation*}
+    Therefore, $B = \clo{A}$.
+\end{proof}
+
+\begin{prop}
+    Let $A$ be a symmetric operator. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A$ is essentially self-adjoint.
+        \item $\ker (A^* \pm iI) = 0$.
+        \item $\clo{\Img (A \pm iI)} = \mathrm{H}$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    By replacing $A$ with $\clo{A}$ in the proof of above theorem, it can get the desired results.
+\end{proof}
+
+\section{Resolution of Identity}
+
+\begin{defn}[Operator Topology]
+    Consider $A_n \in \mathcal{B}(\mathrm{H})$, the space of bounded linear operators.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Strong operator topology (SOT): $A_n \sto A$ in SOT if
+        \begin{equation*}
+            \forall~x \in \mathcal{H},\quad \norm{A_nx - Ax} \sto 0.
+        \end{equation*}
+        \item Weak operator topology (WOT): $A_n \sto A$ in WOT of
+        \begin{equation*}
+            \forall~x,y \in \mathcal{H},\quad \inn{A_nx,y} \sto \inn{Ax,y}.
+        \end{equation*}
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    By the Cauchy-Schwarz inequality, convergence in SOT implies convergence in WOT.
+\end{rmk}
+\begin{prop}
+    Let $A_n,B_n \in \mathcal{B}(\mathcal{H})$. Let $A,B \in \mathcal{B}(\mathcal{H})$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $A_n \sto A$ and $B_n \sto B$ in SOT, then $A_nB_n \sto AB$ in SOT.
+        \item If $A_n \sto A$ in WOT, $A_n^* \sto A^*$ in WOT.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For any $x\in \mathcal{H}$, because $\bb{A_nx}$ is convergent, it is bounded. By the principle of uniform boundedness, $\bb{\norm{A_n}}$ is bounded. Then
+        \begin{equation*}
+            \begin{aligned}
+                \left\|A_n B_n x-A B x\right\| & \leq\left\|A_n B_n x-A_n B x\right\|+\left\|A_n B x-A B x\right\| \\
+                & \leq\left(\sup _n\left\|A_n\right\|\right)\left\|B_n x-B x\right\|+\left\|A_n B x-A B x\right\| \rightarrow 0
+            \end{aligned}
+        \end{equation*}
+
+        \item For $x,y \in \mathrm{H}$,
+        \begin{equation*}
+            \inn{A_n^* x, y}= \inn{x, A_n y}=\overline{\inn{A_n y, x}} \rightarrow \overline{\inn{A y, x}}=\inn{x, A y}=\inn{A^* x, y}. \qedhere
+        \end{equation*}
+    \end{enumerate}
+\end{proof}
+\begin{rmk}
+    Note that $(1)$ is not true for WOT and $(2)$ is not true for SOT.
+\end{rmk}
+
+\begin{prop}
+   Let $\bb{P_n}$ be a sequence of orthogonal projections and $P \in \mathcal{B}(\mathcal{H})$.
+   \begin{enumerate}[label=(\arabic{*})]
+       \item If $P_n \sto P$ in SOT, then $P$ is also an orthogonal projection.
+       \item If $P_n \sto P$ in WOT and $P^2 = P$, then $P$ is also an orthogonal projection and $P_n \sto P$ in SOT.
+   \end{enumerate} 
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item By above proposition, $P_n = P_n^* \sto P^* $ in WOT, so $P = P^*$. Similarly, $P_n = P_n^2 \sto P^2$ in SOT, so $P=P^2$.
+        \item $P$ is an orthogonal projection by similar reason as above. For $x\in\mathcal{H}$,
+        \begin{equation*}
+            \begin{aligned}
+                \left\|P_n x-P x\right\|^2&=\left(P_n x, x\right)-2 \operatorname{Re}\left(P_n x, P x\right)+(P x, x)\\
+                & \rightarrow(P x, x)-2 \operatorname{Re}(P x, P x)+(P x, x)=0 
+            \end{aligned}\qedhere
+        \end{equation*}
+    \end{enumerate}
+\end{proof}
+
+\begin{prop}
+    Let $\bb{P_n}$ be a sequence of orthogonal projections with $P_n \leq P_{n+1}$. Then there is a $P$ such that $P_n \sto P$ in SOT. It is also true when $P_n \geq P_{n+1}$.
+\end{prop}
+\begin{proof}
+    For $x \in \mathcal{H}$, $\inn{P_nx,x}$ is a monotone increasing sequence with bound $\norm{x}$. Therefore, it has a limit. For $m > n$,
+    \begin{equation*}
+        \norm{P_mx-P_nx} = \inn{P_mx,x} - \inn{P_nx,x} \sto 0
+    \end{equation*}
+    Therefore, define $Px \defeq \lim_n P_nx$, which is clearly a bounded linear operator, so it is an orthogonal projection by above proposition. The same results can be obtained for $P_n \geq P_{n+1}$.
+\end{proof}
+
+\begin{defn}[Resolution of Identity]
+    Let $\bb{E(\lambda)}_{\lambda \in \R}$ be a family of orthogonal projections such that
+    \begin{enumerate}[label=(\arabic{*})]
+        \item if $\lambda \leq \mu$, then $E(\lambda) \leq E(\mu)$,
+        \item when $\lambda \sto \infty$, $E(\lambda) \sto I$ in SOT, meanwhile $E(\lambda) \sto 0$ as $\lambda \sto -\infty$,
+        \item when $\varepsilon \sto 0+$, $E(\lambda + \varepsilon) \sto E(\lambda)$ in SOT.
+    \end{enumerate}
+    Then it is called a resolution of the identity.
+\end{defn}
+\begin{rmk}
+    Note that if $\bb{E(\lambda)}_{\lambda \in \R}$ is a resolution of the identity, then $E(\lambda - \varepsilon)$ is also convergent to an orthogonal projection as $\varepsilon \sto 0+$.
+\end{rmk}
+
+Fix $x,y \in \mathcal{H}$. Because $\lambda \mapsto \inn{E(\lambda)x, x}$ is monotone increasing and right-continuous, it can consider the Lebesgue-Stieltjes integral $\int_{\R} \cdot d\inn{E(\lambda)x,x}$, which can be extended to $\int_\R \cdot d\inn{E(\lambda)x,y}$ by the polarization 
+\begin{equation*}
+    \inn{E(\lambda)x,y} = \frac{1}{4}\sum_{k=0}^3 i^k \inn{E(\lambda)(x+i^ky),x+i^ky}.
+\end{equation*}
+For a complex-valued continuous function $f$, consider $A(f)$, whose domain is defined as
+\begin{equation*}
+    D(A(f)) \defeq \bb{x\in\mathcal{H} \colon \int_{\R}\abs{f(\lambda)}d\inn{E(\lambda)x,x} < \infty}.
+\end{equation*}
+
+\begin{thm}
+    As above settings,
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $D(A(f))$ is a dense subspace of $\mathcal{H}$.
+        \item for $x \in D(A(f))$ and $y \in \mathcal{H}$, the operator $A(f)$ is well-defined as
+        \begin{equation*}
+            \inn{A(f)x,y} = \int_{\R} f(\lambda) d\inn{E(\lambda)x,y}.
+        \end{equation*}
+        \item for $x\in D(A(f))$,
+        \begin{equation*}
+            \norm{A(f)x}^2 = \int_\R \abs{f(\lambda)}^2 d \inn{E(\lambda)x,x}.
+        \end{equation*}
+        \item $E(\lambda)A(f) \subset A(f)E(\lambda)$.
+        \item $A(f)^* = A(\clo{f})$.
+        \item $A(f)$ is closed.
+        \item if $f$ is real-valued, then $A(f) = A(f)^*$.
+        \item if $f$ is bounded, $A(f)$ is bounded and $\norm{A(f)} \leq \norm{f}_{\infty}$.
+        \item if $\abs{f(\lambda)} \equiv 1$, $A(f)$ is a unitary.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $x \in D(A(f))$, it is clear $\alpha x \in D(A(f))$. For $x,y \in D(A(f))$,
+        \begin{equation*}
+            \inn{(E(\lambda)-E(\mu))(x+y),x+y} \leq 2\inn{(E(\lambda)-E(\mu))(x),x} + 2\inn{(E(\lambda)-E(\mu))(y),y}
+        \end{equation*}
+        Therefore, $x + y \in D(A(f))$. So $D(A(f))$ is a subspace.
+
+        For any $x \in \mathcal{H}$ and $n \in \N$, let $x_n = (E(n) - E(-n))x$. Then $x_n \in D(A(f))$ and $x_n \sto x$. So $D(A(f))$ is dense.
+
+        \item It is sufficient to prove that for a fixed $x \in D(A(f))$
+        \begin{equation*}
+            y \mapsto \int_\R \clo{f(\lambda)} d\inn{E(\lambda)y,x}
+        \end{equation*}
+        is a linear functional. First, linearity is clear. For any $a,b \in \R$ and $y \in \mathcal{H}$, let $a = \lambda_0 < \cdots < \lambda_n = b$ be a partition of $[a,b]$.
+        \begin{equation*}
+            \begin{aligned}
+                &\quad\abs{\sum_{j=1}^n \clo{f(\lambda_j)} \inn{(E(\lambda_j)-E(\lambda_{j-1}))y,x}} \\ 
+                &\leq \sum_{j=1}^n \abs{f(\lambda_j)} \abs{\inn{(E(\lambda_j)-E(\lambda_{j-1}))y,x}} \\
+                &\leq\sum_{j=1}^n\left|f\left(\lambda_j\right)\right|\left\|\left(E\left(\lambda_j\right)-E\left(\lambda_{j-1}\right)\right) y\right\|\left\|\left(E\left(\lambda_j\right)-E\left(\lambda_{j-1}\right)\right) x\right\| \\
+                &\leq\sqrt{\sum_{j=1}^n\left|f\left(\lambda_j\right)\right|^2\left\|\left(E\left(\lambda_j\right)-E\left(\lambda_{j-1}\right)\right) x\right\|^2} \sqrt{\sum_{j=1}^n\left\|\left(E\left(\lambda_j\right)-E\left(\lambda_{j-1}\right)\right) y\right\|^2} \\
+                &\leq \sqrt{\sum_{j=1}^n\left|f\left(\lambda_j\right)\right|^2 \inn{E\left(\lambda_j\right)-E\left(\lambda_{j-1}\right) x, x}}\|y\|
+            \end{aligned}
+        \end{equation*}
+        Therefore, we have
+        \begin{equation*}
+            \abs{\int_a^b \clo{f(\lambda)} d\inn{E(\lambda)y,x}} \leq \sqrt{\int_a^b \abs{f(\lambda)}^2 d\inn{E(\lambda)x,x}}\norm{y}.
+        \end{equation*}
+        $x \in D(A(f))$ implies that the right-hand side is bounded. So $y \mapsto \int_\R \clo{f(\lambda)} d\inn{E(\lambda)y,x}$ is bounded. By Riesz representation theorem, there is a unique element, defined as $A(f)x$, such that 
+        \begin{equation*}
+            \inn{y,A(f)x} = \int_\R \clo{f(\lambda)} d\inn{E(\lambda)y,x},
+        \end{equation*}
+        which is clear linear in $x$.
+
+        \item For $x \in D(A(f))$, let $y = A(f)x$. Then
+        \begin{equation*}
+            \norm{A(f)x}^2 = \int_\R f(\lambda) d\inn{E(\lambda)x,A(f)x}.
+        \end{equation*}
+        Furthermore,
+        \begin{equation*}
+            \inn{E(\lambda)x,A(f)x} = \int_\R \clo{f(\mu)} d\inn{E(\lambda)x,E(\mu)x} = \int_{-\infty}^\lambda \clo{f(\mu)}d\inn{E(\mu)x,x}
+        \end{equation*}
+        Therefore, we have $\norm{A(f)x}^2 = \int_\R \abs{f(\mu)}^2 d \inn{E(\lambda)x,x}$.
+
+        \item For $x \in D(A(f))$, 
+        \begin{equation*}
+            \begin{aligned}
+                \int_\R \abs{f(\mu)}^2 d \inn{E(\mu)E(\lambda)x,E(\lambda)(x)} &= \int_{-\infty}^\lambda \abs{f(\mu)}^2 d\inn{E(\mu)x,x} \\
+                &\leq \int_\R\abs{f(\mu)}^2 d\inn{E(\mu)x,x} < \infty.
+            \end{aligned}
+        \end{equation*}
+        So $E(\lambda)x \in D(A(f))$. Furthermore,
+        \begin{equation*}
+            \begin{aligned}
+                \inn{E(\lambda)A(f)x,y} &= \int_\R f(\mu) d \inn{E(\mu)x,E(\lambda)y}
+                &= \int_\R f(\mu) d \inn{E(\mu)E(\lambda)x,y} \\
+                &= \inn{A(f)E(\lambda)x,y}.
+            \end{aligned}
+        \end{equation*}
+        So $E(\lambda)A(f) \subset A(f)E(\lambda)$.
+
+        \item Clearly, $D(A(f)) = D(A(\clo{f}))$. For any $x,y \in D(A(f))$,
+        \begin{equation*}
+            \clo{\inn{A(f)x,y}} = \clo{\int_\R f(\lambda) d \inn{E(\lambda)x,y}} = \int_\R \clo{f(\lambda)} d \inn{E(\lambda)y,x} = \inn{A(\clo{f})y,x}
+        \end{equation*}
+        Therefore, $A(\clo{f}) \subset A(f^*)$. Conversely, for $x \in D(A(f^*))$, $y \in \mathcal{H}$, and $n \in \N$, let
+        \begin{equation*}
+            x_n=(E(n)-E(-n)) x,\quad y_n=(E(n)-E(-n)) y.
+        \end{equation*}
+        Then 
+        \begin{equation*}
+            \begin{aligned}
+                \begin{aligned}
+                    \left\|A(f)^* x\right\| & =\lim _{n \rightarrow \infty}\left\|(E(n)-E(-n)) A(f)^* x\right\| \\
+                    & =\lim _{n \rightarrow \infty} \sup _{\|y\| \leq 1}\left|\inn{(E(n)-E(-n)) A(f)^* x, y}\right| \\
+                    & =\lim _{n \rightarrow \infty} \sup _{\|y\| \leq 1}\left|\inn{A(f)^* x, y_n}\right| \\
+                    & =\lim _{n \rightarrow \infty} \sup _{\|y\| \leq 1}\left|\inn{x, A(f) y_n}\right| \\
+                    & =\lim _{n \rightarrow \infty} \sup _{\|y\| \leq 1}\left|\inn{x_n, A(f) y_n}\right| \\
+                    & =\lim _{n \rightarrow \infty} \sup _{\|y\| \leq 1}\left|\inn{A(\bar{f}) x_n, y}\right| \\
+                    & =\lim _{n \rightarrow \infty}\left\|A(\bar{f}) x_n\right\| \\
+                    & =\lim _{n \rightarrow \infty} \sqrt{\int_{\mathbb{R}}|f(\lambda)|^2 d \inn{x_n, E(\lambda) x_n}} \\
+                    & =\lim _{n \rightarrow \infty} \sqrt{\int_{-n}^n|f(\lambda)|^2 d\inn{x, E(\lambda) x}} 
+                \end{aligned}
+            \end{aligned}
+        \end{equation*}
+        Therefore, $x \in D(A(f)) = D(A(\clo{f}))$.
+
+        \item By $(5)$, $A(f) = A(\clo{f})^*$ is closed.
+
+        \item It is also by $(5)$.
+
+        \item It is by $(3)$.
+
+        \item First, $A(f)$ is bounded and $\norm{A(f)x}^2 = \norm{x}^2$ by $(3)$. So $A(f)^*A(f) = I$ and $A(\clo{f})^*A(\clo{f}) = I$, which implies that $A(f)A(f)^* = I$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+Such $A(f)$ is denoted by
+\begin{equation*}
+    A(f) = \int_\R f(\lambda) dE(\lambda).
+\end{equation*}
+\begin{rmk}
+    Note that if $A = \int_{\R} \lambda dE(\lambda)$, then one can see
+    \begin{equation*}
+        A^2 = \int_{\R} \lambda^2 dE(\lambda)
+    \end{equation*}
+    So by induction, we have $A^n = \in \lambda^n dE(\lambda)$. So by linearity, for any analytic function $f(\lambda) = \sum_{n=0}^\infty a_n \lambda^n$,
+    \begin{equation*}
+        A(f) = \sum_n^\infty a_n A^n.
+    \end{equation*}
+\end{rmk}
+
+\begin{defn}
+    Let $\bb{E(\lambda)}_{\lambda \in \R}$ be a resolution of the identity. If there are $\lambda_1,\lambda_2$ such that $E(\lambda_1) = 0$ and $E(\lambda_2) = I$, then $\bb{E(\lambda)}_{\lambda \in \R}$ is called bounded.
+\end{defn}
+
+\begin{prop}
+    $A = \int_{\R} \lambda dE(\lambda)$ is bounded if and only if $\bb{E(\lambda)}_{\lambda \in \R}$ is bounded.
+\end{prop}
+\begin{proof}
+    If $A$ is bounded, for any $x \in \mathcal{H}$,
+    \begin{equation*}
+        \int_\R \lambda^2 d \inn{E(\lambda)x,x} = \norm{Ax}^2 \leq \norm{A}^2\norm{x}^2.
+    \end{equation*}
+    Assume there is a sequence $\lambda_n < 0$ with $\lambda_n \sto -\infty$ such that $E(\lambda_n) \neq 0$. Choose a sequence $x_n \in E(\lambda_n)\mathcal{H}$ with $\norm{x_n} = 1$.
+    \begin{equation*}
+        \begin{aligned}
+            \int_\R \lambda^2 d \inn{E(\lambda)x_n,x_n} &= \int_\R \lambda^2 d \inn{E(\lambda)E(\lambda_n)x_n,x_n} \\
+            &= \int_{-\infty}^{\lambda_n} \lambda^2 d \inn{E(\lambda)x_n,x_n} \\
+            &\geq \lambda_n^2 \inn{E(\lambda_n)x_n,x_n} = \lambda_n^2,
+        \end{aligned}
+    \end{equation*}
+    which induces a contradiction. And the similar reasoning for $\lambda \sto \infty$.
+
+    Conversely, if $E(\lambda_1) = 0$ and $E(\lambda_2) = I$, then
+    \begin{equation*}
+        \int_\R \lambda^2 d \inn{E(\lambda)x,x} \leq \int_{\lambda_1}^{\lambda_2} \lambda^2 d \inn{E(\lambda)x,x} \leq \max\bb{\lambda_1^2,\lambda_2^2}\norm{x}^2.
+    \end{equation*}
+    Therefore, $D(A) = \mathcal{H}$ and $\norm{A} \leq \max \bb{\abs{\lambda_1},\abs{\lambda_2}}$.
+\end{proof}
+
+\begin{defn}
+    Let $\bb{E(\lambda)}_{\lambda \in \R}$ be a resolution of the identity.
+    \begin{equation*}
+        E(\bb{\lambda}) = E(\lambda) - E(\lambda - 0).
+    \end{equation*}
+    If $E(\bb{\lambda}) \neq 0$, then $E(\lambda)$ is called uncontinuous at $\lambda$.
+\end{defn}
+
+\begin{prop}
+    Let $\bb{E(\lambda)}_{\lambda \in \R}$ be a resolution of the identity and $A = \int_{\R} \lambda dE(\lambda)$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $x \in \ker (A - \mu I)$ if and only if the function $\lambda \mapsto \norm{E(\lambda)x}^2$ is constant except for $\lambda = \mu$.
+        \item $E(\bb{\mu})$ is the orthogonal projection onto $\ker (A - \mu I)$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $x \in D(A)$,
+        \begin{equation*}
+            \norm{(A - \mu I)x}^2 = \int_{\R} (\lambda - \mu)^2 d \inn{E(\lambda)x,x}.
+        \end{equation*}
+
+        \item Let $x \in \ker (A - \mu I)$. By $(1)$, when $\lambda < \mu$,
+        \begin{equation*}
+            \|E(\lambda) x\|=\lim _{\lambda \rightarrow-\infty}\|E(\lambda) x\|=0,
+        \end{equation*}
+        and when $\lambda > \mu$, 
+        \begin{equation*}
+            \|E(\lambda) x\|=\lim _{\lambda \rightarrow \infty}\|E(\lambda) x\|=\|x\|^2.
+        \end{equation*}
+        Therefore, $E(\mu-0) x=0$ and $E(\mu) x=x$.
+
+        Conversely, for any $x \in \Img E(\bb{\mu})$,
+        \begin{equation*}
+            E(\lambda)x = \left\{
+                \begin{aligned}
+                    x,&\quad \lambda > \mu \\
+                    0,&\quad \lambda < \mu.
+                \end{aligned}
+            \right.
+        \end{equation*}
+        Therefore, by $(1)$, $x \in \ker (A - \mu I)$.
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}
+    For a $A \in \mathcal{B}(\mathcal{H})$, if $0 \leq A \leq 1$, then $\norm{A} \leq 1$.
+\end{lem}
+\begin{proof}
+    Because $A$ is self-adjoint and $A \geq 0$, the Cauchy-Schwarz inequality implies that
+    \begin{equation*}
+        \inn{Ax,y} \leq \inn{Ax,x}^{\frac{1}{2}}\inn{Ay,y}^{\frac{1}{2}}
+    \end{equation*}
+    Choose $y = Ax$ and $A \leq 1$,
+    \begin{equation*}
+        \inn{Ax,Ax} = |\langle A x, x\rangle|^{1 / 2}\left|\left\langle A^2 x, A x\right\rangle\right|^{1 / 2} \leq|\langle x, x\rangle|^{1 / 2}|\langle A x, A x\rangle|^{1 / 2}
+    \end{equation*}
+    Therefore, $\norm{Ax} \leq \norm{x}$.
+\end{proof}
+
+\begin{lem}
+    Let $\bb{A_n}_{n \in \N} \in \mathcal{B}(\mathcal{H})$ and $A \in \mathcal{B}(\mathcal{H})$ such that
+    \begin{equation*}
+        0 \leq A_1 \leq \cdots \leq A_n \leq \cdots \leq A.
+    \end{equation*}
+    Then $A_n$ is convergent in SOT.
+\end{lem}
+\begin{proof}
+    It can assume $A = \alpha I$. Furthermore, by replacing $A_n$ by $\frac{1}{\alpha}A_n$, we can assume $\alpha = 1$.
+
+    For $x \in \mathcal{H}$, $\bb{\inn{A_nx,x}}_{n \in \N}$ is a bounded and monotone increasing sequence, so it converges. Furthermore, if $m > n$, by Cauchy-Schwarz inequality,
+    \begin{equation*}
+        \begin{aligned}
+            \inn{(A_m - A_n)x,(A_m - A_n)x} &\leq \inn{(A_m - A_n)x,x}^{\frac{1}{2}}\inn{(A_m - A_n)^2x,(A_m - A_n)x}^{\frac{1}{2}} \\
+            & \inn{(A_m - A_n)x,x}^{\frac{1}{2}}\inn{(A_m - A_n)x,(A_m - A_n)x}^{\frac{1}{2}},
+        \end{aligned}
+    \end{equation*}
+    where the last inequality is because $A_m - A_n \leq 1$ and above lemma. Therefore,
+    \begin{equation*}
+        \norm{(A_m - A_n)x} \leq \inn{(A_m - A_n)x,x}^\frac{1}{2} \sto 0,
+    \end{equation*}
+    and it is Cauchy. Let $Bx \defeq \lim_{n \sto \infty} A_nx$. Moreover, $\norm{A_nx} \leq \norm{x}$ by above lemma implies that $\norm{Bx} \leq \norm{x}$. So $B \in \mathcal{B}(\mathcal{H})$ and $A_n \sto B$ in SOT.
+\end{proof}
+
+\begin{thm}
+    Let $A \in \mathcal{B}(\mathcal{H})$ with $A \geq 0$. Then there exists a unique $X \in \mathcal{B}(\mathcal{H})$ with $X \geq 0$ such that $X^2 = A$. Moreover, if $AT = TA$ for $T \in \mathcal{B}(\mathcal{H})$, then $XT = TX$.
+\end{thm}
+\begin{proof}
+    Constructing a sequence of polynomials $\bb{P_n(t)}_{n \in \N}$ as $P_0(t) = 0$ and $P_{n+1}(t) = (t + P_n(t)^2) / 2$. Therefore,
+    \begin{equation*}
+        P_{n+1}(t)-P_n(t)=\left(P_n(t)-P_{n-1}(t)\right)\left(P_n(t)+P_{n-1}(t)\right) / 2.
+    \end{equation*}
+    WLTG, assume $0 \leq A \leq 1$. Let $B = I - A$. Then $0 \leq B \leq 1$ and $B^{2k}, B^{2k+1} \geq 0$. Let $B_n = P_n(B) \geq 0$ and so $B_{n+1}-B_n=P_{n+1}(B)-P_n(B) \geq 0$. By
+    \begin{equation*}
+        \inn{B_{n+1}x,x} = \frac{1}{2}\inn{Bx,x} + \frac{1}{2} \inn{B_nx,B_nx} \leq \inn{x,x},
+    \end{equation*}
+    $B_n \leq 1$ and $\norm{B_n} \leq 1$. Therefore,
+    \begin{equation*}
+        0 \leq B_1 \leq B_2 \leq \cdots \leq \cdots \leq I
+    \end{equation*}
+    By above lemma, $B_n \sto B_\infty$ in SOT and $0 \leq B_\infty \leq 1$. Let $X = I - B_\infty$. Because $B_\infty = (B_\infty + B_\infty^2) / 2$,
+    \begin{equation*}
+        X^2=\left(I-B_{\infty}\right)^2=I-2 B_{\infty}+B_{\infty}^2=I-B_\infty=A.
+    \end{equation*}
+    Moreover, for any $T \in \mathcal{B}(\mathcal{H})$ with $TA = AT$, $TB_n = B_nT$ and so $TB_\infty = B_\infty T$ and $XT = TX$.
+
+    If there is another $Y \geq 0$ such that $Y^2 = A$. Because $YA = AY$, $XY = YX$. Therefore, $(X+Y)(X-Y) = X^2- Y^2 = 0$. Let $X = X_1^2$ and $Y = Y_1^2$ with $X_1,Y_1 \geq 0$. For $x \in \mathcal{H}$, let $y = (X-Y)x$.
+    \begin{equation*}
+        \left\|X_1 y\right\|^2+\left\|Y_1 y\right\|^2= \inn{(X_1^2+Y_1^2)y,y} = \inn{(X+Y)(X-Y)x,y} = 0.
+    \end{equation*}
+    So $X_1y = Y_1y = 0$ and $Xy = Yy = 0$. Then
+    \begin{equation*}
+        \|X x-Y x\|^2= \inn{y,(X-Y)x} = \inn{(X-Y)y,x} = 0.
+    \end{equation*}
+    Therefore, $X = Y$.
+\end{proof}
+
+\begin{defn}[Root and Absolute]
+    For $A \geq 0$, let $X = A^{\frac{1}{2}}$. For any $A \in \mathcal{B}(\mathcal{H})$, let $\abs{A} = (A^*A)^{\frac{1}{2}}$.
+\end{defn}
+
+\begin{defn}[Partial Isometry]
+    Let $U \in \mathcal{B}(\mathcal{H})$. If $U \colon (\ker U)^\perp \sto \Img U$ is an isometry, then $U$ is called a partial isometry.
+\end{defn}
+
+\begin{thm}[Polar Decomposition]
+    Let $A \in \mathcal{B}(\mathcal{H})$. Then there exists a unique partial isometry $U$ such that $\ker U = \ker A = \ker \abs{A}$, $\Img U = \clo{\Img A}$, and $A = U \abs{A}$.
+\end{thm}
+\begin{proof}
+    For $x,y \in \mathcal{H}$, by
+    \begin{equation*}
+        \inn{Ax,Ay} = \inn{\abs{A}x,\abs{A}y},
+    \end{equation*}
+    $\ker A = \ker \abs{A}$. Define $U_0 \colon \Img \abs{A} \sto \Img A$ by
+    \begin{equation*}
+        U_0 \abs{A}x = Ax.
+    \end{equation*}
+    So it is well-defined and inner product-preserving. Then it can be extended to $U \colon \clo{\Img \abs{A}} \sto \clo{\Img A}$. Moreover, let $U |_{\clo{\Img \abs{A}}^\perp} = 0$. So $U$ is a partial isometry and $\Img U = \clo{\Img A}$. Because
+    \begin{equation*}
+        \clo{\Img \abs{A}}^\perp = \ker \abs{A} = \ker A,
+    \end{equation*}
+    $\ker U = \ker A$. So $A = U \abs{A}$. The uniqueness is obvious.
+\end{proof}
+
+\begin{defn}
+    Let $A \in \mathcal{B}(\mathcal{H})$. Let $K \subset \mathcal{H}$ be a closed subspace and $P$ is the orthogonal projection onto $K$. If $PD(A) \subset D(A)$ and $PA \subset AP$, then $P$ (or $K$) is called reducing $A$.
+\end{defn}
+\begin{rmk}
+    In such case, $(I - P) A \subset A (I - P)$, i.e., $K$ reducing $A$ is equivalent to $K^\perp$ reducing $A$. Then consider $A_K \colon D(A_K) \sto K$ for $D(A_K) = D(A) \cap K$, which is a linear operator on $K$.
+\end{rmk}
+
+\begin{prop}
+    Let $A \in \mathcal{B}(\mathcal{H})$. Let $K \subset \mathcal{H}$ be a closed subspace and $P$ is the orthogonal projection onto $K$. If $K$ reduces $A$, the the following statements are true.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $A$ is closed, then $A_K$ is closed.
+        \item If $D(A)$ is dense in $\mathcal{H}$, then $D(A_K)$ is dense in $K$. In such case, $(A^*)_K = (A_K)^*$.
+        \item If $A$ is unitary, then $A_K$ is unitary.
+        \item If $A$ is self-adjoint, then $A_K$ is self-adjoint.
+        \item $\sigma(A) = \sigma(A_K) \cup \sigma(A_{K^\perp})$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $x_n \in K \cap D(A)$ with $x_n \sto x$ and $Ax_n \sto y$. Because $K$ is closed, $x,y \in K$. Furthermore, because $A$ is closed, $Ax = y$.
+
+        \item Let $x \in K$. There exists $x_n \in D(A)$ such that $x_n \sto x$ and so $Px_n \sto x$. Because $Px_n \in D(A_K)$, $D(A_K)$ is dense.
+
+        $PA \subset AP$ implies that $PA^* \subset A^*P$. For $x \in D((A_K)^*) \subset K$ and $y \in D(A)$,
+        \begin{equation*}
+            \inn{(A_K)^*x,y} = \inn{(A_K)^*x,Py} = \inn{x,A_KPy} = \inn{x,APy} = \inn{x,PAy} = \inn{x,Ay}
+        \end{equation*}
+        Therefore, $x \in D(A^*) \cap K$ and $(A_K)^* \subset (A^*)_K$.
+
+        Conversely, if $x \in D(A^*) \cap K$, for any $y \in D(A_K)$,
+        \begin{equation*}
+            \inn{(A^*)_Kx,y} = \inn{A^*x, y} = \inn{x,Ay} = \inn{x,A_Ky},
+        \end{equation*}
+        so $x \in D((A_K)^*)$.
+
+        \item It is directly by $(2)$.
+
+        \item It is by $(2)$.
+
+        \item Let $\lambda \in \rho(A)$. Then $A_K - \lambda I_K$ and $A_{K^\perp} - \lambda I_{K^{\perp}}$ are injective. For any $y \in \mathcal{H}$, let $x_n \in D(A)$ with $(A - \lambda I)x_n \sto y$. If $y \in K$, because $PA \subset AP$, $(A - \lambda I)Px_n \sto Py = y$. So $\clo{\Img (A_K -\lambda I_K)} = K$. Similarly, $\clo{\Img (A_{K^\perp} - \lambda I_{K^{\perp}})} = K^\perp$. Moreover, let $\norm{(A-\lambda)^{-1}} = C$. Therefore, it is clearly 
+        \begin{equation*}
+            \begin{aligned}
+                \left\|\left(A_K-\lambda I_K\right) x\right\| \geq C\|x\|,& \quad \forall~ x \in D(A_K), \\
+                \left\|\left(A_{K^\perp}-\lambda I_{K^\perp}\right) x\right\| \geq C\|x\|,& \quad \forall~ x \in D(A_{K^\perp}),  
+            \end{aligned}
+        \end{equation*}
+        It follows that $\rho(A) \subset \rho(A_K) \cap \rho(A_{K^\perp})$.
+
+        Conversely, let $\lambda \in \rho(A_K) \cap \rho(A_{K^\perp})$. Then $A_K - \lambda I_K$ and $A_{K^\perp} - \lambda I_{K^{\perp}}$ are injective. So $A -\lambda I$ is also injective. For any $y \in \mathcal{H}$, there exist $x^\prime_n \in D(A) \cap K$ such that $(A - \lambda I) x_n^\prime \sto Py$, and $x_n^{\prime \prime} \in D(A) \cap K^\perp$ such that $(A - \lambda I) x_n^{\prime \prime} \sto (I-P) y $. Therefore, $x_n = x_n^\prime + x_n^{\prime \prime} \in D(A)$ and $(A - \lambda I) x_n \sto y$. It follows that $\clo{\Img (A - \lambda I)} = \mathcal{H}$. Furthermore, let $C_1 = \norm{(A_K - \lambda I_K)^{-1}}$ and $C_2 = \norm{(A_{K^\perp} - \lambda I_{K^\perp})^{-1}}$. Then
+        \begin{equation*}
+            \|(A-\lambda I) x\|^2 \geq C_1^2\|P x\|^2+C_2^2\|(I-P) x\|^2,
+        \end{equation*}
+        which implies that $(A-\lambda I)^{-1}$ is bounded. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\section{Spectral Decomposition for Bounded Self-adjoint Operator}
+
+\begin{thm}
+    Let $A \in \mathcal{B}(\mathcal{H})$ be self-adjoint and $A = U \abs{A}$ be its polar decomposition.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\Img A = \Img \abs{A}$ and $U = U^*$.
+        \item If $A$ is commutative with all bounded operators, so is $U$.
+        \item Therefore are reducing spaces $\mathcal{H}_{\pm}$ such that
+        \begin{equation*}
+            \mathcal{H} = \mathcal{H}_+ \oplus \mathcal{H}_- \oplus \ker A
+        \end{equation*}
+        and $A_+ \geq 0$ and $A_- \leq 0$.
+        \item If $K$ reduces $A$ and $A_K \geq 0$, then $K \subset \mathcal{H}_+ \oplus \ker A$. So is $\mathcal{H}_-$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $A = A^* = \abs{A}U^*$. So $\Img A \subset \Img \abs{A}$. Conversely,
+        \begin{equation*}
+            A^2 = AA^* = U \abs{A}^2 U^* = (U\abs{A}U^*)^2
+        \end{equation*}
+        By the uniqueness of root, $\abs{A} = U\abs{A}U^* = AU^*$. So $\Img \abs{A} \subset \Img A$.
+
+        Furthermore, we have
+        \begin{equation*}
+            U^*|A|=U^* U|A| U^*=|A| U^*
+        \end{equation*}
+        and
+        \begin{equation*}
+            \operatorname{ker} U^*=(\operatorname{Im} U)^{\perp}=(\operatorname{Im} A)^{\perp}=\operatorname{ker} A.
+        \end{equation*}
+        So by the uniqueness of the polar decomposition, $U = U^*$.
+
+        \item If $AB = BA$, then $\abs{A}B = B\abs{A}$ because $A$ is self-adjoint. So
+        \begin{equation*}
+            BU\abs{A} = U \abs{A}B.
+        \end{equation*}
+        Therefore, $BU = UB$ on $\Img \abs{A}$. On the other hand, for any $x \in \ker \abs{A} = (\Img \abs{A})^\perp$, because $\ker \abs{A} = \ker U$, $BUx = 0$. Moreover, $ABx = BAx = 0$, i.e., $Bx \in \ker A = \ker U$. It follows that $UBx = 0$. Therefore, $UB = BU$.
+
+        \item First, $\mathcal{H} = \ker A \oplus \clo{\Img A}$. $U^2 = U^*U$ is the identity on $\clo{\Img A}$. Let $\mathcal{H}_+$ be the image of $(I + U) / 2$ on $\clo{\Img A}$ and $\mathcal{H}_-$ be the image of $(I - U) / 2$ on $\clo{\Img A}$. It follows that $\mathcal{H}_- \perp \mathcal{H}_+$, and $\clo{\Img A} = \mathcal{H}_+ \oplus \mathcal{H}_-$. Because $UA = AU$, $\mathcal{H}_\pm$ reduces A. For $x \in \mathcal{H}_+$, $Ux = x$, so
+        \begin{equation*}
+            Ax = U\abs{A}x = \abs{A}Ux = \abs{A}x
+        \end{equation*}
+        and for $x \in \mathcal{H}_-$, $Ux = -x$, so
+        \begin{equation*}
+            Ax = U\abs{A}x = \abs{A}Ux = -\abs{A}x.
+        \end{equation*}
+
+        \item Let $Q$ and $P_\pm$ be the corresponding orthogonal projections onto $K$ and $\mathcal{H}_\pm$ respectively. Because $AQ = QA$, $UQ = QU$, i.e., $P_\pm$ also commutative with $Q$. So $QP_-$ is also an orthogonal projection and it suffices to show $QP_- = 0$. For any $x \in \Img QP_- = \Img P_-Q$, 
+        \begin{equation*}
+            \inn{Ax,x} \geq0,\quad \inn{Ax,x} \leq 0,
+        \end{equation*} 
+        so $\inn{Ax,x} = 0$. On $K$, because $A_K \geq 0$, Cauchy-Schwarz inequality implies that
+        \begin{equation*}
+            \inn{Ax,Ax} \leq \inn{Ax,x}^\frac{1}{2}\inn{A^2x,Ax}^\frac{1}{2} = 0
+        \end{equation*}
+        It follows that $x \in \ker A \cap \mathcal{H}_ = 0$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}
+    Let $A \in \mathcal{B}(\mathcal{H})$ be self-adjoint. There is a unique resolution of the identity $\bb{E(\lambda)}$ such that
+    \begin{equation*}
+        A = \int_{-\infty}^\infty \lambda dE(\lambda).
+    \end{equation*}
+    Furthermore, when $\lambda < -\norm{A}$, $E(\lambda) = 0$, and $E(\lambda) = I$ for $\lambda > \norm{A}$.
+\end{thm}
+\begin{proof}
+    For $\lambda \in \R$, let
+    \begin{equation*}
+        A - \lambda I = U(\lambda) \abs{A - \lambda I}
+    \end{equation*}
+    be the polar decomposition and let
+    \begin{equation*}
+        \mathcal{H} = \mathcal{H}_+(\lambda) \oplus \mathcal{H}_-(\lambda) \oplus \ker (A - \lambda I).
+    \end{equation*}
+    Denote $A_\pm(\lambda)$ be $A|_{\mathcal{H}_\pm}$, and thus $A_+(\lambda) \geq \lambda$ and $A_-(\lambda) \leq \lambda$. Denote $P_0(\lambda)$ and $P_\pm(\lambda)$ be orthogonal projections onto $\ker (A - \lambda I)$ and $\mathcal{H}_\pm(\lambda)$. Let $E(\lambda) \defeq P_0(\lambda) + P_-(\lambda)$.
+    \begin{equation*}
+        H(\lambda) \defeq E(\lambda) H=H_{-}(\lambda) \oplus \operatorname{ker}(A-\lambda I).
+    \end{equation*}
+    and so $H(\lambda)$ reduces $A$.
+
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $x \in \mathcal{H}(\lambda)$, if $\lambda < \mu$, by $\inn{(A -\lambda I)x,x} \leq 0$, $\inn{(A -\mu I)x,x} \leq 0$. Therefore, $E(\lambda) \leq E(\mu)$ by $(4)$ in above theorem.
+
+        \item If $\lambda < - \norm{A}$, for $x \in \mathcal{H}$ with $x\neq 0$,
+        \begin{equation*}
+            \inn{(A- \lambda I)x,x} > \inn{Ax,x} + \norm{A}\norm{x}^2 \geq \inn{Ax,x} + \abs{\inn{Ax,x}} \geq 0,
+        \end{equation*}
+        which implies that $E(\lambda) = 0$. Similarly, $\lambda > \norm{A}$ implies that $E(\lambda) = I$.
+
+        \item When $\lambda < \mu$, by $(A - \mu I)E(\mu) \leq 0$ and $(A -\lambda I)(I - E(\lambda)) \geq 0$,
+        \begin{equation*}
+            \begin{aligned}
+                & (A-\mu I)(E(\mu)-E(\lambda)) \leq 0, \\
+                & (A-\lambda I)(E(\mu)-E(\lambda)) \geq 0.
+            \end{aligned}
+        \end{equation*}
+        It follows that
+        \begin{equation*}
+            \lambda(E(\mu)-E(\lambda)) \leq A(E(\mu)-E(\lambda)) \leq \mu(E(\mu)-E(\lambda)).
+        \end{equation*}
+        As $\mu \sto \lambda + 0$, $(A-\lambda I)(E(\lambda+0)-E(\lambda))=0$. So
+        \begin{equation*}
+            (E(\lambda+0)-E(\lambda))\mathcal{H} \subset \operatorname{ker}(A-\lambda I) \subset E(\lambda)\mathcal{H},
+        \end{equation*}
+        which implies that $E(\lambda + 0) - E(\lambda) = 0$.
+
+        \item choose $\lambda_0 < -\norm{A}$, $\lambda_n > \norm{A}$, and $\lambda_0 < \lambda_1 < \cdots < \lambda_n$, by above
+        \begin{equation*}
+            \begin{aligned}
+                \sum_{k=1}^n \lambda_{k-1}\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right) &\leq \sum_{k=1}^n A\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right)=A  \\ 
+                &\leq \sum_{k=1}^n \lambda_k\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right).
+            \end{aligned}
+        \end{equation*}
+        Then, for $\lambda_k^\prime \in (\lambda_{k-1},\lambda_k]$ and $x \in \mathcal{H}$,
+        \begin{equation*}
+            \begin{aligned}
+                -\sum_{k=1}^n\left(\lambda_k^{\prime}-\lambda_{k-1}\right) \inn{\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right) x, x} & \leq \inn{\left(A-\sum_{k=1}^n \lambda_k^{\prime}\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right)\right) x, x} \\
+                & \leq \sum_{k=1}^n\left(\lambda_k-\lambda_k^{\prime}\right) \inn{\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right) x, x}.
+            \end{aligned}
+        \end{equation*}
+        Let $\Delta=\max _{1 \leq k \leq n}\left|\lambda_k-\lambda_{k-1}\right|$. So
+        \begin{equation*}
+            -\Delta\|x\|^2 \leq \inn{A-\sum_{k=1}^n \lambda_k^{\prime}\left(E\left(\lambda_k\right)-E\left(\lambda_{k-1}\right)\right) x, x} \leq \Delta\|x\|^2.
+        \end{equation*}
+        It follows that
+        \begin{equation*}
+            A=\int_{-\infty}^{\infty} \lambda d E(\lambda).
+        \end{equation*}
+
+        \item If $A = \int_{-\infty}^\infty \lambda dF(\lambda)$ for another $F(\lambda)$. Let
+        \begin{equation*}
+            A_\lambda = \int_{-\infty}^\infty \abs{\mu -\lambda} dF(\mu).
+        \end{equation*}
+        Then we have
+        \begin{equation*}
+            \begin{aligned}
+                \inn{A_\lambda^2 x,x} &= \inn{A_\lambda x, A_\lambda x} = \int_{-\infty}^\infty \abs{\mu - \lambda}^2 d \inn{F(\mu)x,x} \\
+                &= \inn{(A- \lambda I)x, (A - \lambda I)x} = \inn{(A-\lambda I)^2x,x}
+            \end{aligned}
+        \end{equation*}
+        Therefore, $A_\lambda^2 = (A - \lambda I)^2$. Because $A_\lambda \geq 0$, by the uniqueness of root, $A_\lambda = \abs{A - \lambda I}$. Let $V(\lambda) = I -F(\lambda) - F(\lambda - 0)$. For $x,y \in \mathcal{H}$,
+        \begin{equation*}
+            \begin{aligned}
+                \inn{V(\lambda) A_\lambda x, y}= & \int_{\mu<\lambda}|\mu-\lambda| d\inn{F(\mu) x,(I-F(\lambda)-F(\lambda-0)) y} \\
+                & +\int_{\mu>\lambda}|\mu-\lambda| d\inn{F(\mu) x,(I-F(\lambda)-F(\lambda-0)) y} \\
+                = & -\int_{\mu<\lambda}(\lambda-\mu) d\inn{F(\mu) x, y}+\int_{\mu>\lambda}(\mu-\lambda) d\inn{F(\mu) x, y} \\
+                = & \inn{(A-\lambda I) x, y}.
+            \end{aligned}
+        \end{equation*}
+        So $A - \lambda I = V(\lambda)A_\lambda$. Furthermore,
+        \begin{equation*}
+            V(\lambda)^2=I-F(\lambda)+F(\lambda-0)=I-F(\{\lambda\})
+        \end{equation*}
+        is a projection, $V(\lambda)$ is a partial isometry. Because $\ker (A - \lambda I) = F(\bb{\lambda}) = \ker V(\lambda)$, $A - \lambda I = V(\lambda)\abs{A - \lambda I}$ is the polar decomposition. So $U(\lambda) = V(\lambda)$ and thus $E(\lambda) = F(\lambda)$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\section{Spectral Measure}
+
+\begin{defn}[Spectral Measure]
+    Let $\mathcal{H}$ be a Hilbert space and $(\R^d, \mathcal{B}^d)$ be the Borel measure space. If a family of orthogonal projections $\bb{E(B)}_{B \in \mathcal{B}^d}$ satisfies
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $E(\emptyset) = 0$ and $E(\R^d) = I$,
+        \item for $B_1,B_2 \in \mathcal{B}^d$, $E(B_1)E(B_2) = E(B_1 \cap B_2)$,
+        \item for disjoint $\bb{B_n}_{n \in \N} \subset \mathcal{B}^d$,
+        \begin{equation*}
+            \sum_{n=1}^N E(B_n) \sto E(\cup_nB_n)
+        \end{equation*}
+        in SOT as $N \sto \infty$,
+    \end{enumerate}
+    then $E$ is called a $d$-dimensional spectral measure.
+\end{defn}
+\begin{rmk}
+    By $(2)$, $\sum_{n=1}^N E(B_n)$ is still an orthogonal projection. By $(3)$, for $B_1 \subset B_2$, $E(B_2) = E(B_1) + E(B_2 \backslash B_1)$, so $E(B_1) \leq E(B_2)$.
+\end{rmk}
+
+\begin{prop}
+    Let $E$ be a $1$-dimensional spectral measure. Then denote $E(\lambda) = E((-\infty,\lambda])$, which is a resolution of the identity. Furthermore, the integral with respect to $\inn{E(\lambda)x,x}$ is as same as $\inn{E(B)x,x}$.
+\end{prop}
+
+
+\begin{prop}
+   For $F \colon \mathcal{H} \sto \R$, if it satisfies
+   \begin{enumerate}[label=(\arabic{*})]
+       \item there exists $C$ such that $\abs{F(x)} \leq C\norm{x}^2$,
+       \item $F(x+y) + F(x-y) = 2F(x)+2F(y)$,
+       \item for $\alpha \in \C$ and $x \in \mathcal{H}$, $F(\alpha x) = \abs{\alpha}^2F(x)$,
+   \end{enumerate} 
+   then there exists $A \in \mathcal{B}(\mathcal{H})$ that is self-adjoint such that $F(x) = \inn{Ax,x}$.
+\end{prop}
+\begin{proof}
+    For $x,y \in \mathcal{H}$,
+    \begin{equation*}
+        B(x, y)=\frac{1}{4} \sum_{k=0}^3 i^k F\left(x+i^k y\right),
+    \end{equation*}
+    which implies that $B(y,x) = \clo{B(x,y)}$ and $B(x,0) = 0$. By $(2)$ and $(3)$,
+    \begin{equation*}
+        F(x+\alpha y)+F(x+\alpha z)=\frac{1}{2}(F(2 x+\alpha(y+z))+F(\alpha(y-z)))
+    \end{equation*}
+    Choose $\alpha = \pm 1,\pm i$ and add them all, we get
+    \begin{equation*}
+        4 B(x, y)+4 B(x, z)=2(B(2 x, y+z)+B(0, y-z))=2 B(2 x, y+z).
+    \end{equation*}
+    Let $z = 0$, so $2 B(x, y)=B(2 x, y)$ and 
+    \begin{equation*}
+        B(x,y) + B(x,z) = B(x,y+z).
+    \end{equation*}
+    Furthermore, it can be extended to $B(x,ny) = n B(x,y)$ and $B(x,ry) = rB(x,y)$ for all rational $r$. By $(1)$,
+    \begin{equation*}
+        |B(x, y)| \leq \frac{C}{4}\left(\|x+y\|^2+\|x+i y\|^2+\|x-y\|^2+\|x-i y\|^2\right) \leq C\left(\|x\|^2+\|y\|^2\right)
+    \end{equation*}
+    So for positive rational $r$,
+    \begin{equation*}
+        |B(x, y)| \leq|B(r x, y / r)| \leq C\left(r^2\|x\|^2+\|y\|^2 / r^2\right) \le 2C\norm{x}\norm{y}.
+    \end{equation*}
+    Moreover,
+    \begin{equation*}
+        \begin{aligned}
+            4 B(i x, y) & =F(i x+y)+i F(i x+i y)-F(i x-y)-i F(i x-i y) \\
+            & =i(F(x+y)+i F(x+i y)-F(x-y)-i F(x-i y))=4 i B(x, y)
+        \end{aligned}
+    \end{equation*}
+    and by continuity and $B(y,x) = \clo{B(x,y)}$, $B(\alpha x, y) = \alpha B(x,y)$. Therefore, by Riesz representation theorem,
+    \begin{equation*}
+        B(x,y) = \inn{Ax,y}
+    \end{equation*}
+    Then $B(x,x) = F(2x)/4 = F(x) \in \R$. It follows that $A=A^*$.
+\end{proof}
+
+\begin{thm}
+    Let $\mathcal{B}^d_0$ be the set of all $\prod_{j=1}^d(a_j,b_j]$ (containing $(a,\infty)$ and $(-\infty, \infty)$). Consider $E_0$, the map from $\mathcal{B}^d_0$ to the set of orthogonal projections, satisfying the above $3$ conditions. Then there is a unique extension $E$ of $E_0$, which is a $d$-dimensional spectral measure. 
+\end{thm}
+\begin{proof}
+    For $x \in \mathcal{H}$ and $B \in \mathcal{B}^d_0$, let $\mu_x(B) = \norm{E_0(B)x}^2$, which is a pre-measure defined on the ring $\mathcal{B}^d_0$. Then by the Carathéodory-Hopf extension theorem, there exists a unique extension $\mu_x$ of measure defined on $\mathcal{B}^d$. By the uniqueness of extension, for any $B \in \mathcal{B}^d$,
+    \begin{equation*}
+        \begin{aligned}
+            & \mu_x(B) \leq\|x\|^2, \\
+            & \mu_{x+y}(B)+\mu_{x-y}(B)=2 \mu_x(B)+2 \mu_y(B), \\
+            & \mu_{\alpha x}(B)=|\alpha|^2 \mu_x(B).
+        \end{aligned}
+    \end{equation*}
+    Therefore, by above proposition,
+    \begin{equation*}
+        \mu_x(B)=(E(B) x, x)
+    \end{equation*}
+    for some bounded self-adjoint operator $E(B) \geq 0$. By the conditions of $E_0$ and the uniqueness of extension, such $E$ satisfies $(2)$ 
+    \begin{equation*}
+        E\left(B_1\right) E\left(B_2\right)=E\left(B_1 \cap B_2\right),
+    \end{equation*}
+    which implies that $E(B)$ is an orthogonal projection, and
+    \begin{equation*}
+        \inn{E(\cup_n B_n)x,x} = \sum_n \inn{E(B_n)x,x}
+    \end{equation*}
+    for disjoint $B_n$ in $\mathcal{B}^d$. And because $E(B_n)$ and $E(B)$ are all projections, convergence in WOT implies convergence in SOT.
+\end{proof}
+\begin{cor}
+    If $E(\lamdab)$ is a resolution of the identity, it has the unique $1$-dimensional spectral measure.
+\end{cor}
+
+\begin{prop}
+    Let $\bb{E_j(\lambda)}$ be commutative resolutions of the identity and let $E_j$ the corresponding $1$-dimensional spectral measure. Then there is a unique $d$-dimensional spectral measure, such that for $B_1,\cdots,B_d \in \mathcal{B}^1_0$,
+    \begin{equation*}
+        E\left(B_1 \times B_2 \times \cdots \times B_d\right)=E_1\left(B_1\right) E_2\left(B_2\right) \cdots E_d\left(B_d\right).
+    \end{equation*}
+\end{prop}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%\include{Appendix}
+\newpage
+\printbibliography
+\end{document}

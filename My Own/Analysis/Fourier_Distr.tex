@@ -1,0 +1,2278 @@
+\chapter{Fourier Analysis and Distributions on \texorpdfstring{$\R^d$}{Rd}}
+
+\section{Fourier Analysis on \texorpdfstring{$\mathbb{T}$}{T}}
+Let $\T = \R / (2\pi \Z)$. You can view $\T$ as $[0,2\pi]$ or $[-\pi,\pi]$.
+\begin{enumerate}[label=\arabic*.]
+	\item First, let's consider the Fourier series on $L^2([0,2\pi])$. Considering the following function space,
+	\begin{equation*}
+		C_{\op{per}}([0,2\pi]) = \bb{f \in C([0,2\pi]) \colon f(0) = f(2\pi)}
+	\end{equation*}
+	\begin{prop}
+		For $1\leq p < \infty$, $C_{\op{per}}([0,2\pi])$ is dense in $L^p([0,2\pi])$.
+	\end{prop}
+	\begin{proof}
+		For any $f \in L^p([0,2\pi])$, we have for any $\varepsilon > 0$, there is a $\delta > 0$ such that
+		\begin{equation*}
+			\norm{f\chi_{[\delta,2\pi-\delta]}-f}_p < \varepsilon
+		\end{equation*}
+		Moreover, there is a $g \in C_0(\R)$ such that $\supp g \in (0,2\pi)$ and 
+		\begin{equation*}
+			\norm{f\chi_{[\delta,2\pi-\delta]}-g}_p < \varepsilon
+		\end{equation*}
+		Therefore, $g \sto f$ and $g \in C_{\op{per}}([0,2\pi])$.
+	\end{proof}
+	\begin{rmk}
+		In general, for a locally compact space $X$ with a Radon measure $\mu$, we have $C_c(X)$ is dense in $L^p(X)$ for $1\leq p < \infty$.
+		\begin{proof}
+			First since $L^p$ is approximated by simple functions, it is necessary for approximating $\chi_E$ by $C_c(X)$ for any Borel set $E$. Because Radon measure $\mu$ is inner regular on any $\sigma$-finite set, for any $\varepsilon > 0$, there are compact $K \subset E$ and open $U \supset E$ such that $\mu(U \backslash K) < \varepsilon$. Then by the Urysohn's lemma, there is a $f \in C_c(X)$ such that $\chi_E \leq f \leq \chi_U$. Therefore, 
+			\begin{equation*}
+				\left\|\chi_E-f\right\|_p \leq \mu(U \backslash K)^{1 / p}<\epsilon^{1 / p}
+			\end{equation*}
+		\end{proof}
+	\end{rmk}
+
+	\begin{thm}
+		$\bb{\frac{1}{\sqrt{2\pi}}e^{inx}}_{n \in \Z}$ is an orthonormal basis of $L^2([0,2\pi])$.
+	\end{thm}
+	\begin{proof}
+		By above, we only need to prove that $f \in C_{\op{per}}([0,2\pi])$ can be expressed by $\bb{\frac{1}{\sqrt{2\pi}}e^{inx}}_{n \in \Z}$. Let
+		\begin{equation*}
+			a_n = \int_0^{2\pi}f(x)e^{-inx}dx
+		\end{equation*}
+		For any $0 < r < 1$, let
+		\begin{equation*}
+			f_r(x) = \frac{1}{2\pi} \sum_{n \in \Z} a_nr^{\abs{n}}e^{inx}
+		\end{equation*}
+		and it is uniformly convex because of the boundedness of $a_n$ (Cauchy's convergence principle). Next, we need to check
+		\begin{equation*}
+			\norm{f-f_r}_\infty \sto 0,\quad r \sto 1
+		\end{equation*}
+		which implies $\norm{f-f_r}_2 \sto 0$ because of their compact definition. Let 
+		\begin{equation*}
+			\begin{aligned}
+				P_r(x) &= \frac{1}{2\pi}\sum_{n \in \Z} r^{\abs{n}}e^{inx} \\
+				&=\frac{1}{2\pi}\bc{\sum_{n=0}^\infty r^{n}e^{inx} + \sum_{n=1}^\infty r^{n}e^{-inx}} \\
+				&= \frac{1}{2\pi}\bc{\frac{1}{1 - re^{ix}} + \frac{re^{-ix}}{1 - re^{-ix}}} \\
+				&= \frac{1}{2\pi} \frac{1-r^2}{1-2r\cos x +r^2} > 0
+			\end{aligned}
+		\end{equation*}
+		And since it is uniformly convergent
+		\begin{equation*}
+			\int_0^{2\pi}P_r(x)dx = \frac{1}{2\pi}\sum_{n \in \Z} \int_0^{2\pi}r^{\abs{n}}e^{inx}dx = 1
+		\end{equation*}
+		So $f(x) = \int_0^{2\pi}f(x)P_r(y)dy$. And
+		\begin{equation*}
+			\begin{aligned}
+				f_r(x) &= \frac{1}{2\pi} \sum_{n \in \Z} \bc{\int_0^{2\pi}f(y)e^{-iny}dy}r^{\abs{n}}e^{inx} \\
+				&= \int_0^{2\pi} f(y) \bc{\frac{1}{2\pi} \sum_{n \in \Z} r^{\abs{n}}e^{in(x-y)}}dy \\
+				&= \int_0^{2\pi} f(x-y)P_r(y)dy
+			\end{aligned}
+		\end{equation*}
+		so we have
+		\begin{equation*}
+			\begin{aligned}
+				\abs{f_r(x) - f(x)} &\leq \bc{\int_\delta^{2\pi-\delta}+\int_0^{\delta}+\int_{2\pi-\delta}^{2\pi}}\abs{f(x-y)-f(x)}P_r(y)dy\\
+				&=\text{\RNum{1}}+\text{\RNum{2}}+\text{\RNum{3}}
+			\end{aligned}
+		\end{equation*}
+		Since $f \in C_{\op{per}}([0,2\pi])$, we can choose $\delta$ such that $\text{\RNum{2}}+\text{\RNum{3}} < \varepsilon$. Besides, 
+		\begin{equation*}
+			\text{\RNum{1}} \leq 2\pi \cdot 2 \norm{f}_{\infty} \max_{\delta\leq y \leq 2\pi-\delta} P_r(y)
+		\end{equation*}
+		Therefore, we have
+		\begin{equation*}
+			\norm{f-f_r}_\infty \leq 2 \norm{f}_{\infty} \frac{1-r^2}{1-2r\cos \delta +r^2} + \varepsilon
+		\end{equation*}
+	\end{proof}
+	\begin{rmk}
+		On finite measure domain, clearly convergence in $L^{\infty}$ (or uniform) implies convergence in $L^2$ but the converse is note true.
+	\end{rmk}
+	\begin{rmk}
+		Note that the Fourier transform
+		\begin{equation*}
+			\mathcal{F} \colon L^2(\T) \sto \ell^2(\Z)
+		\end{equation*}
+		preserves the norm.
+	\end{rmk}
+	\begin{cor}
+		For $f \in L^2([0,2\pi])$, let
+		\begin{equation*}
+			a_n = \int_0^{2\pi}f(x)e^{-inx}dx
+		\end{equation*}
+		called the Fourier coefficients, then
+		\begin{equation*}
+			f(x) = \frac{1}{2\pi}\sum_{n \in \Z}a_ne^{inx}
+		\end{equation*}
+		convergent in $L^2$.
+	\end{cor}
+	Note that the above is about the $L^2$ convergence. For uniform convergence, we need more.
+
+	\begin{prop}
+		For $f \in C_{\op{per}}([0,2\pi])$, if $f$ is differentiable and $f^\prime \in L^2([0,2\pi])$, then
+		\begin{equation*}
+			f(x) = \frac{1}{2\pi}\sum_{n \in \Z}a_ne^{inx}
+		\end{equation*}
+		convergence in uniformly.
+	\end{prop}
+	\begin{proof}
+		Consider 
+		\begin{equation*}
+			b_n = \int_0^{2\pi}f^\prime(x)e^{-inx}dx = in a_n~\Rightarrow~a_n = \frac{b_n}{in}
+		\end{equation*}
+		$f^\prime \in L^2([0,2\pi])$ implies $\sum_n \abs{b_n}^2 = \norm{f^\prime}_2^2 < \infty$. Therefore, by the Cauchy-Schwartz inequality, $\sum_n\abs{a_n} < \infty$. Thus, the above convergence is uniform.
+	\end{proof}
+
+	\begin{thm}
+		$\bb{\frac{1}{(\sqrt{2\pi})^n}e^{i(k_1x_1+k_2x_2+\cdots+k_nx_n)}}$ is an orthonormal basis of $L^2([0,2\pi]^n)$.
+	\end{thm}
+	\begin{proof}
+		Only to prove the case $n=2$. For $f \in L^2([0,2\pi]^2)$, assume
+		\begin{equation*}
+			\int_{I^2} f(x,y)e^{-ikx}e^{-ily}dxdy = 0,\quad \forall~k,l\in \Z
+		\end{equation*}
+		where $I = [0,2\pi]$. Let
+		\begin{equation*}
+			g(x) = \bc{\int_0^{2\pi}\abs{f(x,y)}^2dy}^{\frac{1}{2}}~\Rightarrow~g \in L^2
+		\end{equation*}	
+		and $g < \infty$ \emph{a.e.}. Let $f_k(x) = \int_0^{2\pi} f(x,y)e^{-iky}dy$, then by the Cauchy-Schwartz inequality,
+		\begin{equation*}
+			\abs{f_k(x)} \leq \sqrt{2\pi}g(x)~\Rightarrow~f_k \in L^2
+		\end{equation*}
+		Because $\int_0^{2\pi}f_k(x)e^{-ilx}dx = 0$ for all $l$, by above theorem, $f_k = 0$ \emph{a.e.}. Considering two sets
+		\begin{equation*}
+			\begin{aligned}
+				E &= \bb{x \in [0,2\pi] \colon g(x) = \infty} \\
+				E_k &= \bb{x \in [0,2\pi] \colon f_k(x) \neq 0}
+			\end{aligned}
+		\end{equation*}
+		then for any $x \in [0,2\pi] \backslash (E \cup \bigcup_k E_k)$,
+		\begin{equation*}
+			\int_0^{2\pi}\abs{f(x,y)}^2dy < \infty,\quad \int_0^{2\pi} f(x,y)e^{-iky}dy = 0
+		\end{equation*}
+		so $f(x,y) = 0$ for almost every $y$. Therefore, by the Fubini's theorem,
+		\begin{equation*}
+			\int_{I^2} \abs{f(x,y)}dxdy = \int_0^{2\pi} \bc{\int_0^{2\pi}\abs{f(x,y)}dy}dx = 0
+		\end{equation*}
+		which implies $f(x,y) = 0$ \emph{a.e.}.
+	\end{proof}
+
+	\item Next, we consider the Fourier series on $L^1([0,2\pi])$, which is because $L^2([0,2\pi])\subset L^1([0,2\pi])$ (H\"older's inequality) but the converse is not true.
+	\begin{rmk}
+		On a measurable space $(X,\mu)$ with $\mu(X) < \infty$, we have
+		\begin{equation*}
+			L^q(X) \subset L^p(X),\quad 1\leq p < q \leq \infty
+		\end{equation*}
+		\begin{proof}
+			First, for $1\leq p < q < \infty$, since $\frac{p}{q} < 1$, by the H\"older's inequality,
+			\begin{equation*}
+				\int_X \abs{f}^p d\mu \leq \bc{\int_X \abs{f}^q d\mu}^{\frac{p}{q}}\mu(X)^{1-\frac{p}{q}}
+			\end{equation*}
+			Therefore, $L^q(X) \subset L^p(X)$.
+			For $q = \infty$, if $f \in L^\infty(X)$, then $\abs{f(x)} \leq M$ \emph{a.e.}. So
+			\begin{equation*}
+				\int_X \abs{f}^p d\mu \leq M^p\mu(X)
+			\end{equation*}
+			$f \in L^p(X)$.
+		\end{proof}
+	\end{rmk}
+	Besides, note that by the Young's inequality, for $1 \leq p,q,r < \infty$ such that,
+	\begin{equation*}
+		\frac{1}{p} + \frac{1}{q} = \frac{1}{r} + 1
+	\end{equation*}
+	if $f \in L^p(\R)$ and $g \in L^q(\R)$, then $f * g \in L^r(\R)$ and
+	\begin{equation*}
+		\norm{f * g}_r \leq \norm{f}_p\norm{g}_q
+	\end{equation*}
+	\begin{enumerate}[label=(\arabic*)]
+		\item $p = 1, q=p$ and $r = p$,
+		\begin{equation*}
+			\norm{f * g}_p \leq \norm{f}_1\norm{g}_p,\quad \forall~ f \in L^1(\R),g \in L^p(\R)
+		\end{equation*}
+		\item $p=q=r=1$,
+		\begin{equation*}
+			\norm{f * g}_1 \leq \norm{f}_1\norm{g}_1,\quad \forall~ f,g \in L^1(\R)
+		\end{equation*}
+	\end{enumerate}
+
+	\begin{prop}
+		For $f, g \in L^1([0,2\pi])$, the Fourier coefficients of $f,g,f*g$, denoted by $a_n,b_n,c_n$, are well-defined and
+		\begin{equation*}
+			c_n = a_nb_n
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		The well-definition is clear.
+		\begin{equation*}
+			\begin{aligned}
+				c_n &= \int_0^{2\pi}f * g(x) e^{-inx}dx \\
+				&= \int_0^{2\pi} \int_0^{2\pi} f(x-y) g(y)dy e^{-inx}dx \\
+				&= \int_0^{2\pi} \int_0^{2\pi} f(x-y) g(y)e^{-in(x-y)} e^{-iny}dydx \\
+				&= \int_0^{2\pi} \bc{\int_0^{2\pi} f(x-y) e^{-in(x-y)} dx}g(y)e^{-iny}dy \\
+				&= a_nb_n
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\begin{prop}
+		For $f \in L^1([0,2\pi])$ and $0 < r < 1$, let
+		\begin{equation*}
+			P_r(x) = \frac{1}{2\pi}\sum_{n \in \Z} r^{\abs{n}}e^{inx} = \frac{1}{2\pi} \frac{1-r^2}{1-2r\cos x +r^2}
+		\end{equation*}
+		then we can prove
+		\begin{equation*}
+			\lim_{r \sto 1^-}\norm{f - P_r*f}_1 = 0
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $\varepsilon >0$, there is $g \in C_{\op{per}}([0,2\pi])$ such that
+		\begin{equation*}
+			\norm{f - g}_1 < \varepsilon
+		\end{equation*}
+		Let $g_r = g * P_r$. Similarly as above, we can prove
+		\begin{equation*}
+			\norm{g - g_r}_\infty < \varepsilon^\prime,~\Rightarrow~ \norm{g - g_r}_1 < \varepsilon
+		\end{equation*}
+		because of $g,g_r$ defined on $[0,2\pi]$. Thus, there is $r_0$ such that for any $r > r_0$,
+		\begin{equation*}
+			\begin{aligned}
+				\norm{f - P_r*f}_1 &\leq \norm{f - g}_1 + \norm{g - P_r * g}_1 + \norm{P_r * g-P_r *f}_1\\
+				&\leq 2\varepsilon + \norm{P_r}_1\norm{f - g}_1\\
+				&\leq 3\varepsilon
+			\end{aligned}
+		\end{equation*}
+		because $\norm{P_r}_1 = 1$.
+	\end{proof}
+	
+	\begin{thm}
+		For $f \in L^1([0,2\pi])$, let $a_n$ be its Fourier coefficients. Then
+		\begin{equation*}
+			f(x) =  \frac{1}{2\pi} \sum_{n \in \Z} a_ne^{inx}
+		\end{equation*}
+		in $L^1$ sense.
+	\end{thm}
+	\begin{rmk}
+		If we further know $(a_n) \in \ell^1$, then this convergence is uniform by the Weierstrass test, that is, for a sequence $\bb{f_n}$, if $\sup \abs{f_n(x)} \leq M_n$ and $\sum_n M_n < \infty$, then  $\bb{f_n}$ is uniformly. So $\frac{1}{2\pi} \sum_{n \in \Z} a_ne^{inx}$ converges to a $g(x)$ uniformly, and combining this with above we know, $g(x) = f(x)$ \emph{a.e.}. So if $f \in C$, it converges to $f$ uniformly. Moreover, if $f \in C^2$, then $(a_n) \in \ell^1$ by the property of Fourier transform $a_n = \frac{1}{n^2}\widehat{f^{\prime\prime}}$.
+	\end{rmk}
+
+	\begin{thm}
+		For a complex value function $f$, if $f$ has the properties
+		\begin{enumerate}[label=(\roman*)]
+			\item $f \in L^1(\R)$,
+			\item $\sum_{n\in \Z} f(x+2\pi n)$ converges absolutes on $[0,2\pi]$,
+			\item $\sum_{n \in \Z}\widehat{f}(n) < \infty$,
+		\end{enumerate}
+		then
+		\begin{equation*}
+			\sum_{n \in \Z} f(2\pi n) = \frac{1}{2\pi} \sum_{n \in \Z}\widehat{f}(n),
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		For any $x \in [0,2\pi]$, let
+		\begin{equation*}
+			\begin{aligned}
+				F(x) &= \sum_{n\in \Z} f(x+2\pi n) \\
+				G(x) &= \sum_{n\in \Z} \abs{f(x+2\pi n)}
+			\end{aligned}
+		\end{equation*}
+		Note that
+		\begin{equation*}
+			\begin{aligned}
+				\int_0^{2\pi}G(x)dx &= \int_0^{2\pi}\sum_{n\in \Z} \abs{f(x+2\pi n)}dx \\
+				&= \sum_{n\in \Z}\int_0^{2\pi} \abs{f(x+2\pi n)}dx \\
+				&= \sum_{n\in \Z}\int_{2\pi n}^{2\pi (n+1)} \abs{f(x)}dx \\
+				&= \int_\R \abs{f(x)} dx < \infty
+			\end{aligned}
+		\end{equation*}
+		because $f \in L^1(\R)$ and also $\widehat{f}$ is well-defined. Besides, $\abs{F(x)} \leq G(x)$ so $F \in L^1([0,2\pi])$.
+		\begin{equation*}
+			\begin{aligned}
+				\int_0^{2\pi} F(x)e^{-ikx}dx &=  \int_0^{2\pi}  \sum_{n\in \Z} f(x+2\pi n)e^{-ikx}dx \\
+				&= \sum_{n\in \Z} \int_0^{2\pi} f(x+2\pi n)e^{-ikx}dx \\
+				&= \sum_{n\in \Z} \int_0^{2\pi} f(x+2\pi n)e^{-ik(x+2\pi n)}dx \\
+				&= \sum_{n\in \Z} \int_{2\pi n}^{2\pi (n+1)} f(x)e^{-ikx}dx \\
+				&= \int_{-\infty}^{\infty} f(x)e^{-ikx}dx \\
+				&= \widehat{f}(k)
+			\end{aligned}
+		\end{equation*}
+		which means $\widehat{F}(k) = \widehat{f}(k)$. Moreover, since $\sum_{n \in \Z}\widehat{f}(n) < \infty$,
+		\begin{equation*}
+			F(x) = \frac{1}{2\pi}\sum_{n\in \Z}\widehat{f}(n)e^{inx},~a.e.
+		\end{equation*}
+		So $2\pi F(0) = 2\pi\sum_{n \in \Z} f(2\pi n) = \sum_{n \in \Z}\widehat{f}(n)$.
+	\end{proof}
+
+
+	\item Summability kernel: For $k_n \in L^1([0,2\pi])$, if
+	\begin{enumerate}[label=(\roman*)]
+		\item $\int_0^{2\pi}k_n(x)dx = 1$,
+		\item $\exists~C > 0$ such that $\norm{k_n}_1 \leq C$ for all $n$,
+		\item for $0 < \delta < \pi$,
+		\begin{equation*}
+			\int_{\delta \leq|x| \leq \pi}\left|k_n(x)\right| d x \rightarrow 0,\quad \text{as }n \sto \infty
+		\end{equation*}
+	\end{enumerate}
+	then $(k_n)$ is called a summability kernel over $\T$.
+	\begin{thm}
+		Let $(k_n)$ be a summability kernel over $\T$. Then for any $f \in C(\T) = C_{\text{per}}([0,2\pi])$,
+		\begin{equation*}
+			k_n *f \sto f,\quad \text{in uniform}
+		\end{equation*}
+	\end{thm}
+	\begin{rmk}
+		And also by the density of $C(\T)$ in $L^p(\T)$ ($1\leq p < \infty$), similarly as above, for $f \in L^p(\T)$,
+		\begin{equation*}
+			k_n *f \sto f,\quad \text{in } L^p-\text{norm}
+		\end{equation*}
+	\end{rmk}
+	In fact,
+	\begin{equation*}
+		P_r(x)  = \frac{1}{2\pi}\sum_{n \in \Z} r^{\abs{n}}e^{inx} = \frac{1}{2\pi} \frac{1-r^2}{1-2r\cos x +r^2}
+	\end{equation*}
+	is a summability kernel over $\T$ with continuous index $r \in [0,1)$. So the proof of this theorem is as same as the above proof. 
+
+
+	\noindent Here is another example. First, the Dirichlet's kernel
+	\begin{equation*}
+		D_N(x) = \frac{1}{2\pi}\sum_{n = -N}^Ne^{inx} = \frac{\sin \left(N+\frac{1}{2}\right) x}{\sin \frac{x}{2}}~ \Rightarrow~(D_N * f)(x) = \frac{1}{2\pi}\sum_{n = -N}^N \widehat{f}(n)e^{inx} \eqdef S_N(f)
+	\end{equation*}
+	And let
+	\begin{equation*}
+		\sigma_N(f) = \frac{1}{N+1}\sum_{n=0}^N S_n(f)
+	\end{equation*}
+	called the Ces\`aro summation. Define Fej\'er kernel as
+	\begin{equation*}
+		K_N(x) =  \frac{1}{N+1}\sum_{n=0}^N D_n(f) = \frac{1}{2\pi}\sum_{n = -N}^N \left(1-\frac{|n|}{N+1}\right) e^{i n x}
+	\end{equation*}
+	Note that
+	\begin{enumerate}[label=(\roman*)]
+		\item $\sigma_N(f)=K_N * f$,
+		\item $K_N(x)=\frac{1}{2\pi}\frac{1}{N+1}\left(\frac{\sin \frac{N+1}{2} x}{\sin \frac{x}{2}}\right)^2$,
+		\item $\int_{0}^{2\pi} K_N(x) d x=1$,
+		\item for $0 < \delta < \pi$, 
+		\begin{equation*}
+			\sup _{\delta \leq|x| \leq \pi} K_N(x) \rightarrow 0,\quad \text{as } N \sto \infty
+		\end{equation*}
+	\end{enumerate}
+	Therefore, $(K_N)$ is also a summability kernel over $\T$. And so for $f \in L^1(\T)$,
+	\begin{equation*}
+		(K_N * f)(x) = \frac{1}{2\pi}\sum_{n=-N}^N\left(1-\frac{|n|}{N+1}\right) \widehat{f}(n) e^{i n x} \sto f,\quad \text{in }L^1
+	\end{equation*}
+	First, it can prove the injectivity of Fourier transform $\mathcal{F} \colon L^1(\T) \sto \ell^\infty$.
+	\begin{cor}
+		Let $f \in L^1(\T)$. If $\widehat{f}(n) = 0$, then $f = 0$ \emph{a.e.}.
+	\end{cor}
+	\begin{proof}
+		It is because
+		\begin{equation*}
+			(K_N * f)(x) = \frac{1}{2\pi}\sum_{n=-N}^N\left(1-\frac{|n|}{N+1}\right) \widehat{f}(n) e^{i n x}  = 0,~\forall~N
+		\end{equation*}
+	\end{proof}
+	Another application of $K_N$ is it can prove the Riemannian-Lebesgue lemma.
+	\begin{cor}[Riemannian-Lebesgue lemma]
+		For $f \in L^1(\T)$, 
+		\begin{equation*}
+			\lim_{n \sto \infty} \widehat{f}(n) \sto 0
+		\end{equation*}
+	\end{cor}
+	\begin{proof}
+		Let $P_N(x) = (K_N * f)(x)$. Because $K_N \in L^1(\T)$ and 
+		\begin{equation*}
+			K_N(x) =  \frac{1}{2\pi}\sum_{n = -N}^N \left(1-\frac{|n|}{N+1}\right) e^{i n x}
+		\end{equation*}
+		by the uniqueness of Fourier coefficients (since $\sum_{n \in \Z}a_n e^{inx} = 0$ implies $a_n = 0$ for all $n$),
+		\begin{equation*}
+			\widehat{K_N}(n) = 0,~\forall~\abs{n} > N
+		\end{equation*}
+		So
+		\begin{equation*}
+			\widehat{P_N}(n) = \widehat{K_N}(n)\widehat{f}(n) = 0~\forall~\abs{n} > N
+		\end{equation*}
+		Besides, for any $\varepsilon > 0$ there exists a $N_0$ such that 
+		\begin{equation*}
+			\norm{f - P_{N_0}}_1 < \varepsilon
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				\abs{\widehat{f}(n)} &\leq \abs{\widehat{f}(n)-\widehat{P_{N_0}}(n)}+\abs{\widehat{P_{N_0}}(n)} \\
+				&\leq \varepsilon + \abs{\widehat{P_{N_0}}(n)}
+			\end{aligned}
+		\end{equation*}
+		which implies that 
+		\begin{equation*}
+			\lim_{n\sto \infty}\abs{\widehat{f}(n)} < \varepsilon
+		\end{equation*}
+	\end{proof}
+
+
+	\item Different Convergence: Consider complex-valued function $f$ on $[0,2\pi]$ satisfying
+	\begin{enumerate}[label=(\arabic*)]
+		\item $f$ is differentiable on $[0,2\pi]$ except for finitely many points,
+		\item $f^\prime$ is bounded when it is well-defined
+	\end{enumerate}
+	Then it can prove that $\forall~x_0 \in [0,2\pi]$, $f(x_0+0)$ and $f(x_0-0)$ exist and
+	\begin{equation*}
+		\forall~\varepsilon,\varepsilon^\prime > 0,\quad \abs{f(x_0 + \varepsilon) - f(x_0 + \varepsilon^\prime)} \leq K \abs{\varepsilon - \varepsilon^\prime}
+	\end{equation*}
+	In fact, this implies $f$ satisfies $\alpha$($\alpha \in (0,1]$)-order Lipschitz condition, that is there are $\delta,K > 0$ such that for any $\varepsilon \in (0,\delta]$,
+	\begin{equation*}
+		\abs{f(x_0 + \varepsilon) - f(x_0 + 0)} \leq K\varepsilon^\alpha,\quad \abs{f(x_0 - \varepsilon) - f(x_0 - 0)} \leq K\varepsilon^\alpha
+	\end{equation*}
+	This will imply that
+	\begin{equation}\label{eq:four_sum}
+		\varphi_{x_0}(x) = (f(x_0 + x)-f(x_0 + 0)) + (f(x_0 - x)- f(x_0 - 0)),\quad \frac{\varphi_{x_0}(x)}{x} \in L^1([0,\delta])
+	\end{equation}
+	Under this condition, when $f \in L^1([0,2\pi])$ (which is extended to $\R$ by setting the period $T=2\pi$), for any $x \in [0,2\pi]$ and the Fourier coefficients $a_n$,
+	\begin{equation*}
+		\lim_{N \sto \infty}\frac{1}{2\pi} \sum_{n = -N}^N a_ne^{inx} = \frac{f(x+0) + f(x-0)}{2}
+	\end{equation*}
+	\begin{proof}
+		By calculating,
+		\begin{equation*}
+			\begin{aligned}
+				\frac{1}{2\pi} \sum_{n = -N}^N a_ne^{inx} &= \frac{1}{2\pi} \sum_{n = -N}^N \int_0^{2\pi} f(y)e^{in(x-y)}dy \\
+				&= \frac{1}{2\pi} \int_0^{2\pi} f(y)\sum_{n = -N}^Ne^{in(x-y)}dy \\
+				&= \frac{1}{2\pi} \int_0^{2\pi} f(y)\frac{\sin(N+\frac{1}{2})(x-y)}{\sin \frac{x-y}{2}}dy \\
+				&= \frac{1}{2\pi} \int_0^{2\pi} f(y+x)\frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy \\
+				&= \frac{1}{2\pi} \bc{\int_0^{\pi}+\int_{-\pi}^{0}} f(y+x)\frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy \\
+				&=	\frac{1}{2\pi} \int_0^{\pi} \bc{f(x+y)+f(x-y)}\frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy
+			\end{aligned}
+		\end{equation*}
+		If $f(x) = 1$, the $a_n = 0$ for $n \neq 0$ and $a_0 = 2\pi$. So above equality implies
+		\begin{equation*}
+			1 = \frac{1}{2\pi} \int_0^{\pi} 2\frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy
+		\end{equation*}
+		Therefore, we have
+		\begin{equation*}
+			\frac{f(x_0 + 0) - f(x_0 - 0)}{2} = \frac{1}{2\pi} \int_0^{\pi} \bc{f(x_0 + 0) - f(x_0 - 0)}\frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy
+		\end{equation*}
+		And so
+		\begin{equation*}
+			\frac{1}{2\pi} \sum_{n = -N}^N a_ne^{inx} - \frac{f(x + 0) - f(x - 0)}{2} =  \frac{1}{2\pi} \int_0^{\pi} \varphi_x(y) \frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy
+		\end{equation*}
+		Let $G(y) = \frac{\varphi_x(y)}{\sin \frac{y}{2}}$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\int_0^{\pi}\abs{G(y)}dy &= \int_0^{\pi}\abs{\frac{\varphi_x(y)}{\frac{1}{2}y} \cdot \frac{\frac{1}{2}y}{\sin \frac{y}{2}}}dy \\
+				&\leq K \int_0^{\pi}\abs{\frac{\varphi_x(y)}{\frac{1}{2}y}}dy \\
+				&\leq \infty
+			\end{aligned}
+		\end{equation*}
+		which is because $\frac{\varphi_x(y)}{\frac{1}{2}y} \in L^1([0,\pi])$ and $\abs{\frac{\frac{1}{2}y}{\sin \frac{y}{2}}} \leq K$ on $[0,\pi]$. Therefore, $G \in L^1([0,\pi])$ so that by the Riemannian-Lebesgue lemma,
+		\begin{equation*}
+			\int_0^{\pi} \varphi_x(y) \frac{\sin(N+\frac{1}{2})y}{\sin \frac{y}{2}}dy = \int_0^{\pi}  G(y)\sin(N+\frac{1}{2})ydy \sto 0,\quad \text{as } N \sto \infty
+		\end{equation*}
+	\end{proof}
+
+	\noindent But if the condition (\ref{eq:four_sum}) is not satisfied, what can we get?
+	\begin{thm}
+		For $f \in L^1(\T)$, if $f(x_0+0)$ and $f(x_0-0)$ exist and let $\alpha = \frac{1}{2}(f(x_0+0)+f(x_0)-0)$, then
+		\begin{equation*}
+			\lim_{N \sto \infty}\sigma_N(f)(x_0) = \alpha
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		Fix any $\varepsilon > 0$. Because $\sigma_N = K_N * f$ and $K_N(-x) = K_N(x)$ and $\int_{\T}K_N(x)dx = 1$,
+		\begin{equation*}
+			\begin{aligned}
+				\sigma_N(f)(x_0) - \alpha &= \int_{\T} f(x_0-x)K_N(x)dx - \alpha \\ 
+				&= \int_{-\pi}^\pi f(x_0-x)K_N(x)dx - \alpha \\
+				&= \int_{0}^\pi (f(x_0-x)+f(x_0+x)-2\alpha)K_N(x)dx \\
+				&= \bc{\int_0^\delta + \int_\delta^\pi}(f(x_0-x)+f(x_0+x)-2\alpha)K_N(x)dx 
+			\end{aligned}
+		\end{equation*}
+		with $\delta > 0$ such that
+		\begin{equation*}
+			\abs{f(x_0-x)+f(x_0+x)-2\alpha} < \varepsilon,\quad x \in (0,\delta)
+		\end{equation*}
+		and 
+		\begin{equation*}
+			\sup _{\delta \leq|x| \leq \pi} K_N(x) < \varepsilon
+		\end{equation*}
+		Then, we have
+		\begin{equation*}
+			\abs{\sigma_N(f)(x_0) - \alpha} \leq \text{\RNum{1}} + \text{\RNum{2}}
+		\end{equation*}
+		where
+		\begin{equation*}
+			\begin{aligned}
+				\text{\RNum{1}} &= \int_0^\delta \abs{(f(x_0-x)+f(x_0+x)-2\alpha)K_N(x)}dx \\
+				&\leq \varepsilon\int_0^\delta \abs{K_N(x)}dx \\
+				&\leq \varepsilon
+			\end{aligned}
+		\end{equation*}
+		and
+		\begin{equation*}
+			\begin{aligned}
+				\text{\RNum{2}} &= \int_\delta^\pi \abs{(f(x_0-x)+f(x_0+x)-2\alpha)K_N(x)}dx \\
+				&\leq (\norm{f}_1+ \alpha)\varepsilon
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	Note that if $S_N(f)(x_0)$ exists as $N \sto \infty$, then it converges to $\alpha$.
+
+	\noindent Now, let's consider more about the uniform convergence.
+	\begin{thm}\label{thm:c1four}
+		For $f$ defined on $\T$, if there is a $\varphi \in L^1(\T)$ with $\int_\T \varphi(x)dx = 0$ such that
+		\begin{equation*}
+			f(x) = \int_0^x \varphi(s)ds + f(0),\quad x \in \T
+		\end{equation*}
+		(which implies $f \in C(\T)$), then $S_N(f) \sto f$ uniformly as $N \sto \infty$.
+	\end{thm}
+	\begin{rmk}
+		Note that if $f \in C^1$, then above condition is clearly satisfied.
+	\end{rmk}
+	\begin{lem}
+		The following lemmas are needed for proving above theorem.
+		\begin{enumerate}[label=\Roman{*}.]
+			\item For any continuous map $t \mapsto h_t$ from closed bounded interval $I \subset \R$ to $L^1(\T)$, then
+			\begin{equation*}
+				\lim_{\abs{n} \sto \infty}\widehat{h_t}(n) = 0
+			\end{equation*}
+			uniformly on $I$.
+			\item Let $I_N(t) = \int_0^t D_N(s)ds$ defined on $[-\pi,\pi]$. Then there is $C > 0$ such that for all $N \in \N_0$ and $t \in [-\pi, \pi]$,
+			\begin{equation*}
+				\abs{I_N(t)} \leq C
+			\end{equation*}
+			\item (Integral by Parts) For functions $f,g$ defined on $[-\pi,\pi]$, if there are $\varphi,\psi \in L^1([-\pi,\pi])$ such that
+			\begin{equation*}
+				f(t)=\int_0^t \varphi(s) d s+f(0), \quad g(t)=\int_0^t \psi(s) d s+g(0)
+			\end{equation*}
+			then for any $[a, b] \subset[-\pi, \pi]$,
+			\begin{equation*}
+				\int_a^b f(t) \psi(t) d t=f(b) g(b)-f(a) g(a)-\int_a^b \varphi(t) g(t) d t
+			\end{equation*}
+		\end{enumerate}
+	\end{lem}
+	\begin{proof}
+		\begin{enumerate}[label=\Roman{*}.]
+			\item For $\varepsilon > 0$, by the compactness of $I$, there is a partition $\bb{t_j}$ of $I$ such that
+			\begin{equation*}
+				\norm{h_t - h_{t_j}}_1 < \varepsilon,\quad \forall~t \in [t_j,t_{j+1}]
+			\end{equation*}
+			For each $h_{t_j}$, let $P_j^{N_j}$ be the series such that $\norm{h_{t_j}-P_j}_1 < \varepsilon$. Let $N = \max_j N_j$. Then for all $n > N$, $\forall~t \in [t_j,t_{j+1}]$
+			\begin{equation*}
+				\begin{aligned}
+					\abs{\widehat{h_t}(n)} &= \abs{\widehat{h_t}(n) - \widehat{P_j^{N_j}}(n)} \\
+					&\leq \norm{h_t - P_j^{N_j}}_1 \\
+					&\leq \norm{h_t - h_{t_j}}_1+\norm{h_{t_j}-P_j}_1 \\
+					&< 2\varepsilon,
+				\end{aligned}
+			\end{equation*}
+
+			\item It is because
+			\begin{equation*}
+				\begin{aligned}
+					I_N(t) & =\int_0^t \frac{\sin \left(N+\frac{1}{2}\right) s}{\sin \frac{s}{2}} d s \\
+					& =\int_0^t\left(\frac{1}{\frac{s}{2}}-\frac{1}{\sin \frac{s}{2}}\right) \sin \left(N+\frac{1}{2}\right) s d s+2 \int_0^t \frac{\sin \left(N+\frac{1}{2}\right) s}{s} d s .
+				\end{aligned}
+			\end{equation*}
+			The first term is bounded because of $s \sim \sin s$ as $s \sto 0$. For the second term, it is $2 \int_0^{\left(N+\frac{1}{2}\right) t} \frac{\sin x}{x} d x$, which converges to $\frac{\pi}{2}$ as $N \sto \infty$.
+
+			\item It can be obtained by approximating $L^1$-functions by $C$-functions.
+		\end{enumerate}
+	\end{proof}
+
+	\begin{proof}[Proof of Theorem \ref{thm:c1four}]
+		By $S_N(f) = D_N * f$ and $\int_{-\pi}^\pi D_N(x)dx = 1$, 
+		\begin{equation*}
+			\begin{aligned}
+				S_N(f)(t)-f(t) & =\int_{-\pi}^\pi(f(t-s)-f(t)) D_N(s) d s \\
+				& =\int_{-\delta}^\delta+\int_{\delta \leq|s| \leq \pi}(f(t-s)-f(t)) D_N(s) d s
+			\end{aligned}
+		\end{equation*}
+		Let $\chi_\delta = \chi_{[-\pi,-\delta] \cup[\delta, \pi]}$. Then the second term is
+		\begin{equation*}
+			\int_{-\pi}^\pi \underbrace{(f(t-s)-f(t)) \frac{1}{\sin \frac{s}{2}} \chi_\delta(s)}_{=: h_t(s)} \sin \left(N+\frac{1}{2}\right) s d s 
+		\end{equation*}
+		For $t \mapsto h_t \in L^(\T)$, by above lemma, this term converges uniformly to $0$ as $N \sto \infty$ on $\T$.
+
+		\noindent For the first term, by the lemma,
+		\begin{equation*}
+			\begin{aligned}
+				&~\quad\int_{-\delta}^\delta(f(t-s)-f(t)) D_N(s) d s \\
+				& =\left((f(t-\delta)-f(t)) I_N(\delta)-(f(t+\delta)-f(t)) I_N(-\delta)+\int_{-\delta}^\delta \varphi(t-s) I_N(s) d s\right) \\
+				& =\left((f(t+\delta)+f(t-\delta)-2 f(t)) I_N(\delta)+\int_{-\delta}^\delta \varphi(t-s) I_N(s) d s\right) .
+			\end{aligned}
+		\end{equation*}
+		The first term can be arbitrarily small because $f$ is uniformly continuous on $\T$ and $I_N$ is bounded. For the second term, let $\varphi_0 \in C(\T)$ such that $\norm{\varphi - \varphi_0}_1 < \varepsilon$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\left|\int_{-\delta}^\delta \varphi(t-s) I_N(s) d s\right| & \leq C \int_{-\delta}^\delta|\varphi(t-s)| d s<C \int_{-\delta}^\delta\left|\varphi_0(t-s)\right| d s+2 \pi C \varepsilon \\
+				& \leq 2 C \delta\left\|\varphi_0\right\|_{\infty}+2 \pi C \varepsilon<10 C \varepsilon .
+			\end{aligned}
+		\end{equation*}
+		which can be arbitrarily small.
+	\end{proof}
+
+	This technique can be applied to proving the Riemannian local principle.
+	\begin{thm}
+		For $f, g \in L^1(\T)$, let $J \subset \T$ open interval such that $f = g$ on $J$. Then for closed interval $I \subset J$, $S_N(f) -S_N(g)$ converges to $0$ uniformly as $N \sto \infty$ on $I$.
+	\end{thm}
+	The proof is basically same by replacing $f(t-s)-f(t)$ with $f(t-s)-g(t-s)$.
+	\begin{cor}
+		Let $f \in L^1(\T)$ and $J \subset \T$ open interval. If $f \in C^1(J)$, then for closed interval $I \subset J$, then $S_N(f)$ converges to $I$ uniformly.
+	\end{cor}
+	\begin{prop}
+		For $f \in L^1(\T)$, there is a $g \in C^\infty(\T)$ such that $f=g$ \emph{a.e.} if and only if for $\widehat{f} = (a_n)_{n \in \Z}$, $a_n = o(\abs{n}^{-k})$ as $n \sto \infty$.
+	\end{prop}
+	\begin{proof}
+		$\Rightarrow$: if $f \in C^\infty$, then
+		\begin{equation*}
+			\widehat{f}(n) = \frac{\widehat{f^{(k)}}(n)}{(in)^k}
+		\end{equation*}
+		$\Leftarrow$: first, by $a_n = o(\abs{n}^{-k})$, $(a_n) \in \ell^1$. So 
+		\begin{equation*}
+			S_N(f)(t)=\frac{1}{2\pi}\sum_{n=-N}^N a_n e^{i n t}
+		\end{equation*}
+		converse uniformly on $\T$, denoted by $g(t)$. And because $a_n = o(\abs{n}^{-k})$, $g \in C^\infty$. Besides, by the uniqueness of Fourier series, $g = f$ \emph{a.e.}.
+	\end{proof}
+
+
+	\item More properties: First, let summarize the proved properties. Considering the Fourier transform
+	\begin{equation*}
+		\mathcal{F} \colon L^1(\T) \rightarrow \ell^\infty(\Z)
+	\end{equation*}
+	\begin{enumerate}[label=(\roman{*})]
+		\item $\mathcal{F}$ is injective;
+		\item $\op{Im}\mathcal{F} \subset c_0(\Z)$, where
+		\begin{equation*}
+			c_0(\Z) = \bb{(a_n) \in \ell^\infty(\Z) \colon a_n \sto \infty,\text{ as }\abs{n} \sto \infty}
+		\end{equation*}
+		\item when restricting $\mathcal{F}$ on $L^2(\T)$, $\mathcal{F} \colon L^2(\T) \rightarrow \ell^2(\Z)$ preserves the norm.
+	\end{enumerate}
+\end{enumerate}
+
+\section{Fourier Analysis on \texorpdfstring{$\R$}{R}}
+
+\begin{enumerate}[label=\arabic*.]
+	\item Basic properties: First note that the Fourier transform can be well-defined on $L^1(\R)$, because
+	\begin{equation*}
+		\abs{\int_\R f(x)e^{-ix\xi}dx} \leq \int_\R \abs{f(x)e^{-ix\xi}} dx = \int_\R \abs{f(x)} dx < \infty
+	\end{equation*}
+	and the Fourier transform $\widehat{f}$ is uniformly continuous on $\R$, because
+	\begin{equation*}
+		|\widehat{f}(\xi+\eta)-\widehat{f}(\xi)|=\left|\int_{\mathbb{R}} f(x)\left(e^{-i(\xi+\eta) x}-e^{-i \xi x}\right) d x\right| \leq \int_{\mathbb{R}}|f(x)|\left|e^{-i \eta x}-1\right| d x \leq 2\norm{f}_1
+	\end{equation*}
+	and by the DCT, the RHS is integrable and $\sto 0$ as $\eta \sto 0$ independent with $\xi$. 
+
+	\noindent Examples of Fourier analysis: 
+	\begin{enumerate}[label=(\arabic*)]
+		\item Considering the characteristic function $\chi_{[-1,1]}(x)$ on $\R$, clearly $\chi_{[-1,1]} \in L^1\cap L^2$. So
+		\begin{equation*}
+			\begin{aligned}
+				\widehat{\chi}_{[-1,1]}(\xi) &= \int_\R \chi_{[-1,1]}(x)e^{-ix\xi}dx \\
+				&= \int_{-1}^1 \cos \xi x dx + i\int_{-1}^1 \sin \xi x dx \\
+				&= 2 \frac{\sin \xi}{\xi}
+			\end{aligned}
+		\end{equation*}
+		Note that $\widehat{\chi}_{[-1,1]}(\xi) \notin L^1$, because if it is, then $\chi_{[-1,1]}=\widecheck{\widehat{\chi}}_{[-1,1]} \in C_0$.
+
+		\noindent Moreover, based on these results and the inverse formula, we have
+		\begin{equation*}
+			\frac{1}{2 \pi} \int_{-\infty}^\infty 2\frac{\sin \xi}{\xi}e^{ix\xi} d\xi = \chi_{[-1,1]}(x) ~\Rightarrow~ \int_{-\infty}^\infty \frac{\sin \xi}{\xi} d\xi =\pi \chi_{[-1,1]}(0) = \pi
+		\end{equation*}
+		Besides, we have
+		\begin{equation*}
+			\int_{-\infty}^\infty \frac{\sin \alpha x}{x} dx = \left \{ 
+				\begin{aligned}
+					\pi,\quad&\alpha > 0 \\
+					-\pi,\quad&\alpha < 0 \\
+					0,\quad&\alpha = 0
+				\end{aligned}
+			\right.
+		\end{equation*}
+
+		\item For $\alpha > 0$, considering
+		\begin{equation*}
+			\frac{1}{\cosh \alpha x} = \frac{2}{e^{\alpha x} + e^{-\alpha x}} \in L^1\cap L^2
+		\end{equation*}
+		by directly calculating. Then
+		\begin{equation*}
+			\mathcal{F}\bc{\frac{1}{\cosh \alpha x}}(\xi) = \int_{\R} \frac{2e^{-ix\xi}}{e^{\alpha x} + e^{-\alpha x}}dx
+		\end{equation*}
+		Then by the residues theorem, we have
+		\begin{equation*}
+			\mathcal{F}\bc{\frac{1}{\cosh \alpha x}}(\xi) = \frac{\pi}{\alpha}\frac{1}{\cosh\frac{\pi}{2\alpha}\xi}
+		\end{equation*}
+	\end{enumerate}
+
+
+	\item Kernels: For $\lambda > 0$, define
+	\begin{equation*}
+		D_\lambda(x) = \frac{1}{2\pi}\int_{-\lambda}^\lambda e^{i\xi x}d\xi,\quad K_\lambda(x) = \frac{1}{2\pi}\int_{-\lambda}^\lambda \bc{1-\frac{\abs{\xi}}{\lambda}}e^{i\xi x}d\xi
+	\end{equation*}
+	It can easily obtain $D_\lambda(x)=\frac{\sin \lambda x}{\pi x} = \lambda D_1(\lambda x)$. And for $K_\lambda(x)$, from integral by parts,
+	\begin{equation*}
+		K_\lambda(x) = \frac{\lambda}{2 \pi}\left(\frac{\sin (\lambda x / 2)}{\lambda x / 2}\right)^2
+	\end{equation*}
+	and also $K_\lambda(x) = \lambda K_1(\lambda x)$.
+
+	\noindent In general, let's consider the summability kernel in continuous version. A family of $(k_\lambda)_{\lambda > 0}$ in $L^1(\R)$ is called a summability kernel on $\R$ if
+	\begin{enumerate}[label=(\arabic{*})]
+		\item for all $\lambda$, $\int_\R k_\lambda(x)dx = 1$,
+		\item there is a $C> 0$ such that $\norm{k_\lambda}_1 \leq C$ for all $\lambda$,
+		\item for any $\delta > 0$, 
+		\begin{equation*}
+			\lim_{\lambda \sto \infty} \int_{\abs{x} \geq \delta} \abs{k_\lambda(x)}dx = 0
+		\end{equation*}
+	\end{enumerate}
+	Note that $(K_\lambda)_{\lambda > 0}$ is a summability kernel but not $(D_\lambda)_{\lambda > 0}$.
+
+	\noindent Similarly as the discrete case, the continuous summability kernel has the same properties.
+	\begin{thm}\label{thm:summability}
+		Let $(k_\lambda)_{\lambda > 0}$ be a summability kernel.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item For uniform continuous $f\in L^1(\R)$, then
+			\begin{equation*}
+				\lim_{\lambda \sto \infty}k_\lambda * f =f
+			\end{equation*}
+			uniformly.
+			\item Let $1 \leq p < \infty$. For any $f \in L^p(\R)$,
+			\begin{equation*}
+			 	\lim_{\lambda \sto \infty}k_\lambda * f =f
+			\end{equation*} 
+			in $L^p$-norm.
+		\end{enumerate}
+	\end{thm}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Because $f$ is uniformly continuous, for any $\varepsilon > 0$, there is a $\delta > 0$ \emph{s.t.} for any $\abs{y} < \delta$,
+			\begin{equation*}
+				|f(x-y)-f(x)|<\varepsilon
+			\end{equation*}
+			Besides, $f \in L^1$,
+			\begin{equation*}
+				\begin{aligned}
+					\left|\left(k_\lambda * f\right)(x)-f(x)\right| &\leq \int_{\mathbb{R}}|f(x-y)-f(x)|\left|k_\lambda(y)\right| d y  \\
+					&\leq \bc{\int_{\abs{y} < \delta}+\int_{\abs{y} \geq \delta}} |f(x-y)-f(x)|\left|k_\lambda(y)\right| d y  \\
+					&\leq \int_{\abs{y} < \delta} \varepsilon \abs{k_\lambda(y)}dy + \int_{\abs{y} \geq \delta}2 \norm{f}_1\abs{k_\lambda(y)}dy
+				\end{aligned}
+			\end{equation*}
+
+			\item For $\varepsilon > 0$, there is a $\delta > 0$ such that
+			\begin{equation*}
+				\abs{y} < \delta~\Rightarrow~\int_{\mathbb{R}}|f(x-y)-f(x)|^p d x<\varepsilon
+			\end{equation*}
+			which is because $C_c(\R)$ is dense in $L^p(\R)$.
+
+			\noindent For $p > 1$, let $q$ be the conjugate of $p$. By the H\"older's inequality ($|f(x-y)-f(x)|\left|k_\lambda(y)\right| = (|f(x-y)-f(x)|^p\left|k_\lambda(y)\right|)^\frac{1}{p}\left|k_\lambda(y)\right|^\frac{1}{q}$),
+			\begin{equation*}
+				\begin{aligned}
+					\left\|k_\lambda * f-f\right\|_p^p &\leq \int_{\mathbb{R}}\left(\int_{\mathbb{R}}|f(x-y)-f(x)|\left|k_\lambda(y)\right| d y\right)^p d x \\
+					&\leq \int_{\mathbb{R}}\left(\int_{\mathbb{R}}|f(x-y)-f(x)|^p\left|k_\lambda(y)\right| d y\right)\left(\int_{\mathbb{R}}\left|k_\lambda(y)\right| d y\right)^{p / q} d x \\
+					&\leq C^{p / q}\int_{\mathbb{R}}\left|k_\lambda(y)\right|\left(\int_{\mathbb{R}}|f(x-y)-f(x)|^p d x\right)dy \\
+					&= 2^pC^{p / q} \bc{\int_{\abs{y} < \delta}\varepsilon \abs{k_\lambda (y)}dy + \int_{\abs{y} \geq \delta} \norm{f}_p^p \abs{k_\lambda(y)}dy} \sto 0,\quad \text{as } \lambda \sto \infty
+				\end{aligned}
+			\end{equation*}
+
+			\noindent For $p =1$, it has the similar proof without the H\"older's inequality.
+
+		\end{enumerate}
+	\end{proof}
+
+	\begin{cor}
+		For $1 \leq p < \infty$, $C_c^\infty(\R)$ is dense in $L^p(\R)$.
+	\end{cor}
+	\begin{proof}
+		First, because $\norm{f - f\chi_{-M,M}}_p \sto 0$ as $M \sto \infty$, we only need to consider $f$ with $f(x) = 0$ for $\abs{x} > M$. Choose $\varphi \in C_c^\infty(\R)$ such that $\int_\R \varphi(x) dx = 1$. For any $\lambda > 0$, let $\varphi_\lambda(x) \defeq \lambda\varphi(\lambda x)$. Then $(\varphi_\lambda)_{\lambda > 0}$ is a summability kernel. So $\varphi_\lambda * f \sto f$ in $L^p$. Besides, by the DCT, $\varphi_\lambda * f \in C^\infty$. Moreover, for any $\lambda$, $\supp \varphi_\lambda \in [-L,L]$ for some large $L$. Then if $\abs{x} > M+L$, then because $\abs{y} < m$ to guarantee $f(y) \neq 0$,
+		\begin{equation*}
+			\left(\varphi_\lambda * f\right)(x)=\int_{-M}^M \varphi_\lambda(x-y) f(y) d y=0
+		\end{equation*}
+		by $\abs{x - y} > L$. So $\supp \varphi_\lambda * f \subset [-M-L,M+L]$.
+	\end{proof}
+
+	If $f \in C_c^\infty(\R)$, then
+	\begin{equation*}
+		\widehat{f^\prime}(\xi) = i\xi \widehat{f}(\xi)
+	\end{equation*}
+	So by above corollary, we can prove the continuous version of Riemannian-Lebesgue lemma.
+	\begin{lem}[Riemannian-Lebesgue Lemma]
+		For any $f \in L^1(\R)$,
+		\begin{equation*}
+			\lim_{\abs{\xi} \sto \infty} \widehat{f}(\xi) = 0
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		For $\varepsilon > 0$, there is a $g \in C_c^\infty(\R)$ such that $\norm{f - g}_1 < \varepsilon$. For $g$, we know $\widehat{g}(\xi) \sto 0$ as $\abs{\xi} \sto \infty$. So
+		\begin{equation*}
+			\abs{\widehat{f}(\xi)} \leq |\widehat{f}(\xi)-\widehat{g}(\xi)|+|\widehat{g}(\xi)|<\|f-g\|_1+\varepsilon<2 \varepsilon
+		\end{equation*}
+	\end{proof}
+
+	\item Applications of Kernels: 
+	\begin{cor}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item For $f \in L^1(\R)$ and $\lambda > 0$, let $\sigma_\lambda(f) = K_\lambda * f$. Then for any $x \in \R$,
+			\begin{equation*}
+				\sigma_\lambda(f)(x) = \frac{1}{2\pi}\int_{-\lambda}^\lambda \bc{1 - \frac{\abs{\xi}}{\lambda}}\widehat{f}(\xi)e^{i\xi x}d\xi
+			\end{equation*}
+			and $\sigma_\lambda(f) \sto f$ in $L^1$ as $\lambda \sto \infty$.
+			\item Fourier transform
+			\begin{equation*}
+				\mathcal{F} \colon L^1(\R) \sto C_0(\R)
+			\end{equation*}
+			is an injection.
+		\end{enumerate}
+	\end{cor}
+
+	\begin{cor}
+		Assume $f,\widehat{f} \in L^(\R)$. Then
+		\begin{equation*}
+			f(x) = \frac{1}{2\pi} \int_\R \widehat{f}(\xi)e^{i\xi x}d\xi (\eqdef \widecheck{\widehat{f}}),~a.e.
+		\end{equation*}
+	\end{cor}
+	\begin{proof}
+		By above, for any $x \in \R$,
+		\begin{equation*}
+			\sigma_\lambda(f)(x)=\frac{1}{2 \pi} \int_{\R} \chi_{[-\lambda, \lambda]}(\xi)\left(1-\frac{|\xi|}{\lambda}\right) \widehat{f}(\xi) e^{i \xi x} d \xi .
+		\end{equation*}
+		By the DCT, as $\lambda \sto \infty$,
+		\begin{equation*}
+			\sigma_\lambda(f)(x) \sto \frac{1}{2 \pi} \int_{\R} \widehat{f}(\xi) e^{i \xi x} d \xi .
+		\end{equation*}
+		And combining this with $\sigma_\lambda(f) \sto f$, we have the above result.
+	\end{proof}
+	Note that if $f \in C^2(\R)$ and $f,f^\prime,f^{\prime\prime} \in L^1(\R)$, then the above formula always true for all $x \in \R$, because $\widehat{f}(\xi)=(i \xi)^{-2}\widehat{f^{\prime \prime}}(\xi) \in L^1(\R)$.
+
+	\begin{prop}
+		If $F(\xi) \in L^1(\R)$, then the Fourier inverse transform $\widecheck{F}(x)$ exists and $\widecheck{F}(x) \in C_0(\R)$.
+	\end{prop}
+	\begin{proof}
+		First,
+		\begin{equation*}
+			\widecheck{F}(x) = \frac{1}{2\pi} \int_\R F(\xi)e^{ix\xi} d\xi
+		\end{equation*}
+		The existence of $\widecheck{F}(x)$ is similar as the above.
+
+		\noindent For the continuity of $\widecheck{F}(x)$,
+		\begin{equation*}
+			\begin{aligned}
+				\abs{\widecheck{F}(x)-\widecheck{F}(x_0)} &= \frac{1}{2\pi} \abs{\int_\R F(\xi)e^{ix\xi} - F(\xi)e^{ix_0\xi} d\xi} \\
+				&\leq \frac{1}{2\pi} \int_\R \abs{F(\xi)}\abs{e^{ix\xi} -e^{ix_0\xi}} d\xi \\
+				&\leq \frac{1}{2\pi} \int_\R \abs{F(\xi)}\abs{e^{ix\xi} -e^{ix_0\xi}} d\xi \\
+				&\leq \frac{1}{\pi} \int_\R \abs{F(\xi)} d\xi
+			\end{aligned}
+		\end{equation*}
+		and $e^{ix\xi} \sto e^{ix_0\xi}$ as $x \sto x_0$, so by the Dominant Convergence Theorem
+		\begin{equation*}
+			\widecheck{F}(x) \sto \widecheck{F}(x_0),\quad \text{as } x \sto x_0
+		\end{equation*}
+		For the $C_0$, 
+		\begin{equation*}
+			\lim_{\abs{x} \sto \infty}\widecheck{F}(x) = 0,
+		\end{equation*}
+		which is because of the Riemannian-Lebesgue lemma.
+	\end{proof}
+
+	\begin{cor}
+		For $K_\lambda$,
+		\begin{equation*}
+			\widehat{K_\lambda}(\xi)=\chi_{[-\lambda, \lambda]}(\xi)\left(1-\frac{|\xi|}{\lambda}\right) .
+		\end{equation*}
+	\end{cor}
+	\begin{proof}
+		Let $\varphi_\lambda(\xi) = \chi_{[-\lambda, \lambda]}(\xi)\left(1-\frac{|\xi|}{\lambda}\right)$. By definition, 
+		\begin{equation*}
+			K_\lambda(x)=\frac{1}{2 \pi} \int_{\mathbb{R}} \varphi_\lambda(\xi) e^{i \xi x} d \xi = \frac{1}{2 \pi} \widehat{\varphi_\lambda}(-x)
+		\end{equation*}
+		Therefore, by the inverse formula,
+		\begin{equation*}
+			\varphi_\lambda(\xi)=\frac{1}{2 \pi} \int_{\mathbb{R}} \widehat{\varphi_\lambda}(x) e^{i \xi x} d x=\int_{\mathbb{R}} K_\lambda(-x) e^{i \xi x} d x=\widehat{K_\lambda}(\xi)
+		\end{equation*}
+	\end{proof}
+\end{enumerate}
+
+\section{Fourier Analysis on \texorpdfstring{$\R^d$}{Rd}}
+
+On $\R^d$, the Fourier transform is defined as
+\begin{equation*}
+	\widehat{f}(\xi) = \int_{\R^d}f(x)e^{-i\xi \cdot x}dx,\quad \xi \in \R^d
+\end{equation*}
+
+\begin{enumerate}[label=\arabic*.]
+	\item Rapidly Decreasing Functions: For $f$ defined on $\R^d$ and $k \in \N$, $f$ is called a rapidly decreasing function if
+	\begin{equation*}
+		\lim_{\abs{x} \sto \infty} \abs{x}^kf(x) = 0
+	\end{equation*}
+	or $f(x) = o(\abs{x}^{-k})$ as $\abs{x} \sto \infty$. The Schwartz space is defined as
+	\begin{equation*}
+		\mathcal{S} = \mathcal{S}(\R^d) = \bb{f \in C^\infty(\R^d) \colon \partial^\alpha f \text{ is rapidly decreasing},~\forall~\alpha}
+	\end{equation*}
+	$f \in \mathcal{S}$ is called Schwartz rapidly decreasing function. 
+	\begin{prop}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $C_c^\infty(\R^d) \subset \mathcal{S}$,
+			\item $f \in \mathcal{S}$ implies $\partial^\alpha f \in \mathcal{S}$ for all $\alpha$,
+			\item $p$ is a polynomial, then for $f \in \mathcal{S}$, $pf \in \mathcal{S}$.
+		\end{enumerate}
+	\end{prop}
+
+	\begin{prop}
+		\begin{enumerate}[label = (\arabic*)]
+			\item For any $f \in \mathcal{S}$ and $\alpha$, $\widehat{\partial^\alpha f}(\xi)$ exists and 
+			\begin{equation*}
+				\widehat{\partial^\alpha f}(\xi) = i^{\abs{\alpha}}\xi^{\abs{\alpha}}\widehat{f}(\xi)
+			\end{equation*}
+			\item For any $f \in \mathcal{S}$, $\widehat{f} \in C^\infty(\R^d)$ and
+			\begin{equation*}
+				\widehat{x^\alpha f}(\xi) = i^{\abs{\alpha}}(\partial \widehat{f})(\xi)
+			\end{equation*}
+			\item For any $f \in \mathcal{S}$, $\widehat{f} \in \mathcal{S}$.
+		\end{enumerate}
+	\end{prop}
+
+	\item Inverse Formula: First, because
+	\begin{equation*}
+		C_c^\infty(\R^d) \subset \mathcal{S} \subset L^p(\R^d)
+	\end{equation*}
+	$\mathcal{S}$ is dense in $L^p(\R^d)$ ($1 \leq p < \infty$).
+
+	\begin{prop}[Riemannian-Lebesgue Lemma]
+		For any $f \in L^1(\R^d)$, $\widehat{f} \in C_0(\R^d)$.
+	\end{prop}
+	\begin{proof}
+		Continuity of $\widehat{f}$ is obtained from the DCT. $\exists~g \in C_c^\infty \subset \mathcal{S}$ such that $\norm{f - g}_1 \leq \varepsilon$. So
+		\begin{equation*}
+			\abs{\widehat{f}(\xi)} \leq \norm{\widehat{f} - \widehat{g}}_\infty + \abs{\widehat{g}(\xi)} \leq \norm{f-g}_1 + \abs{\widehat{g}(\xi)}
+		\end{equation*}
+	\end{proof}
+
+	\begin{thm}
+		Assume $f,\widehat{f} \in L^1(\R^d)$. Then
+		\begin{equation*}
+			f(x)=\frac{1}{(2 \pi)^d} \int_{\mathbb{R}^d} \widehat{f}(\xi) e^{i \xi \cdot x} d \xi,,~a.e.
+		\end{equation*}
+		In particular,
+		\begin{equation*}
+			\left(\mathcal{F}^2 f\right)(x)=(\mathcal{F} \widehat{f})(x)=(2 \pi)^d f(-x) .
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		Consider a function $\kappa \in L^1(\R^d)$ that is bounded and
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $\kappa$ is continuous at $0$ and $k(0) = 1$,
+			\item let 
+			\begin{equation*}
+				k(x) \defeq \frac{1}{(2\pi)^d}\int_{\R^d}\kappa(\xi)e^{i\xi \cdot x}d\xi
+			\end{equation*}
+			and $k \in L^1$ with $\widehat{k}(0) = \int_{\R^d}k(x)dx = 1$.
+		\end{enumerate}
+		Then for $\lambda > 0$, let $k_\lambda(x) = \lambda^dk(\lambda x)$ so $(k_\lambda)_{\lambda > 0}$ is a summability kernel on $\R^d$. And therefore, $k_\lambda * f \sto f$ in $L^1$. Besides,
+		\begin{equation*}
+			\begin{aligned}
+				\left(k_\lambda * f\right)(x) & =\int_{\mathbb{R}^d} k_\lambda(x-y) f(y) d y \\
+				& =\frac{\lambda^d}{(2 \pi)^d} \int_{\mathbb{R}^d} f(y)\left(\int_{\mathbb{R}^d} \kappa(\xi) e^{i \xi \cdot \lambda(x-y)} d \xi\right) d y \\
+				& =\frac{1}{(2 \pi)^d} \int_{\mathbb{R}^d}\left(\int_{\mathbb{R}^d} \kappa(\eta / \lambda) e^{i \eta \cdot(x-y)} d \eta\right) f(y) d y \\
+				& =\frac{1}{(2 \pi)^d} \int_{\mathbb{R}^d} \widehat{f}(\eta) \kappa(\eta / \lambda) e^{i \eta \cdot x} d \eta \\
+				& \rightarrow \frac{1}{(2 \pi)^d} \int_{\mathbb{R}^d} \widehat{f}(\eta) e^{i \eta \cdot x} d \eta \quad(\lambda \rightarrow \infty) .
+			\end{aligned}
+		\end{equation*}
+		by the DCT.
+	\end{proof}
+	\begin{rmk}
+		An example of $\kappa$ is
+		\begin{equation*}
+			\kappa(x) = \prod_{i=1}^d\chi_{[-1,1]}(x_i)(1-\abs{x_i})
+		\end{equation*}
+	\end{rmk}
+	\begin{cor}
+		\begin{enumerate}[label=(\arabic*)]
+			\item For $f \in L^1(\R^d)$, $\widehat{f} = 0$ implies $f = 0$.
+			\item The Fourier transform $\mathcal{F} \colon \mathcal{S} \sto \mathcal{S}$ is a bijection.
+		\end{enumerate}
+	\end{cor}
+	\begin{proof}
+		$(1)$ is by the inverse formula, which implies that $\mathcal{F}$ is an injective. For $(2)$, for any $f \in \mathcal{S}$,
+		\begin{equation*}
+			\left(\mathcal{F}^4 f\right)(x)=(2 \pi)^d\left(\mathcal{F}^2 f\right)(-x)=(2 \pi)^{2 d} f(x)
+		\end{equation*}
+		let $g = \mathcal{F}^3\bc{(2\pi)^{-2d}f}$, then $\mathcal{F}(g) = f$. So $\mathcal{F}$ is a surjection.
+	\end{proof}
+
+	\begin{prop}
+		For any $f,g \in \mathcal{S}$, $f*g \in \mathcal{S}$.
+	\end{prop}
+	\begin{proof}
+		First, for $\phi,\psi \in \mathcal{S}$, $\phi \psi \in \mathcal{S}$. First, $f * g \in L^1(\R^d)$ and $\widehat{f},\widehat{g} \in \mathcal{S}$. Therefore,
+		\begin{equation*}
+			\widehat{f * g} = \widehat{f}\widehat{g}\in \mathcal{S}
+		\end{equation*}
+		and thus by the inverse, $f * g = \mathcal{F}^{-1}(\widehat{f * g}) \in \mathcal{S}$.
+	\end{proof}
+
+	\item Plancherel Theorem: 
+	\begin{lem}
+		For any $f \in L^1(\R^d) \cap L^2(\R^d)$, there is a $(f_n)_{n \in \N} \subset \mathcal{S}$ such that $f_n \sto f$ both in $L^1$ and $L^2$ norms.
+	\end{lem}
+
+	\begin{thm}
+		There is a unique linear map
+		\begin{equation*}
+			\mathcal{F} \colon L^2(\R^d) \longrightarrow L^2(\R^d)
+		\end{equation*}
+		such that
+		\begin{enumerate}[label=(\arabic{*})]
+			\item for any $f \in L^1(\R^d) \cap L^2(\R^d)$, $\widehat{f} = \mathcal{F}(f)$,
+			\item for any $f \in L^2(\R^d)$, $\|\mathcal{F} f\|_2=(2 \pi)^{d / 2}\|f\|_2$.
+		\end{enumerate}
+	\end{thm}
+	\begin{proof}
+		\begin{enumerate}[label=\Roman*.]
+			\item Isometry on $\mathcal{S}$: For $f, g \in \mathcal{S}$, let $h(x) = \bar{\widehat{g}(x)}$. So
+			\begin{equation*}
+				\widehat{h}(\xi) =\int_{\mathbb{R}^d} \overline{\widehat{g}(x)} e^{-i \xi \cdot x} d x=\overline{\int_{\mathbb{R}^d} \widehat{g}(x) e^{i \xi \cdot x} d x}=(2 \pi)^d \overline{g(\xi)}
+			\end{equation*}
+			and because
+			\begin{equation*}
+				\int_{\mathbb{R}^d} f(x) \widehat{h}(x) d x=\int_{\mathbb{R}^d \times \mathbb{R}^d} f(x) h(y) e^{-i x \cdot y} d x d y=\int_{\mathbb{R}^d} \widehat{f}(y) h(y) d y
+			\end{equation*}
+			we have
+			\begin{equation*}
+				(2 \pi)^d\langle f, g\rangle=\langle\widehat{f}, \widehat{g}\rangle
+			\end{equation*}
+
+			\item Constructing $\mathcal{F}$: For $f \in L^2(\R^d)$, let $(f_n)_{n \in \N} \subset \mathcal{S}$ such that $f_n \sto f$ in $L^2$. Because
+			\begin{equation*}
+				\norm{\widehat{f_n} - \widehat{f_m}}_2 = (2 \pi)^{d/2}\norm{{f_n} - {f_m}}_2
+			\end{equation*}
+			$(\widehat{f_n})_{n \in \N}$ is a Cauchy in $L^2(\R^d)$. By the completeness of $L^2(\R^d)$, there is a $\widehat{f} \in L^2(\R^d)$ such that $\widehat{f_n}) \sto \widehat{f})$ in $L^2$. Therefore, 
+			\begin{equation*}
+				\mathcal{F}(f) \defeq \widehat{f}
+			\end{equation*}
+			And this definition is independent with the choice of the $f_n$, because if there are such $g_n$ and $\widehat{g}$, then
+			\begin{equation*}
+				\norm{\widehat{f}-\widehat{g}}_2 \leq \norm{\widehat{f}-\widehat{f_n}}_2 + \norm{\widehat{g}_n-\widehat{g}}_2+ \norm{\widehat{f}_n-\widehat{g}_n}_2,
+			\end{equation*}
+			where these terms are all arbitrarily small. Besides, we have $\norm{\mathcal{F}(f)}_2 = \norm{f}_2$, which implies $\mathcal{F}$ is an injective. And the linearity of $\mathcal{F}$ can be induced by the linearity of the Fourier transform on $\mathcal{S}$.
+
+			\item Proof of $(1)$: For $f \in L^1(\R^d) \cap L^2(\R^d)$, there is a $(f_n)_{n \in \N} \subset \mathcal{S}$ such that $f_n \sto f$ both in $L^1$ and $L^2$ norms. So by above $\widehat{f_n} = \mathcal{F}f_n \sto \mathcal{F}f$ in $L^2$. By the definition of Fourier transform on $L^1\cap L^2$,
+			\begin{equation*}
+				\norm{\widehat{f_n} - \widehat{f}}_\infty \leq \norm{f_n-f}_1
+			\end{equation*}
+			So $\widehat{f_n} \sto \widehat{f}$ uniformly. Then on any ball $B \subset \R^d$,
+			\begin{equation*}
+				\int_B\abs{\mathcal{F}(f)(\xi) - \widehat{f}(\xi)} d\xi \leq \int_B\abs{\mathcal{F}(f)(\xi) - \mathcal{F}(f_n)(\xi)} d\xi + \int_B\abs{\widehat{f_n}(\xi) - \widehat{f}(\xi)} d\xi
+			\end{equation*}
+			The the second term can be arbitrarily small because of $\widehat{f_n} \sto \widehat{f}$ uniformly. For the first term, by
+			\begin{equation*}
+				m(B)^{1 / 2}\left(\int_B\left|\mathcal{F} f(\xi)-\mathcal{F} f_n(\xi)\right|^2 d \xi\right)^{1 / 2} \leq m(B)^{1 / 2}\left\|\mathcal{F} f-\mathcal{F} f_n\right\|_2
+			\end{equation*}
+			it can also be arbitrarily small. Therefore, on any ball $B$, $\mathcal{F}(f) = \widehat{f}$. So $\mathcal{F}(f) = \widehat{f}$.
+
+			\item Surjectivity: First, we have known
+			\begin{equation*}
+				\mathcal{S} \subset \op{Im}\mathcal{F} \subset L^2(\R^d)
+			\end{equation*}
+			So only need to check the closedness of $\op{Im}\mathcal{F}$. Assume
+			\begin{equation*}
+				\mathcal{F}f_n \sto g \in L^2(\R^d),\quad n \sto \infty
+			\end{equation*}
+			in $L^2$. Then by the Cauchy of $(\mathcal{F}f_n)_{n \in \N}$ and isometry of $\mathcal{F}$, $(f_n)_{n \in \N}$ is also Cauchy. So there is a $f \in L^2$ such that $f_n \sto f$ in $L^2$. Then
+			\begin{equation*}
+				\left\|\mathcal{F} f_n-\mathcal{F} f\right\|_2=(2 \pi)^{d / 2}\left\|f_n-f\right\|_2 \rightarrow 0
+			\end{equation*}
+			implies $\mathcal{F} f = g \in \op{Im}\mathcal{F}$.
+
+			\item The uniqueness of $\mathcal{F}$ is by the density of $L^1 \cap L^2$ in $L^2$.
+		\end{enumerate}
+	\end{proof}
+\end{enumerate}
+
+\section{Distributions}
+
+\begin{enumerate}[label=\arabic*.]
+	\item Definitions: 
+	\begin{defn}[Test Function Space]
+		Consider the set
+		\begin{equation*}
+			\mathcal{D}=\mathcal{D}\left(\mathbb{R}^d\right)=C_c^{\infty}\left(\mathbb{R}^d\right)
+		\end{equation*}
+		with the topology defined as for $(\varphi_n)_{n \in \N} \subset \mathcal{D}$, $\varphi_n \sto \varphi$ in $\mathcal{D}$ if and only if there is a compact $K \subset \R^d$ such that $\supp \varphi \cup \bigcup_n \supp \varphi_n \subset K$ and for any $\alpha$ $\partial^\alpha \varphi_n \sto \partial^\alpha \varphi$ uniformly on $\R^n$. 
+	\end{defn}
+	\begin{rmk}
+		In fact, $\mathcal{D}$ equipped with this topology is a locally convex topological space. It is induced by a family of seminorms indexed by any compact set $K \subset \R^d$ and $n \in \N_0$,
+		\begin{equation*}
+			p_{K,n}(f) \defeq \sup_{x \in K} \sup_{\abs{\alpha} \leq n} \abs{\partial^\alpha f(x)}
+		\end{equation*}
+	\end{rmk}
+
+	\begin{defn}
+		The set of distributions on $\R^d$ is
+		\begin{equation*}
+			\mathcal{D}^\prime = \mathcal{D}^\prime(\R^d) = \bb{T \colon \mathcal{D} \sto \C \colon T \text{ is linear and continuous}}
+		\end{equation*}
+		where $\mathcal{D}$ is equipped with the above topology.
+	\end{defn}
+
+	\begin{exam}[Locally Integrable Functions]
+		\begin{defn}
+			The locally integrable function space is
+			\begin{equation*}
+				L^1_{loc}(\R^d) \defeq \bb{u \colon \R^d \sto \C \colon \int_K \abs{u(x)}dx < \infty,~\forall~K \subset \R^d \text{ compact}}
+			\end{equation*}
+		\end{defn}
+		Note that
+		\begin{itemize}
+			\item for any $p \in [1,\infty]$, $L^p(\R^d) \subset L^1_{loc}(\R^d)$ by the H\"older's Inequality
+			\begin{equation*}
+				\int_K|u(x)| d x \leq\|u\|_{p}\|1\|_{p^\prime} \leq\|u\|_{p}|K|^{\frac{1}{p^{\prime}}}<\infty
+			\end{equation*}
+
+			\item $C(\Omega) \subset L^1_{loc}(\Omega)$.
+		\end{itemize}
+		\begin{prop}
+			$f \in L^1_{loc}$ if and only if
+			\begin{equation*}
+				\int_{\R^d}\abs{f(x)\varphi(x)}dx < \infty,\quad \forall~\varphi \in \mathcal{D}
+			\end{equation*}
+		\end{prop}
+		\begin{proof}
+			$\Rightarrow$ is clearly by definition.
+
+			\noindent $\Leftarrow$: For any compact $K \subset \R^d$, there is a $\varphi \in \mathcal{D}$ with $K \subset \supp \varphi \subset K^\prime$ and $\varphi(x) = 1$ on $K$. Then
+			\begin{equation*}
+				\int_K \abs{f(x)}dx \leq \int_{\R^d} \abs{f(x)\varphi(x)} dx < \infty
+			\end{equation*}
+		\end{proof}
+
+		Let $f \in L^1_{loc}(\R^d)$. Define $T_f \colon \mathcal{D} \sto \C$ by
+		\begin{equation*}
+			\inn{T_f, \varphi} \defeq \int_{\R^d} f(x)\varphi(x) dx
+		\end{equation*}
+		Then for $(\varphi_n)_{n \in \N} \subset \mathcal{D}$, $\varphi_n \sto \varphi$ in $\mathcal{D}$, then $\exists$ compact $K$ containing all supports and so
+		\begin{equation*}
+			\inn{T_f, \varphi_n} \defeq \int_{K} f(x)\varphi_n(x) dx \sto  \int_{K} f(x)\varphi(x) dx = \inn{T_f, \varphi}
+		\end{equation*}
+		by the DCT. Therefore, $T_f \in \mathcal{D}^\prime$. And in the following we do not differ $T_f$ and $f$. Moreover,
+		\begin{equation*}
+			T_f = 0 ~\Rightarrow~f = 0
+		\end{equation*}
+		\begin{proof}
+			For any open set $U$, considering an open ball $B \subset \R^d$ such that $U \subset B$. Let $\varphi_n \in \mathcal{D}$ and $0 \leq \varphi_n \leq 1$ such that $\varphi_n \sto \chi_U$. Then
+			\begin{equation*}
+				0 = \int_B f(x)\varphi_n(x)dx \sto \int_B f(x)\chi_U(x)dx = \int_U f(x)dx = 0
+			\end{equation*}
+		\end{proof}
+		which also means $f = g$ in $L^1_{loc}$ if and only if
+		\begin{equation*}
+			\int_{\R^d} f(x)\varphi(x) dx = \int_{\R^d} g(x)\varphi(x) dx,\quad \varphi \in \mathcal{D}
+		\end{equation*}
+	\end{exam}
+	
+	\begin{exam}[Dirichlet's Delta Function]
+		Define $\delta \colon \mathcal{D} \sto \C$ as
+		\begin{equation*}
+			\inn{\delta,\varphi} = \varphi(0)
+		\end{equation*}
+		Clearly, $\delta \in \mathcal{D}^\prime$. Note that $\delta \notin L^1_{loc}$. More generally, for any $\mu$ on $\R^d$, define $T_\mu \in \mathcal{D}^\prime$ as
+		\begin{equation*}
+			\inn{T_\mu,\varphi} = \int_{\R^d}\varphi d\mu
+		\end{equation*}
+	\end{exam}	
+
+	\item Derivatives: For $T \in \mathcal{D}^\prime$, $\partial^\alpha T$ defined as
+	\begin{equation*}
+		\inn{\partial^\alpha T, \varphi} = (-1)^{\abs{\alpha}}\inn{T,\partial \varphi},\quad \varphi \in \mathcal{D}
+	\end{equation*}
+	\begin{rmk}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item This definition is a generalization. Because if $f \in C^\infty$, then by the integral by parts we have
+			\begin{equation*}
+				\left\langle\partial^\alpha f, \varphi\right\rangle=\int_{\mathbb{R}^d}\left(\partial^\alpha f\right)(x) \varphi(x) d x=(-1)^{|\alpha|} \int_{\mathbb{R}^d} f(x)\left(\partial^\alpha \varphi\right)(x) d x=(-1)^{|\alpha|}\left\langle f, \partial^\alpha \varphi\right\rangle
+			\end{equation*}
+			Therefore, we can see if $f \in C^\infty(\R^d)$,
+			\begin{equation*}
+				\partial^\alpha T_f = T_{\partial^\alpha f}
+			\end{equation*}
+			\item For $f \in L^1_{loc}$, if we define
+			\begin{equation*}
+				\inn{\partial^\alpha f, \varphi} = \int_{\R^d} f(x)\partial^\alpha \varphi(x)dx,\quad \varphi \in \mathcal{D}
+			\end{equation*}
+			then $\partial^\alpha f \in L^1_{loc}$ and it is uniquely determined by above proposition and example. Then we can see
+			\begin{equation*}
+				\partial^\alpha T_f = T_{\partial^\alpha f}
+			\end{equation*}
+		\end{enumerate}
+	\end{rmk}
+	Moreover, for $(\varphi_n)_{n \in \N} \subset \mathcal{D}$ with $\varphi_n \sto \varphi$ in $\mathcal{D}$,
+	\begin{equation*}
+		\left\langle\partial^\alpha T, \varphi_n\right\rangle=(-1)^{|\alpha|}\left\langle T, \partial^\alpha \varphi_n\right\rangle \rightarrow(-1)^{|\alpha|}\left\langle T, \partial^\alpha \varphi\right\rangle=\left\langle\partial^\alpha T, \varphi\right\rangle
+	\end{equation*}
+	which means $\partial^\alpha T \in \mathcal{D}^\prime$. 
+
+	\begin{exam}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Let
+			\begin{equation*}
+				H(x)= 
+				\begin{cases}
+					1, & x \geq 0 \\ 
+					0, & x<0 
+				\end{cases}
+			\end{equation*}
+			Then $H \in L^1_{xloc}$. For any $\varphi \in \mathcal{D}$,
+			\begin{equation*}
+				\inn{H^\prime, \varphi} = -\inn{H,\varphi^\prime} = -\int_\R H(x) \varphi^\prime(x)dx = -\int_0^\infty \varphi^\prime(x)dx = \varphi(0)
+			\end{equation*}
+			So $H^\prime = \delta$.
+
+			\item For any $\alpha$ and any $\varphi \in \mathcal{D}$,
+			\begin{equation*}
+				\inn{\partial^\alpha \delta, \varphi} = (-1)^{\abs{\alpha}}\inn{\delta, \partial^\alpha \varphi} = (-1)^{\abs{\alpha}} \partial^\alpha \varphi(0)
+			\end{equation*}
+
+			\item For $g \in L^1_{loc}(\R)$, if
+			\begin{equation*}
+				f(x) = \int_0^x g(t)dt+f(0)
+			\end{equation*}
+			then $(T_f)^\prime = T_g$ by
+			\begin{equation*}
+				\left\langle\left(T_f\right)^{\prime}, \varphi\right\rangle=-\left\langle T_f, \varphi^{\prime}\right\rangle=-\int_{\mathbb{R}} f(x) \varphi^{\prime}(x) d x=-\left([f(x) \varphi(x)]_{-\infty}^{\infty}-\int_{\mathbb{R}} g(x) \varphi(x) d x\right)=\langle g, \varphi\rangle
+			\end{equation*}
+
+			\item Consider $f(x) = \log \abs{x} \in L^1_{loc}(\R)$.
+			\begin{equation*}
+				\begin{aligned}
+					-\int_{|x| \geq \varepsilon} \varphi^{\prime}(x) \log |x| d x-\int_{|x| \geq \varepsilon} \frac{\varphi(x)}{x} d x &= -[\varphi(x) \log |x|]_{\varepsilon}^{\infty}-[\varphi(x) \log |x|]_{-\infty}^{-\varepsilon} \\
+					&=(\varphi(\varepsilon)-\varphi(-\varepsilon)) \log \varepsilon
+				\end{aligned}
+			\end{equation*}
+			The RHS converges to $0$ as $\varepsilon \sto 0+$. Therefore,
+			\begin{equation*}
+				\left\langle\left(T_f\right)^{\prime}, \varphi\right\rangle=-\int_{\mathbb{R}} \varphi^{\prime}(x) \log |x| d x=\lim _{\varepsilon \searrow 0} \int_{|x| \geq \varepsilon} \frac{\varphi(x)}{x} d x \eqdef \inn{\op{p.v.}\bc{\frac{1}{x}},\varphi}
+			\end{equation*}
+			So $\left(T_f\right)^{\prime} = \op{p.v.}\bc{\frac{1}{x}}$.
+		\end{enumerate}
+	\end{exam}
+
+	\begin{prop}
+		For $T \in \mathcal{D}^\prime(\R)$, $T^\prime = 0$ implies $T$ is constant distribution, \emph{i.e.} $\inn{T, \varphi} = \inn{c,\varphi}$ for all $\varphi \in \mathcal{D}(\R)$.
+	\end{prop}
+	\begin{proof}
+		Fix $\varphi_0 \in \mathcal{D}$ with $\int_\R \varphi_0(x)dx = 1$. The for any $\varphi \in \mathcal{D}$, there is a $\psi \in \mathcal{D}$ such that
+		\begin{equation*}
+			\varphi = \psi^\prime + \alpha \varphi_0,\quad \alpha = \inn{1,\varphi} = \int_\R \varphi(x) dx
+		\end{equation*}
+		In fact,
+		\begin{equation*}
+			\psi(x) = \int_{-\infty}^x (\varphi(t) - \alpha \varphi_0(t))dt
+		\end{equation*}
+		Let $c \defeq \inn{T,\varphi_0}$. Then by $T^\prime = 0$,
+		\begin{equation*}
+			\langle T, \varphi\rangle=\left\langle T, \psi^{\prime}\right\rangle+\alpha\left\langle T, \varphi_0\right\rangle=-\left\langle T^{\prime}, \psi\right\rangle+\alpha c=c\langle 1, \varphi\rangle
+		\end{equation*}
+	\end{proof}
+
+	\item Convolution: For $\varphi \in \mathcal{D}$ and $x,y \in \R^d$,
+	\begin{equation*}
+		\varphi^\sim(x) = \varphi(-x),\quad \left(\tau_x \varphi\right)(y)=\varphi(y-x)
+	\end{equation*}
+	\begin{rmk}
+		For $\varphi_n \sto \varphi$ in $\mathcal{D}$, it is clearly $\tau_x\varphi_n \sto \tau_x\varphi$ and $\varphi_n^\sim \sto \varphi^\sim$ in $\mathcal{D}$.
+	\end{rmk}
+	For $f \in L^1_{loc}$ and $\varphi \in \mathcal{D}$,
+	\begin{equation*}
+		(f * \varphi)(x) = \int_{\mathbb{R}^d} f(y) \psi(x-y) d y=\int_{\mathbb{R}^d} f(y)\left(\tau_x \psi^{\sim}\right)(y) d y=\left\langle f, \tau_x \psi^{\sim}\right\rangle
+	\end{equation*}
+	Based on this, for $T \in \mathcal{D}^\prime$ and $\psi \in \mathcal{D}$,
+	\begin{equation*}
+		(T * \psi)(x) = \inn{T, \tau_x \psi^{\sim}},\quad x \in \R^d
+	\end{equation*}
+	So by this definition, we have for any $f \in L^1_{loc}$ and $\varphi \in \mathcal{D}$,
+	\begin{equation*}
+		T_f * \varphi = f * \varphi
+	\end{equation*}
+	\begin{exam}
+		For any $\psi \in C^\infty(\R^d)$,
+		\begin{equation*}
+			(\delta * \psi)(x)=\left\langle\delta, \tau_x \psi^{\sim}\right\rangle=\left(\tau_x \psi^{\sim}\right)(0)=\psi^{\sim}(-x)=\psi(x)
+		\end{equation*}
+	\end{exam}
+
+	\begin{prop}\label{prop:convofdistri}
+		For any $T \in \mathcal{D}^\prime$ and $\psi \in \mathcal{D}$,
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $\tau_t(T*\psi) = T*(\tau_t\psi)$ for all $t$.
+			\item $T * \psi \in C^\infty$ and for any $\alpha$,
+			\begin{equation*}
+				\partial^\alpha(T*\psi) = (\partial^\alpha T) * \psi = T * (\partial^\alpha \psi)
+			\end{equation*}
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item By the definition, $(T * (\tau_t\psi))(x) = \inn{T, \tau_x(\tau_t\psi)^\sim}$.
+			\begin{equation*}
+				\left(\tau_x\left(\tau_t \psi\right)^{\sim}\right)(y)=\left(\tau_t \psi\right)^{\sim}(y-x)=\left(\tau_t \psi\right)(x-y)=\psi(x-y-t)=\left(\tau_{x-t} \psi^{\sim}\right)(y)
+			\end{equation*}
+			So we have
+			\begin{equation*}
+				\left\langle T, \tau_x\left(\tau_t \psi\right)^{\sim}\right\rangle=\left\langle T, \tau_{x-t} \psi^{\sim}\right\rangle=(T * \psi)(x-t)=\left(\tau_t(T * \psi)\right)(x)
+			\end{equation*}
+
+			\item First, for the second equality,
+			\begin{equation*}
+				\left(\left(\partial^\alpha T\right) * \psi\right)(x)=\left\langle\partial^\alpha T, \tau_x \psi^{\sim}\right\rangle=(-1)^{|\alpha|}\left\langle T, \partial^\alpha\left(\tau_x \psi^{\sim}\right)\right\rangle
+			\end{equation*}
+			and for $\partial^\alpha\left(\tau_x \psi^{\sim}\right)$,
+			\begin{equation*}
+				\partial^\alpha\left(\tau_x \psi^{\sim}\right)(y)=\partial^\alpha([y \mapsto \psi(x-y)])(y)=(-1)^{|\alpha|}\left(\partial^\alpha \psi\right)(x-y)=(-1)^{|\alpha|} \tau_x\left(\partial^\alpha \psi\right)^{\sim}(y)
+			\end{equation*}
+			So
+			\begin{equation*}
+				\left(\left(\partial^\alpha T\right) * \psi\right)(x) = \left\langle T, \tau_x\left(\partial^\alpha \psi\right)^{\sim}\right\rangle = \bc{T * (\partial^\alpha \psi)}(x)
+			\end{equation*}
+			Next, for the first equality, firstly note that it can prove $T*\psi \in C^\infty$. To prove the the first equality, it only needs to prove that for any directional derivative $D_e$ for a unit vector $e$. For $r \neq 0$, let $\eta_r=\left(\tau_{-r e}-\tau_0\right) / r$. Then as $r \sto 0$,
+			\begin{equation*}
+					\left(\eta_r \psi\right)(y)=\frac{\psi(y+r e)-\psi(y)}{r} \rightarrow\left(D_e \psi\right)(y)
+			\end{equation*}
+			and for any $\beta$,
+			\begin{equation*}
+				\partial^\beta\left(\eta_r \psi\right)(y)=\frac{\left(\partial^\beta \psi\right)(y+r e)-\left(\partial^\beta \psi\right)(y)}{r} \rightarrow\left(D_e \partial^\beta \psi\right)(y)=\partial^\beta\left(D_e \psi\right)(y)
+			\end{equation*}
+			Moreover, compactness of the support means that the convergence is uniform. Therefore, by the definition, $\eta_r \psi \sto D_e \psi$ in $\mathcal{D}$. And so $\tau_x\left(\eta_r \psi\right)^{\sim} \rightarrow \tau_x\left(D_e \psi\right)^{\sim}$. By the continuity of $T$,
+			\begin{equation*}
+				\left\langle T, \tau_x\left(\eta_r \psi\right)^{\sim}\right\rangle \rightarrow\left\langle T, \tau_x\left(D_e \psi\right)^{\sim}\right\rangle=\left(T *\left(D_e \psi\right)\right)(x)
+			\end{equation*}
+			where the left hand side is
+			\begin{equation*}
+				\left(T *\left(\eta_r \psi\right)\right)(x)=\left(\eta_r(T * \psi)\right)(x)=\frac{(T * \psi)(x+r e)-(T * \psi)(x)}{r} .
+			\end{equation*}
+			Therefore, as $r \sto 0$, we have
+			\begin{equation*}
+				D_e(T * \psi)=T *\left(D_e \psi\right)
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+	
+	For any $f \in L^1_{loc}(\R^d)$ and $\varphi,\psi \in \mathcal{D}$,
+	\begin{equation*}
+		\begin{aligned}
+			\langle f * \psi, \varphi\rangle & =\int_{\mathbb{R}^d}(f * \psi)(x) \varphi(x) d x=\int_{\mathbb{R}^d} \int_{\mathbb{R}^d} f(y) \psi(x-y) \varphi(x) d y d x \\
+			& =\int_{\mathbb{P}_d} f(y)\left(\psi^{\sim} * \varphi\right)(y) d y=\left\langle f, \psi^{\sim} * \varphi\right\rangle
+		\end{aligned}
+	\end{equation*}
+	This result can be extended to $\mathcal{D}^\prime$.
+	\begin{prop}
+		For any $T \in \mathcal{D}^\prime$ and $\varphi,\psi \in \mathcal{D}$,
+		\begin{equation*}
+			\langle T * \psi, \varphi\rangle=\left\langle T, \psi^{\sim} * \varphi\right\rangle
+		\end{equation*}
+		Note that because $T * \psi \in C^\infty$, this $\inn{\cdot,\cdot}$ is the integral.
+	\end{prop}
+
+	\begin{proof}
+		Let
+		\begin{equation*}
+			S_{\varepsilon}(x)=\varepsilon^d \sum_{v \in \mathbb{Z}^d} \psi^{\sim}(x-\varepsilon v) \varphi(\varepsilon v)
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\left(\psi^{\sim} * \varphi\right)(x)=\int_{\mathbb{R}^d} \psi^{\sim}(x-y) \varphi(y) d y=\lim _{\varepsilon \rightarrow 0} S_{\varepsilon}(x)
+		\end{equation*}
+		and for any $\alpha$,
+		\begin{equation*}
+			\partial^\alpha S_{\varepsilon}(x)=\varepsilon^d \sum_{v \in \mathbb{Z}^d} \partial^\alpha\left(\psi^{\sim}\right)(x-\varepsilon v) \varphi(\varepsilon v) \rightarrow \int_{\mathbb{R}^d} \partial^\alpha\left(\psi^{\sim}\right)(x-y) \varphi(y) d y=\left(\left(\partial^\alpha\left(\psi^{\sim}\right)\right) * \varphi\right)(x)
+		\end{equation*}
+		so $S_\varepsilon \sto \psi^{\sim} * \varphi$ in $\mathcal{D}$. And thus
+		\begin{equation*}
+			\left\langle T, S_{\varepsilon}\right\rangle \rightarrow\left\langle T, \psi^{\sim} * \varphi\right\rangle
+		\end{equation*}
+		On the other hand,
+		\begin{equation*}
+			\begin{aligned}
+				\left\langle T, S_{\varepsilon}\right\rangle & =\varepsilon^d \sum_{v \in \mathbb{Z}^d}\left\langle T, \tau_{\varepsilon v} \psi^{\sim}\right\rangle \varphi(\varepsilon v)=\varepsilon^d \sum_{v \in \mathbb{Z}^d}(T * \psi)(\varepsilon v) \varphi(\varepsilon v) \\
+				& \rightarrow \int_{\mathbb{R}^d}(T * \psi)(y) \varphi(y) d y=\langle T * \psi, \varphi\rangle
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\item Support of Distribution: Generally, the support of $f$ on $\R^d$ is the complementary of the maximal open set $U$ such that $\lv{f}_U = 0$, \emph{i.e.}
+	\begin{equation*}
+		\supp f \defeq \R^d \backslash \bigcup_{U \text{ open}} \bb{\lv{f}_U = 0}
+	\end{equation*}
+	For any open $U \subset \R^d$, let
+	\begin{equation*}
+		\mathcal{D}(U)=\{\varphi \in \mathcal{D} \mid \operatorname{supp} \varphi \subset U\}
+	\end{equation*}
+	Let $T \in \mathcal{D}^\prime$.
+	\begin{equation*}
+		\mathcal{U}(T) \defeq \bb{U \subset_\text{open} \R^d \colon \forall~\varphi \in \mathcal{D}(U),~\inn{T,\varphi} = 0}
+	\end{equation*}
+	Then the support of $T$ is defined as
+	\begin{equation*}
+		\supp T \defeq \R^d \backslash \bigcup \mathcal{U}(T)
+	\end{equation*}
+	\begin{rmk}
+		For $f \in L^1_{loc}(\R^d)$, 
+		\begin{equation*}
+			\supp T_f = \supp f
+		\end{equation*}
+		which is because, first for $U$ with $\lv{f}_U =0$, clearly we have $\inn{T_f, \varphi} = 0$ for any $\varphi \in \mathcal{D}(U)$, and conversely, for $U$ with $\inn{T_f, \varphi} = 0$ for any $\varphi \in \mathcal{D}(U)$, then $\lv{f}_U =0$.
+	\end{rmk}
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$. If for any $\lambda \in \Lambda$, $U_\lambda \in \mathcal{U}(T)$, then $\bigcup_{\lambda \in \Lambda}U_\lambda \in \mathcal{U}(T)$.
+	\end{prop}
+	\begin{proof}
+		Let $U = \bigcup_{\lambda \in \Lambda}U_\lambda$. For $\bc{U_\lambda}_{\lambda \in \Lambda}$, choose a partition of unity $\bc{\psi_\lambda}_{\lambda \in \Lambda}$. Then for $\varphi \in \mathcal{U}$, because $\supp \varphi$ is compact, there is $\lambda_1,\cdots,\lambda_n \in \Lambda$ such that
+		\begin{equation*}
+			\varphi = \sum_{i=1}^n \varphi \psi_{\lambda_i}
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\inn{T,\varphi} = \sum_{i=1}^n \inn{T,\varphi \psi_{\lambda_i}} = 0
+		\end{equation*}
+		by $\supp \psi_{\lambda_i} \subset U_{\lambda_i} \in \mathcal{U}(T)$.
+	\end{proof}
+
+	For example, $\supp \delta = \bb{0}$.
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $\varphi \in \mathcal{D}$ with $\varphi = 0$ near around $\supp T$, then $\inn{T,\varphi} = 0$.
+			\item For any $\alpha$, $\supp \partial^\alpha T \subset \supp T$.
+			\item For any $\psi \in \mathcal{D}$,
+			\begin{equation*}
+				\operatorname{supp}(T * \psi) \subset \operatorname{supp} T+\operatorname{supp} \psi \text {. }
+			\end{equation*}
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		Let $U = \bigcup \mathcal{U}(T) = \R^d \backslash \supp T$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Assume open $V$ contains $\supp T$ such that $\supp \varphi \subset \R^d \backslash V$. So for any $x \in \R^d \backslash V$, choose open $U_x \cap \supp T =\varnothing$. Let
+			\begin{equation*}
+				U_1 \defeq \bigcup_{x \in \R^d \backslash V}U_x \subset U
+			\end{equation*}
+			Then $\supp \varphi \subset U_1 \subset U$. So $\inn{T,\varphi} = 0$.
+
+			\item First, for any $\varphi \subset \mathcal{D}(U)$, $\partial^\alpha \varphi \in \mathcal{D}(U)$, then
+			\begin{equation*}
+				\left\langle\partial^\alpha T, \varphi\right\rangle=(-1)^{|\alpha|}\left\langle T, \partial^\alpha \varphi\right\rangle=0
+			\end{equation*}
+			So $U \in \mathcal{U}(\partial^\alpha T)$.
+
+			\item For $x \in \R^d$ with $(T * \psi)(x)=\left\langle T, \tau_x \psi^{\sim}\right\rangle \neq 0$, by $(1)$
+			\begin{equation*}
+				\operatorname{supp} T \cap \operatorname{supp}\left(\tau_x \psi^{\sim}\right) \neq \varnothing
+			\end{equation*}
+			So there is a $y \in \operatorname{supp} T \cap \operatorname{supp}\left(\tau_x \psi^{\sim}\right)$. And $y \in \operatorname{supp}\left(\tau_x \psi^{\sim}\right)$ implies $x - y \in \supp \psi$. Therefore,
+			\begin{equation*}
+				x \in y + \supp \psi \subset \supp T + \supp \psi
+			\end{equation*}
+			And the closedness of $\supp T + \supp \psi$ is by the compactness of $\supp T$ and $\supp \psi$.
+		\end{enumerate}
+		Note that if $A,B \subset \R^d$ are compact, then $A+B$ is closed.
+	\end{proof}
+
+	\item Distributions with Compact Support: 
+	\begin{prop}
+		Linear map $T \colon \mathcal{D} \sto \C$ is continuous if and only if for any compact $K \subset \R^d$, there is a $C > 0$ and $N \in \N$ such that for any $\varphi \in \mathcal{D}$ with $\supp \varphi \subset K$ we have
+		\begin{equation*}
+			|\langle T, \varphi\rangle| \leq C \sum_{|\alpha| \leq N}\left\|\partial^\alpha \varphi\right\|_{\infty}
+		\end{equation*}
+	\end{prop}
+	\begin{rmk}
+		This result can be obtained from the general result of the theory of locally convex topological vector space.
+	\end{rmk}
+
+	\begin{lem}
+		Assume $\psi_n \sto \psi$ in $\mathcal{D}$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item For any $R \in \mathcal{D}^\prime$ with compact support, $R*\psi_n \sto R*\psi$ in $\mathcal{D}$.
+			\item For any $R \in \mathcal{D}^\prime$ and $\eta \in \mathcal{D}$, $\eta(R*\psi_n)\sto \eta(R*\psi)$ in $\mathcal{D}$.
+		\end{enumerate}
+	\end{lem}
+	\begin{proof}
+		$\psi_n \sto \psi$ in $\mathcal{D}$ implies that there is a compact $K$ such that $\supp \psi_n, \supp \psi \in K$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Because $\supp R$ is compact, 
+			\begin{equation*}
+				\supp R*\psi_n, \supp R*\psi \in K + \supp R
+			\end{equation*}
+			Besides, for any $x \in K + \supp R$ and $\alpha$,
+			\begin{equation*}
+				\begin{aligned}
+					& \left|\partial^\alpha\left(R * \psi_n\right)(x)-\partial^\alpha(R * \psi)(x)\right|=\left|\left(R *\left(\partial^\alpha \psi_n\right)\right)(x)-\left(R *\left(\partial^\alpha \psi\right)\right)(x)\right| \\
+					& =\left|\left\langle R, \tau_x\left(\partial^\alpha \psi_n-\partial^\alpha \psi\right)^{\sim}\right\rangle\right| \leq C \sum_{|\beta| \leq N}\left\|\partial^\beta\left(\tau_x\left(\partial^\alpha \psi_n-\partial^\alpha \psi\right)^{\sim}\right)\right\|_{\infty} \\
+					& =C \sum_{|\beta| \leq N}\left\|\partial^{\alpha+\beta} \psi_n-\partial^{\alpha+\beta} \psi\right\|_{\infty} \rightarrow 0 .
+				\end{aligned}
+			\end{equation*}
+			where $C$ is independent with $x$, so it is uniform. 
+
+			\item For any $x \in \supp \eta$ and $\alpha$,
+			\begin{equation*}
+				\begin{aligned}
+					& \left|\partial^\alpha\left(\eta\left(R * \psi_n\right)\right)(x)-\partial^\alpha(\eta(R * \psi))(x)\right| \\
+					& =\sum_{\alpha_1+\alpha_2=\alpha} c_{\alpha_1 \alpha_2}\left|\left(\partial^{\alpha_1} \eta\right)(x)\right|\left|\partial^{\alpha_2}\left(R * \psi_n\right)(x)-\partial^{\alpha_2}(R * \psi)(x)\right| \\
+					& \leq \sum_{\alpha_1+\alpha_2=\alpha} c_{\alpha_1 \alpha_2}\left\|\partial^{\alpha_1} \eta\right\|_{\infty} C \sum_{|\beta| \leq N}\left\|\partial^{\alpha_2+\beta} \psi_n-\partial^{\alpha_2+\beta} \psi\right\|_{\infty} \rightarrow 0 .
+				\end{aligned}
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+
+	For $T \in \mathcal{D}^\prime$, define $T^\sim \in \mathcal{D}^\prime$ as
+	\begin{equation*}
+		\left\langle T^{\sim}, \varphi\right\rangle=\left\langle T, \varphi^{\sim}\right\rangle, \quad \varphi \in \mathcal{D}
+	\end{equation*}
+	By this definition, we have $T_f^\sim = T_{f^\sim}$ for any $f \in L^1_{loc}$. And we have $\supp T^\sim = - \supp T$, like the usual function.
+
+	\begin{prop}
+		For any $\varphi,\psi \in \mathcal{D}$ and $T \in \mathcal{D}^\prime$, we have
+		\begin{enumerate}
+			\item $T^{\sim} * \psi^{\sim}=(T * \psi)^{\sim}$.
+			\item $(T * \psi) * \varphi=T *(\psi * \varphi)$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}
+			\item For $x \in \R^d$,
+			\begin{equation*}
+				\left(\tau_x \psi\right)^{\sim}(y)=\left(\tau_x \psi\right)(-y)=\psi(-y-x)=\psi^{\sim}(x+y)=\left(\tau_{-x} \psi^{\sim}\right)(y)
+			\end{equation*}
+			so
+			\begin{equation*}
+				\left(T^{\sim}{ }_* \psi^{\sim}\right)(x)=\left\langle T^{\sim}, \tau_x \psi\right\rangle=\left\langle T, \tau_{-x} \psi^{\sim}\right\rangle=(T * \psi)(-x)=(T * \psi)^{\sim}(x)
+			\end{equation*}
+
+			\item For $x \in \R^d$,
+			\begin{equation*}
+				((T * \psi) * \varphi)(x)=\left\langle T * \psi, \tau_x \varphi^{\sim}\right\rangle=\left\langle T, \psi^{\sim} *\left(\tau_x \varphi^{\sim}\right)\right\rangle
+			\end{equation*}
+			On the other hand,
+			\begin{equation*}
+				\begin{aligned}
+					\psi^{\sim} *\left(\tau_x \varphi^{\sim}\right) & =\int_{\mathbb{R}^d} \psi^{\sim}(\cdot-y) \varphi^{\sim}(y-x) d y=\int_{\mathbb{R}^d} \psi^{\sim}(\cdot-x-y) \varphi^{\sim}(y) d y \\
+					& =\tau_x\left(\psi^{\sim} * \varphi^{\sim}\right)=\tau_x\left((\psi * \varphi)^{\sim}\right)
+				\end{aligned}
+			\end{equation*}
+			So we have the desired equality.
+		\end{enumerate}
+	\end{proof}
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$ with compact support.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Extending $T$ to a linear map $\bar{T} \colon C^\infty(\R^d) \sto \C$ by
+			\begin{equation*}
+				\inn{\bar{T},\varphi} = \inn{T,\eta \varphi},\quad \varphi \in C^\infty(\R^d)
+			\end{equation*}
+			where $\eta \in \mathcal{D}$ such that $\eta = 1$ near around $\supp T$. Note that this extension is independent with the choice of $\eta$.
+
+			\item If $\varphi,\psi \in C^\infty(\R^d)$ with $\varphi = \psi$ near around $\supp T$, then $\inn{\bar{T},\varphi} = \inn{\bar{T},\psi}$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}
+			\item First, for $\varphi \in \mathcal{D}$, $\varphi - \eta \varphi = 0$ near around $\supp T$. So $\langle T, \varphi\rangle=\langle T, \eta \varphi\rangle$, and it is an extension.
+
+			\noindent If $\eta, \zeta = 1$ near around $\supp T$, then $\eta \varphi-\zeta \varphi = 0$ near around $\supp T$. So $\langle T, \eta \varphi\rangle=\langle T, \zeta \varphi\rangle$.
+
+			\item Similarly, $\eta \varphi-\eta \psi = 0$ near around $\supp T$.
+		\end{enumerate}
+	\end{proof}
+
+	For $T,S \in \mathcal{D}^\prime$, define $T * S \in \mathcal{D}^\prime$ as
+	\begin{enumerate}[label=(\arabic{*})]
+		\item when $\supp S$ is compact, 
+		\begin{equation*}
+			\langle T * S, \varphi\rangle=\left\langle T, S^{\sim} * \varphi\right\rangle, \quad \varphi \in \mathcal{D}
+		\end{equation*}
+		where the compactness of $\supp S$ implies $S^\sim *\varphi \in \mathcal{D}$.
+
+		\item when $\supp T$ is compact, consider $\bar{T}$ on $C^\infty(\R^d)$,
+		\begin{equation*}
+			\langle T * S, \varphi\rangle=\left\langle\bar{T}, S^{\sim} * \varphi\right\rangle, \quad \varphi \in \mathcal{D}
+		\end{equation*}
+	\end{enumerate}
+	By this definition, we can see
+	\begin{enumerate}[label=(\alph*)]
+		\item For $f \in L^1_{loc}$ and $\varphi \in \mathcal{D}$ ,then $\supp T_\varphi = \supp \varphi$ is compact and
+		\begin{equation*}
+			T_f * T_\varphi = T_{f * \varphi}
+		\end{equation*}
+
+		\item More generally, for $T \in \mathcal{D}^\prime$ and $\varphi \in \mathcal{D}$, we have
+		\begin{equation*}
+			T * T_{\varphi} = T_{T *\varphi}
+		\end{equation*}
+
+		\item For any $T \in \mathcal{D}^\prime$,
+		\begin{equation*}
+			\langle T * \delta, \varphi\rangle=\left\langle T, \delta^{\sim} * \varphi\right\rangle=\langle T, \delta * \varphi\rangle=\langle T, \varphi\rangle,\quad \varphi \in \mathcal{D}
+		\end{equation*}
+	\end{enumerate}
+
+	\begin{prop}
+		For $T,S \in \mathcal{D}^\prime$, if $S$ or $T$ has the compact support, then
+		\begin{equation*}
+			T*S = S*T
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		First, for $\varphi,\psi \in \mathcal{D}$, check
+		\begin{equation*}
+			\langle T * S, \varphi * \psi\rangle=\langle S * T, \varphi * \psi\rangle
+		\end{equation*}
+		Assume $S$ has the compact support and $\supp S \subset U \subset K$ for open $U$ and compact $K$. 
+		\begin{equation*}
+			\begin{aligned}
+				\langle T * S, \varphi * \psi\rangle & =\left\langle T, S^{\sim} *(\varphi * \psi)\right\rangle=\left\langle T,\left(S^{\sim} * \varphi\right) * \psi\right\rangle=\left\langle T, \psi *\left(S^{\sim} * \varphi\right)\right\rangle \\
+				& =\left\langle T * \psi^{\sim}, S^{\sim} * \varphi\right\rangle=\left\langle T^{\sim} * \psi, S * \varphi^{\sim}\right\rangle
+			\end{aligned}
+		\end{equation*}
+		Let $\eta \in \mathcal{D}$ such that $\eta = 1$ near around $K - \supp \varphi$. Because
+		\begin{equation*}
+			\operatorname{supp}\left(S * \varphi^{\sim}\right) \subset K+\operatorname{supp} \varphi^\sim = K-\operatorname{supp} \varphi
+		\end{equation*}
+		we have
+		\begin{equation*}
+			\left\langle S * \varphi^{\sim}, \eta\left(T^{\sim} * \psi\right)\right\rangle=\left\langle S, \varphi *\left(\eta\left(T^{\sim} * \psi\right)\right)\right\rangle=\left\langle S,\left(\eta\left(T^{\sim}{ }_* * \psi\right)\right) * \varphi\right\rangle
+		\end{equation*}
+		For any $x \in K$,
+		\begin{equation*}
+			\left(\left(\eta\left(T^{\sim} * \psi\right)\right) * \varphi\right)(x)=\int_{\operatorname{supp} \varphi} \underbrace{\eta(x-y)}_{=1}\left(T^{\sim} * \psi\right)(x-y) \varphi(y) d y=\left(\left(T^{\sim} * \psi\right) * \varphi\right)(x)
+		\end{equation*}
+		Therefore, On $U$, $\left(\eta\left(T^{\sim} * \psi\right)\right) * \varphi =\left(T^{\sim} * \psi\right) * \varphi$. Then consider the extension of $S$,
+		\begin{equation*}
+			\begin{aligned}
+				\left\langle S,\left(\eta\left(T^{\sim} * \psi\right)\right) * \varphi\right\rangle & =\left\langle\bar{S},\left(T^{\sim} * \psi\right) * \varphi\right\rangle=\left\langle\bar{S}, T^{\sim} *(\psi * \varphi)\right\rangle=\langle S * T, \psi * \varphi\rangle \\
+				& =\langle S * T, \varphi * \psi\rangle .
+			\end{aligned}
+		\end{equation*}
+
+		\noindent Next, $\bb{\varphi * \psi \colon \varphi,\psi \in \mathcal{D}}$ is dense in $\mathcal{D}$. For $\varphi \in \mathcal{D}$ with $\int_{\R^d} \varphi(x) dx = 1$, let
+		\begin{equation*}
+			\varphi_n(x) = n^d\varphi(nx)
+		\end{equation*}
+		Then $(\varphi_n)_{n \in \N}$ is a summability kernel. So for any $\psi \in \mathcal{D}$, $\varphi_n * \psi \sto \psi$ in $\mathcal{D}$. By the continuity of $T*S$ and $S*T$,
+		\begin{equation*}
+			\langle T * S, \psi\rangle=\langle S * T, \psi\rangle
+		\end{equation*}
+		Therefore $T*S =S*T$.
+	\end{proof}
+	By this, we get $T * \delta=T=\delta * T$ for all $T \in \mathcal{D}^\prime$.
+
+	\begin{prop}
+		For $T,S \in \mathcal{D}^\prime$, assume $T$ or $S$ has the compact support. Then for any $\alpha$,
+		\begin{equation*}
+			\partial^\alpha(T * S)=\left(\partial^\alpha T\right) * S=T *\left(\partial^\alpha S\right)
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		Assume $S$ has the compact support. For any $\varphi \in \mathcal{D}$,
+		\begin{equation*}
+			\left\langle\partial^\alpha(T * S), \varphi\right\rangle=(-1)^{|\alpha|}\left\langle T * S, \partial^\alpha \varphi\right\rangle=(-1)^{|\alpha|}\left\langle T, S^{\sim} *\left(\partial^\alpha \varphi\right)\right\rangle
+		\end{equation*}
+		Because $S^{\sim} *\left(\partial^\alpha \varphi\right)=\partial^\alpha\left(S^{\sim} * \varphi\right)$, the right hand side is
+		\begin{equation*}
+			(-1)^{|\alpha|}\left\langle T, \partial^\alpha\left(S^{\sim} * \varphi\right)\right\rangle=\left\langle\partial^\alpha T, S^{\sim} * \varphi\right\rangle=\left\langle\left(\partial^\alpha T\right) * S, \varphi\right\rangle
+		\end{equation*}
+		So the first equality is obtained. Besides, for $\psi \in \mathcal{D}$,
+		\begin{equation*}
+			\begin{aligned}
+				\left\langle\partial^\alpha\left(S^{\sim}\right), \psi\right\rangle & =(-1)^{|\alpha|}\left\langle S^{\sim}, \partial^\alpha \psi\right\rangle=(-1)^{|\alpha|}\left\langle S,\left(\partial^\alpha \psi\right)^{\sim}\right\rangle=\left\langle S, \partial^\alpha\left(\psi^{\sim}\right)\right\rangle \\
+				& =(-1)^{|\alpha|}\left\langle\partial^\alpha S, \psi^{\sim}\right\rangle=(-1)^{|\alpha|}\left\langle\left(\partial^\alpha S\right)^{\sim}, \psi\right\rangle
+			\end{aligned}
+		\end{equation*}
+		so $\partial^\alpha\left(S^{\sim}\right)=(-1)^{|\alpha|}\left(\partial^\alpha S\right)^{\sim}$. And by $S^{\sim} *\left(\partial^\alpha \varphi\right)=\left(\partial^\alpha\left(S^{\sim}\right)\right) * \varphi$, 
+		\begin{equation*}
+			(-1)^{|\alpha|}\left\langle T, S^{\sim} *\left(\partial^\alpha \varphi\right)\right\rangle= (-1)^{|\alpha|}\left\langle T,\left(\partial^\alpha\left(S^{\sim}\right)\right) * \varphi\right\rangle=\left\langle T,\left(\partial^\alpha S\right)^{\sim} * \varphi\right\rangle=\left\langle T *\left(\partial^\alpha S\right), \varphi\right\rangle .
+		\end{equation*}
+	\end{proof}
+
+	\begin{prop}
+		For $T,S \in \mathcal{D}^\prime$, assume $T$ or $S$ has the compact support. Then
+		\begin{equation*}
+			\operatorname{supp}(T * S) \subset \operatorname{supp} T+\operatorname{supp} S
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		Only need to prove for $\varphi \in \mathcal{D}$ with $\supp \varphi \cap (\operatorname{supp} T+\operatorname{supp} S) = \varnothing$, which implies $\supp T \cap (\supp \varphi - \supp S) = \varnothing$, we have $\inn{T*S,\varphi} = 0$. First, we have
+		\begin{equation*}
+			\operatorname{supp}\left(S^{\sim} * \varphi\right) \subset \operatorname{supp} S^{\sim}+\operatorname{supp} \varphi=\operatorname{supp} \varphi-\operatorname{supp} S
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\langle T * S, \varphi\rangle=\left\langle\bar{T}, S^{\sim} * \varphi\right\rangle=0
+		\end{equation*}
+	\end{proof}
+
+	\item Order of Distribution: Let $T \in \mathcal{D}$. We say $T$ has the order $N \in \N$ if there is a $C > 0$ such that for any $\varphi \in \mathcal{D}$
+	\begin{equation*}
+		|\langle T, \varphi\rangle| \leq C \sum_{|\alpha| \leq N}\left\|\partial^\alpha \varphi\right\|_{\infty}
+	\end{equation*}
+
+	\begin{exam}
+		Let $f \in L^1(\R^d)$. For any $\varphi \in \mathbb{D}$,
+		\begin{equation*}
+			\left|\left\langle\partial^\alpha f, \varphi\right\rangle\right| \leq\|f\|_1\left\|\partial^\alpha \varphi\right\|_{\infty}
+		\end{equation*}
+		Therefore, $\partial^\alpha f$ has the order $\abs{\alpha}$.
+	\end{exam}
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$ with the compact support. Then there is an $N \in \N$ such that $T$ has the order $N$.
+	\end{prop}
+	\begin{proof}
+		Let $\supp T \subset U \subset K$ for open $U$ and compact $K$. Then there is an $\eta \in \mathcal{D}$ such that $\eta = 1$ on $U$ and $\eta = 0$ on $\R^d \backslash K$. First, for $\varphi \in \mathcal{D}$ with $\supp \varphi \subset K$, by the continuity of $T$, there is a $C > 0$ and $N \in \N$ such that
+		\begin{equation*}
+			|\langle T, \varphi\rangle| \leq C \sum_{|\alpha| \leq N}\left\|\partial^\alpha \varphi\right\|_{\infty} .
+		\end{equation*}
+		For genera $\varphi \in \mathcal{D}$, because $\supp \eta \varphi \subset K$,
+		\begin{equation*}
+			|\langle T, \varphi\rangle|=|\langle T, \eta \varphi\rangle| \leq C \sum_{|\alpha| \leq N}\left\|\partial^\alpha(\eta \varphi)\right\|_{\infty} \leq C \sum_{|\alpha| \leq N} \sum_{\alpha_1+\alpha_2=\alpha} c_{\alpha_1 \alpha_2}\left\|\partial^{\alpha_1} \eta\right\|_{\infty}\left\|\partial^{\alpha_2} \varphi\right\|_{\infty} .
+		\end{equation*}
+	\end{proof}
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$ with compact support and let its order be $N$. Then for any $f \in C^N(\R^d)$, $T * f \in \mathcal{D}^\prime$ is a continuous function on $\R^d$.
+	\end{prop}
+	\begin{proof}
+		Let $\psi \in \mathcal{D}$ with $\int_{\R^d}\psi(x)dx = 1$ and define $\psi_n(x) = n^d\psi(nx)$. Then $(\psi_n)_{n \in \N}$ is a summability kernel. For $x \in \R^d$, define
+		\begin{equation*}
+			F_n(x)=\left\langle\bar{T}, \tau_x\left(\psi_n * f\right)^{\sim}\right\rangle
+		\end{equation*}
+		Note that $\tau_x\left(\psi_n * f\right)^{\sim} \in C^\infty$ and there is a $\eta \in \mathcal{D}$ with $\eta = 1$ near $\supp T$ such that
+		\begin{equation*}
+			\langle\bar{T}, \varphi\rangle=\langle T, \eta \varphi\rangle, \quad \varphi \in C^{\infty}\left(\mathbb{R}^d\right)
+		\end{equation*}
+		\begin{enumerate}
+			\item Limits and continuity: First, since $T$ has the order $N$, there is a $C > 0$ such that
+			\begin{equation*}
+				\left|F_n(x)-F_m(x)\right| \leq C \sum_{|\alpha| \leq N}\left\|\partial^\alpha\left(\eta \tau_x\left(\psi_n * f\right)^{\sim}\right)-\partial^\alpha\left(\eta \tau_x\left(\psi_m * f\right)^{\sim}\right)\right\|_{\infty} = \text{\RNum{1}}
+			\end{equation*}
+			By $\left(\psi_n * f\right)^{\sim}=\psi_n^{\sim} * f^{\sim}$, we have
+			\begin{equation*}
+				\partial^\alpha\left(\eta \tau_x\left(\psi_n * f\right)^{\sim}\right)=\sum_{\alpha_1+\alpha_2=\alpha} c_{\alpha_1 \alpha_2}\left(\partial^{\alpha_1} \eta\right) \partial^{\alpha_2}\left[\tau_x\left(\psi_n^{\sim} * f^{\sim}\right)\right]
+			\end{equation*}
+			And because $, \partial^{\alpha_2}\left[\tau_x\left(\psi_n^{\sim} * f^{\sim}\right)\right]=\tau_x \partial^{\alpha_2}\left(\psi_n^{\sim} * f^{\sim}\right)=\tau_x\left(\psi_n^{\sim} * \partial^{\alpha_2}\left(f^{\sim}\right)\right)$,
+			\begin{equation*}
+				\text{\RNum{1}} \leq C \sum_{|\alpha| \leq N} \sum_{\alpha_1+\alpha_2=\alpha} c_{\alpha_1 \alpha_2}\left\|\left(\partial^{\alpha_1} \eta\right) \tau_x\left(\psi_n^{\sim} * \partial^{\alpha_2}\left(f^{\sim}\right)-\psi_m^{\sim} * \partial^{\alpha_2}\left(f^{\sim}\right)\right)\right\|_{\infty}
+			\end{equation*}
+			Because $\psi_n^{\sim} *  g \sto g$ uniformly on $\R^d$, as $n,m \sto \infty$, the right hand side converges to $0$ uniformly. Therefore, 
+			\begin{equation*}
+				F(x) = \lim_{n \sto \infty}F_n(x)
+			\end{equation*}
+			uniformly. And the continuity of $F_n(x)$ implies the continuity of $F(x)$.
+
+			\item Check: $T * f = F$, \emph{i.e.} for any $\varphi \in \mathcal{D}$,
+			\begin{equation*}
+				\left\langle T, \eta\left(f^{\sim} * \varphi\right)\right\rangle=\langle F, \varphi\rangle
+			\end{equation*}
+			For $\varepsilon > 0$,
+			\begin{equation*}
+				S_{n, \varepsilon}(x)=\varepsilon^d \sum_{v \in \mathbb{Z}^d} \eta(x)\left(\psi_n * f\right)^{\sim}(x-\varepsilon v) \varphi(\varepsilon v)
+			\end{equation*}
+			Then
+			\begin{equation*}
+				\begin{aligned}
+					\left\langle T, S_{n, \varepsilon}\right\rangle & =\varepsilon^d \sum_{v \in \mathbb{Z}^d}\left\langle T, \eta \tau_{\varepsilon v}\left(\psi_n * f\right)^{\sim}\right\rangle \varphi(\varepsilon v) \\
+					& =\varepsilon^d \sum_{v \in \mathbb{Z}^d} F_n(\varepsilon v) \varphi(\varepsilon v) \underset{n \rightarrow \infty}{\rightarrow} \varepsilon^d \sum_{v \in \mathbb{Z}^d} F(\varepsilon v) \varphi(\varepsilon v) \underset{\varepsilon \rightarrow 0}{\rightarrow}\langle F, \varphi\rangle .
+				\end{aligned}
+			\end{equation*}
+			On the other hand, for any $x \in \R^d$,
+			\begin{equation*}
+				S_{n, \varepsilon}(x) \underset{\varepsilon \rightarrow 0}{\rightarrow} \eta(x)\left(\left(\psi_n * f\right)^{\sim} * \varphi\right)(x)
+			\end{equation*}
+			And for $x \in \supp \eta$, above convergence is uniform and for all $\beta$ with $\abs{\beta} \leq N$,
+			\begin{equation*}
+				\partial^\beta S_{n, \varepsilon} \sto \partial^\beta\left(\eta\left(\left(\psi_n * f\right)^{\sim} * \varphi\right)\right)
+			\end{equation*}
+			converges uniformly. And because $T$ has order $N$,
+			\begin{equation*}
+				\left\langle T, S_{n, \varepsilon}\right\rangle \underset{\varepsilon \rightarrow 0}{\rightarrow}\left\langle T, \eta\left(\left(\psi_n * f\right)^{\sim} * \varphi\right)\right\rangle
+			\end{equation*}
+			uniformly. And by $\left(\psi_n * f\right)^{\sim}\sto f^{\sim}$ uniformly,
+			\begin{equation*}
+				\left\langle T, \eta\left(\left(\psi_n * f\right)^{\sim} * \varphi\right)\right\rangle \underset{n \rightarrow \infty}{\rightarrow}\left\langle T, \eta\left(f^{\sim} * \varphi\right)\right\rangle .
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+
+	\begin{thm}
+		Let $T \in \mathcal{D}^\prime$ with compact support and order $N$. Then there is a continuous function $g$ such that
+		\begin{equation*}
+			\partial_1^{N+2} \partial_2^{N+2} \cdots \partial_d^{N+2} g=T
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		For $x=\left(x_1, \ldots, x_d\right) \in \mathbb{R}^d$, define $E(x)$ as
+		\begin{equation*}
+			E(x)= \begin{cases}x_1^{N+1} \cdots x_d^{N+1} /((N+1)!)^d & x_i > 0,~\forall~i, \\ 0, & \text {others}\end{cases}
+		\end{equation*}
+		Then $E \in C^N$ and
+		\begin{equation*}
+			\partial_1^{N+2} \cdots \partial_d^{N+2} E=\delta
+		\end{equation*}
+		Let $g = T * E$. Then by above, $g$ is continuous and
+		\begin{equation*}
+			\partial_1^{N+2} \cdots \partial_d^{N+2} g=T *\left(\partial_1^{N+2} \cdots \partial_d^{N+2} E\right)=T * \delta=T .
+		\end{equation*}
+	\end{proof}
+
+	\begin{cor}
+		\begin{enumerate}
+			\item Let $T \in \mathcal{D}^\prime$ that has the form as the derivatives of continuous function. Then for any open $U \subset \R^d$, there are a continuous function $f$ and $\alpha$ such that for any $\varphi \in \mathcal{D}(U)$,
+			\begin{equation*}
+				\langle T, \varphi\rangle=\left\langle\partial^\alpha f, \varphi\right\rangle
+			\end{equation*}
+			\item Let $T \in \mathcal{D}^\prime$ with compact support. If $\supp T \subset U$ open, then there are continuous $f_1,\cdots,f_n$ and $\alpha_1,\cdots,\alpha_n$ such that $\supp f_k \subset U$ and
+			\begin{equation*}
+				T=\sum_{k=1}^n \partial^{\alpha_k} f_k
+			\end{equation*}
+		\end{enumerate}
+	\end{cor}
+	\begin{proof}
+		\begin{enumerate}
+			\item Choose $\eta \in \mathcal{D}$ with $\eta = 1$ on $U$ and $\langle S, \varphi\rangle=\langle T, \eta \varphi\rangle$. Then it can be obtained by above theorem.
+
+			\item Generally, for $\eta \in C^\infty$ and $T \in \mathcal{D}^\prime$, we have
+			\begin{equation*}
+				\eta\left(\partial^\beta T\right)=\sum_{\alpha \leq \beta}(-1)^{|\alpha|} \frac{\beta!}{(\beta-\alpha)!\alpha!} \partial^{\beta-\alpha}\left(\left(\partial^\alpha \eta\right) T\right)
+			\end{equation*}
+			Let $\eta \in \mathcal{D}$ with $\eta = 1$ on $\supp T$. Because $T=\partial^\beta g$, 
+			\begin{equation*}
+				T=\eta\left(\partial^\beta g\right)=\sum_{\alpha<\beta} c_{\alpha \beta} \partial^{\beta-\alpha}\left(\left(\partial^\alpha \eta\right) g\right)
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+
+	\begin{thm}
+		Let $T \in \mathcal{D}^\prime$ with $\supp T =\bb{0}$. Then there is a $N \in \N$ such that
+		\begin{equation*}
+			T=\sum_{|\alpha| \leq N} a_\alpha \partial^\alpha \delta
+		\end{equation*}
+	\end{thm}
+\end{enumerate}
+
+\section{Fourier Analysis on Distributions}
+\begin{enumerate}
+	\item Tempered Distributions: For any $f \in L^1(\R^d)$ and $\varphi \in \mathcal{S}$, by the Fubini's theorem,
+	\begin{equation*}
+		\int_{\mathbb{R}^d} \widehat{f}(y) \varphi(y) d y=\int_{\mathbb{R}^d \times \mathbb{R}^d} f(x) \varphi(y) e^{-i y \cdot x} d x d y=\int_{\mathbb{R}^d} f(x) \widehat{\varphi}(x) d x
+	\end{equation*}
+	So we have $\langle\widehat{f}, \varphi\rangle=\langle f, \widehat{\varphi}\rangle$. Motivated by this, for $T \in \mathcal{D}$, its Fourier transform $\widehat{T}$ is defined
+	\begin{equation*}
+		\inn{\widehat{T},\varphi} = \inn{T,\widehat{\varphi}},\quad \varphi \in \mathcal{S}
+	\end{equation*}
+	But it cannot be extended to $\mathcal{D}$. To solve this problem, we need more about distributions. 
+
+	\noindent For $N \in \N$, defined $\norm{\cdot}_N$ on $\mathcal{S}$ as
+	\begin{equation*}
+		\|\varphi\|_N=\sum_{|\alpha|,|\beta| \leq N} \sup _{x \in \mathbb{R}^d}\left|x^\alpha\left(\partial^\beta \varphi\right)(x)\right|, \quad \varphi \in \mathcal{S} .
+	\end{equation*}
+	Let $\mathcal{S}$ be equipped with the topology induced by the family of seminorms $\bb{\norm{\cdot}_N}_{N \in \N_0}$.
+	\begin{rmk}
+		When considering $\mathcal{D} \subset \mathcal{S}$, the topology defined on $\mathcal{D}$ as above is equivalent to this new topology on $\mathcal{D}$ induced by these seminorms.
+	\end{rmk}
+
+	\begin{prop}
+		$\mathcal{D}$ is dense in $\mathcal{S}$.
+	\end{prop}
+	\begin{proof}
+		Let $\varphi \in \mathcal{S}$. Choose $\psi \in \mathcal{D}$ such that $\psi = 1$ on $[-1,1]^d$. Let $\psi_n(x)= \psi(x/n)$ and $\varphi_n = \psi_n \varphi$. Then for any $\beta$,
+		\begin{equation*}
+			\left(\partial^\beta \varphi_n\right)(x)-\left(\partial^\beta \varphi\right)(x)=\partial^\beta\left(\left(\psi_n-1\right) \varphi\right)(x)=\sum_{\beta_1+\beta_2=\beta} c_{\beta_1 \beta_2} \partial^{\beta_1}\left(\psi_n-1\right)(x)\left(\partial^{\beta_2} \varphi\right)(x)
+		\end{equation*}
+		and thus for any $\alpha$,
+		\begin{equation*}
+			\left|x^\alpha \partial^\beta\left(\varphi_n-\varphi\right)(x)\right|=\sum_{\beta_1+\beta_2=\beta} c_{\beta_1 \beta_2}\left|\partial^{\beta_1}\left(\psi_n-1\right)(x)\right|\left|x^\alpha\left(\partial^{\beta_2} \varphi\right)(x)\right| .
+		\end{equation*}
+		First, by $\left\|\partial^{\beta_1}\left(\psi_n-1\right)\right\|_{\infty}=n^{-\left|\beta_1\right|}\left\|\partial^{\beta_1} \psi\right\|_{\infty}$, $\left\|\partial^{\beta_1}\left(\psi_n-1\right)\right\|_{\infty}$ is bounded with respect to $n$. Then for $\abs{x} > n$, we have $\left|x^\alpha\left(\partial^{\beta_2} \varphi\right)(x)\right| \sto 0$ as $n \sto \infty$. And for $\abs{x} \leq n$, $\partial^{\beta_1}\left(\psi_n-1\right)(x)=0$. Therefore, $\varphi_n \sto \varphi$ in $\mathcal{S}$.
+	\end{proof}
+
+	Considering distributions on $\mathcal{S}$, defined as
+	\begin{equation*}
+		\mathcal{S}^\prime = \mathcal{S}^\prime(\R^d) = \bb{T \colon \mathcal{S} \sto \C \colon T \text{ is linear and continuous.}}
+	\end{equation*}
+	and the element in $\mathcal{S}^\prime$ is called a tempered distribution. 
+
+	\noindent Because $\mathcal{S}$ is a locally convex topological space and $\norm{\varphi}_{N_1} \leq \norm{\varphi}_{N_2}$ with $N_1 \leq N_2$, $T \in \mathcal{D}^\prime$ if and only if there are $N \in \N_0$ and $C> 0$,
+	\begin{equation*}
+		|\langle T, \varphi\rangle| \leq C\|\varphi\|_N,\quad \varphi \in \mathcal{S}
+	\end{equation*}
+	By this definition, because $\mathcal{D}$'s topology can be also induced by the same topology on $\mathcal{S}$ and $\mathcal{D}$ is dense in $\mathcal{S}$, we have the following corollary.
+	\begin{cor}
+		$T \mapsto \lv{T}_{\mathcal{D}}$ is a map from $\mathcal{S}^\prime \sto \mathcal{D}^\prime$ and this map is injective. Moreover, $\mathcal{S}^\prime \subset \mathcal{D}^\prime$ under this restriction.
+	\end{cor}
+	\begin{exam}
+		\begin{enumerate}
+			\item For $f(x) = e^x$, clearly it is in $\mathcal{D}^\prime$. But $f \notin \mathcal{S}^\prime$.
+		
+			\item Let $f \in L^1_{loc}(\R^d)$ satisfy that there is a $N \in \N$ such that
+			\begin{equation*}
+				\int_{|x| \geq 1} \frac{|f(x)|}{|x|^N} d x<\infty
+			\end{equation*}
+			Then for any $\varphi \in \mathcal{S}$,
+			\begin{equation*}
+				|\langle f, \varphi\rangle| \leq \int_{|x|<1}|f(x)||\varphi(x)| d x+\int_{|x| \geq 1} \frac{|f(x)|}{|x|^N}|x|^N|\varphi(x)| d x \leq C\|\varphi\|_N
+			\end{equation*}
+			Therefore, $f \in \mathcal{S}^\prime$.
+
+			\item For any measure $\mu$ defined on $(\R^d,\mathcal{R}^d)$, if there is a $N \in \N$ such that
+			\begin{equation*}
+				\int_{|x| \geq 1}|x|^{-N} d \mu(x)<\infty
+			\end{equation*}
+			then by defining $\inn{\mu,\varphi} \defeq \int \varphi(x)d\mu(x)$ for $\varphi \in \mathcal{S}$, $\mu \in \mathcal{S}^\prime$ because
+			\begin{equation*}
+				|\langle\mu, \varphi\rangle| \leq \int_{|x|<1}|\varphi| d \mu+\int_{|x| \geq 1} \frac{1}{|x|^N}|x|^N|\varphi(x)| d \mu(x) \leq C\|\varphi\|_N
+			\end{equation*}
+			For example, the Dirac delta function $\delta$ can be viewed as the measure with $\mu(\bb{0}) = \mu(\R^d) = 1$, called the Dirac measure.
+		\end{enumerate}
+	\end{exam}
+	\begin{rmk}
+		A function on $\R^d$ is called polynomial growth if there is $N \in \N$ and $C > 0$ such that for all $x \in \R^d$,
+		\begin{equation*}
+			|f(x)| \leq C\left(1+|x|^N\right)
+		\end{equation*}
+		Then measurable $f \in \mathcal{S}^\prime$. Moreover, $L^p(\R^d) \subset \mathcal{S}^\prime$.
+	\end{rmk}
+
+	\begin{prop}
+		If $T \in \mathcal{D}^\prime$ with compact support, then for its extension $\bar{T}$ on $C^\infty$, $\lv{\bar{T}}_\mathcal{S} \in \mathcal{S}^\prime$.
+	\end{prop}
+	\begin{proof}
+		Choose $\varphi_n \sto \varphi$ in $\mathcal{S}$. Let $\eta \in \mathcal{D}$ such that $\eta = 1$ near around $\supp T$. Then we have $\eta \varphi_n \sto \eta \varphi$ in $\mathcal{D}$. So
+		\begin{equation*}
+			\left\langle\bar{T}, \varphi_n\right\rangle=\left\langle T, \eta \varphi_n\right\rangle \rightarrow\langle T, \eta \varphi\rangle=\langle\bar{T}, \varphi\rangle
+		\end{equation*}
+	\end{proof}
+
+	For $T \in \mathcal{S}^\prime$ and $\alpha$, $x^\alpha T \colon \mathcal{S} \sto \C$ is defined as
+	\begin{equation*}
+		\left\langle x^\alpha T, \varphi\right\rangle=\left\langle T, x^\alpha \varphi\right\rangle
+	\end{equation*}
+	where $x^\alpha \varphi$ is $x \mapsto x^\alpha \varphi(x)$. Note that for $\varphi \in \mathcal{S}$, $x^\alpha \varphi \in \mathcal{S}$.
+	\begin{prop}
+		For $T \in \mathcal{S}^\prime$ and $\alpha$, $x^\alpha T, \partial^\alpha T \in \mathcal{S}^{\prime}$.
+	\end{prop}
+	\begin{proof}
+		For $\varphi \in \mathcal{S}$,
+		\begin{equation*}
+			\begin{aligned}
+				& \left|\left\langle x^\alpha T, \varphi\right\rangle\right|=\left|\left\langle T, x^\alpha \varphi\right\rangle\right| \leq C\left\|x^\alpha \varphi\right\|_N \leq C\|\varphi\|_{N+|\alpha|}, \\
+				& \left|\left\langle\partial^\alpha T, \varphi\right\rangle\right|=\left|\left\langle T, \partial^\alpha \varphi\right\rangle\right| \leq C\left\|\partial^\alpha \varphi\right\|_N \leq C\|\varphi\|_{N+|\alpha|}
+			\end{aligned}
+		\end{equation*}
+		So $x^\alpha T, \partial^\alpha T \in \mathcal{S}^{\prime}$.
+	\end{proof}
+
+	\item Fourier Transform on $\mathcal{S}^\prime$: For $T \in \mathcal{S}^\prime$, define $\widehat{T} \colon \mathcal{S} \sto \C$ as
+	\begin{equation*}
+		\langle\widehat{T}, \varphi\rangle=\langle T, \widehat{\varphi}\rangle, \quad \varphi \in \mathcal{S}
+	\end{equation*}
+	\begin{rmk}
+		By this definition, for $f \in L^1_{loc}$, by $\inn{\widehat{f},\varphi} = \inn{f,\widehat{\varphi}}$, we have $\widehat{T_f} = T_{\widehat{f}}$. So as $f \in L^1$.
+	\end{rmk}
+
+	\begin{prop}
+		For $\varphi_n \sto \varphi$ in $\mathcal{S}$, then $\widehat{\varphi}_n \sto \widehat{\varphi}$ in $\mathcal{S}$. So $T \in \mathcal{S}^\prime$ implies $\widehat{T} \in \mathcal{S}^\prime$.
+	\end{prop}
+	\begin{proof}
+		For $\varphi \in \mathcal{S}$,
+		\begin{equation*}
+			|\widehat{\varphi}(\xi)| \leq \int_{\mathbb{R}^d}|\varphi(x)| d x=\int_{\mathbb{R}^d} \frac{1}{1+|x|^{d+1}} \underbrace{\left(1+|x|^{d+1}\right)|\varphi(x)|}_{\leq\|\varphi\|_{d+1}} d x .
+		\end{equation*}
+		So $\|\widehat{\varphi}\|_{\infty} \leq C\|\varphi\|_{d+1}$ for some $C> 0$. Moreover, for $\alpha$,
+		\begin{equation*}
+			\left(\partial^\alpha \varphi\right)^{\wedge}(\xi)=i^{|\alpha|} \xi^\alpha \widehat{\varphi}(\xi), \quad\left(x^\alpha \varphi\right)^{\wedge}(\xi)=i^{|\alpha|}\left(\partial^\alpha \widehat{\varphi}\right)(\xi)
+		\end{equation*}
+		So we have
+		\begin{equation*}
+			\left|\xi^\alpha\left(\partial^\beta \widehat{\varphi}\right)(\xi)\right|=\left|\xi^\alpha\left(x^\beta \varphi\right)^{\wedge}(\xi)\right|=\left|\left(\partial^\alpha\left(x^\beta \varphi\right)\right)^{\wedge}(\xi)\right| \leq C\left\|\partial^\alpha\left(x^\beta \varphi\right)\right\|_{d+1} \leq C_1\|\varphi\|_{|\alpha|+|\beta|+d+1} .
+		\end{equation*}
+		and thus $\|\widehat{\varphi}\|_N \leq C_2\|\varphi\|_{2 N+d+1}$.
+	\end{proof}
+
+	\noindent Recall $\mathcal{F} \colon \mathcal{S} \sto \mathcal{S}$ is a bijection. For $S \in \mathcal{S}^\prime$, define $\widecheck{S} \colon \mathcal{S} \sto \C$ as
+	\begin{equation*}
+		\inn{\widecheck{S},\varphi} = \inn{S,\mathcal{F}^{-1}\varphi},\quad \varphi \in \mathcal{S}
+	\end{equation*}
+	Then $\widecheck{S}$ is called the inverse transform of $S$. Moreover, by $\mathcal{F}^2 \varphi=(2 \pi)^d \varphi^{\sim}$, $\mathcal{F}^{-1} \varphi=(2 \pi)^{-2 d} \mathcal{F}^3 \varphi$. So by above proposition,
+	\begin{equation*}
+		\varphi_n \sto \varphi\quad \Rightarrow \quad \mathcal{F}^{-1} \varphi_n \rightarrow \mathcal{F}^{-1} \varphi
+	\end{equation*}
+	in $\mathcal{S}$. So $S \in \mathcal{S}^\prime$ implies $\widecheck{S} \in \mathcal{S}^\prime$.
+
+	\begin{prop}
+		Fourier transform $\mathcal{F} \colon \mathcal{S}^\prime \sto \mathcal{S}^\prime$ is a bijection and $\mathcal{F}^{-1}S = \widecheck{S}$.
+	\end{prop}
+	\begin{proof}
+		For $\varphi \in \mathcal{S}$,
+		\begin{equation*}
+			\inn{\widecheck{\widehat{T}}, \varphi} = \inn{\widehat{T}, \mathcal{F}^{-1}\varphi} = \inn{T,\mathcal{F}\mathcal{F}^{-1}\varphi} = \inn{T,\varphi}
+		\end{equation*}
+		Therefore, $\widecheck{\widehat{T}} = T$ and similarly $\widehat{\widecheck{T}} = T$.
+	\end{proof}
+
+	\begin{prop}
+		For $T \in \mathcal{S}^\prime$ and $\alpha$,
+		\begin{equation*}
+			\widehat{\partial^\alpha T} = i^{\abs{\alpha}}x^\alpha \widehat{T},\quad \widehat{x^\alpha T} = i^{\abs{\alpha}}\partial^\alpha \widehat{T}
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $\varphi \in \mathcal{S}$,
+		\begin{equation*}
+			\begin{aligned}
+				& \left\langle\widehat{\partial^\alpha T}, \varphi\right\rangle=\left\langle\partial^\alpha T, \widehat{\varphi}\right\rangle=(-1)^{|\alpha|}\left\langle T, \partial^\alpha \widehat{\varphi}\right\rangle=i^{|\alpha|}\left\langle T,\widehat{x^\alpha \varphi}\right\rangle=i^{|\alpha|}\left\langle x^\alpha \widehat{T}, \varphi\right\rangle, \\
+				& \left\langle \widehat{x^\alpha T}, \varphi\right\rangle=\left\langle T, x^\alpha \widehat{\varphi}\right\rangle=i^{-|\alpha|}\left\langle T,\widehat{\partial^\alpha \varphi}\right\rangle=i^{-|\alpha|}\left\langle\widehat{T}, \partial^\alpha \varphi\right\rangle=i^{|\alpha|}\left\langle\partial^\alpha \widehat{T}, \varphi\right\rangle .
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\begin{prop}
+		For $T \in \mathcal{S}^\prime$,
+		\begin{equation*}
+			\mathcal{F}^2 T=(2 \pi)^d T^{\sim},\quad \mathcal{F}^4 T=(2 \pi)^{2 d} T
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $\varphi \in \mathcal{S}$,
+		\begin{equation*}
+			\left\langle\mathcal{F}^2 T, \varphi\right\rangle=\left\langle T, \mathcal{F}^2 \varphi\right\rangle=\left\langle T,(2 \pi)^d \varphi^{\sim}\right\rangle=(2 \pi)^d\left\langle T^{\sim}, \varphi\right\rangle .
+		\end{equation*}
+	\end{proof}
+
+	\begin{prop}
+		Equipping $\mathcal{S}^\prime$ with the $wk^*$-topology, then
+		\begin{equation*}
+			T_n \rightarrow T \quad \Rightarrow \quad \widehat{T_n} \rightarrow \widehat{T}
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $\varphi \in \mathcal{S}$,
+		\begin{equation*}
+			\left\langle\widehat{T_n}, \varphi\right\rangle=\left\langle T_n, \widehat{\varphi}\right\rangle \rightarrow\langle T, \widehat{\varphi}\rangle=\langle\widehat{T}, \varphi\rangle
+		\end{equation*}
+	\end{proof}
+
+	\begin{exam}
+		\begin{enumerate}
+			\item For the $\delta \in \mathcal{D}^\prime$, because $\supp \delta ={0}$, $\delta \in \mathcal{S}^\prime$. And by
+			\begin{equation*}
+				\langle\widehat{\delta}, \varphi\rangle=\langle\delta, \widehat{\varphi}\rangle=\widehat{\varphi}(0)=\int_{\mathbb{R}^d} \varphi(x) d x=\langle 1, \varphi\rangle
+			\end{equation*}
+			we have $\widehat{\delta} = 1$. And by the inverse formula,
+			\begin{equation*}
+				\widehat{1}=\mathcal{F}^2 \delta=(2 \pi)^d \delta
+			\end{equation*}
+			And based on this, for any monomial $x^\alpha = x^\alpha \cdot 1$,
+			\begin{equation*}
+				\widehat{x^\alpha}=i^{|\alpha|} \partial^\alpha \widehat{1}=(2 \pi)^d i^{|\alpha|} \partial^\alpha \delta .
+			\end{equation*}
+
+			\item For $a \in \R^d$, let $\delta_a \in \mathcal{S}^\prime$ defined as
+			\begin{equation*}
+				\left\langle\delta_a, \varphi\right\rangle=\varphi(a)
+			\end{equation*}
+			Then
+			\begin{equation*}
+				\widehat{\delta_a} = \bc{x \mapsto e^{-i a \cdot x}}
+			\end{equation*}
+			
+			\item On $L^2$, $\mathcal{F} \colon L^2 \sto L^2$ bijective isometry. For any $f \in L^2$, let $f_n = f\chi_{[-n,n]^d} \in L^1$. $f_n \sto f$ in $L^2$ implies $\widehat{f_n} \sto \widehat{f}$ in $L^2$. Besides, because $\mathcal{S} \subset L^2$, for any $\varphi \mathcal{S}$ and $g_n \sto g$ in $L^2$ implies $\inn{g_n ,\varphi} \sto \inn{g, \varphi}$. So
+			\begin{equation*}
+				\left\langle\widehat{T_f}, \varphi\right\rangle=\langle f, \widehat{\varphi}\rangle=\lim _{n \rightarrow \infty}\left\langle f_n, \widehat{\varphi}\right\rangle=\lim _{n \rightarrow \infty}\left\langle\widehat{f_n}, \varphi\right\rangle=\langle \widehat{f}, \varphi\rangle .
+			\end{equation*}
+			Therefore, $\widehat{T_f} = T_{\widehat{f}}$.
+
+			\item By the Poisson Summation Formula, for any $\varphi \in \mathcal{S}$,
+			\begin{equation*}
+				\sum_{n \in \mathbb{Z}} \widehat{\varphi}(n)=2 \pi \sum_{k \in \mathbb{Z}} \varphi(2 \pi k)
+			\end{equation*}
+			we have
+			\begin{equation*}
+				\mathcal{F}\left(\sum_{n \in \mathbb{Z}} \delta_n\right)=2 \pi \sum_{k \in \mathbb{Z}} \delta_{2 \pi k}, \quad \mathcal{F}\left(\sum_{k \in \mathbb{Z}} \delta_{2 \pi k}\right)=\sum_{n \in \mathbb{Z}} \delta_n
+			\end{equation*}
+		\end{enumerate}
+	\end{exam}
+
+	\item Polynomial Growth Functions:
+	\begin{thm}
+		For any $T \in \mathcal{S}^\prime$, there is a polynomial growth continuous function $f$ such that $T = \partial^\alpha f$
+	\end{thm}
+
+	\noindent For $a \in \R^d$, let $\Sigma_a = \prod_{i=1}^d[a_i,\infty)$.
+	\begin{prop}
+		\begin{enumerate}
+			\item For any $a,b \in \R^d$, $\Sigma_a \cap\left(-\Sigma_b\right)$ is either empty or a closed rectangular so compact.
+
+			\item For any $a \in \R^d$ and compact $K$, there is a $b \in \R^d$ such that $\Sigma_a + K \subset \Sigma_b$
+		\end{enumerate}
+	\end{prop}
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$ and $\varphi \in C^\infty$ with $\supp T \subset \Sigma_a$ and $\supp \varphi \subset -\Sigma_b$. Let $\eta \in \mathcal{D}$ such that $\eta = 1$ near around $\Sigma_a \cap\left(-\Sigma_b\right)$. Define
+		\begin{equation*}
+			\langle T, \varphi\rangle=\langle T, \eta \varphi\rangle
+		\end{equation*}
+		which is independent with the choice of $\eta$. Then for any $\alpha$,
+		\begin{equation*}
+			\left\langle\partial^\alpha T, \varphi\right\rangle=(-1)^{|\alpha|}\left\langle T, \partial^\alpha \varphi\right\rangle .
+		\end{equation*}
+	\end{prop}
+
+	\begin{prop}
+		Let $T,S \in \mathcal{D}^\prime$ with $\operatorname{supp} T \subset \Sigma_a$ and $\operatorname{supp} S \subset \Sigma_b$. Define
+		\begin{equation*}
+			\langle T * S, \varphi\rangle=\left\langle T, S^{\sim} * \varphi\right\rangle, \quad \varphi \in \mathcal{D}
+		\end{equation*}
+		Then $T * S \in \mathcal{D}^\prime$. 
+	\end{prop}
+	\begin{rmk}
+		For the definition, $S^\sim * \varphi \in C^\infty$ with the support contained in $\supp \varphi - \Sigma_b$ that is contained in $-\Sigma_c$ by the above proposition. So $\left\langle T, S^{\sim} * \varphi\right\rangle$ can be defined.
+	\end{rmk}
+	\noindent Similarly as above, we have
+	\begin{equation*}
+		\partial^\alpha(T * S)=\left(\partial^\alpha T\right) * S=T *\left(\partial^\alpha S\right)
+	\end{equation*}
+
+	\begin{prop}
+		Let $T \in \mathcal{S}^\prime$ with the order $N$ and $f \in C^N$. And assume $\supp T \subset \Sigma_a$ and $\supp f \subset \Sigma_b$. 
+		\begin{enumerate}
+			\item Then $T * f \in \mathcal{D}^\prime$ is a continuous function on $\R^d$.
+
+			\item If for any $\abs{\alpha} < N$, $\partial^\alpha f$ is polynomial growth, then $T*f$ is polynomial growth.
+		\end{enumerate}
+	\end{prop}
+
+	\item Convolution with Rapidly Decreasing Functions: For $T \in \mathcal{S}^\prime$ and $\psi \in \mathcal{S}$,
+	\begin{equation*}
+		(T * \psi)(x)=\left\langle T, \tau_x \psi^{\sim}\right\rangle, \quad x \in \mathbb{R}^d
+	\end{equation*}
+
+	\begin{lem}
+		Let $f$ be polynomial growth and continue. Let $\psi \in \mathcal{S}$. Then $f * \psi \in C^\infty$ and polynomial growth. Moreover, for any $\alpha$, 
+		\begin{equation*}
+			\partial^\alpha(f * \psi)=f *\left(\partial^\alpha \psi\right)
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		For any $x,y \in \R^d$, we have
+		\begin{equation*}
+			1+|x| \leq(1+|x-y|)(1+|y|)
+		\end{equation*}
+		Because $f$ is polynomial growth, there is a $C> 0$ and $M \in \N$ such that $|f(x)| \leq C(1+|x|)^M$. Therefore, for any $x \in \R^d$,
+		\begin{equation*}
+			\begin{aligned}
+				|(f * \psi)(x)| &\leq \int_{\mathbb{R}^d}|f(y)||\psi(x-y)| d y \\
+				&\leq \int_{\mathbb{R}^d} \frac{C}{(1+|y|)^{d+1}} \frac{(1+|y|)^{M+d+1}}{(1+|x-y|)^{M+d+1}}(1+|x-y|)^{M+d+1}|\psi(x-y)| d y \\
+				&\leq \int_{\mathbb{R}^d} \frac{C d y}{(1+|y|)^{d+1}}(1+|x|)^{M+d+1} C_1\|\psi\|_{M+d+1}
+			\end{aligned}
+		\end{equation*}
+		So $f * \psi$ is polynomial growth.
+
+		\noindent To show $C^\infty$, let $e_1=(1,0,\cdots,0) \in \R^d$, then for any $h \neq 0$,
+		\begin{equation*}
+			\frac{(f * \psi)\left(x+h e_1\right)-(f * \psi)(x)}{h}=\int_{\mathbb{R}^d} f(y) \frac{\psi\left(x+h e_1-y\right)-\psi(x-y)}{h} d y .
+		\end{equation*}
+		By the mean value theorem, there is a $\xi \in (0,1)$ such that if let $z=x+\xi e_1-y$,
+		\begin{equation*}
+			\begin{aligned}
+				& \left|\frac{\psi\left(x+h e_1-y\right)-\psi(x-y)}{h}\right|=\left|\partial_1 \psi(z)\right| \\
+				& =\frac{1}{(1+|y|)^{M+d+1}} \frac{(1+|y|)^{M+d+1}}{(1+|z|)^{M+d+1}}(1+|z|)^{M+d+1}\left|\partial_1 \psi(z)\right| \\
+				& \leq \frac{\left(1+\left|x+\xi e_1\right|\right)^{M+d+1}}{(1+|y|)^{M+d+1}} C_2\|\psi\|_{M+d+2} \leq \frac{C_3}{(1+|y|)^{M+d+1}} .
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\left|f(y) \frac{\psi\left(x+h e_1-y\right)-\psi(x-y)}{h}\right| \leq \frac{C C_3}{(1+|y|)^{d+1}}
+		\end{equation*}
+		Then let $h \sto 0$, by the DCT
+		\begin{equation*}
+			D_{e_1}(f * \psi) = f * (D_{e_1}\psi)
+		\end{equation*}
+	\end{proof}
+
+	\begin{prop}
+		For any $T \in \mathcal{S}^\prime$ and $\psi \in \mathcal{S}$,
+		\begin{enumerate}
+			\item when writing $T = \partial^\alpha f$ for some polynomial growth $f$, $T * \psi = f * \partial^\alpha \psi$;
+			\item $T * \psi \in C^\infty$ is polynomial growth.
+		\end{enumerate}
+	\end{prop}
+
+	\begin{prop}
+		For any $T \in \mathcal{S}^\prime$ and $\psi,\varphi \in \mathcal{S}$ and $\alpha$,
+		\begin{enumerate}
+			\item $\langle T * \psi, \varphi\rangle=\left\langle T, \psi^{\sim} * \varphi\right\rangle$;
+			\item $\partial^\alpha(T * \psi)=\left(\partial^\alpha T\right) * \psi=T *\left(\partial^\alpha \psi\right)$.
+		\end{enumerate}
+	\end{prop}
+
+	\begin{prop}
+		Let $T \in \mathcal{D}^\prime$ with compact support ($T \in \mathcal{S}^\prime$).
+		\begin{enumerate}
+			\item $\widehat{T}$ is polynomial growth and $C^\infty$;
+			\item For any $\xi \in \R^d$,
+			\begin{equation*}
+				\widehat{T}(\xi)=\left\langle\bar{T}, \varphi_{\xi}\right\rangle
+			\end{equation*}
+			where $\varphi_{\xi}(x)=e^{-i \xi \cdot x}$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		We only need to show the case of $T = \partial^\alpha f$ for some continuous $f$ with compact support. First,
+		\begin{equation*}
+			\widehat{T}=\widehat{\partial^\alpha f}=i^{|\alpha|} \xi^\alpha \widehat{f}
+		\end{equation*}
+		Because $\widehat{f}$ is bounded, $\widehat{T}$ is polynomial growth. Besides, by
+		\begin{equation*}
+			\widehat{f}(\xi)=\int_{\operatorname{supp} f} f(x) e^{-i \xi \cdot x} d x
+		\end{equation*}
+		and the DCT on compact $\supp f$, $\widehat{f} \in C^\infty$. Let $\eta \in \mathcal{D}$ such that $\eta = 1$ near around $\supp f$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\left\langle\bar{T}, \varphi_{\xi}\right\rangle & =\left\langle T, \eta \varphi_{\xi}\right\rangle=\left\langle\partial^\alpha f, \eta \varphi_{\xi}\right\rangle=(-1)^{|\alpha|}\left\langle f, \partial^\alpha\left(\eta \varphi_{\xi}\right)\right\rangle \\
+				& =(-1)^{|\alpha|} \int_{\operatorname{supp} f} f(x) \partial^\alpha\left(\eta \varphi_{\xi}\right)(x) d x=(-1)^{|\alpha|} \int_{\operatorname{supp} f} f(x)\left(\partial^\alpha \varphi_{\xi}\right)(x) d x \\
+				& =\int_{\operatorname{supp} f} f(x) i^{|\alpha|} \xi^\alpha e^{-i \xi \cdot x} d x=i^{|\alpha|} \xi^\alpha \widehat{f}(\xi)=\widehat{T}(\xi) .
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\noindent Recall, for $\varphi,\psi \in \mathcal{S}$,
+	\begin{equation*}
+		\widehat{\widehat{\varphi}} = (2\pi)^d\varphi^\sim,\quad \widehat{\varphi}^\sim = \widehat{\varphi^\sim},\quad (\varphi * \psi)^{\sim}=\varphi^{\sim} * \psi^{\sim}
+	\end{equation*}
+	\begin{prop}
+		For $T,S \in\mathcal{S}^\prime$ and $\psi \in \mathcal{S}$,
+		\begin{enumerate}
+			\item $\widehat{T * \psi} = \widehat{\psi}\widehat{T}$;
+			\item if $S$ is with compact support, then $\widehat{T * S} \in \mathcal{S}^\prime$ and $\widehat{T * S} = \widehat{S}\widehat{T}$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}
+			\item For $\varphi \in \mathcal{S}$,
+			\begin{equation*}
+				\begin{aligned}
+					\left\langle\widehat{T * \psi}, \varphi\right\rangle & =\left\langle T * \psi, \widehat{\varphi}\right\rangle=\left\langle T, \psi^{\sim} * \widehat{\varphi}\right\rangle=\frac{1}{(2 \pi)^d}\left\langle T,\widehat{\widehat{\left(\psi^{\sim} * \widehat{\varphi}\right)^\sim}}\right\rangle \\
+					& =\frac{1}{(2 \pi)^d}\left\langle\widehat{T},\widehat{\psi * \widehat{\varphi}^{\sim}}\right\rangle=\langle\widehat{T}, \widehat{\psi} \varphi\rangle=\langle\widehat{\psi} \widehat{T}, \varphi\rangle .
+				\end{aligned}
+			\end{equation*}
+
+			\item First, $T=\partial^\alpha f$ with $f$ polynomial growth and continuous. It is sufficient to prove when $S = \partial^\beta g$ with continuous $g$ and compact $\supp g$. First,
+			\begin{equation*}
+				T * S = \partial^{\alpha + \beta}(f*g),
+			\end{equation*}
+			where $f*g$ is polynomial growth. So $T * S \in \mathcal{S}^\prime$. 
+
+			\noindent Note that $\widehat{f*g} = \widehat{g}\widehat{f}$. Because for any $\varphi \in \mathcal{S}$,
+			\begin{equation*}
+				\begin{aligned}
+					\inn{\widehat{f * g},\varphi} &= \inn{f * g, \widehat{\varphi}} = \inn{f,g^\sim * \widehat{\varphi}} = \frac{1}{(2\pi)^d}\inn{f,\widehat{\widehat{g^\sim * \widehat{\varphi}^\sim}}} \\
+					&= \frac{1}{(2\pi)^d} \inn{\widehat{f},\widehat{g*\widehat{\varphi}^\sim}} = \inn{\widehat{f},\widehat{g}\varphi} = \inn{\widehat{g}\widehat{f},\varphi}
+				\end{aligned}
+			\end{equation*}
+			Then we have
+			\begin{equation*}
+				\widehat{T * S}=\widehat{\partial^{\alpha+\beta}(f * g)}=i^{|\alpha+\beta|} \xi^{\alpha+\beta}\widehat{f * g}=i^{|\alpha+\beta|} \xi^{\alpha+\beta} \widehat{g} \widehat{f}=\widehat{S} \widehat{T} .
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+\end{enumerate}

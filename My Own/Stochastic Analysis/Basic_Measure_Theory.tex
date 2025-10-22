@@ -1,0 +1,94 @@
+\chapter{Basic Measure Theory}
+
+\section{Conditional Expectation}
+Fix a probability space $(\Omega, \mathcal{F},\Pb)$.
+
+\begin{defn}[Conditional Expectation]
+    Let $X \colon \Omega \sto \R$ be a $L^1$ random variable and $\mathcal{G} \subset \mathcal{F}$ be a $\sigma$-sub-field. A random variable $Y$ is called the conditional expectation of $X$ given $\mathcal{G}$ if
+    \begin{enumerate}[label=(\roman*)]
+    	\item $Y$ is $\mathcal{G}$-measurable,
+    	\item for any $A \in \mathcal{G}$,
+    	\begin{equation*}
+    		\int_A Y d\Pb = \int_A X d\Pb,
+    	\end{equation*}
+    \end{enumerate}
+\end{defn}
+
+\begin{thm}
+    For given $X$ and $\mathcal{G}$, such $Y$ exists and is unique, denoted by $Y = \E[X \mid \mathcal{G}]$.
+\end{thm}
+\begin{proof}
+    For the uniqueness, let $Y^\prime$ be another conditional expectation. Let
+    \begin{equation*}
+    	A_{\varepsilon} = \bb{Y - Y^\prime \geq \varepsilon} \in \mathcal{G}.
+    \end{equation*}
+    for any $\varepsilon > 0$. So
+    \begin{equation*}
+    	\varepsilon \Pb({A_\varepsilon}) \leq \int_{A_\varepsilon} Y-Y^\prime d\Pb = \int_{A_\varepsilon} X d\Pb-\int_{A_\varepsilon} X d\Pb = 0.
+    \end{equation*}
+    As $\varepsilon \sto 0$, $Y \leq Y^\prime$ a.e.. Similarly, we have $Y^\prime \leq Y$. So $Y =Y^\prime$.
+
+    For existence, WTLG, assume $X \geq 0$. Let
+    \begin{equation*}
+    	\nu(A) = \int_A X d\Pb,\quad A \in \mathcal{G}.
+    \end{equation*}
+    Then $\nu$ is a measure on $\mathcal{G}$, which is absolutely continuous with respect to $\Pb$ on $\mathcal{G}$. So by the Radon-Nikodym theorem, there exists a $\mathcal{G}$-measurable $Y$ such that
+    \begin{equation*}
+    	\int_A Y d\Pb = \int_A X d\Pb,\quad A \in \mathcal{G}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{exam}
+    Suppose $X \in L^2$. Then
+    \begin{equation*}
+    	\E\bj{(X-\E[X \mid \mathcal{G}])^2} = \inf \bb{ \E[(X-Y)^2] \mid Y \text{ is } \mathcal{G}-\text{measurable.}}
+    \end{equation*}
+\end{exam}
+
+\section{Change of Measures}
+
+Fix $(\Omega,\mathcal{F},\Pb)$ with filtration $\mathbb{F} = (\mathcal{F}_t)_{t \geq 0}$ satisfying the usual condition. Let $W=(W_t)_{t \geq 0}$ be a Brownian motion on $(\Omega,\mathcal{F},\Pb)$. Denote $\E = \E_{\Pb}$.
+
+\begin{prop}
+    Let $\Pb,\Q$ be probability measures on $(\Omega,\mathcal{F})$. Suppose $\Q \ll \Pb$ and
+    \begin{equation*}
+        Z = \frac{d\Q}{d\Pb}.
+    \end{equation*}
+    Then for any $\sigma$-algebra $\mathcal{G} \subset \mathcal{F}$, $\Q \ll \Pb$ on $\mathcal{G}$ and
+    \begin{equation*}
+        \lv{\frac{d\Q}{d\Pb}}_\mathcal{G} = \E\bj{Z \mid \mathcal{G}}.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Absolutely continuity is obvious. For any $A \in \mathcal{G}$, by the property of conditional expectation,
+    \begin{equation*}
+        \Q(A) = \int_A Z d\Pb = \int_A \E[Z \mid \mathcal{G}]d\Pb.
+    \end{equation*}
+    So by the uniqueness in Radon-Nikodym Theorem,
+    \begin{equation*}
+        \lv{\frac{d\Q}{d\Pb}}_\mathcal{G} = \E\bj{Z \mid \mathcal{G}}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{prop}
+    Let $\Pb,\Q$ be probability measures on $(\Omega,\mathcal{F})$. Suppose $\Pb \sim \Q$ with $Z = \frac{d\Q}{d\Pb}$. Let $\mathcal{G} \subset \mathcal{F}$ $\sigma$-subalgebra. Then for any $\mathcal{F}$-measurable $Y \geq 0$.
+    \begin{equation*}
+        \E_\Q [Y \mid \mathcal{G}] = \frac{\E[YZ \mid \mathcal{G}]}{\E[Z \mid \mathcal{G}]}.
+    \end{equation*}
+\end{prop}
+\begin{rmk}
+    For general $Y$, we need $Y \in L^1$ then $Y = Y^+ - Y^-$.
+\end{rmk}
+\begin{proof}
+    For any $A \in \mathcal{G}$,
+    \begin{align*}
+        \int_A \E_\Q [Y \mid \mathcal{G}] d\Q &= \int_A Y d\Q = \int_A YZ d\Pb \\
+        &= \int_A \E[YZ \mid \mathcal{G}] d\Pb = \int_A \E[YZ \mid \mathcal{G}] \frac{d\Pb}{d\Q} d\Q\\
+        &= \int_A \E[YZ \mid \mathcal{G}] \bc{\frac{d\Q}{d\Pb}}^{-1} d\Q = \int_A \E[YZ \mid \mathcal{G}] \bc{\lv{\frac{d\Q}{d\Pb}}_{\mathcal{G}}}^{-1} d\Q\\
+        &= \int_A \E[YZ \mid \mathcal{G}]\E\bj{Z \mid \mathcal{G}}^{-1} d\Q.
+    \end{align*}
+    So
+    \begin{equation*}
+        \E_\Q [Y \mid \mathcal{G}] = \frac{\E[YZ \mid \mathcal{G}]}{\E[Z \mid \mathcal{G}]}. \qedhere
+    \end{equation*}
+\end{proof}

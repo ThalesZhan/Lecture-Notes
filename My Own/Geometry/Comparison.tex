@@ -1,0 +1,1663 @@
+\chapter{Comparison Theorems}
+
+\section{Rouch Comparison}
+
+\begin{enumerate}[label=\arabic{*}.]
+		\item \emph{\textbf{$2$-Dim case:}} Consider ODEs on $\R$,
+	\begin{equation*}
+		\begin{aligned}
+			\phi^{\prime\prime}(t) + \kappa \phi(t) &= 0 \\
+			\eta^{\prime\prime}(t) + \ell \eta(t) &= 0
+		\end{aligned}
+	\end{equation*}
+	with $\kappa,\ell > 0$. If $\kappa < \ell$ and $\phi(0) = \eta(0) = 0$ and $\phi^\prime(0) = \eta^\prime(0) = \sqrt{\kappa}$, then
+	\begin{equation*}
+		\phi(t) = \sin \sqrt{\kappa}t,\quad \eta(t) = \sqrt{\frac{\kappa}{\ell}}\sin \sqrt{\ell}t
+	\end{equation*}
+	Then $\phi(t) \geq \eta(t)$ before the first zero point.
+
+	\begin{thm}[Sturm]
+		Let $f,h$ be two continuous functions such that $f(t) \leq h(t)$ for $t \in I$. Let $\phi,\eta$ satisfy
+		\begin{equation*}
+			\begin{aligned}
+				\phi^{\prime\prime}(t) + f(t) \phi(t) &= 0 \\
+				\eta^{\prime\prime}(t) + h(t) \eta(t) &= 0
+			\end{aligned}
+		\end{equation*}
+		Assume $\phi \neq 0$. Let $a,b \in I$ be two continuous zero point of $\phi$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item There is a zero point of $\eta$ in $(a,b)$. Otherwise, $f(t) = h(t)$ on $[a,b]$ and $\eta = c\phi$.
+			\item Suppose $\eta(a) = 0$ and $\eta^\prime(a) = \phi^\prime(a) > 0$. If $\tau$ is the smallest zero point of $\eta$ in $(a,b]$, then
+			\begin{equation*}
+				\phi(t) \geq \eta(t),\quad \forall~t \in [a,\tau]
+			\end{equation*}
+			and $\phi(t_0) = \eta(t_0)$ for some $t_0 \in [a,\tau]$ only if $f(t) = h(t)$ for all $t \in [a,t_0]$.
+		\end{enumerate}
+	\end{thm}
+	\begin{proof}
+		First, it has
+		\begin{equation*}
+			\phi^{\prime\prime}\eta - \eta^{\prime\prime}\phi = (h-f)\phi\eta
+		\end{equation*}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Suppose $\eta$ has no zero point in $(a,b)$. WTLG, $\phi,\eta > 0$ on $(a,b)$. Therefore,
+			\begin{equation*}
+				\phi^{\prime\prime}\eta - \eta^{\prime\prime}\phi = \bc{\phi^{\prime}\eta - \eta^{\prime}\phi}^\prime \geq 0
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				\lv{(\phi^{\prime}\eta - \eta^{\prime}\phi)}_{a}^b = \phi^{\prime}(b)\eta(b) - \phi^{\prime}(a)\eta(a) \geq 0
+			\end{equation*}
+			On the other hand, by the continuity of $\eta$, $\eta(a),\eta(b) \geq 0$, and $\phi^{\prime}(a) > 0,\phi^{\prime}(b) < 0$ (Otherwise, by the uniqueness of the solution, $\phi = 0$),
+			\begin{equation*}
+				\phi^{\prime}(b)\eta(b) - \phi^{\prime}(a)\eta(a) \leq 0
+			\end{equation*}
+			But if $f \neq h$, $\phi^{\prime}(b)\eta(b) - \phi^{\prime}(a)\eta(a) > 0$, which induces a contradiction. If $f = h$, 
+			\begin{equation*}
+				\phi^{\prime}(b)\eta(b) - \phi^{\prime}(a)\eta(a) = 0 ~\Rightarrow~\phi^{\prime}(b)\eta(b) = \phi^{\prime}(a)\eta(a) = 0
+			\end{equation*}
+			So $\eta(a) = \eta(b) = 0$. By the structure of the solution of linear ODE, $\phi = c\eta$ for some $c$.
+
+			\item By assumptions, we have $\phi,\eta > 0$ on $(a,\tau)$. So 
+			\begin{equation*}
+				\phi^{\prime\prime}\eta - \eta^{\prime\prime}\phi = \bc{\phi^{\prime}\eta - \eta^{\prime}\phi}^\prime = (h-f)\phi\eta \geq 0
+			\end{equation*}
+			Besides,
+			\begin{equation*}
+				\phi^{\prime}(a)\eta(a) - \eta^{\prime}(a)\phi(a) = 0 ~\Rightarrow~ \phi^{\prime}\eta - \eta^{\prime}\phi \geq 0
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				\bc{\frac{\phi}{\eta}}^\prime = \frac{\phi^{\prime}\eta - \eta^{\prime}\phi}{\eta^2} \geq 0
+			\end{equation*}
+			Besides,
+			\begin{equation*}
+				\frac{\phi}{\eta}(a) \defeq \lim_{t \sto a}\frac{\phi(t)}{\eta(t)} = \lim_{t \sto a}\frac{\phi^\prime(t)}{\eta^\prime(t)} = 1
+			\end{equation*}
+			So
+			\begin{equation*}
+				\frac{\phi}{\eta}(t) \geq 1,\quad \forall~t \in [a,\tau]
+			\end{equation*}
+			If there is a $t_0$ such that $\frac{\phi}{\eta}(t_0) = 1$, then
+			\begin{equation*}
+				\phi(t) = \eta(t),\quad \forall~t \in [a,t_0]
+			\end{equation*}
+			Then
+			\begin{equation*}
+				\begin{aligned}
+					\bc{\frac{\phi}{\eta}}^\prime = 0&~\Rightarrow~ \phi^{\prime}\eta - \eta^{\prime}\phi = 0 \\
+					&~\Rightarrow~\phi^{\prime\prime}\eta - \eta^{\prime\prime}\phi =  (h-f)\phi\eta =0 \\
+					&~\Rightarrow~h =f
+				\end{aligned}
+			\end{equation*}
+			on $[a,t_0]$. \qedhere
+		\end{enumerate}
+	\end{proof}
+
+	For the first result, there is a geometric interpretation.
+	\begin{thm}[Bonnet]
+		Let $M$ be a surface ($2$-dimensional Riemannian manifold) and $\gamma \colon [0,L] \sto M$ be a normal geodesic. Let $\kappa > 0$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $K(\gamma(t)) \leq \kappa$ for all $t \in [a,b]$ and $L < \frac{\pi}{\sqrt{\kappa}}$, then $\gamma$ has no conjugate point.
+			\item If $K(\gamma(t)) \geq \kappa$ for all $t \in [a,b]$ and $L > \frac{\pi}{\sqrt{\kappa}}$, then there is a $\tau \in (0,L)$ such that $\gamma(\tau)$ is conjugate to $\gamma(0)$. In particular, $\gamma$ is not shortest.
+		\end{enumerate}
+	\end{thm}
+	\begin{proof}
+		Let $Y(0) \perp \dot{\gamma}(0)$ with $\abs{Y(0)} = 1$ and move it in parallel along $\gamma$ to get $Y(t)$ ($\abs{Y} = 1$). Then any normal Jacobian field can be written as $U(t) = \phi(t)Y(t)$. Then the Jacobian equation becomes
+		\begin{equation*}
+			\phi^{\prime\prime}(t) + K(\gamma(t))\phi(t) = 0
+		\end{equation*}
+		Consider
+		\begin{equation*}
+			\eta^{\prime\prime}(t) + \kappa\eta(t) = 0
+		\end{equation*}
+		It has a solution $\eta(t) = \sin \sqrt{\kappa} t$ that has two continuous zeros at $0,\frac{\pi}{\sqrt{\kappa}}$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $K(\gamma(t)) \leq \kappa$, then by Sturm's Theorem $\phi(0) = 0$ implies $\phi(L) \neq 0$ for $L < \frac{\pi}{\sqrt{\kappa}}$. So there is no Jacobian field vanishing at endpoints of $\gamma$.
+
+			\item If $\kappa \leq K$, then there is $t_0 \in (0,\frac{\pi}{\sqrt{\kappa}}]$ such that $\phi(t_0) = 0$. Because $L > \frac{\pi}{\sqrt{\kappa}}$, there is a Jacobian field vanishing at $0$ and $t_0$. \qedhere
+		\end{enumerate}
+	\end{proof}
+
+	Similarly, there is a geometric interpretation for the second result.
+	\begin{thm}
+		Given two $2$-dimensional Riemannian manifolds $(M,g)$ and $(\clo{M},\clo{g})$. Given two normal geodesics $\gamma \colon [a,b] \longrightarrow M$ and $\clo{\gamma} \colon [a,b] \longrightarrow \clo{M}$ such that $K(\gamma(t)) \leq \clo{K}(\clo{\gamma}(t))$. Let $\tau \in (a,b)$ such that $\gamma|_{[a,\tau]}$ and $\clo{\gamma}|_{[a,\tau]}$ has no conjugate points. Let $U$ and $\clo{U}$ be normal Jacobian fields along $\gamma$ and $\clo{\gamma}$ respectively with $U(a) = \clo{U}(a) = 0$ and $\abs{\nabla_{T}U(a)} = \abs{\nabla_{\clo{T}}U(a)}$. Then
+		\begin{equation*}
+		 	\abs{U(t)} \geq \abs{\clo{U}(t)},\quad \forall~t \in [a,\tau]
+		 \end{equation*} 
+		 Furthermore, if there is a $t_0 \in [a,\tau]$ such that $\abs{U(t_0)} \geq \abs{\clo{U}(t_0)}$, then $K(\gamma(t)) = \clo{K}(\clo{\gamma}(t))$ for all $t \in [a,t_0]$.
+	\end{thm}
+
+	\item \emph{\textbf{High-dim case:}} Let $\gamma$ be a geodesic with a orthonormal fame $\bb{Y_i(t)}$ where $Y_1 = T$. Then any normal Jacobian field $U$ can be
+	\begin{equation*}
+		U(t) = \sum_{i=2}^n \phi^i(t)Y_i(t)
+	\end{equation*}
+	Then by the Jacobian equation $\nabla_T\nabla_T U + R(U,T)T = 0$,
+	\begin{equation*}
+		\frac{d^2}{dt^2}\phi^j(t) + \sum_{i=2}\phi^i(t)R(Y_j,T,Y_i,T) = 0
+	\end{equation*}
+	Let $M$ and $\clo{M}$ be two Riemannian manifolds with same dimension. Let $\gamma \colon [0,\ell] \sto M$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be normal geodesics. The problem is to compare the time of the first conjugate by comparing the curvature. The idea is to compare the index form $I(V,V)$.
+	\begin{lem}\label{lem:compind}
+		Let $(M,g)$ and $(\clo{M},\clo{g})$ be two Riemannian manifolds with same dimension $n$. Let $\gamma \colon [0,\ell] \sto M$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be normal geodesics. Then there is a linear map
+		\begin{equation*}
+			\Phi \colon \mathcal{V}(\gamma) \longrightarrow \mathcal{V}_{\clo{\gamma}},
+		\end{equation*}
+		where $\mathcal{V}(\gamma) = $the set of all continuous piecewise smooth vector field along $\gamma$, such that for any $X \in \mathcal{V}(\gamma)$,
+		\begin{enumerate}[label=(\arabic{*})]
+			\item if $\nabla_T X$ is continuous at $t$, then $\nabla_{\clo{T}}\Phi(X)$ is continuous at $t$;
+			\item $\inn{X(t),T(t)}_g = \inn{\Phi(X)(t),\clo{T}(t)}_{\clo{g}}$;
+			\item $\abs{X(t)}_g = \abs{\Phi(X)(t)}_{\clo{g}}$;
+			\item $\abs{\nabla_TX(t)}_g = \abs{\nabla_{\clo{T}}\Phi(X)(t)}_{\clo{g}}$.
+		\end{enumerate}
+	\end{lem}
+	\begin{proof}
+		Let
+		\begin{equation*}
+			\phi_{t_0} \colon T_{\gamma(t_0)}M \longrightarrow T_{\clo{\gamma}(t_0)}\clo{M} 
+		\end{equation*}
+		be a linear isometry such that $\phi_{t_0}(T(t_0)) = \clo{T}(t_0)$. Then define
+		\begin{equation*}
+			\Phi(X)(t) = \mathcal{P}_{\clo{\gamma},t_0,t}\circ\phi_{t_0}\circ\mathcal{P}_{\gamma,t,t_0}(X(t))
+		\end{equation*}
+		Clearly, $\Phi$ is linear by the linearity of parallel moving. Let $\bb{Y_1=T,Y_2,\cdots,Y_n}$ be an orthonormal frame of $\gamma$. Then let
+		\begin{equation*}
+			\clo{Y}_i(t_0) = \phi_{t_0}(Y_i(t_0))
+		\end{equation*}
+		Then $\bb{\clo{Y}_1(t_0)=T,\clo{Y}_2(t_0),\cdots,\clo{Y}_n(t_0)}$ is orthonormal.
+		\begin{equation*}
+			\clo{Y}_i(t) = \mathcal{P}_{\clo{\gamma},t_0,t}(\clo{Y}_i(t_0))
+		\end{equation*}
+		is an orthonormal frame of $\clo{\gamma}$ and $\clo{Y}_i(t) = \Phi(Y_i)(t)$. Then
+		\begin{equation*}
+			X(t) = f^i(t)Y_i(t) ~\Rightarrow~ \Phi(X)(t) = f^i(t)\clo{Y}(t)
+		\end{equation*}
+		So above properties are clear, such as
+		\begin{equation*}
+			\nabla_TX = \bc{\frac{d}{dt}f^i}Y_i,\quad\nabla_T\Phi(X) = \bc{\frac{d}{dt}f^i}\clo{Y}_i \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\begin{thm}\label{thm:transind}
+		Let $(M,g)$ and $(\clo{M},\clo{g})$ be two Riemannian manifolds with same dimension $n$. Let $\gamma \colon [0,\ell] \sto M$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be normal geodesics. For any $t \in [0,\ell]$, suppose that for all $2$-dim section $\Pi_{\gamma(t)} \subset T_{\gamma(t)}M$, $\clo{\Pi}_{\clo{\gamma}(t)} \subset T_{\clo{\gamma}(t)}\clo{M}$,
+		\begin{equation*}
+			K(\Pi_{\gamma(t)}) \leq K(\clo{\Pi}_{\clo{\gamma}(t)})
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\op{ind}(\gamma) \leq \op{ind}(\clo{\gamma})
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		Let $W \in \mathcal{V}_0(\gamma)$.
+		\begin{equation*}
+			\begin{aligned}
+				I(W,W) &= \int_0^\ell \inn{\nabla_T W,\nabla_TW} - R(W,T,W,T)dt\\
+				&= \int_0^\ell \inn{\nabla_T W,\nabla_TW} - K(\Pi_{W,T})(\inn{W,W}\abs{T,T}-\inn{W,T}^2)dt
+			\end{aligned}
+		\end{equation*}
+		Let $V = \Phi(W)$ in above lemma. So $V \in \mathcal{V}_0(\clo{\gamma})$ and by above lemma
+		\begin{equation*}
+			\begin{aligned}
+				\clo{I}(V,V) &= \int_0^\ell \inn{\nabla_{\clo{T}} V,\nabla_{\clo{T}}V} - K(\Pi_{V,{\clo{T}}})(\inn{V,V}\abs{{\clo{T}},{\clo{T}}}-\inn{V,{\clo{T}}}^2)dt \\
+				&= \int_0^\ell \inn{\nabla_T W,\nabla_TW} - K(\Pi_{V,{\clo{T}}})(\inn{W,W}\abs{T,T}-\inn{W,T}^2)dt
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			I(W,W) \geq \clo{I}(\Phi(W),\Phi(W))
+		\end{equation*}
+		and $I(W,W) < 0$ implies $\clo{I}(\Phi(W),\Phi(W)) < 0$, which means that $\Phi(\mathcal{A})$ is also a negative space with same dimension of $\clo{\gamma}$ if $\mathcal{A}$ is a negative space of $\gamma$. So
+		\begin{equation*}
+			\op{ind}(\gamma) \leq \op{ind}(\clo{\gamma}) \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\begin{cor}[Morse-Schoenberg Comparison Theorem]
+		Let $(M,g)$ be $n$-dimensional Riemannian manifold with a normal geodesic $\gamma \colon [0,\ell] \sto M$. Let $\kappa > 0$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $K(\Pi_{\gamma(t)}) \leq \kappa$ for any $t$ and $\ell < \frac{\pi}{\sqrt{\kappa}}$, then $\op{ind}(\gamma) = 0$, that is $\gamma$ has no conjugate point.
+			\item If $K(\Pi_{\gamma(t)}) \geq \kappa$ for any $t$ and $\ell > \frac{\pi}{\sqrt{\kappa}}$, then there is a $\tau \in (a,b)$ conjugate to $0$ and so $\gamma$ is not minimizing.
+		\end{enumerate}
+	\end{cor}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item By setting $\clo{M} = \mathbb{S}^n\bc{\frac{1}{\sqrt{\kappa}}}$, then
+			\begin{equation*}
+				\op{ind}(\gamma)\leq\op{ind}(\clo{\gamma})
+			\end{equation*}
+			where $\clo{\gamma} \colon [0,\ell] \sto \mathbb{S}^n\bc{\frac{1}{\sqrt{\kappa}}}$. Because $\ell < \frac{\pi}{\sqrt{\kappa}}$, any geodesic with length $< \frac{\pi}{\sqrt{\kappa}}$ has no conjugate point. So $\op{ind}(\clo{\gamma}) = 0$ and $\op{ind}(\gamma) = 0$.
+
+			\item By setting $\clo{M} = \mathbb{S}^n\bc{\frac{1}{\sqrt{\kappa}}}$, then
+			\begin{equation*}
+				\op{ind}(\gamma)\geq\op{ind}(\clo{\gamma})
+			\end{equation*}
+			But any geodesic in $\mathbb{S}^n\bc{\frac{1}{\sqrt{\kappa}}}$ with length $> \frac{\pi}{\sqrt{\kappa}}$ always has at least one conjugate point. So $\op{ind}(\clo{\gamma}) > 0$ and $\op{ind}(\gamma) > 0$. \qedhere
+		\end{enumerate}
+	\end{proof}
+
+	\begin{thm}[Rauch Comparison Theorem]\label{thm:rouch}
+		Let $(M,g)$ and $(\clo{M},\clo{g})$ be two Riemannian manifolds with same dimension $n$. Let $\gamma \colon [0,\ell] \sto M$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be normal geodesics. Let $U,\clo{U}$ be normal Jacobian fields along $\gamma$ and $\clo{\gamma}$ respectively with $U(0) = \clo{U}(0)=0$ and $\abs{\nabla_TU(0)} = \abs{\nabla_{\clo{T}}\clo{U}(0)}$. Suppose that
+		\begin{enumerate}[label=(\roman*)]
+			\item for any $t \in [0,\ell]$, suppose that for all $2$-dim section $\Pi_{\gamma(t)} \subset T_{\gamma(t)}M$, $\clo{\Pi}_{\clo{\gamma}(t)} \subset T_{\clo{\gamma}(t)}\clo{M}$,
+			\begin{equation*}
+				K(\Pi_{\gamma(t)}) \leq K(\clo{\Pi}_{\clo{\gamma}(t)})
+			\end{equation*}
+			\item $\clo{\gamma}$ has no conjugate point on $[0,\ell]$. (In fact, it implies $\gamma$ has no conjugate point.)
+		\end{enumerate}
+		Then
+		\begin{equation*}
+			\abs{U(t)} \geq \abs{\clo{U}(t)},\quad t \in [0,\ell]
+		\end{equation*}
+	\end{thm}
+	\begin{rmk}
+		For the condition that $U,\clo{U}$ are normal, it can be replaced by
+		\begin{equation*}
+			\inn{\nabla_TU(0),\dot{\gamma}(0)} = \inn{\nabla_{\clo{T}}\clo{U}(0),\dot{\clo{\gamma}}(0)} = 0
+		\end{equation*}
+		Decomposing $U = fT + U^\perp$, where $f(t) = at + b$, then
+		\begin{equation*}
+			\nabla_TU = f^\prime T + \nabla_TU^\perp
+		\end{equation*}
+		So
+		\begin{equation*}
+			\begin{aligned}
+				0 & = \inn{f^\prime(0) T(0) + \nabla_TU^\perp,T(0)} \\
+				&= f^\prime(0) + \frac{d}{dt}\inn{U^\perp, T} \\
+				&= f^\prime(0)
+			\end{aligned}
+		\end{equation*}
+		which implies $f = 0$ and so $U$ is normal.
+	\end{rmk}
+	\begin{exam}
+		Consider $\mathbb{S}^n(r)$ that has the constant sectional curvature $\kappa = \frac{1}{r^2}$. Then
+		\begin{equation*}
+			U_\kappa(t) = \frac{1}{\sqrt{\kappa}}\sin\sqrt{\kappa}t E(t)
+		\end{equation*}
+		is a normal Jacobian field ($E \perp T$ and $\abs{E} = 1$). Then
+		\begin{equation*}
+			U(0) = 0,\quad \nabla_TU_\kappa(0) = E(0)
+		\end{equation*}
+		Then for different $\kappa$, $U_k(t)$ satisfies above conditions. And
+		\begin{equation*}
+			\abs{U_k(t)} = \abs{\frac{1}{\sqrt{\kappa}}\sin\sqrt{\kappa}t}
+		\end{equation*}
+		which coincides with above results, larger curvature implies smaller $\abs{U(t)}$ when $t$ is before the conjugate point.
+	\end{exam}
+	\begin{proof}[Proof of Theorem \ref{thm:rouch}]
+		Assume $\clo{U} \neq 0$. Consider the map
+		\begin{equation*}
+			t \mapsto \frac{\abs{U(t)}^2}{\abs{\clo{U(t)}}^2}
+		\end{equation*}
+		it is sufficient to show:
+		\begin{enumerate}[label=\Roman*.]
+			\item By L'Hospital's rule,
+			\begin{equation*}
+				\begin{aligned}
+				 	\lim_{t \sto 0}\frac{\abs{U(t)}^2}{\abs{\clo{U(t)}}^2} &= \lim_{t \sto 0}\frac{\inn{\nabla_TU,U}}{\inn{\nabla_{\clo{T}}\clo{U},\clo{U}}} \\
+				 	&= \lim_{t \sto 0}\frac{\inn{\nabla_T\nabla_TU,U} + \inn{\nabla_TU,\nabla_TU}}{\inn{\nabla_{\clo{T}}\nabla_{\clo{T}}\clo{U},\clo{U}}+ \inn{\nabla_{\clo{T}}\clo{U},\nabla_{\clo{T}}\clo{U}}} \\
+				 	&= 1
+				 \end{aligned} 
+			\end{equation*}
+
+			\item And
+			\begin{equation*}
+				\frac{d}{dt}\frac{\abs{U(t)}^2}{\abs{\clo{U(t)}}^2} = 2\frac{\inn{\nabla_TU,U}\inn{\clo{U},\clo{U}} - \inn{U,U}\inn{\nabla_{\clo{T}}\clo{U},\clo{U}}}{\inn{\clo{U},\clo{U}}^2} \geq 0
+			\end{equation*}
+			So it needs to check
+			\begin{equation*}
+				\inn{\nabla_TU(t),U(t)}\abs{\clo{U(t)}}^2 - \inn{\nabla_{\clo{T}}\clo{U}(t),\clo{U}(t)}\abs{U(t)}^2 \geq 0
+			\end{equation*}
+			that is for any $t_0$
+			\begin{equation*}
+				\inn{\nabla_TU(t_0),U(t_0)} \geq \frac{\abs{U(t_0)}^2}{\abs{\clo{U}(t_0)}^2} \inn{\nabla_{\clo{T}}\clo{U}(t_0),\clo{U}(t_0)}
+			\end{equation*}
+			Note that because $U,\clo{U}$ are Jacobian,
+			\begin{equation*}
+				I_0^{t_0}(U,U) = \inn{\nabla_TU(t_0),U(t_0)}, \quad \clo{I}_0^{t_0}(\clo{U},\clo{U}) =\inn{\nabla_{\clo{T}}\clo{U}(t_0),\clo{U}(t_0)}
+			\end{equation*}
+			So it needs to show
+			\begin{equation*}
+				I_0^{t_0}(U,U) \geq \frac{\abs{U(t_0)}^2}{\abs{\clo{U}(t_0)}^2} \clo{I}_0^{t_0}(\clo{U},\clo{U})
+			\end{equation*}
+			Consider a linear isometry $\phi_{t_0} \colon T_{\gamma(t_0)}M \sto T_{\clo{\gamma}(t_0)}\clo{M}$ such that
+			\begin{equation*}
+				\phi_{t_0}(U(t_0)) = c\clo{U}(t_0),\quad c=\frac{\abs{U(t_0)}}{\abs{\clo{U}(t_0)}} 
+			\end{equation*}
+			Note that such $\phi_{t_0}$ also needs to satisfy $\phi_{t_0}(T(t_0)) = \clo{T}(t_0)$. The reason of the existence of such $\phi_{t_0}$ is because $\inn{T,U} =\inn{\clo{T},\clo{U}} = 0$. For each $t_0$, we can choose orthonormal basis $Y_1(t_0) = T(t_0),Y_2(t_0) = \frac{U(t_0)}{\abs{U(t_0)}},\cdots$ and the corresponding $\clo{Y}_1(t_0) = \clo{T}(t_0),\clo{Y}_2(t_0) = \frac{\clo{U}(t_0)}{\abs{\clo{U}(t_0)}},\cdots$ to construct our $\phi_{t_0}$. Define $\Phi$ as same as it in \textbf{Lemma} \ref{lem:compind}.  
+			Then we have
+			\begin{equation*}
+				I_0^{t_0}(U,U) \geq \clo{I}_0^{t_0}(\Phi(U),\Phi(U))
+			\end{equation*}
+			Besides, note that
+			\begin{equation*}
+				\Phi(U)(0) = 0,\quad \Phi(U)(t_0) = \phi_{t_0}(U(t_0)) = c\clo{U}(t_0)
+			\end{equation*}
+			Therefore, because $c\clo{U}$ is Jacobian and $\clo{\gamma}$ has no conjugate point, by \textbf{Lemma} \ref{lem:indexlem},
+			\begin{equation*}
+				\clo{I}_0^{t_0}(\Phi(U),\Phi(U)) \geq \clo{I}_0^{t_0}(c\clo{U},c\clo{U})
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				I_0^{t_0}(U,U) \geq \clo{I}_0^{t_0}(c\clo{U},c\clo{U}) = c^2\clo{I}_0^{t_0}(\clo{U},\clo{U}) \qedhere
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+
+	\item \textbf{Applications:} Consider the applications of the Rauch Comparison Theorem. 
+	\begin{thm}
+		Let $(M,g)$ and $(\clo{M},\clo{g})$ be two Riemannian manifolds with same dimension $n$. Let $p \in M$ and $\clo{p} \in \clo{M}$. Let $\phi \colon T_pM \sto T_{\clo{p}}\clo{M}$ be an isometry, $V \in T_pM$ and $\clo{V} = \phi(V)$. Consider geodesics
+		\begin{equation*}
+			\gamma(t) = \exp_ptV,\quad \clo{\gamma}(t) = \exp_{\clo{p}}t\clo{V},\quad t\in [0,1]
+		\end{equation*}
+		Let $X \in T_V(T_pM)$ and $\clo{X} = \phi(X) \in T_{\clo{V}}(T_{\clo{p}}\clo{M})$. Suppose
+		\begin{enumerate}[label=(\roman*)]
+			\item for any $t \in [0,\ell]$, suppose that for all $2$-dim section $\Pi_{\gamma(t)} \subset T_{\gamma(t)}M$, $\clo{\Pi}_{\clo{\gamma}(t)} \subset T_{\clo{\gamma}(t)}\clo{M}$,
+			\begin{equation*}
+				K(\Pi_{\gamma(t)}) \leq K(\clo{\Pi}_{\clo{\gamma}(t)})
+			\end{equation*}
+			\item $\clo{\gamma}$ has no conjugate point on $[0,\ell]$. (In fact, it implies $\gamma$ has no conjugate point.)
+		\end{enumerate}
+		Then
+		\begin{equation*}
+			\abs{(d\exp_p)_V(X)}_g \geq \abs{(d\exp_{\clo{p}})_V(\clo{X})}_{\clo{g}}
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		Note that
+		\begin{equation*}
+			X = X^\perp + \inn{X,V}V,\quad X^\perp = X-\inn{X,V}V
+		\end{equation*}
+		By \textbf{Lemma} \ref{lem:gausslem} we have
+		\begin{equation*}
+			\abs{(d\exp_p)_V(V)}^2 = \abs{V}^2,\quad \inn{(d\exp_p)_V(X^\perp),(d\exp_p)_V(V)} = \inn{X^\perp,V} = 0
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\abs{(d\exp_p)_V(X)}^2 = \abs{(d\exp_p)_V(X^\perp)}^2 + \inn{X,V}\abs{V}^2
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			\abs{(d\exp_p)_V(X)}_g \geq \abs{(d\exp_{\clo{p}})_V(\clo{X})}_{\clo{g}} \quad\Leftrightarrow\quad \abs{(d\exp_p)_V(X^\perp)}_g \geq \abs{(d\exp_{\clo{p}})_V(\clo{X}^\perp)}_{\clo{g}}
+		\end{equation*}
+		because $\phi$ is isometric, \emph{i.e.} $\inn{X,V}_{g} =\inn{\clo{X},\clo{V}}_{\clo{g}}$ and $\abs{V}^2 = \abs{\clo{V}}^2$. So we only need to consider the case of $\inn{X,V} = 0$. Consider the variation of $\gamma$
+		\begin{equation*}
+			F(t,s) = \exp_pt(V+sX)
+		\end{equation*}
+		It follows that the corresponding Jacobian field satisfies
+		\begin{equation*}
+			U(0) = 0,\quad \nabla_TU(0) = X,\quad U(1) = (d\exp_p)_V(X)
+		\end{equation*}
+		Similarly, consider the variation of $\clo{\gamma}$
+		\begin{equation*}
+			\clo{F}(t,s) = \exp_{\clo{p}}t(\clo{V}+s\clo{X})
+		\end{equation*}
+		It follows that the corresponding Jacobian field satisfies
+		\begin{equation*}
+			\clo{U}(0) = 0,\quad \clo{\nabla}_{\clo{T}}\clo{U}(0) = \clo{X},\quad \clo{U}(1) = (d\exp_{\clo{p}})_V(\clo{X})
+		\end{equation*}
+		Because
+		\begin{equation*}
+			\inn{\nabla_TU(0),\dot{\gamma}(0)} = \inn{\nabla_{\clo{T}}\clo{U}(0),\dot{\clo{\gamma}}(0)} = 0
+		\end{equation*}
+		they are normal Jacobian fields. Then the result can be obtained by the Rauch Comparison Theorem.
+	\end{proof}
+	\begin{cor}
+		Let $(M,g)$ be a complete Riemannian manifold with sectional curvature $\leq 0$. Then for any $p \in M$,
+		\begin{equation*}
+			\abs{(d\exp_p)_V(X)} \geq \abs{X},\quad \forall~V \in T_pM,~\forall~X \in T_V(T_pM)
+		\end{equation*}
+	\end{cor}
+	\begin{rmk}
+		$\abs{(d\exp_p)_V(X)}^2 = g_{\exp_p(V)}\bc{(d\exp_p)_V(X),(d\exp_p)_V(X)}$ and $\abs{X}^2 = g_p(X,X)$.
+	\end{rmk}
+
+	\begin{cor}
+		Let $(M,g)$ be a Cartan-Hadamard manifold. Consider a geodesic triangular with sides $a,b,c$ and angle $A,B,C$,
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $a^2+b^2-2ab\cos C \leq c^2$;
+			\item $A + B + C \leq \pi$.
+		\end{enumerate}
+	\end{cor}
+	\begin{proof}
+		For $(1)$, it can get by comparing the geodesic triangular with the triangular in $T_pM$ with $a,b$ being radical geodesic. For $(2)$, let $a,b,c$ with $A^\prime,B^\prime,C^\prime$ be a triangular in Euclidean space, then
+		\begin{equation*}
+			\begin{aligned}
+				a^2+b^2-2ab\cos c \leq c^2 = a^2+b^2-2ab\cos C^\prime &~ \Rightarrow ~ \cos C^\prime \leq \cos C \\
+				&~ \Rightarrow ~ A + B + C \leq A^\prime + B^\prime + C^\prime = \pi \qedhere
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+\end{enumerate}
+
+
+\section{Hessian and Laplacian Comparison}
+
+\begin{enumerate}[label=\arabic{*}]
+	\item \emph{\textbf{Hessian:}} For $p \in M$, consider the distance function $\rho(\cdot) = d(p,\cdot)$. When $(M,g)$ is complete, $\exp_p \colon E(p) \sto \exp_p(E(p))$ is a diffeomorphism and so
+	\begin{equation*}
+		\rho(x) = \sqrt{g_p\bc{\exp_p^{-1}(x),\exp_p^{-1}(x)}}
+	\end{equation*}
+	is $C^\infty$ defined on $\exp_p(E(p)) \backslash \bb{p}$.
+
+	\begin{lem}
+		Let $(M,g)$ be a Riemannian manifold and $\gamma \colon [0,\ell] \sto M$ be a normal geodesic with $p = \gamma(0)$ and $v = \dot{\gamma}(0)$. Suppose $\gamma$ is minimizing and contain no cut point. For $\rho(\cdot) = d(p,\cdot)$, we have
+		\begin{equation*}
+			(\op{grad}\rho)_t = \dot{\gamma}(t)
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		\textbf{Claim:} For any $t$ and $E \in T_{\gamma(t)}M$ with $\abs{E} = 1$ and $\inn{E,\dot{\gamma}(t)} = 0$, it can find a geodesic $\widetilde{\gamma}(s)$ starting from $\gamma(t)$ such that $\dot{\widetilde{\gamma}}(0) = E$ and $\rho(\widetilde{\gamma}(s)) \equiv t$. 
+		\begin{proof}[proof of the claim]
+			Because $\gamma$ is minimizing and contain no cut point, $\gamma \in \exp_p(E(p))$. Because $\exp_p$ is non-singular on $E(p)$, it can let
+			\begin{equation*}
+				\widetilde{E}\defeq(d\exp_p)_{tv}^{-1}(E) \in T_pM
+			\end{equation*}
+			Note that
+			\begin{equation*}
+				(d\exp_p)_{tv}(tv) = \lv{\frac{d}{ds}}_{s=0}\exp_p((t+s)v) = \dot{\gamma}(t)
+			\end{equation*}
+			Because $\inn{E,\dot{\gamma}(t)} = 0$, by Gauss's Lemma
+			\begin{equation*}
+				\inn{\widetilde{E},tv} = \inn{(d\exp_p)_{tv}(\widetilde{E}),(d\exp_p)_{tv}(tv)} = \inn{E,\dot{\gamma}(t)} = 0
+			\end{equation*}
+			Therefore, we can find a unit circle $v(s)$ in $T_pM$ with $v(0) = v$ and $\dot{v}(0) = \widetilde{E}$, \emph{i.e.} $\abs{v(s)} = 1$. Then let
+			\begin{equation*}
+				\widetilde{\gamma}(s) = \exp_p(tv(s))
+			\end{equation*}
+			First, clearly $d(p,\widetilde{\gamma}(s)) \equiv t$. Moreover,
+			\begin{equation*}
+				\dot{\widetilde{\gamma}}(0) = \lv{\frac{d}{ds}}_{s=0}\exp_p(tv(s)) = (d\exp_p)_{tv}(\widetilde{E}) = E \qedhere
+			\end{equation*}
+		\end{proof}
+		Then
+		\begin{equation*}
+			0 = \lv{\frac{d}{ds}}_{s=0}\rho(\widetilde{\gamma}(s)) = \inn{\op{grad}\rho,E} = 0
+		\end{equation*}
+		Because $E$ is arbitrary, $\op{grad}\rho = c\dot{\gamma}(t)$.  Moreover, 
+		\begin{equation*}
+			\inn{\op{grad}\rho,\dot{\gamma}(t)} = \dot{\gamma}(t)(\rho) = \frac{d}{dt} \rho(\gamma(t)) = \frac{d}{dt} t = 1
+		\end{equation*}
+		So we have $(\op{grad}\rho)_t = \dot{\gamma}(t)$.
+	\end{proof}
+
+	\begin{thm}[Hessian Comparison Theorem]\label{thm:hessiancomp}
+		Let $(M,g)$ and $(\clo{M},\clo{g})$ be two Riemannian manifolds with same dimension $n$. Let $\gamma \colon [0,\ell] \sto M$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be normal geodesics. Let $p = \gamma(0)$, $\clo{p} = \clo{\gamma}(0)$, $\rho(\cdot) = d(p,\cdot)$, and $\clo{\rho}(\cdot)=\clo{d}(\clo{p},\cdot)$. Suppose that
+		\begin{enumerate}[label=(\roman*)]
+			\item for any $t \in [0,\ell]$, suppose that for all $2$-dim section $\Pi_{\gamma(t)} \subset T_{\gamma(t)}M$, $\clo{\Pi}_{\clo{\gamma}(t)} \subset T_{\clo{\gamma}(t)}\clo{M}$,
+			\begin{equation*}
+				K(\Pi_{\gamma(t)}) \leq K(\clo{\Pi}_{\clo{\gamma}(t)})
+			\end{equation*}
+			\item $\clo{\gamma},\gamma$ are minimizing and contain no cut point.
+		\end{enumerate}
+		Then we have
+		\begin{equation*}
+			\op{Hess} \rho \geq \clo{\op{Hess}} \clo{\rho}
+		\end{equation*}
+		along $\gamma,\clo{\gamma}$, that is  for any $t \in [0,\ell]$, for any $X \in T_{\gamma(t)}M$, $\clo{X} \in T_{\clo{\gamma}(t)}\clo{M}$ with $\abs{X}_g = \abs{\clo{X}}_{\clo{g}}$ and $\inn{X,\dot{\gamma}(t)} = \inn{\clo{X},\dot{\clo{\gamma}}(t)}$,
+		\begin{equation*}
+			\op{Hess} \rho(X,X) \geq \clo{\op{Hess}} \clo{\rho}(\clo{X},\clo{X})
+		\end{equation*}
+	\end{thm}
+	\begin{rmk}
+		For any $X \in T_{\gamma(t)}M$ for some $t$,
+		\begin{equation*}
+			X = X^\perp + \inn{X,\dot{\gamma}(t)}\dot{\gamma}(t)
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\op{Hess} \rho(X,X) = \op{Hess} \rho(X^\perp,X^\perp) + 2\inn{X,\dot{\gamma}(t)}\op{Hess} \rho(X^\perp,\dot{\gamma}(t)) + \inn{X,\dot{\gamma}(t)}^2\op{Hess} \rho(\dot{\gamma}(t),\dot{\gamma}(t))
+		\end{equation*}
+		However,
+		\begin{equation*}
+			\op{Hess} \rho(\dot{\gamma}(t),\dot{\gamma}(t)) = \frac{d^2}{dt^2} \rho(\gamma(t)) = \frac{d^2}{dt^2} t = 0
+		\end{equation*}
+		Besides, by $\op{grad}\rho = \dot{\gamma}(t)$ ($\abs{\op{grad}\rho} = 1$)
+		\begin{equation*}
+			\begin{aligned}
+				\op{Hess} \rho(\dot{\gamma}(t),X^\perp) & = \nabla^2 \rho(\dot{\gamma}(t),X^\perp) \\
+				&= \nabla (\nabla \rho)(\dot{\gamma}(t),X^\perp) \\
+				&= \nabla_{X^\perp} (\nabla \rho)(\dot{\gamma}(t)) \\
+				&= \nabla_{X^\perp} (\nabla_{\dot{\gamma}(t)} \rho) - \nabla \rho (\nabla_{X^\perp} \dot{\gamma}(t)) \\
+				&= \nabla_{X^\perp}(\inn{\dot{\gamma}(t),\op{grad}\rho}) - \inn{\nabla_{X^\perp} \dot{\gamma}(t),\op{grad}\rho} \\
+				&= \nabla_{X^\perp}(\inn{\op{grad}\rho,\op{grad}\rho}) - \inn{\nabla_{X^\perp} \op{grad}\rho,\op{grad}\rho} \\
+				&= \frac{1}{2}\nabla_{X^\perp}(\inn{\op{grad}\rho,\op{grad}\rho}) \\
+				&= 0
+			\end{aligned}
+		\end{equation*}
+		Therefore, we have
+		\begin{equation*}
+			\op{Hess} \rho(X,X) = \op{Hess} \rho(X^\perp,X^\perp)
+		\end{equation*}
+		and in above theorem $X,\clo{X}$ can be chosen such that they are perpendicular to tangent direction.
+	\end{rmk}
+	\begin{proof}
+		WLTG, let $t = \ell$. Let $X \in T_{\gamma(\ell)}M$, $\clo{X} \in T_{\clo{\gamma}(\ell)}\clo{M}$ with $\abs{X}_g = \abs{\clo{X}}_{\clo{g}}$ and $\inn{X,\dot{\gamma}(\ell)} = \inn{\clo{X},\dot{\clo{\gamma}}(\ell)} = 0$. Because $\gamma,\clo{\gamma}$ are contained in the area that the exponential map is diffeomorphic, we can apply the calculation as \textbf{Theorem} \ref{thm:distconv}. Let $\xi$ be a geodesic with $\xi(0) = \gamma(t)$ and $\dot{\xi}(0) = X$. By considering a family of geodesics connecting $p$ with $\xi(s)$, the variation
+		\begin{equation*}
+			F(t,s) = \exp_p \frac{t}{\ell}\exp_p^{-1}\bc{\xi(s)},\quad t \in [0,\ell]
+		\end{equation*}
+		with the Jacobian field $U$ that satisfies $U(0) = 0,U(\ell) = \dot{\xi}(0) =X$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\op{Hess}\rho(X,X) &= \lv{\frac{d^2}{ds^2}}_{s=0}\rho(\xi(s)) \\
+				&=  \lv{\frac{d^2}{ds^2}}_{s=0} L(s) \\
+				&= \int_0^\ell\left\langle\nabla_T U, \nabla_T U\right\rangle-R(U, T, U, T)-(T\langle T, U\rangle)^2 d t \\
+				&= \int_0^\ell\left\langle\nabla_T U, \nabla_T U\right\rangle-R(U, T, U, T) d t \\
+				&= I(U,U)
+			\end{aligned}
+		\end{equation*}
+		because $\inn{T,U} = 0$ by $U(0),U(\ell) \perp T$. Similarly,
+		\begin{equation*}
+			\clo{\op{Hess}} \clo{\rho}(\clo{X},\clo{X}) = \clo{I}(\clo{U},\clo{U})
+		\end{equation*}
+		Similarly as the proof of the Rauch Comparison Theorem, we need to compare the index form. Choose a linear isometry
+		\begin{equation*}
+			\phi_{t}\colon T_{\gamma(t)}M \longrightarrow T_{\clo{\gamma}(t)}\clo{M}
+		\end{equation*}
+		such that $\phi_{\ell}(X) = \clo{X}$, which can be done because $\abs{X} = \abs{\clo{X}}$. Then by the proof of \textbf{Theorem} \ref{thm:transind},
+		\begin{equation*}
+			I(U,U) \geq \clo{I}(\Phi(U),\Phi(U))
+		\end{equation*}
+		Besides, clearly $\Phi(U)(0) = 0$ and
+		\begin{equation*}
+			\Phi(U)(\ell) = \phi_{\ell}(X) = \clo{X}
+		\end{equation*}
+		Then because $\clo{U}$ is Jacobian with $\clo{U}(0) = 0$ and $\clo{U}(\ell) = \clo{X}$, by \textbf{Lemma} \ref{lem:compind},
+		\begin{equation*}
+			I(U,U) \geq \clo{I}(\Phi(U),\Phi(U)) \geq \clo{I}(\clo{U},\clo{U}) \qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{rmk}
+		In above calculation, because $U$ is Jacobian,
+		\begin{equation*}
+			\op{Hess}\rho(X,X) = I(U,U) = \lv{\inn{\nabla_TU,U}}_0^\ell = \inn{\nabla_TU(\ell),X}
+		\end{equation*}
+	\end{rmk}
+	\begin{rmk}
+		Moreover, if $f \in C^\infty(\R_+)$ with $f^\prime \geq 0$, then under the same condition
+		\begin{equation*}
+			\op{Hess} f\circ\rho(X,X) \geq \clo{\op{Hess}} f \circ\clo{\rho}(\clo{X},\clo{X})
+		\end{equation*}
+		Because:
+		\begin{equation*}
+			\begin{aligned}
+				\op{Hess} f\circ\rho(X,X) &= \lv{\frac{d^2}{ds^2}}_{s=0} f(\rho(\xi(s))) \\
+				&= \lv{\frac{d}{ds}}_{s=0}\bc{f^\prime(\rho(\xi(s))) \frac{d}{ds}\rho(\xi(s))} \\
+				&= f^{\prime\prime}(t)\inn{X,X}^2 + f^\prime(t)\op{Hess}\rho(X,X) \\
+			\end{aligned}
+		\end{equation*}
+		Because $f^{\prime\prime}(t)\inn{X,X}^2$ is as same as $\clo{X}$, $f^\prime(t) \geq 0$ implies the desired result.
+	\end{rmk}
+	\begin{cor}
+		Let $(M,g)$ be a Cartan-Hadamard manifold. Then
+		\begin{equation*}
+			\op{Hess}\rho^2(X,X) \geq 2g(X,X)
+		\end{equation*}
+		and so $\Delta \rho^2 \geq 2n$.
+	\end{cor}
+	\begin{proof}
+		It is because the Euclidean space $(T_pM,g_p)$ has the constant sectional curvature $0$ and the Hessian is $2g$.
+	\end{proof}
+
+	\begin{exam}[Hessian on Constant Curvature Space]
+		Let $(M,g)$ be a Riemannian manifold with constant sectional curvature $\kappa \in \R$. Let $p \in M$ and $\rho(\cdot) = d(p,\cdot)$. Let $\gamma \colon [0,\ell] \sto M$ with $q = \gamma(t_0)$ and $X \in T_qM$ perpendicular to $\dot{\gamma}(t_0)$. Then by above
+		\begin{equation*}
+			\op{Hess}\rho(X,X) = \inn{\nabla_TU(t_0),X}
+		\end{equation*}
+		There is an $E(t)$ be parallel along $\gamma$ with $E \perp T$ such that $U(t) = f(t)E(t)$.
+		\begin{proof}
+			Let $E_1=T,E_2,\cdots,E_n$ be an orthonormal frame along $\gamma$. Then
+			\begin{equation*}
+				U(t) = \sum_{i=2}^nf^i(t)E_i(t)
+			\end{equation*}
+			and the constant sectional curvature implies that for all $i = 2,3,\cdots,n$
+			\begin{equation*}
+				\left\{
+					\begin{aligned}
+						&\frac{d^2}{dt^2}f^i(t) + \kappa f^i(t) = 0 \\
+						&f^i(t) = 0
+					\end{aligned}
+				\right.
+			\end{equation*}
+			Because $U \neq 0$, there is $i_0$ such that $f^{i_0} \neq 0$. Let $f(t) = f^{i_0}(t)$. Because all $f^i$ satisfy the same equation with the same $0$-order condition, $f^i(t) = c_if(t)$ with a constant $c_i$ for all $i$. So
+			\begin{equation*}
+				U(t) = \sum_{i=2}^nf^i(t)E_i(t) = \sum_{i=2}^nc_if(t)E_i(t) = f(t) \sum_{i=2}^nc_iE_i(t) = f(t) E(t)
+			\end{equation*}
+			with $E(t) = \sum_{i=2}^nc_iE_i(t) \perp T$.  Moreover, WTLG, let $f^\prime(0) = 1$. Then
+		\begin{equation*}
+			f(t) = \left\{
+				\begin{array}{ll}
+					\frac{1}{\sqrt{\kappa}} \sin \sqrt{\kappa}t,&\kappa > 0\\
+					t,&\kappa = 0 \\
+					\frac{1}{\sqrt{\kappa}} \sinh \sqrt{\kappa}t,&\kappa < 0
+				\end{array}
+			\right. \qedhere
+		\end{equation*}
+		\end{proof}
+		So we have
+		\begin{equation*}
+			\begin{aligned}
+				\nabla_TU(t_0) &= \lv{\nabla_T \bc{f(t)E(t)}}_{t=t_0}\\
+				&= f^\prime(t_0)E(t_0)
+			\end{aligned}
+		\end{equation*}
+		Besides, we know $U(t_0) = X = f(t_0)E(t_0)$, that is
+		\begin{equation*}
+			\abs{X}^2 = f^2(t_0)\abs{E(t_0)}^2
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\op{Hess}\rho(X,X) = \inn{\nabla_TU(t_0),U(t_0)} = \frac{f^\prime(t_0)}{f(t_0)}\abs{X}^2
+		\end{equation*}
+		and
+		\begin{equation*}
+			\Delta \rho(\gamma(t_0)) = \sum_{i=2}^n \op{Hess}\rho(E_i,E_i) = \frac{f^\prime(t_0)}{f(t_0)} (n-1)
+		\end{equation*}
+		In particular, if $\kappa = 0$, then 
+		\begin{equation*}
+			\op{Hess}\rho(X,X) = \frac{1}{t_0}\abs{X}^2 = \frac{1}{r}\abs{X}^2,\quad r = d(p,q)
+		\end{equation*}
+		So by Hessian Comparison theorem, if $(M,g)$ is a Cartan-Hadamard manifold,
+		\begin{equation*}
+			\op{Hess}\rho \geq \frac{1}{r}g
+		\end{equation*}
+		Furthermore, in such case
+		\begin{equation*}
+			\Delta \rho = \sum_{i=2}^n \op{Hess}\rho(E_i,E_i) \geq  \sum_{i=2}^n \frac{1}{r}g(E_i,E_i) = \frac{n-1}{r}
+		\end{equation*} 
+	\end{exam}
+
+	\item \emph{\textbf{Laplacian:}} We want to relax the conditions of the Hessian Comparison Theorem to obtain the Laplacian Comparison Theorem.
+	\begin{thm}
+		Let $(M,g)$ and $(\clo{M},\clo{g})$ be two Riemannian manifolds with same dimension $n$. Let $\gamma \colon [0,\ell] \sto M$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be normal geodesics. Let $p = \gamma(0)$, $\clo{p} = \clo{\gamma}(0)$, $\rho(\cdot) = d(p,\cdot)$, and $\clo{\rho}(\cdot)=\clo{d}(\clo{p},\cdot)$. Suppose that
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $\op{Ric}(\dot{\gamma},\dot{\gamma})(t) \leq \clo{\op{Ric}}(\dot{{\clo\gamma}},\dot{\clo{\gamma}})(t)$ for any $t \in [0,\ell]$;
+			\item $\clo{\gamma},\gamma$ are minimizing and contain no cut point.
+			\item $M$ is a space form.
+		\end{enumerate}
+		Then we have
+		\begin{equation*}
+			\Delta \rho(\gamma(t)) \geq \clo{\Delta} \clo{\rho}(\clo{\gamma}(t)),\quad t \in [0,\ell]
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		First, choosing $t = \ell$. Let $e_1 = \dot{\gamma}(\ell),\cdots,e_n$ be an orthonormal basis of $T_{\gamma(\ell)}M$ and moving them in parallel to get a frame $\bb{e_i(t)}$. Then
+		\begin{equation*}
+			\Delta \rho(\gamma(\ell)) = \sum_{i=2}^n \op{Hess}\rho(e_i,e_i) = \sum_{i=2}^n I(U_i,U_i)
+		\end{equation*}
+		where $U_i$ is a normal Jacobian field with $U_i(0)=0,U_i(\ell) = e_i$. Similarly for $\clo{M}$,
+		\begin{equation*}
+			\clo{\Delta} \clo{\rho}(\clo{\gamma}(\ell)) = \sum_{i=2}^n \clo{\op{Hess}}\clo{\rho}(\clo{e}_i,\clo{e}_i) = \sum_{i=2}^n \clo{I}(\clo{U}_i,\clo{U}_i)
+		\end{equation*}
+		where $\clo{U}_i$ is a normal Jacobian field with $\clo{U}_i(0)=0,\clo{U}_i(\ell) = \clo{e}_i$. 
+		Let $\phi_\ell \colon T_{\gamma(\ell)}M \sto \colon T_{\clo{\gamma}(\ell)}\clo{M}$ such that $\phi_\ell(e_i) = \clo{e}_i$. Then it induces a $\Phi$, which satisfies
+		\begin{equation*}
+			\Phi(U_i)(0) = 0,\quad \Phi(U_i)(\ell) = \clo{U}_i(\ell)
+		\end{equation*}
+		So by \textbf{Lemma} \ref{lem:indexlem},
+		\begin{equation*}
+			\clo{I}(\Phi(U_i),\Phi(U_i)) \geq \clo{I}(\clo{U}_i,\clo{U}_i),\quad \forall~i
+		\end{equation*}
+		Therefore, it is sufficient to show
+		\begin{equation*}
+			\sum_{i=2}^n I(U_i,U_i) \geq \sum_{i=2}^n \clo{I}(\Phi(U_i),\Phi(U_i))
+		\end{equation*}
+		Because 
+		\begin{equation*}
+			\begin{aligned}
+				\op{LHS} &= \sum_{i=2}^n \int_0^\ell \inn{\nabla_TU_i,\nabla_TU_i} - R(U_i,T,U_i,T)dt \\
+				\op{RHS} &= \sum_{i=2}^n \int_0^\ell \inn{\clo{\nabla}_{\clo{T}}\Phi(U_i),\clo{\nabla}_{\clo{T}}\Phi(U_i)} - \clo{R}(\Phi(U_i),{\clo{T}},\Phi(U_i),{\clo{T}})dt \\
+				&= \sum_{i=2}^n \int_0^\ell \inn{\nabla_TU_i,\nabla_TU_i} - \clo{R}(\Phi(U_i),{\clo{T}},\Phi(U_i),{\clo{T}})dt
+			\end{aligned}
+		\end{equation*}
+		we need to show
+		\begin{equation*}
+			\int_0^\ell \sum_{i=2}^n R(U_i,T,U_i,T)dt \geq \int_0^\ell \sum_{i=2}^n \clo{R}(\Phi(U_i),{\clo{T}},\Phi(U_i),{\clo{T}})dt
+		\end{equation*}
+		However,
+		\begin{equation*}
+			R(U_i,T,U_i,T) = K(\Pi_{U_i,T})\bc{\inn{U_i,U_i}\inn{T,T}-\inn{U_i,T}^2}
+		\end{equation*}
+		When $t=\ell$, because $\bb{e_i}$ is orthonormal,
+		\begin{equation*}
+			\op{Ric}(\dot{\gamma(\ell)}) = \sum_{i=2}^n R(U_i,T,U_i,T)(\ell)
+		\end{equation*}
+		But it is not true for other point. So we need the further condition. Because $M$ has constant sectional curvature and $U_i(0) = 0,U_i(\ell) = e_i$
+		\begin{equation*}
+			U_i(t) = f(t)e_i(t),\quad \forall~i=2,3,\cdots,n
+		\end{equation*}
+		where $f^{\prime\prime} + \kappa f = 0$ with $f(0)=0,f(\ell) = 1$ (Note that $f$ is independent with $i$ by the uniqueness of the solution.) Then for any $t \in [0,\ell]$,
+		\begin{equation*}
+			\sum_{i=2}^nR(U_i,T,U_i,T)(t) = \sum_{i=2}^nf^2(t) R(e_i,T,e_i,T) = f^2(t)\op{Ric}(\dot{\gamma}(t))
+		\end{equation*}
+		For the right hand side, because $\Phi(U_i)(t) = f(t)\clo{e}_i(t)$,
+		\begin{equation*}
+			\sum_{i=2}^n \clo{R}(\Phi(U_i),{\clo{T}},\Phi(U_i),{\clo{T}}) = f^2(t)\clo{\op{Ric}}(\dot{\clo{\gamma}}(t))
+		\end{equation*}
+		Therefore, the inequality we need is
+		\begin{equation*}
+			\int_0^\ell f^2(t)\op{Ric}(\dot{\gamma}(t)) dt \geq \int_0^\ell f^2(t)\clo{\op{Ric}}(\dot{\clo{\gamma}}(t))dt
+		\end{equation*}
+		which is clearly true.
+	\end{proof}
+	\begin{rmk}
+		Note that if $\Delta \rho (\gamma(t)) \leq \clo{\Delta} \clo{\rho}(\clo{\gamma}(t))$, by
+		\begin{equation*}
+			\clo{I}_0^t(\Phi(U_i),\Phi(U_i)) = \clo{I}_0^t(\clo{U}_i,\clo{U}_i)
+		\end{equation*}
+		$\Phi(U_i) = f(t)\clo{e}_i(t) = \clo{U}_i$, \emph{i.e.} it is Jacobian,
+		\begin{equation*}
+			\nabla_{\clo{T}}\nabla_{\clo{T}}\Phi(U_i)+\clo{R}(\Phi(U_i),\clo{T})\clo{T} = 0 ~\Rightarrow~ \frac{d^2}{dt^2}f(t) + f\clo{R}(\clo{e}_i,\clo{T},\clo{e}_j,\clo{T}) = 0
+		\end{equation*}
+		But $f^{\prime\prime} + \kappa f = 0$. Therefore, $\clo{R}(\clo{e}_i,\clo{T},\clo{e}_j,\clo{T}) = \kappa$, which means $\clo{M}$ has constant sectional curvature.
+	\end{rmk}
+	\begin{cor}
+		Under the same conditions as above theorem. Let $f \in C^\infty(\R_+)$ with $f^\prime \geq 0$. Then
+		\begin{equation*}
+			\Delta f(\rho)(\gamma(t)) \geq \clo{\Delta} f(\clo{\rho})(\clo{\gamma}(t))
+		\end{equation*}
+	\end{cor}
+	\begin{proof}
+		By 
+		\begin{equation*}
+			\op{Hess} f\circ\rho(X,X) = f^{\prime\prime}(t)\inn{X,X}^2 + f^\prime(t)\op{Hess}\rho(X^\perp,X^\perp)
+		\end{equation*}
+		we have
+		\begin{equation*}
+			\Delta f(\rho)(t) = f^{\prime\prime}(t) + f^\prime(t)\Delta\rho(t) \qedhere
+		\end{equation*}
+	\end{proof}
+
+
+	\begin{thm}[Laplacian Comparison Theorem]\label{thm:laplaciancomp}
+		Let $(M,g)$ be a Riemannian manifold with dimension $n$ and $\gamma\colon [0,\ell] \sto M$ be a geodesic with $\gamma(0) = p$. Let $\rho(\cdot) = d(p,\cdot)$. Suppose that $\op{Ric} \geq (n-1)\kappa$ and $\gamma$ is minimizing and has no cut point.
+		\begin{equation*}
+			\Delta \rho(\gamma(t)) \leq \frac{f_\kappa^\prime(r)}{f_\kappa(r)}(n-1)
+		\end{equation*}
+		where $f_\kappa$ the solution of $f^{\prime\prime} + \kappa f = 0$ with $f(0) = 0,f(\ell) = 1$.
+	\end{thm}
+	\begin{proof}
+		Let $(\clo{M},\clo{g})$ be a space form with curvature $\kappa$ and $\clo{\gamma} \colon [0,\ell] \sto \clo{M}$ be a geodesic. We only need to show $\gamma$ is minimizing and has no cut point. It is clear when $\kappa \leq 0$.  For $\kappa > 0$, because $\gamma$ is minimizing and has no cut point, $\ell < \frac{\pi}{\sqrt{\kappa}}$ by Myers' Lemma. Then because $\clo{M}$ is isometric to the sphere $\Sp^n(1 / \sqrt{\kappa})$, $\clo{\gamma}$ is minimizing and has no cut point. 
+	\end{proof}
+	
+	\item \emph{\textbf{Volume Comparison:}} Let $(M,g)$ be a Riemannian manifold. Let $(x,U)$ be a chart. Then define the integral by
+	\begin{equation*}
+		\int_{x(U)}\sqrt{\det g_{ij}(x)}dx
+	\end{equation*}
+	Note this definition is independent with the choice of coordinate by the fact in section $1.1$ and the change of variable of Euclidean integral. Moreover, by the partition of unity, we can choose $(x_\alpha,U_\alpha)$ with $\phi_\alpha$ and define
+	\begin{equation*}
+		\op{Vol}(M) = \sum_\alpha \int_{x_\alpha(U_\alpha)} \phi_\alpha\cdot\sqrt{\det g_{ij}(x)}dx_\alpha
+	\end{equation*}
+	Moreover, this definition is independent with the choice of $(x_\alpha,U_\alpha)$ and $\phi_\alpha$,
+	\begin{equation*}
+		\begin{aligned}
+			\op{Vol}(M) &= \sum_\beta \int_{y_\beta(V_\beta)} \psi_\beta\cdot\sqrt{\det g_{ij}(y)}dy_\beta \\
+			&= \sum_\beta\sum_\alpha \int_{y_\beta(V_\beta) \cap x_\alpha(U_\alpha)} \phi_\alpha\psi_\beta\cdot\sqrt{\det g_{ij}(y)}dy_\beta \\
+			&= \sum_\beta\sum_\alpha \int_{y_\beta(V_\beta) \cap x_\alpha(U_\alpha)} \phi_\alpha\psi_\beta\cdot\sqrt{\det g_{ij}(x)}dx_\alpha \\
+			&=  \sum_\alpha \int_{x_\alpha(U_\alpha)} \phi_\alpha\cdot\sqrt{\det g_{ij}(x)}dx_\alpha
+		\end{aligned}
+	\end{equation*}
+	Note that the final equality is because we interchange $\sum_\beta\sum_\alpha$ by $\sum_\alpha\sum_\beta$, which is valid because each term is nonnegative (by the series theory). Then we construct a linear functional
+	\begin{equation*}
+		\mathcal{F} \colon C_c(M) \longrightarrow \R
+	\end{equation*}
+	by
+	\begin{equation*}
+		\mathcal{F}(f) \defeq \sum_\alpha  \int_{x_\alpha(U_\alpha)} f(x)\phi_\alpha\cdot\sqrt{\det g_{ij}(x)}dx_\alpha
+	\end{equation*}
+	which is independent with the choice of the partition of unity (where the final inequality does not require the nonnegativity because of the compactness). Then $f \geq 0$ implies $\mathcal{F}(f) \geq 0$. Therefore, by the Riesz-Markov-Kakutani Representation Theorem (because $M$ is a locally compact Hausdorff space), then there is a $\sigma$-algebra $\mathfrak{M}$ containing all Borel sets and a unique positive measure $\mu$ such that
+	\begin{equation*}
+		\mathcal{F}(f) = \int_Mf(x)d\mu(x),\quad \forall~f\in C_c(M)
+	\end{equation*}
+	Moreover,
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $\mu(K) \leq \infty$ for all compact $K$;
+		\item For any $E \in \mathfrak{M}$,
+		\begin{equation*}
+			\mu(E) = \inf \bb{\mu(V) \colon E \subset V,~V \text{ is open}}
+		\end{equation*}
+		which is called outer-regular;
+		\item because $M$ is $\sigma$-compact (countable union of compact sets), for any any $E \in \mathfrak{M}$,
+		\begin{equation*}
+			\mu(E) = \inf \bb{\mu(K) \colon K \subset E,~K \text{ is compact}}
+		\end{equation*}
+		which is called inner-regular.
+	\end{enumerate}
+	So $\mu$ is a regular Borel measure on $M$.
+	\begin{rmk}
+	 	\begin{enumerate}[label=(\roman{*})]
+	 		\item Consider the volume form
+	 		\begin{equation*}
+	 			\Omega_0 = \sqrt{\det g_{ij}(x)} dx^1\wedge \cdots dx^n
+	 		\end{equation*}
+	 		when $M$ is orientable, above integral coincides with the integral of form.
+
+	 		\item If $M$ is complete, then $M = \exp_p(E(p))\sqcup C(p)$. Because any radical geodesic intersects $\tilde{C}(p)$ only once on $T_pM$, $\tilde{C}(p)$ has the Lebesgue measure $0$. Because $\exp_p$ is smooth, $C(p)$ has measure $0$.
+	 	\end{enumerate}
+	\end{rmk}
+
+	Let $(M,g)$ be a complete Riemannian manifold. In coordinate $\exp_p \colon E(p) \subset T_pM \sto \exp_p(E(p))$, let $\bb{\frac{\partial}{\partial x^i}}$ be the coordinate basis. Then $g$ has the matrix expression as
+	\begin{equation*}
+		g_{ij}(v) = \bc{g^*\exp_p}_v\bc{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}} = g_{\exp_p(v)}\bc{(d\exp_p)_v\bc{\frac{\partial}{\partial x^i}},(d\exp_p)_v\bc{\frac{\partial}{\partial x^j}}},\quad \forall~v \in E(p)
+	\end{equation*}
+	Because $C(p)$ has measure $0$,
+	\begin{equation*}
+		\op{Vol}(M) = \int_{E(p)}\sqrt{\det(g_{ij}(x))}dx
+	\end{equation*}
+	Let $V \in E(p)$ with $\abs{V} = 1$ and $t_0 < \tau(V)$. Let
+	\begin{equation*}
+	 	F_i(t,s) = \exp_p \frac{t}{t_0}\bc{t_0V + s\frac{\partial}{\partial x^i}},\quad t \in [0,t_0]
+	\end{equation*} 
+	with the corresponding Jacobian field $U_i(t)$,
+	\begin{equation*}
+		U_i(0) = 0,\quad U_i(t_0) = (d\exp_p)_{t_0V}\bc{\frac{\partial}{\partial x^i}}
+	\end{equation*}
+	But this method is not valid because we cannot calculate it for each $t_0$.
+
+	\noindent Therefore, let's consider another way. Let $\varphi(x) = \sqrt{\det(g_{ij}(x))}$ and consider the polar coordinate $\varphi(t,\theta)$. Denote $\theta \sim V \in S_p$.
+	\begin{equation*}
+		\op{Vol}(M) = \int_0^{\tau(\theta)} \int_{\Sp^{n-1}}\varphi(t,\theta) t^{n-1}d\theta dt 
+	\end{equation*}
+	where
+	\begin{equation*}
+		\varphi(t,\theta) = \sqrt{\det g_{\exp_p(t\theta)}\bc{(d\exp_p)_{t\theta}\bc{\frac{\partial}{\partial x^i}},(d\exp_p)_{t\theta}\bc{\frac{\partial}{\partial x^j}}}}
+	\end{equation*}
+	Moreover, let's fix $\theta$ (\emph{i.e.} $V \in S_p$) to calculate $\varphi(t) = \varphi(t,\theta)$.
+	\begin{equation*}
+		(d\exp_p)_{t_0V} \colon T_{t_0V}(T_pM) \longrightarrow T_{\exp_p(t_0V)}M
+	\end{equation*}
+	where $\bb{\frac{\partial}{\partial x^i}}$ is an orthonormal basis of $(T_{t_0V}(T_pM),g_p)$. If choosing an orthonormal basis $\bb{e_j}$ in $T_{\exp_p(t_0V)}M$ such that $d\exp_p\bc{\frac{\partial}{\partial x^i}} = \alpha_i^je_j$. Then
+	\begin{equation*}
+		\varphi(t_0) = \det(\alpha_i^j)
+	\end{equation*}
+
+	\begin{lem}\label{lem:indepjac}
+		Let $\gamma \colon [0,\ell] \sto M$ be a normal geodesic containing no conjugate point. Let $J_1,\cdots,J_{n-1}$ be linearly independent normal Jacobian fields along $\gamma$ such that $J_i(0) = 0$. Then we have
+		\begin{equation*}
+			\varphi(t) = \frac{\sqrt{\det\bc{\inn{J_i(t),J_j(t)}}}}{\sqrt{\det\bc{\inn{t\nabla_TJ_i(0),t\nabla_TJ_j(0)}}}} = \frac{\sqrt{\det\bc{\inn{J_i(t),J_j(t)}}}}{t^{n-1}\sqrt{\det\bc{\inn{\nabla_TJ_i(0),\nabla_TJ_j(0)}}}}
+		\end{equation*}
+	\end{lem}
+	\begin{rmk}
+		Because $\gamma$ has no conjugate point, $J_1,\cdots,J_{n-1}$ are linearly independent if and only if $J_1(t_0),\cdots,J_{n-1}(t_0)$ are linearly independent for some $t_0 \neq 0$. Also, it is if and only if $\nabla_TJ_1(0),\cdots,\nabla_TJ_{n-1}(0)$ are linearly independent. 
+	\end{rmk}
+	\begin{proof}
+		First, consider
+		\begin{equation*}
+			(d\exp_p)_{t\dot{\gamma}(0)} \colon T_{t\dot{\gamma}(0)}(T_{\gamma(0)}M) \longrightarrow T_{\gamma(t)}M
+		\end{equation*}
+		And $J_1(t),\cdots,J_{n-1}(t),\dot{\gamma}(t)$ is a basis of $T_{\gamma(t)}M$ and by $J_i(t) \perp \dot{\gamma}(t)$ and $\abs{\dot{\gamma}(t)}=1$,
+		\begin{equation*}
+			\abs{J_1(t)\wedge \cdots \wedge J_{n-1}(t)} = \sqrt{\det\bc{\inn{J_i(t),J_j(t)}}} =  \abs{\dot{\gamma}(t)\wedge J_1(t)\wedge \cdots \wedge J_{n-1}(t)}
+		\end{equation*}
+		Besides, $\nabla_TJ_1(0),\cdots,\nabla_TJ_{n-1}(0)$ are linear independent and
+		\begin{equation*}
+			0 = \inn{J_i(t),\dot{\gamma}(t)} ~\Rightarrow~ 0=\frac{d}{dt}\inn{J_i(t),\dot{\gamma}(t)} = \inn{\nabla_TJ_i(t),\dot{\gamma}(t)}
+		\end{equation*}
+		that is $\nabla_TJ_i(0) \perp \dot{\gamma}(0)$. It follows $t\nabla_TJ_1(0),\cdots,t\nabla_TJ_{n-1}(0),\dot{\gamma}(0)$ is a basis of $T_{\gamma(0)}M$. Therefore,
+		\begin{equation*}
+			t^{n-1}\sqrt{\det\bc{\inn{\nabla_TJ_i(0),\nabla_TJ_j(0)}}}= \abs{\dot{\gamma}(0) \wedge t\nabla_TJ_1(0)\wedge \cdots \wedge t\nabla_TJ_{n-1}(0)}
+		\end{equation*}
+		For any $t_0$, we have 
+		\begin{equation*}
+			(d\exp_p)_{t_0\dot{\gamma}(0)}(t_0\nabla_TJ_i(0)) = J_i(t_0),\quad (d\exp_p)_{t_0\dot{\gamma}(0)}(\dot{\gamma}(0)) =\dot{\gamma}(t_0) 
+		\end{equation*}
+		by choosing the variation $F(t,s) = \exp_pt(\dot{\gamma}(0)+ \nabla_TJ_i(0))$. Then by linear algebra, we have the result.
+	\end{proof}
+	\begin{rmk}
+		For linear map $\Phi \colon V \sto \widetilde{V}$ between two same dimensional inner product spaces. Let $\bb{e_i}$ be an orthonormal basis of $V$ and define
+		\begin{equation*}
+			\det \Phi \defeq \det \bc{\inn{\Phi(e_i),\Phi(e_j)}}_{n\times n}
+		\end{equation*}
+		First, this definition is independent with the choice of the orthonormal basis $\bb{e_i}$. Because if $\bb{e_i^\prime}$ is another orthonormal basis of $V$ with $e_i^\prime = \varepsilon_i^ke_k$, then
+		\begin{equation*}
+			\inn{\Phi(e_i^\prime),\Phi(e_j^\prime)} = \varepsilon_i^k\varepsilon_j^\ell\inn{\Phi(e_k),\Phi(e_\ell)} ~\Rightarrow~ \bc{\inn{\Phi(e_i^\prime),\Phi(e_j^\prime)}} = \bc{\varepsilon_i^k}\bc{\inn{\Phi(e_k),\Phi(e_\ell)}}\bc{\varepsilon_j^\ell}^\top
+		\end{equation*}
+		and by $\bc{\varepsilon_i^k}$ is orthonormal, we have $\det \bc{\inn{\Phi(e_i^\prime),\Phi(e_j^\prime)}} = \det \bc{\inn{\Phi(e_i),\Phi(e_j)}}$. Moreover, if $\bb{v_i}$ be another basis of $V$ but it may be not orthonormal and $v_i = a_i^je_j$, then similarly we have
+		\begin{equation*}
+			\bc{\inn{\Phi(v_i),\Phi(v_j)}} = \bc{a_i^k}\bc{\inn{\Phi(e_k),\Phi(e_\ell)}}\bc{a_j^\ell}^\top
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			\det \Phi = \frac{\det \bc{\inn{\Phi(v_i),\Phi(v_j)}}}{\bc{\det \bc{a_i^k}}^2} =  \frac{\det \bc{\inn{\Phi(v_i),\Phi(v_j)}}}{\abs{v_1\wedge \cdots \wedge v_n}^2}
+		\end{equation*}
+		Furthermore, if let $\bb{\widetilde{e}_i}$ be an orthonormal basis of $\widetilde{V}$ and $\Phi(e_i) = \alpha_i^j\widetilde{e}_j$, then we have
+		\begin{equation*}
+			\bc{\inn{\Phi(e_i),\Phi(e_j)}}_{n\times n} = \bc{\alpha_i^k}\bc{\alpha_i^k}^\top~\Rightarrow~\det \Phi = \bc{\det\bc{\alpha_i^k}}^2
+		\end{equation*}
+		Therefore, $\sqrt{\det \Phi} = \abs{\Phi(e_1)\wedge \cdots\wedge \Phi(e_n)}$. And so
+		\begin{equation*}
+			\sqrt{\det \Phi} = \frac{\abs{\Phi(v_1)\wedge \cdots\wedge \Phi(v_n)}}{\abs{v_1\wedge \cdots \wedge v_n}}
+		\end{equation*}
+	\end{rmk}
+	\begin{exam}[Constant Sectional Curvature]
+		Let $(M_\kappa,g)$ be a simply connected space form of sectional curvature $\kappa$. Let $e_1,e_2,\cdots,e_n=\dot{\gamma}(0)$ be a orthonormal basis of $T_{\gamma(0)}M$ and move them in parallel to get a frame $e_i(t)$. Let
+		\begin{equation*}
+			J_i(t) = c_if_\kappa(t)E_i(t)
+		\end{equation*}
+		such that $f(t)$ is the solution of
+		\begin{equation*}
+			\left\{
+				\begin{aligned}
+					&f^{\prime\prime} + \kappa f = 0\\
+					&f(0)=0,~f^\prime(0)=1
+				\end{aligned}
+			\right.
+		\end{equation*}
+		Then
+		\begin{equation*}
+			\varphi_\kappa(t,\theta) = \bc{\frac{f_\kappa(t)}{t}}^{n-1}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				\op{Vol}(M_\kappa) &= \int_0^{\frac{\pi}{\sqrt{\kappa}}} \int_{\Sp^{n-1}}f_\kappa(t)^{n-1}dtd\theta \\
+				&= \op{Vol}(\Sp^{n-1})\int_0^{\frac{\pi}{\sqrt{\kappa}}}f_\kappa(t)^{n-1}dt
+			\end{aligned}
+		\end{equation*}
+		and denote $\frac{\pi}{\sqrt{\kappa}} = \infty$ if $\kappa \leq 0$.
+	\end{exam}
+
+	\begin{lem}
+		Let $\gamma \colon [0,\ell] \sto M$ be a normal geodesic containing no conjugate point. Let $\rho(\cdot) = d(\gamma(0),\cdot)$ and $\varphi(t) = \varphi(t,\dot{\gamma}(0))$. Then
+		\begin{equation*}
+			\bc{\log \varphi(t) }^\prime= \frac{\varphi^\prime(t)}{\varphi(t)} = \bc{\Delta \rho - \frac{n-1}{\rho}}(\gamma(t))
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		WTLG, let $t = \ell$. Let $e_1,e_2,\cdot,e_n = \dot{\gamma}(\ell)$ be a orthonormal basis of $T_{\gamma(\ell)}M$. Let $J_1,\cdots,J_{n-1}$ be normal Jacobian fields along $\gamma$ such that $J_i(0) = 0$, $J_i(\ell) = e_i$, and so they are independent and independent at each point.
+		Note that
+		\begin{equation*}
+			\varphi(t) = \frac{\abs{J_1(t)\wedge \cdots \wedge J_{n-1}(t)}}{t^{n-1}\abs{\nabla_TJ_1(0)\wedge \cdots \wedge \nabla_TJ_{n-1}(0)}} ~\Rightarrow~ \varphi(\ell) = \frac{1}{\ell^{n-1}\abs{\nabla_TJ_1(0)\wedge \cdots \wedge \nabla_TJ_{n-1}(0)}}
+		\end{equation*}
+		Then
+		\begin{equation*}
+			\lv{\frac{\varphi^\prime}{\varphi}}_{t=\ell} = \lv{\frac{\frac{d}{dt}\varphi^2}{2\varphi^2}}_{t=\ell}
+		\end{equation*}
+		First,
+		\begin{equation*}
+			\begin{aligned}
+				\frac{d}{dt}\varphi^2 & = \frac{1}{\abs{\nabla_TJ_1(0)\wedge \cdots \wedge \nabla_TJ_{n-1}(0)}^2}\frac{d}{dt} \bc{\frac{1}{t^{2(n-1)}} \det \bc{\inn{J_i(t),J_j(t)}}} \\
+				&= \ell^{2(n-1)}\varphi(\ell)^2\bc{-2(n-1)\frac{1}{t^{2n-1}}\det \bc{\inn{J_i(t),J_j(t)}} + \frac{1}{t^{2(n-1)}} \frac{d}{dt}\det \bc{\inn{J_i(t),J_j(t)}}}
+			\end{aligned}
+		\end{equation*}
+		Besides,
+		\begin{equation*}
+			\begin{aligned}
+				&\quad\lv{\frac{d}{dt}}_{t=\ell}\det \bc{\inn{J_i(t),J_j(t)}} = \lv{\frac{d}{dt}}_{t=\ell}\sum_\sigma \op{sgn}(\sigma)\inn{J_1(t),J_{\sigma(1)}(t)}\cdots\inn{J_{n-1}(t),J_{\sigma(n-1)}(t)}\\
+				&= \sum_\sigma \op{sgn}(\sigma) \sum_{i=1}^{n-1}\inn{J_1(l),J_{\sigma(1)}(l)}\cdots \lv{\frac{d}{dt}}_{t=\ell} \inn{J_i(t),J_{\sigma(i)}(t)} \cdots\inn{J_{n-1}(l),J_{\sigma(n-1)}(l)} \\
+				&= \sum_{i=1}^{n-1} \lv{\frac{d}{dt}}_{t=\ell} \inn{J_i(t),J_i(t)}\\
+				&= 2\sum_{i=1}^{n-1}\inn{\nabla_TJ_i(\ell),J_i(\ell)}
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				\lv{\frac{d}{dt}}_{t = \ell}\varphi^2 &= \ell^{2(n-1)}\varphi(\ell)^2\bc{-2(n-1)\frac{1}{\ell^{2n-1}} + \frac{2}{\ell^{2(n-1)}} \sum_{i=1}^{n-1}\inn{\nabla_TJ_i(\ell),J_i(\ell)} } \\
+				&= 2\varphi(\ell)^2\bc{-(n-1)\frac{1}{\ell} + \sum_{i=1}^{n-1}\inn{\nabla_TJ_i(\ell),J_i(\ell)} } \\
+				&= 2\varphi(\ell)^2\bc{-(n-1)\frac{1}{\ell} + \sum_{i=1}^{n-1}I(J_i,J_i)} \\
+				&= 2\varphi(\ell)^2\bc{-(n-1)\frac{1}{\ell} + \sum_{i=1}^{n-1}\op{Hess}\rho(e_i,e_i)}\\
+				&= 2\varphi(\ell)^2\bc{-(n-1)\frac{1}{\rho} + \Delta \rho (\gamma(\ell))}
+			\end{aligned}
+		\end{equation*}
+		It follows the desired result.
+	\end{proof}
+	\begin{rmk}
+		In particular, if $M_\kappa$ is a space form of $\kappa$, then $\varphi(t) = \bc{\frac{f_{\kappa}(t)}{t}}^{n-1}$. So
+		\begin{equation*}
+			\bc{\log \varphi(t) }^\prime = (n-1) \frac{t}{f_{\kappa}(t)}\frac{tf^\prime_{\kappa}(t) - f_\kappa(t)}{t^2} = \Delta \rho - (n-1)\frac{1}{\rho}
+		\end{equation*}
+	\end{rmk}
+	
+	\begin{thm}[Bishop]
+		Let $(M,g)$ be a Riemannian manifold with $\op{Ric} \geq (n-1)\kappa$. Let $\gamma \colon [0,\ell] \sto M$ be a normal geodesic containing no cut point. Then
+		\begin{equation*}
+			t \mapsto \frac{\varphi(t)}{\varphi_\kappa(t)},\quad t \in [0,\ell]
+		\end{equation*}
+		is non-increasing.
+	\end{thm}
+	\begin{rmk}
+		As $t \sto 0$, by above example, $\varphi_\kappa \sto 1$. In fact, by
+		\begin{equation*}
+			\varphi(t,\theta) = \sqrt{\det g_{\exp_p(t\theta)}\bc{(d\exp_p)_{t\theta}\bc{\frac{\partial}{\partial x^i}},(d\exp_p)_{t\theta}\bc{\frac{\partial}{\partial x^j}}}}
+		\end{equation*}
+		as $t \sto 0$, $\varphi \sto 1$. Therefore, for any $0 < t_1 < t \leq \ell$,
+		\begin{equation*}
+			\frac{\varphi(t)}{\varphi_\kappa(t)} \leq \frac{\varphi(t_1)}{\varphi_\kappa(t_1)} \sto 0,\quad t_1 \sto 0
+		\end{equation*}
+		It follows that $\varphi(t) \leq \varphi_\kappa(t)$.
+	\end{rmk}
+	\begin{proof}
+		Let $(\clo{M},\clo{g})$ be a simply-connected space form of $\kappa$. Note that $\clo{\op{Ric}} = (n-1)\kappa g$. Then by $\op{Ric} \geq \clo{\op{Ric}}$, We have
+		\begin{equation*}
+			\Delta \rho \leq \clo{\Delta} \clo{\rho}
+		\end{equation*}
+		Therefore, by above lemma
+		\begin{equation*}
+			\begin{aligned}
+				\bc{\log \varphi(t) }^\prime &= \bc{\Delta \rho - (n-1)\frac{1}{\rho}}(\gamma(t)) \\
+				\bc{\log \varphi_\kappa(t) }^\prime &= \bc{\clo{\Delta} \clo{\rho} - (n-1)\frac{1}{\clo{\rho}}}(\clo{\gamma}(t))
+			\end{aligned}
+		\end{equation*}
+		for $0<t_1 < t_2 \leq \ell$, we have
+		\begin{equation*}
+			\bc{\log \varphi(t) }^\prime \leq \bc{\log \varphi_\kappa(t) }^\prime ~\Rightarrow~ \log \frac{\varphi(t_2)}{\varphi_\kappa(t_2)} \leq \log \frac{\varphi(t_1)}{\varphi_\kappa(t_1)} ~\Rightarrow~\frac{\varphi(t_2)}{\varphi_\kappa(t_2)} \leq \frac{\varphi(t_1)}{\varphi_\kappa(t_1)} \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\begin{cor}[Bishop]
+		Let $(M,g)$ be a complete Riemannian manifold with $\op{Ric} \geq (n-1)\kappa$ for $\kappa > 0$. Then
+		\begin{equation*}
+			\op{Vol}(M) \leq \op{Vol}\bc{\Sp^n(1 / \sqrt{\kappa})}
+		\end{equation*}
+		where ``$=$'' if and only if $M$ is isometric to $\Sp^n(1 / \sqrt{\kappa})$.
+	\end{cor}
+	\begin{proof}
+		First,
+		\begin{equation*}
+			\begin{aligned}
+				\op{Vol}(M) &= \int_0^{\tau(\theta)} \int_{\Sp^{n-1}}\varphi(t,\theta) t^{n-1}d\theta dt \\ 
+				&\leq  \int_0^{\frac{\pi}{\sqrt{\kappa}}} \int_{\Sp^{n-1}}\varphi_\kappa(t,\theta) t^{n-1}d\theta dt \\
+				&= \op{Vol}\bc{\Sp^n(1 / \sqrt{\kappa})} 
+			\end{aligned}
+		\end{equation*}
+		Furthermore, ``$=$'' if and only if 
+		\begin{equation*}
+			\Delta \rho = \clo{\Delta} \clo{\rho}
+		\end{equation*}
+		which is equivalent to $M$ has constant sectional curvature $\kappa$. Moreover, it should be simply connected. Otherwise, because its universal covering is isometric to $\Sp^n(1 / \sqrt{\kappa})$, the volume of the universal covering is $\op{Vol}\bc{\Sp^n(1 / \sqrt{\kappa})} $, it follows that $\op{Vol}(M) < \op{Vol}\bc{\Sp^n(1 / \sqrt{\kappa})} $, contradicting to the assumption.	 
+	\end{proof}
+	\begin{rmk}
+		If $(M,g)$ be a complete Riemannian manifold with $\op{Ric} \geq (n-1)\kappa$ for $\kappa \leq 0$. Then for $p \in M$
+		\begin{equation*}
+			\op{Vol}(B_p(r)) \leq \op{Vol}\bc{B^\kappa(r)},\quad \forall~r>0
+		\end{equation*}
+		and ``$=$'' if and only if $M$ is isometric to $M_\kappa$.
+	\end{rmk}
+
+	\begin{thm}[Bishop-Gromov]
+		Let $(M,g)$ be a Riemannian manifold with $\op{Ric} \geq (n-1)\kappa$. Let $p \in M$ be any point. Then the function
+		\begin{equation*}
+			r \mapsto \frac{\op{Vol}B_p(r)}{\op{Vol}B^\kappa(r)}
+		\end{equation*}
+		is non-increasing.
+	\end{thm}
+	\begin{proof}
+		First, let $r$ is small such that $B_p(r)$ contains no cut point. Then
+		\begin{equation*}
+			\frac{\op{Vol}B_p(r)}{\op{Vol}B^\kappa(r)} = \frac{\int_0^{r} \int_{\Sp^{n-1}}\varphi(t,\theta) t^{n-1}d\theta dt}{\int_0^{r}\int_{\Sp^{n-1}}\varphi_\kappa(t) t^{n-1}d\theta dt}
+		\end{equation*}
+		Consider the function
+		\begin{equation*}
+			t \mapsto \frac{ \int_{\Sp^{n-1}}\varphi(t,\theta) t^{n-1}d\theta}{\int_{\Sp^{n-1}}\varphi_\kappa(t) t^{n-1}d\theta} =  \int_{\Sp^{n-1}}\frac{\varphi(t,\theta) }{\varphi_\kappa(t) }d\theta
+		\end{equation*}
+		which is non-increasing as above. Then by the following lemma, we have the desired result. Next, if $B_p(r)$ contains cut points, then let $\chi$ be the characteristic function of $E(p) \subset T_pM$. For $\chi_\kappa$ on $M^\kappa$, when $\kappa \leq 0$, $\chi_\kappa \equiv 1$. When $\kappa > 0$,
+		\begin{equation*}
+			\chi_k(r,\theta) \defeq \left\{
+				\begin{aligned}
+					1,&\quad r < \frac{\pi}{\sqrt{\kappa}} \\
+					0,&\quad r \geq \frac{\pi}{\sqrt{\kappa}}
+				\end{aligned}
+			\right.
+		\end{equation*}
+		Note that because $\op{Ric} \geq (n-1)\kappa$, $r \mapsto \frac{\chi(r,\theta)}{\chi_\kappa(r,\theta)}$ is non-increasing, so
+		\begin{equation*}
+			t \mapsto  =  \int_{\Sp^{n-1}}\frac{\varphi(t,\theta) \chi(r,\theta)}{\varphi_\kappa(t) \chi_\kappa(r,\theta)}d\theta
+		\end{equation*}
+		is non-increasing. Then by
+		\begin{equation*}
+			\begin{aligned}
+				\frac{\op{Vol}B_p(r)}{\op{Vol}B^\kappa(r)} &= \frac{\op{Vol}B_p(r) \backslash C(p)}{\op{Vol}B^\kappa(r)\backslash C^\kappa(p)} \\
+				&= \frac{\int_0^{r} \int_{\Sp^{n-1}}\varphi(t,\theta)\chi(r,\theta) t^{n-1}d\theta dt}{\int_0^{r}\int_{\Sp^{n-1}}\varphi_\kappa(t)\chi_\kappa(r) t^{n-1}d\theta dt}
+			\end{aligned}
+		\end{equation*}
+		and the following lemma, we have the desired result.
+	\end{proof}
+	\begin{lem}
+		Let $f,g \colon (0,\infty) \sto \R$ be two functions with $f,g \geq 0$. Suppose $t \mapsto \frac{f(t)}{g(t)}$ is non-increasing. Then
+		\begin{equation*}
+			t \mapsto \frac{\int_0^tf(s)ds}{\int_0^tg(s)ds}
+		\end{equation*}
+		is non-increasing.
+	\end{lem}
+	\begin{proof}
+		For any $t_1 \leq t_2$, we want to show
+		\begin{equation*}
+			\begin{aligned}
+				\frac{\int_0^{t_1}f(s)ds}{\int_0^{t_1}g(s)ds} \geq \frac{\int_0^{t_2}f(s)ds}{\int_0^{t_2}g(s)ds} &~\Leftrightarrow~ \int_0^{t_1}f(s)ds\int_0^{t_2}g(s)ds \geq \int_0^{t_2}f(s)ds\int_0^{t_1}g(s)ds \\
+				&~\Leftrightarrow~ \int_0^{t_1}f(s)ds\int_{t_1}^{t_2}g(s)ds \geq \int_{t_1}^{t_2}f(s)ds\int_0^{t_1}g(s)ds
+			\end{aligned}
+		\end{equation*}
+		Let $h = \frac{f}{g}$. We have
+		\begin{equation*}
+			\begin{aligned}
+				\int_0^{t_1}f(s)ds\int_{t_1}^{t_2}g(s)ds &= \int_0^{t_1}h(s)g(s)ds\int_{t_1}^{t_2}g(s)ds \\
+				&\geq \int_0^{t_1}h(t_1)g(s)ds\int_{t_1}^{t_2}g(s)ds \\
+				&\geq \int_0^{t_1}g(s)ds\int_{t_1}^{t_2}h(t_1)g(s)ds \\
+				&\geq \int_0^{t_1}g(s)ds\int_{t_1}^{t_2}h(s)g(s)ds \\
+				&=\int_{t_1}^{t_2}f(s)ds\int_0^{t_1}g(s)ds 
+			\end{aligned}
+		\end{equation*}
+		by the fact that $h$ is non-increasing.
+	\end{proof}
+
+	\begin{thm}[Maximal Diameter Theorem]
+		Let $(M,g)$ be a complete Riemannian manifold with $\op{Ric} \geq (n-1)\kappa$ for $\kappa > 0$. Then $\op{diam}(M) = \frac{\pi}{\sqrt{\kappa}}$ if and only is $M$ is isometric to $\Sp^n(1/\sqrt{\kappa})$.
+	\end{thm}
+	\begin{proof}
+		Note that
+		\begin{equation*}
+			\op{Vol}\bc{\Sp^n\bc{\frac{1}{\sqrt{\kappa}}}} = \op{Vol}\bc{B^1\bc{r}}+ \op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}-r}}
+		\end{equation*}
+		and
+		\begin{equation*}
+			\op{Vol}\bc{M} \geq \op{Vol}\bc{B_p\bc{r}}+ \op{Vol}\bc{B_q\bc{\frac{\pi}{\sqrt{\kappa}}-r}}
+		\end{equation*}
+		where $p,q \in M$ with $d(p,q) = \frac{\pi}{\sqrt{\kappa}}$, because $B_p\bc{r} \cap B_q\bc{\frac{\pi}{\sqrt{\kappa}}-r} = \varnothing$. Moreover, by above theorem
+		\begin{equation*}
+			\begin{aligned}
+				\op{Vol}\bc{B_p\bc{r}} &= \frac{\op{Vol}\bc{B_p\bc{r}}}{\op{Vol}\bc{B^1\bc{r}}}\op{Vol}\bc{B^1\bc{r}} \\
+				&\geq \frac{\op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}}}{\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}}}}\op{Vol}\bc{B^1\bc{r}} 
+			\end{aligned}
+		\end{equation*}
+		and
+		\begin{equation*}
+			\begin{aligned}
+				\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}-r}} &= \frac{\op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}-r}}}{\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}-r}}}\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}-r}} \\
+				&\geq \frac{\op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}}}{\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}}}}\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}-r}}
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\op{Vol}\bc{M} \geq \frac{\op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}}}{\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}}}}\op{Vol}\bc{\Sp^n\bc{\frac{1}{\sqrt{\kappa}}}} = \op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}}
+		\end{equation*}
+		But $\op{diam}(M) \leq \frac{\pi}{\sqrt{\kappa}}$, so
+		\begin{equation*}
+			\op{Vol}\bc{M} = \op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}}
+		\end{equation*}
+		and
+		\begin{equation*}
+			\op{Vol}\bc{M} = \op{Vol}\bc{B_p\bc{r}}+ \op{Vol}\bc{B_q\bc{\frac{\pi}{\sqrt{\kappa}}-r}}
+		\end{equation*}
+		and
+		\begin{equation*}
+			\frac{\op{Vol}\bc{B_p\bc{r}}}{\op{Vol}\bc{B^1\bc{r}}} = \frac{\op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}}}{\op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}}}},\quad \forall~0< r \leq \frac{\pi}{\sqrt{\kappa}}
+		\end{equation*}
+		As $r \sto 0$, the LHS $\sto 1$. Therefore,
+		\begin{equation*}
+			\op{Vol}\bc{M} = \op{Vol}\bc{B_p\bc{\frac{\pi}{\sqrt{\kappa}}}} = \op{Vol}\bc{B^1\bc{\frac{\pi}{\sqrt{\kappa}}}} = \op{Vol}\bc{\Sp^n\bc{\frac{1}{\sqrt{\kappa}}}}
+		\end{equation*}
+		Then by above, it is if and only is $M$ is isometric to $\Sp^n(1/\sqrt{\kappa})$.
+	\end{proof}
+	\begin{rmk}
+		Note that on $\Sp^n(1/\sqrt{\kappa})$, let $p,q$ be $d(p,q) = \frac{\pi}{\sqrt{\kappa}}$, then for any $z \in \Sp^n(1/\sqrt{\kappa})$,
+		\begin{equation*}
+			d(p,z) + d(z,q) = \frac{\pi}{\sqrt{\kappa}}
+		\end{equation*}
+		\emph{i.e.} any $z$ lies in some shortest geodesic connecting $p,q$. In fact, for any $M$ with
+		\begin{equation*}
+			\op{Vol}\bc{M} = \op{Vol}\bc{B_p\bc{r}}+ \op{Vol}\bc{B_q\bc{\frac{\pi}{\sqrt{\kappa}}-r}}
+		\end{equation*}
+		it has the similar property. For any $z$ with $d(p,z) = r$
+		\begin{equation*}
+			d(q,z) \geq d(p,q) - d(p,z) = \frac{\pi}{\sqrt{\kappa}}-r
+		\end{equation*}
+		If it takes $>$, then there is a $\varepsilon > 0$ such that
+		\begin{equation*}
+			B_z(\varepsilon)\cap B_q\bc{\frac{\pi}{\sqrt{\kappa}}-r} = \varnothing
+		\end{equation*}
+		By completeness, $\op{Vol}\bc{B_z(\epsilon) \backslash B_p(r)} \neq 0$. Therefore,
+		\begin{equation*}
+			 \op{Vol}\bc{B_p\bc{r}}+ \op{Vol}\bc{B_q\bc{\frac{\pi}{\sqrt{\kappa}}-r}} < \op{Vol}\bc{M}
+		\end{equation*}
+		contradicting to the assumption.
+	\end{rmk}
+
+	\begin{thm}
+		Let $(M,g)$ be a complete non-compact Riemannian manifold of dimension $n$ with $\op{Ric} \geq 0$. Let $p\in M$. Then there is a constant $C= C(p,n)$ such that
+		\begin{equation*}
+			\op{Vol}(B_p(r)) \geq cr,\quad \forall~r>2
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		There is a geodesic $\gamma \colon [0,\infty) \sto M$ with $\gamma(0)=p$ such that $d(p,\gamma(t)) = t$ by the following lemma. For any $t$, consider two balls $B_{\gamma(t)}(t-1),B_{\gamma(t)}(t+1)$, then we have
+		\begin{equation*}
+			\frac{\op{Vol}(B_{\gamma(t)}(t+1))}{\op{Vol}(B_{\gamma(t)}(t-1))} \leq \frac{\op{Vol}(B^0(t+1))}{\op{Vol}(B^0(t-1))} = \frac{(t+1)^n}{(t-1)^n}
+		\end{equation*}
+		Because $B_p(1) \subset B_{\gamma(t)}(t+1) \backslash B_{\gamma(t)}(t-1)$,
+		\begin{equation*}
+			\op{Vol}(B_p(1)) \leq \op{Vol}(B_{\gamma(t)}(t+1)) - \op{Vol}(B_{\gamma(t)}(t-1))
+		\end{equation*}
+		Then
+		\begin{equation*}
+			\frac{\op{Vol}(B_p(1))}{\op{Vol}(B_{\gamma(t)}(t-1))} \leq \frac{\op{Vol}(B_{\gamma(t)}(t+1))}{\op{Vol}(B_{\gamma(t)}(t-1))}  - 1 \leq \frac{(t+1)^n}{(t-1)^n} - 1
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			\op{Vol}(B_{p}(2t-1) \geq \op{Vol}(B_{\gamma(t)}(t-1)) \geq \op{Vol}(B_p(1)) \frac{(t-1)^n}{(t+1)^n-(t-1)^n}
+		\end{equation*}
+		by $B_{\gamma(t)}(t-1) \subset B_{p}(2t-1)$. Taking $r = 2t-1$,
+		\begin{equation*}
+			\op{Vol}(B_{p}(r) \geq \op{Vol}(B_p(1)) \frac{(\frac{r+1}{2}-1)^n}{(\frac{r+1}{2}+1)^n-(\frac{r+1}{2}-1)^n} \qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{lem}
+		If Riemannian manifold $M$ is non-compact and complete, then for any $p \in M$ there is a geodesic $\gamma \colon [0,\infty) \sto M$ with $\gamma(0)=p$ such that $d(p,\gamma(t)) = t$.
+	\end{lem}
+	\begin{proof}
+		Because $M$ is non-compact and complete, there is sequence $q_i \in M$ such that
+		\begin{equation*}
+			d(p,q_i) \sto \infty
+		\end{equation*}
+		Then let $t \mapsto \exp_p(tv_i)$ with $v_i \in S_p$ be geodesic connecting $p$ and $q_i$ and so $t \in [0,d(p,q_i)]$. By the compactness of $S_p$, we can assume $v_i \sto v_0 \in S_p$. Consider
+		\begin{equation*}
+			t \mapsto \exp_p(tv_0)
+		\end{equation*}
+		Because $\exp_p$ and $d$ are continuous,
+		\begin{equation*}
+			d(p,\exp_p(tv_0)) = \lim_i d(p,\exp_p(tv_i)) = t,\quad \forall~ t \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\begin{thm}
+		Let $(M,g)$ be a complete Riemannian manifold with the sectional curvature $\leq \kappa$. When $B_p(r)$ contains no cut point,
+		\begin{equation*}
+			\op{Vol}(B_p(r)) \geq \op{Vol}(B^\kappa(r))
+		\end{equation*}
+	\end{thm}
+\end{enumerate}
+
+\section{Splitting Theorem}
+
+\begin{thm}\label{thm:splitting}
+	Let $(M,g)$ be a complete non-compact Riemannian manifold of dimension $n$ with $\op{Ric} \geq 0$. If it contains a line, \emph{i.e.} a geodesic $\gamma \colon (-\infty,\infty) \sto M$ such that $d(\gamma(s),\gamma(t)) = \abs{t-s}$. Then $M$ is isometric to $M^\prime \times \R$, where $(M^\prime,g^\prime)$ is a complete Riemannian manifold with with $\op{Ric} \geq 0$.
+\end{thm}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Busemann function:}} Let $O \in M$ and a normal geodesic ray $\gamma \colon [0,\infty) \sto M$ with $\gamma(0) = O$. For any $t \geq 0$,
+	\begin{equation*}
+		b_t^\gamma(x) = t - d(x,\gamma(t))
+	\end{equation*}
+	\begin{prop}
+		For above $b^\gamma_t(x)$,
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $b^\gamma_t(x) \leq d(O,x)$, and so $\bb{b^\gamma_t \colon t \geq 0}$ is uniformly bounded on a compact subset.
+			\item For a given $x \in M$, $b^\gamma_t(x)$ is nondecreasing in $t$.
+			\item $\bb{b^\gamma_t \colon t \geq 0}$ is equicontinuous.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item It is clear by the triangular inequality.
+			\item For $0 \leq s < t$,
+			\begin{equation*}
+				\begin{aligned}
+					b^\gamma_t(x) - b^\gamma_s(x) &= (t-s) + d(x,\gamma(s)) - d(x,\gamma(t)) \\
+					&\geq d(\gamma(t),\gamma(s)) + d(x,\gamma(s)) - d(x,\gamma(t)) \\
+					&\geq 0
+				\end{aligned}
+			\end{equation*}
+			\item For any $x,y \in M$,
+			\begin{equation*}
+				\begin{aligned}
+					\abs{b^\gamma_t(x) - b^\gamma_t(y)} &= \abs{d(y,\gamma(t)) - d(x,\gamma(t))} \\
+					&\leq d(x,y)
+				\end{aligned}
+			\end{equation*}
+			So they are equicontinuous.
+		\end{enumerate}
+	\end{proof}
+	Then by the Arzel\`a–Ascoli theorem,
+	\begin{equation*}
+		b^\gamma(x) \defeq \lim_{t \sto \infty} t - d(x,\gamma(t))
+	\end{equation*}
+	is well-defined. Consider the level set of $b^\gamma_t$,
+	\begin{equation*}
+		\bb{x \in M \colon b^\gamma_t(x) = c} ~\Leftrightarrow~ \bb{x \in M \colon d(x,\gamma(t)) = t-c}
+	\end{equation*}
+	So $b^\gamma(x)$ ``measure'' the difference of $d(O,\gamma(\infty))$ and $d(x,\gamma(\infty))$, which is basically the ``(signed)distance'' between $O$ and the projection of $x$ onto $\gamma$.
+	\begin{prop}
+		We have $b^\gamma(\gamma(t)) = t$. If $M$ contains a line $\gamma$, then let $\gamma^+ = \gamma|_{[0,\infty)}$ we have
+		\begin{equation*}
+			b^{\gamma^+}(\gamma(t)) = t,\quad \forall~t \in (-\infty,\infty)
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		By definition,
+		\begin{equation*}
+			b^{\gamma^+}(\gamma(t)) = \lim_{s \sto \infty} s - d(\gamma(t), \gamma^+(s)) = \lim_{s \sto \infty} s - \abs{t-s} = t \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\item \emph{\textbf{Smoothness:}} Given a normal ray $\gamma$, for any $p \in M$ and any $t_k$ with $\gamma(t_k) \sto \infty$, let
+	\begin{equation*}
+		\bb{\delta_k(\cdot) \colon k=1,2,\cdots}
+	\end{equation*}
+	be a family of normal geodesics connecting $p$ with $\gamma(t_k)$. Then by compactness of $S_p$, there is a subsequence
+	\begin{equation*}
+		\lim_k\dot{\delta}_k(0) = v~\Rightarrow~\delta(t) = \exp_p(tv)
+	\end{equation*}
+	where the normal ray $\delta(t)$ is called an asymptote of $\gamma$. Note that $\delta$ is not unique and $\lim_k \delta_k(t) = \delta(t)$. 
+
+	\begin{prop}
+		Given a ray $\gamma$. For $p \in M$, let $\delta$ be an asymptote of $\gamma$ through $p$. Then we have
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $b^\gamma(x) \geq b^\gamma(p) + b^\delta_r(x)$ for any $x\in M$, $r \geq 0$. In particular, as $r \sto \infty$,
+			\begin{equation*}
+				b^\gamma(x) \geq b^\gamma(p) + b^\delta(x)
+			\end{equation*}
+
+			\item $b^\gamma(\delta(r)) = b^\gamma(p) + b^\delta(\delta(r))$ for any $r \geq 0$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		Let $t_k$ be chosen as above such that $\lim_k \delta_k(t) = \delta(t)$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item First, because $\delta_k$ connects $p$ with $\gamma(t_k)$
+			\begin{equation*}
+				\begin{aligned}
+					b^\gamma(x) - b^\gamma(p) &= \lim_{k \sto \infty} - d(x,\gamma(t_k)) + d(p,\gamma(t_k)) \\
+					&= \lim_{k \sto \infty} - d(x,\gamma(t_k)) + d(p,\delta_k(r)) + d(\delta_k(r),\gamma(t_k)) \\
+					&= r + \lim_{k \sto \infty}  d(\delta_k(r),\gamma(t_k)) - d(x,\gamma(t_k))\\
+					&\geq r + \lim_{k \sto \infty} -d(\delta_k(r),x) \\
+					&= r - d(\delta(r),x) = b^\delta_r(x)
+				\end{aligned}
+			\end{equation*}
+			\item First,
+			\begin{equation*}
+				\begin{aligned}
+					b^\gamma(p) &= \lim_k \bc{t_k - d(p,\gamma(t_k))} \\
+					&= \lim_k \bc{t_k - d(p,\delta_k(r)) - d(\delta_k(r),\gamma(t_k))} \\
+					&= \lim_k \bc{t_k  - d(\delta_k(r),\gamma(t_k))} - r  
+				\end{aligned}
+			\end{equation*}
+			Because
+			\begin{equation*}
+				d(\delta(r),\gamma(t_k)) - d(\delta_k(r),\delta(r)) \leq d(\delta_k(r),\gamma(t_k)) \leq d(\delta(r),\gamma(t_k)) + d(\delta_k(r),\delta(r))
+			\end{equation*}
+			and $d(\delta_k(r),\delta(r)) \sto 0$ as $r \sto \infty$, we have
+			\begin{equation*}
+				b^\gamma(p) =  \lim_k \bc{t_k  - d(\delta(r),\gamma(t_k))} - r = b^\gamma(\delta(r)) - r \qedhere
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+	Denote
+	\begin{equation*}
+		\begin{aligned}
+			b^\gamma_{p,r}(x) &= b^\gamma(p) + b^\delta_r(x) \\
+			&= b^\gamma(p) + r - d(x,\delta(r))
+		\end{aligned}
+	\end{equation*}
+	Because $\delta$ is a ray with $d(p,\delta(t)) = t$, it is always the shortest geodesic. So it contains no cut point, which means if $x$ is around a sufficiently small neighborhood of $p$, $d(x,\delta(r))$ is smooth so is $b^\gamma_{p,r}(x)$. Note that $b^\gamma_{p,r}(x) \leq b^\gamma(x)$ and $b^\gamma_{p,r}(p) = b^\gamma(p)$. Moreover, by assuming $\op{Ric} \geq 0$,
+	\begin{equation*}
+		\begin{aligned}
+			\Delta b^\gamma_{p,r}(x) &= - \Delta d(x,\delta(r))\\
+			&\geq -(n-1)\frac{f^\prime_\kappa(\rho)}{f_\kappa(\rho)} =-(n-1)\frac{1}{d(x,\delta(r))}
+		\end{aligned}
+	\end{equation*}
+	Therefore, for any $\varepsilon > 0$, we can choose sufficiently large $r$ such that $\Delta b^\gamma_{p,r}(x) \geq -\varepsilon$ on a small neighborhood of $p$.
+	\begin{defn}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item A lower barrier function (or support function) for a continuous function $f$ at $x_0$ is a $C^2$ function $g$ is defined on a neighborhood of $x$ such that $g(x) \leq f(x)$ and $g(x_0) = f(x_0)$.
+			\item A function in $f \in C^0(M)$ is said that $\Delta f \geq a$ at $x_0$ in the barrier sense if for any $\varepsilon > 0$, there is a lower barrier function $f_{x_0,\varepsilon}$ of $f$ at $x_0$ such that $\Delta f_{x_0,\varepsilon} \geq a - \varepsilon$.
+		\end{enumerate}
+	\end{defn}
+	\begin{rmk}
+		Therefore, Busemann function $b^\gamma$ is subharmonic \emph{i.e.} $\Delta b^\gamma \geq 0$ in the barrier sense.
+	\end{rmk}
+	\begin{thm}[Hopf-Calabi Maximal Principle]
+		Let $M$ be a connected Riemannian manifold and $f \in C^0(M)$. If $f$ is subharmonic in the barrier sense, then $f$ attaches no local maximum unless it is constant. 
+	\end{thm}
+	\begin{proof}
+		Let $p$ be a weak local maximum, \emph{i.e.} for a neighborhood $V$ of $p$,
+		\begin{equation*}
+			f(p) \geq f(x),\quad \forall x \in V
+		\end{equation*}
+		Let $B_p(\delta)$ for a small $\delta$. Assume there is a $z \in \partial B_p(\delta)$ such that $f(p) > f(z)$, which implies $f(p) > f(z^\prime)$ for $z^\prime \in \partial B_p(\delta)$ closed to $z$. Choosing a normal chart $(x,U)$ such that $z = (\delta,0,\cdots,0)$. Set
+		\begin{equation*}
+			\phi(x) = x_1 - \alpha(x_2^2+\cdots+x_n^2)
+		\end{equation*}
+		for sufficiently large $\alpha$ such that if $y \in \partial B_p(\delta)$ and $f(y) = f(p)$ then $\phi(y) < 0$. Besides,
+		\begin{equation*}
+			\frac{\partial \phi}{\partial x_1} \neq 0~\Rightarrow~ \op{grad }\phi = g^{ij}\frac{\partial \phi}{\partial x^j}\frac{\partial}{\partial x^i} \neq 0
+		\end{equation*}
+		Let $\psi = e^{a\phi} - 1$. Then
+		\begin{equation*}
+			\Delta \psi = e^{a\phi}\bc{a^2\abs{\op{grad}\phi}^2 + a\Delta\phi} > 0
+		\end{equation*}
+		(Note that $\Delta (f \circ \phi) = f^{\prime\prime}\abs{\op{grad}\phi}^2 + f^\prime\Delta\phi$) by choosing sufficiently large $a$. Moreover, $\psi(p) = 0$. Then we can choose small $\eta$ such that
+		\begin{equation*}
+			\lv{\bc{f + \eta \psi}}_{\partial B_p(\delta)} < f(p),\quad \bc{f + \eta \psi}(p) = f(p)
+		\end{equation*}
+		It follows that $f + \eta \psi$ has an inner maximum $q \in B_p(\delta)$. Let $f_{q,\varepsilon}$ be a barrier of $f$ at $q$. Then
+		\begin{equation*}
+			\Delta f_{q,\varepsilon} \geq -\varepsilon
+		\end{equation*}
+		Consider $f_{q,\varepsilon} + \eta \psi$ that is a barrier function of $f + \eta \psi$ at $q$. We have
+		\begin{equation*}
+			\Delta(f_{q,\varepsilon} + \eta \psi) \geq -\varepsilon + \eta \Delta \psi > 0
+		\end{equation*}
+		when $\varepsilon$ is chosen sufficiently small. However, around $q$,
+		\begin{equation*}
+			(f_{q,\varepsilon} + \eta \psi)(x) \leq (f + \eta \psi)(x) \leq (f + \eta \psi)(q) = (f_{q,\varepsilon} + \eta \psi)(q)
+		\end{equation*}
+		which contradicts to $\Delta > 0$. \qedhere
+	\end{proof}
+	\begin{thm}[Regularity]
+		If f is harmonic ($\Delta f = 0$) in barrier sense, then $f$ is smooth.
+	\end{thm}
+
+	\begin{prop}
+		Assume $\op{Ric} \geq 0$ and $\gamma$ is a line. Let $\gamma^+ = \gamma|_{[0,+\infty)}$ and $\gamma^- = -\gamma|_{(-\infty,0]}$. Then
+		\begin{equation*}
+			b^{\gamma^+} + b^{\gamma^-} = 0
+		\end{equation*}
+		and they are smooth. So they are harmonic.
+	\end{prop}
+	\begin{proof}
+		In fact, because Busemann functions are submanifold in barrier sense, $b^{\gamma^+} + b^{\gamma^-} = 0$ implies that
+		\begin{equation*}
+			\Delta b^{\gamma^+} =\Delta (-b^{\gamma^-}) 
+		\end{equation*}
+		so that $-b^{\gamma^-}$ is subharmonic, which means $b^{\gamma^-}$ is harmonic in barrier sense, so is $b^{\gamma+}$. Then by above theorem, they are smooth. So it is sufficient to check the identity. First, we know
+		\begin{equation*}
+			\Delta \bc{b^{\gamma^+} + b^{\gamma^-}} \geq 0
+		\end{equation*}
+		in barrier sense. For any $x \in M$,
+		\begin{equation*}
+			d(x,\gamma^+(t)) + d(x,\gamma^-(s)) \geq t+s  ~\Rightarrow~ t - d(x,\gamma^+(t)) + s- d(x,\gamma^-(s)) \leq 0
+		\end{equation*}
+		As $t,s \sto \infty$,
+		\begin{equation*}
+			b^{\gamma^+}(x) + b^{\gamma^-}(x) \leq 0
+		\end{equation*}
+		At $x = \gamma(0)$, $b^{\gamma^+}(x) + b^{\gamma^-}(x) = 0$. Then by Hopf-Calabi Maximal Principle, we have the identity.
+	\end{proof}
+
+	\item \emph{\textbf{Submanifold:}} Consider the Riemannian submanifold.
+
+	\begin{defn}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item For two Riemannian manifolds $(M,g)$ and $(\clo{M},\clo{g})$, let $f \colon M \sto \clo{M}$ be an immersion. If $f^*\clo{g} = g$, then $(M,g)$ is called an (immersed) Riemannian submanifold.
+			\item  Let $(M,g)$ be a Riemannian submanifold of $(\clo{M},\clo{g})$. Let $p \in M$ and $p = f(p) \in \clo{M}$, \emph{i.e.} we do not distinguish $M$ and $f(M) \in \clo{M}$. Then
+			\begin{equation*}
+				T_{p}\clo{M} = T_pM \oplus \bc{T_pM}^\perp
+			\end{equation*}
+			$\bc{T_pM}^\perp$ is called the orthogonal complement of $T_pM$. Let $\Pi \colon \bigsqcup_{q \in M}T_q\clo{M} \sto TM$ by $\Pi(X_q) =X_q- (X_q)^\perp$.
+			\item $(M,g)$ is called totally geodesic if for any geodesic $\gamma \in \clo{M}$ with $\gamma(0) \in M$ and $\dot{\gamma}(0) \in T_pM$, $\gamma \in M$.
+		\end{enumerate}
+	\end{defn}
+	For any $X,Y \in \Gamma^\infty(TM)$, which can be extended to $\Gamma^\infty(T\clo{M})$,
+	\begin{equation*}
+		\nabla_XY = \Pi(\clo{\nabla}_XY) 
+	\end{equation*}
+	is the Levi-Civita connection of $M$. Therefore, for a curve $\gamma \in M$,
+	\begin{equation*}
+		\clo{\nabla}_{\dot{\gamma}}\dot{\gamma} = 0 ~\Rightarrow~\nabla_{\dot{\gamma}}\dot{\gamma} = 0
+	\end{equation*}
+	Therefore, if $\gamma$ is a geodesic in $\clo{M}$, then also a geodesic in $M$. The second fundamental form is defined as
+	\begin{equation*}
+		B(X,Y) \defeq \clo{\nabla}_XY -\nabla_XY
+	\end{equation*}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For any $f \in C^\infty(M)$, $B(fX,Y) = B(X,fY) = fB(X,Y)$.
+		\item $B(X,Y) = B(Y,X)$.
+	\end{enumerate}
+	\begin{thm}\label{thm:totalgeo}
+		$(M,g)$ is a totally geodesic  submanifold of $(\clo{M},\clo{g})$ if and only if $B \equiv 0$.
+	\end{thm}
+	\begin{proof}
+		``$\Rightarrow$'': By the symmetry, it is sufficient to prove $B(V,V) = 0$ for any $V \in T_pM$. Let $\gamma$ be a geodesic in $\clo{M}$ with $\gamma(0) = p$ and $\dot{\gamma}(0) = V$, \emph{i.e.} $\clo{\nabla}_{\dot{\gamma}}\dot{\gamma} = 0$. Because $M$ is totally geodesic, $\gamma \subset M$ and ${\nabla}_{\dot{\gamma}}\dot{\gamma} = 0$. Therefore,
+		\begin{equation*}
+			B(V,V) = \clo{\nabla}_{\dot{\gamma}}\dot{\gamma}(0) - {\nabla}_{\dot{\gamma}}\dot{\gamma}(0) = 0
+		\end{equation*}
+		``$\Leftarrow$'': For any $p \in M$ and $V \in T_pM$, let $\gamma$ be a geodesic in $\clo{M}$ with $\gamma(0) = p \in M$ and $\dot{\gamma}(0) = V \in T_pM$. Let $\xi$ be a geodesic in $M$ with $\xi(0) = p \in M$ and $\dot{\xi}(0) = V \in T_pM$, that is $\nabla_{\dot{\xi}}\dot{\xi} = 0$. But
+		\begin{equation*}
+			B(\dot{\xi},\dot{\xi}) = 0~\Rightarrow~\clo{\nabla}_{\dot{\xi}}\dot{\xi} = 0
+		\end{equation*}
+		which means $\xi$ is also a geodesic in $\clo{M}$. By the uniqueness of geodesic, $\gamma = \xi \subset M$.
+	\end{proof}
+	
+	\begin{cor}
+		$(M,g)$ is a totally geodesic submanifold of $(\clo{M},\clo{g})$. For any $2$-section $\Pi_p \subset T_pM \subset T_p\clo{M}$,
+		\begin{equation*}
+			K(\Pi_p) = \clo{K}(\Pi_p)
+		\end{equation*}
+	\end{cor}
+	\begin{exam}
+		Let $(M,g)$ be a Riemannian manifold and $o \in M$ and $\rho(\cdot) = d(o,\cdot)$. $\rho$ is smooth on $M \backslash \bb{o,C(o)}$ and $\op{grad}\rho = \dot{\gamma}$. Let $S_t = \bb{x \in M \colon \rho(x) = t}$. For any $X,Y \in \Gamma^\infty(TS_t)$,
+		\begin{equation*}
+			\begin{aligned}
+				\op{Hess}(\rho)(X,X) &= \nabla_Y(\nabla_X\rho) - \nabla\rho(\nabla_YX)\\
+				&= Y(X(\rho)) - \nabla_YX(\rho) \\
+				&= Y\inn{X,\op{grad}\rho} - \inn{\nabla_YX,\op{grad}\rho} \\
+				&= - \inn{\nabla_YX,\op{grad}\rho} \\
+				&= -\inn{\nabla_XY,\op{grad}\rho} - \inn{[X,Y],\op{grad}\rho}\\
+				&= -\inn{\nabla_XY,\op{grad}\rho}
+			\end{aligned}
+		\end{equation*}
+		Therefore, $\op{Hess}\rho(X,X) \cdot (-\op{grad}\rho) = B(X,X)$
+	\end{exam}
+
+	Next, let's consider the level set of $b^{\gamma^+}$.
+	\begin{prop}
+		Under same condition as above, $\abs{\op{grad}b^{\gamma^+}} = 1$.
+	\end{prop}
+	\begin{proof}
+		Because the Busemann function is $1$-Lipschitz,
+		\begin{equation*}
+			\abs{\op{grad}b^{\gamma^+}} \leq 1
+		\end{equation*}
+		For any $p \in M$, let $\delta^\gamma$ be an (normal)asymptote of $\gamma^+$ starting from $p$. At $p$,
+		\begin{equation*}
+			\begin{aligned}
+				\abs{\op{grad}b^{\gamma^+}} &= \abs{\op{grad}b^{\gamma^+}}\abs{\dot{\delta^\gamma}(0)} \\
+				&\geq \abs{\inn{\op{grad}b^{\gamma^+}, \dot{\delta^\gamma}(0)}} \\
+				&= \lv{\frac{d}{dt}}_{t=0}b^{\gamma^+}(\delta(t)) \\
+				&= \lim_{t \sto 0}\frac{b^{\gamma^+}(\delta(t))-b^{\gamma^+}(p)}{t} = 1
+			\end{aligned}
+		\end{equation*}
+		Therefore, $\abs{\op{grad}b^{\gamma^+}} = 1$.
+	\end{proof}
+	\begin{cor}
+		Under the same conditions, all level sets of $b^{\gamma^+}$ are hyper-submanifolds.
+	\end{cor}
+
+	By the Bochner's formula(\textbf{Theorem} \ref{thm:bochner}) and $\op{Ric} \geq 0$,
+	\begin{equation*}
+		\abs{\op{Hess}(b^{\gamma^+})}^2 \leq 0~\Rightarrow~\op{Hess}(b^{\gamma^+}) = 0
+	\end{equation*}
+	Besides, for any $X,Y$
+	\begin{equation*}
+		\begin{aligned}
+			\op{Hess}b^{\gamma^+}(X,Y) &= \nabla^2\op{Hess}(b^{\gamma^+}(X,Y) \\
+			&= \nabla \bc{\nabla b^{\gamma^+}}(X,Y)\\
+			&= \nabla_Y \bc{\nabla b^{\gamma^+}}(X) = 0
+		\end{aligned}
+	\end{equation*}
+	Therefore, $\nabla_Y\nabla b^{\gamma^+} = 0$ for any $Y$, that is $\nabla b^{\gamma^+}$ is parallel along each curve. It can induce the totally geodesic property (geodesic connecting points in the submanifold and with the initial vector lying the submanifold is still in the submanifold) of level sets of $b^{\gamma^+}$. It is because that for any $X,Y \in \Gamma^\infty(TN)$, where $p \in N \subset M$ a level set of $b^{\gamma^+}$,
+	\begin{equation*}
+		\begin{aligned}
+			\inn{\nabla_XY,\op{grad}b^{\gamma^+}} &= X\inn{Y,\op{grad}b^{\gamma^+}} +\inn{Y,\nabla_X\op{grad}b^{\gamma^+}} \\
+			&= X\inn{Y,\op{grad}b^{\gamma^+}} \\
+			&=0
+		\end{aligned}
+	\end{equation*}
+	By \textbf{Theorem} \ref{thm:totalgeo}, $\inn{\nabla_XY,\op{grad}b^{\gamma^+}} = 0$ implies $B(X,Y) = 0$, so $N$ is totally geodesic.
+
+	\item \emph{\textbf{Splitting:}} Let's consider the proof of the Splitting Theorem.
+	\begin{proof}[Proof of Theorem \ref{thm:splitting}]
+		Let $V_0 = \bb{x \in M \colon b^{\gamma^+}(x) = 0}$ that is a complete, $\op{Ric} \geq 0$, totally geodesic, $(n-1)$-dim Riemannian manifold. Define
+		\begin{equation*}
+			\phi \colon V_0 \times \R \longrightarrow M
+		\end{equation*}
+		as
+		\begin{equation*}
+			\phi(a,t) = \exp_a t\op{grad}b^{\gamma^+}
+		\end{equation*}
+		We need to check:
+		\begin{enumerate}[label=\Roman*.]
+			\item $t \sto \exp_a t\op{grad}b^{\gamma^+}$ is a line: Let $\delta^+$ be an asymptote of $\gamma^+$ start from $a$ and $\delta^-$ be an asymptote of $\gamma^-$ start from $a$. Note that $\delta^+,\delta^-$ are two rays. To prove $\delta = \delta^+ \cup \delta^-$ smooth, it needs to prove
+			\begin{equation*}
+				d(\delta^+(t),\delta^-(s)) = t+s
+			\end{equation*}
+			First, by triangular inequality,
+			\begin{equation*}
+				t+s \geq d(\delta^+(t),\delta^-(s))
+			\end{equation*}
+			Besides, because Busemann function is $1$-Lipschitz and $b^{\gamma^+} + b^{\gamma^-} = 0$
+			\begin{equation*}
+				\begin{aligned}
+					d(\delta^+(t),\delta^-(s)) &\geq \abs{b^{\gamma^+}(\delta^+(t)) - b^{\gamma^+}(\delta^-(s))}\\ 
+					&= \abs{b^{\gamma^+}(a)+t + b^{\gamma^-}(a) + s} = t+s
+				\end{aligned}
+			\end{equation*}
+			Therefore, $\delta$ is a normal line for all $\delta^+,\delta^-$, which means $\delta^+,\delta^-$ are unique so is $\delta$. We want to show $\delta(t) = \exp_a t\op{grad}b^{\gamma^+}$. By uniqueness, we only need to show $\dot{\delta}(0) \perp V_0$.  For any $y \in V_0$,
+			\begin{equation*}
+				\begin{aligned}
+					d(\delta^+(t),y) &\geq \abs{b^{\gamma^+}(\delta^+(t)) - b^{\gamma^+}(y)} = t
+				\end{aligned}
+			\end{equation*}
+			and $d(\delta^+(t),a) = t$. Therefore, $\dot{\delta}(0) \perp V_0$ by \textbf{Lemma} \ref{lem:shortperp}. Then, because $\delta(t)$ contains no cut point, $\phi$ is a local diffeomorphism.
+ 			
+ 			\item $\phi$ is injective: because $\dot{\delta}(0) = \op{grad}(b^{\gamma^+})$ for any $a = \delta(0)$, which implies $\dot{\delta}(t) = \op{grad}(b^{\gamma^+})$ because $\op{grad}(b^{\gamma^+}$ is parallel along every geodesic. $\delta_1(t_0) = \delta_2(t_0)$ implies $a_1 = a_2$ otherwise $\dot{\delta}_1(t_0) \neq \dot{\delta}_2(t_0)$.
+
+ 			\item $\phi$ is surjective: For any $x \in M$, let $t = b^{\gamma^+}(x)$. Similarly, we apply above assertions to $V_t = \bb{x \in M \colon b^{\gamma^+}(x) = t}$ so that we get there is a line $\tilde{\delta}$ through $x$ and $\dot{\tilde{\delta}}(0) = \op{grad}(b^{\gamma^+}$.  Moreover, because 
+ 			\begin{equation*}
+ 				b^{\gamma^+}(\tilde{\delta}(r)) = b^{\gamma^+}(x) + r = t + r
+ 			\end{equation*}
+ 			there is a point $a=\tilde{\delta}(-t) \in \tilde{\delta}$ with $b^{\gamma^+}(a) = 0$, that is $a \in V_0$. It implies it is the $\delta$ starting from such $a$.
+
+ 			\item $\phi$ is isometric: We need to check $\phi^*g = g_{V_0}\oplus g_{\op{Euc}}$. For $X = (0,a\lv{\frac{\partial}{\partial t}}_{t=0})$, because
+ 			\begin{equation*}
+ 				d\phi(X) = a\lv{\frac{\partial}{\partial t}}_{t=0}\exp_a\bc{t\op{grad}(b^{\gamma^+})} = a\op{grad}(b^{\gamma^+})
+ 			\end{equation*}
+ 			and $\abs{\op{grad}(b^{\gamma^+})} = 1$
+ 			\begin{equation*}
+ 				\phi^*g(X,X) = g(d\phi(X),d\phi(X)) = a^2 = g_{\op{Euc}}\bc{a\lv{\frac{\partial}{\partial t}}_{t=0},a\lv{\frac{\partial}{\partial t}}_{t=0}}
+ 			\end{equation*}
+ 			For $Y = (V,0)$ with $V \in T_aV_0$, let $a(s)$ be a geodesic in $V_0$ with $a(0) = a$ and $\dot{a}(0) = V$. Then
+ 			\begin{equation*}
+ 				d\phi(Y) = \lv{\frac{d}{ds}}_{s=0}\phi(a(s),0) =\lv{\frac{d}{ds}}_{s=0}a(s) = V
+ 			\end{equation*}
+ 			So $\phi^*g(Y,Y) = g(V,V) = g_{V_0}(V,V)$. Besides
+ 			\begin{equation*}
+ 				\phi^*g(X,Y) = g\bc{a\op{grad}(b^{\gamma^+}),V} = 0
+ 			\end{equation*}
+ 			because $\op{grad}(b^{\gamma^+}) \perp V_0$. \qedhere
+		\end{enumerate}
+	\end{proof}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1029 @@
+\chapter{Discrete Time Markov Theory}
+
+\section{Markov Chain}
+
+\begin{defn}[Markov Chain]
+    If the state space is at most countable, a stochastic process $(X_n)_{n \geq 0}$ is said to have Markov property if for any $n$ and any $i_0,\cdots,i_{n-1},i,j \in S$
+    \begin{equation*}
+        \Pb(X_{n+1} = j \mid X_n = i, X_{n-1} = i_{n-1},\cdots,X_0 = i_0) = \Pb(X_{n+1} = j \mid X_n = i).
+    \end{equation*}
+    and $(X_n)_{n \geq 0}$ is called a Markov chain. Furthermore,
+    \begin{equation*}
+        p_{ij}(n) = \Pb(X_{n+1} = j \mid X_n = i)
+    \end{equation*}
+    is called transition probability. In particular, if $p_{ij}(n) \equiv p_{ij}$, such Markov chain is called time-homogeneous, otherwise, it is called time-inhomogeneous.
+\end{defn}
+
+\noindent In following, we mainly consider the time-homogeneous Markov chain.
+
+\begin{exam}[Ehrenfest Chain]
+    Let $A,B$ be two bottles such that $A$ contains $k$ balls and $B$ contains $r-k$ balls. Each operation is to randomly choose a ball from the $r$ balls and then transfer it from its original bottle into another one. Let $X_n$ be the number of balls in $A$ after $n$-th operation. Note that the state space $S = \bb{0,1,\cdots, r}$. Then
+    \begin{equation*}
+        p_{k j}=\mathbb{P}\left(X_{n+1}=j \mid X_n=k\right) = \begin{cases}0 & ,|k-j| \neq 1 \\ \frac{k}{r} & , j=k+1 \\ \frac{r-k}{r} & , j=k-1\end{cases}.
+    \end{equation*}
+\end{exam}
+
+
+\section{Constructing Markov Chain}
+
+\begin{defn}[Transition Probability]
+    Let $(S,\mathcal{S})$ be the state space (measurable space). A function
+    \begin{equation*}
+        p \colon S \times \mathcal{S} \sto \R
+    \end{equation*}
+    is called a transition probability if
+    \begin{enumerate}[label=(\roman*)]
+        \item For any $x \in S$, $A \sto p(x,A)$ is a probability measure defined on $\mathcal{S}$,
+        \item For any $A \in \mathcal{S}$, $x \sto p(x,A)$ is a measurable function.
+    \end{enumerate}
+    $(X_n)$ is a Markov chain with the transition probability $p$ if
+    \begin{equation*}
+        \Pb(X_{n+1} \in B \mid \mathcal{F}_n)= p(X_n, B)
+    \end{equation*}
+\end{defn}
+
+When given a transition probability $p$, let
+\begin{equation*}
+    \Pb_n(B_0 \times \cdots \times B_n) = \int_{B_0} \mu(dx_0)\int_{B_1}p(x_0, dx_1)\int_{B_2}p(x_1,dx_2) \cdots \int_{B_n}p(x_{n-1},dx_n)
+\end{equation*}
+for $B_0,\cdots,B_n \in \mathcal{S}$. Then $\Pb_n$ on $(S^{n+1},\mathcal{S}^{n+1})$ are consistent, i.e.,
+\begin{equation*}
+    \Pb_{n+1}(B_0 \times \cdots B_n \times S) = \Pb_n(B_0 \times \cdots \times B_n).
+\end{equation*}
+So by Kolmogorov Extension Theorem, there exists a measure $\Pb_\mu$ on $(S^\infty,\mathcal{S}^\infty)$ such that it is the finite dimensional distribution of the coordinate process $(X_n)_{n\geq 0}$ on $(S^\infty,\mathcal{S}^\infty)$, i.e. $X_n(\omega) = \omega_n$ for $\omega \in S^\infty$,
+\begin{equation*}
+    \Pb_{\mu}(X_0 \in B_0, \cdots, X_n \in B_n) = \Pb_{n}(B_0 \times \cdots \times B_n)
+\end{equation*}
+In fact, such $(X_n)_{n\geq 0}$ is a Markov chain with transition probability $p$, where $\mathcal{F}_n = \mathcal{S}^n$, i.e.
+\begin{equation*}
+    \Pb_\mu(X_{n+1} \in B \mid \mathcal{F}_n) = \E\bj{\mathbb{I}_{\bb{X_{n+1} \in B}} \mid \mathcal{F}_n} = p(X_n, B)
+\end{equation*}
+\begin{proof}
+    First, clearly $p(X_n, B)$ is $\mathcal{F}_n$-measurable. So it suffices to check for any $A \in \mathcal{F}_n = \mathcal{S}^n$,
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{\bb{X_{n+1} \in B}} \mathbb{I}_A} = \int_A p(X_n, B) d\Pb_\mu.
+    \end{equation*}
+    Because $\mathcal{F}_n = \sigma(X_0, \cdots, X_n)$, we can assume
+    \begin{equation*}
+        A = \bb{X_0 \in B_0,\cdots,X_n \in B_n}
+    \end{equation*}
+    for $B_i \in \mathcal{S}$. So
+    \begin{equation*}
+        \begin{aligned}
+            \E\bj{\mathbb{I}_{\bb{X_{n+1} \in B}} \mathbb{I}_A} &= \Pb_\mu\bc{X_0 \in B_0,\cdots,X_n \in B_n,\bb{X_{n+1} \in B}} \\
+            &= \int_{B_0} \mu(dx_0)\int_{B_1}p(x_0, dx_1)\cdots \int_{B_n}p(x_{n-1},dx_n)\int_Bp(x_n,dx_{n+1}) \\
+            &=\int_{B_0} \mu(dx_0)\int_{B_1}p(x_0, dx_1)\cdots \int_{B_n}p(x_n,B)p(x_{n-1},dx_n)
+        \end{aligned}
+    \end{equation*}
+    In fact, we can prove that for any measurable function $f$
+    \begin{equation*}
+        \int_{B_0} \mu(dx_0)\int_{B_1}p(x_0, dx_1)\cdots \int_{B_n}f(x_n)p(x_{n-1},dx_n) = \int_A f(X_n)d\Pb_\mu.
+    \end{equation*}
+    By approximation, it can assume $f = \mathbb{I}_C$ for some $C \in \mathcal{S}$. Then
+    \begin{equation*}
+        \begin{aligned}
+            \text{LHS} &= \int_{B_0} \mu(dx_0)\int_{B_1}p(x_0, dx_1)\cdots \int_{B_{n-1}}p(x_{n-1},B_n \cap C)p(x_{n-2},dx_{n-1}) \\
+            &= \Pb_\mu(X_0 \in B_0,\cdots,X_{n-1} \in B_{n-1},X_n \in B_n \cap C).
+        \end{aligned}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \begin{aligned}
+            \int_A f(X_n)d\Pb_\mu &= \int_A \mathbb{I}_{\bb{X_n \in C}}d\Pb_\mu \\
+            &= \int_S \mathbb{I}_{\bb{X_n \in C} \cap A} d\Pb_\mu \\
+            &= \Pb_\mu(X_0 \in B_0,\cdots,X_{n-1} \in B_{n-1},X_n \in B_n \cap C).
+        \end{aligned}
+    \end{equation*}
+    So LHS $=$ RHS. \qedhere
+\end{proof}
+
+
+\noindent Let $\Omega_0 = S^\infty$ with $\mathcal{F}_\infty = \mathcal{S}^\infty$. 
+
+\begin{defn}[Shift Operator]
+    For any $n \in \N$, define
+    \begin{equation*}
+        \theta_n \colon \Omega_0 \sto \Omega_0
+    \end{equation*}
+    by
+    \begin{equation*}
+        \theta_n(\omega) = (\omega_n,\omega_{n+1},\cdots)
+    \end{equation*}
+    for $\omega=(\omega_0,\omega_1,\cdots) \in \Omega_0$.
+\end{defn}
+
+\begin{prop}
+    If $(X_n)_{n \geq 0}$ is a Markov chain with transition probability $p$, then for any bounded measurable function $f$ on $(S,\mathcal{S})$, we have
+    \begin{equation*}
+        \E[f(X_{n+1}) \mid \mathcal{F}_n] = \int_S f(y) p(X_n,dy).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    It is clear true for $f = \mathbb{I}_C$ and so for any simple function $f$. Therefore, by the following Monotone Class Theorem, it is true for any bounded measurable functions.
+\end{proof}
+
+\begin{thm}[Monotone Class Theorem]
+    Let $\mathcal{A} \subset \mathcal{P}(S)$ be a $\pi$-system (i.e. closed under intersection) that contains $S$. Let $\mathcal{H}$ be a collection of real-valued functions satisfying 
+    \begin{enumerate}[label=(\arabic{*})]
+        \item if $A \in \mathcal{A}$, then $\mathbb{I}_A \in \mathcal{H}$,
+        \item if $f,g \in \mathcal{H}$, then $f+g, cf \in \mathcal{H}$ for any real $c$,
+        \item if $f_n \in \mathcal{H}$ are nonnegative and $f_n \uparrow f$ for a bounded measurable $f$, then $f \in \mathcal{H}$.
+    \end{enumerate}
+    Then $\mathcal{H}$ contains all bounded $\sigma(\mathcal{A})$-measurable functions.
+\end{thm}
+
+\begin{thm}[Markov Property]
+    Given the $\mu$ on $S$, the corresponding $\Pb_\mu$ on $\Omega_0$, and the Markov chain $(X_n)_{n\geq 0}$. Let $Y \colon \Omega_0 \sto \R$ be a bounded and $\sigma(X_0,\cdots,X_n,\cdots)$-measurable random variable. Then
+    \begin{equation*}
+        \E_\mu[Y\circ \theta_m \mid \mathcal{F}_m] = \E_{X_m}[Y],
+    \end{equation*}
+    where $\E_\mu$ is the expectation w.s.t. $\Pb_\mu$ and $\E_{X_m} = \E_x|_{x = X_m}$. $\E_x$ is the expectation w.s.t. $\Pb_x$, where $\Pb_x = \Pb_{\delta_x}$. 
+\end{thm}
+\begin{proof}
+    By the Monotone Class Theorem, we can assume
+    \begin{equation*}
+        Y = \prod_{k=0}^n g_k(X_k),
+    \end{equation*}
+    where $g_i$ is bounded measurable function on $(S,\mathcal{S})$. Because $\E_{X_m}[Y]$ is a function of $X_m$, it is clear $\mathcal{F}_m$-measurable. For $A \in \mathcal{F}_m$, it suffices to check
+    \begin{equation*}
+        \E_\mu\bj{Y\circ \theta_m \cdot \mathbb{I}_A} = \E_\mu\bj{\E_{X_m}[Y] \cdot \mathbb{I}_A}.
+    \end{equation*}
+    It can assume 
+    \begin{equation*}
+        A = \bb{X_0 \in A_1,\cdots, X_m \in A_m},
+    \end{equation*}
+    Note that $X_k(\theta(\omega)) = X_{k+m}(\omega)$. So 
+    \begin{equation*}
+        \begin{aligned}
+            \E_\mu\bj{Y\circ \theta_m \cdot \mathbb{I}_A} &= \mathbb{E}_\mu\left[g_0\left(X_m\right) \cdots g_n\left(X_{m+n}\right) \mathbb{I}_{A_0}\left(X_0\right) \cdots \mathbb{I}_{A_m}\left(X_m\right)\right] \\
+            &= \int_{A_0}\mu(dx_0) \int_{A_1}p(x_0,dx_1)\cdots \int_{A_m}g_0(x_m)p(x_{m-1},dx_m) \\
+            &\quad \int_S g_1(x_{m+1})p(x_m,dx_{m+1}) \cdots \int_S g_n(x_{m+n}) p(x_{m+n-1},dx_{m+n}) 
+        \end{aligned}
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+        \begin{aligned}
+            \E_{X_m}[Y] &= \int_S g_0(x_0) \delta_{X_m}(dx_0)\int_S g(x_1)p(x_0,dx_1) \cdots \int_S g(x_n)p(x_{n-1},dx_n) \\
+            &=  g_0(X_m)\int_S g(x_{m+1})p(X_m,dx_{m+1}) \cdots \int_S g(x_{m+n})p(x_{m+n-1},dx_{m+n}) \\
+        \end{aligned}
+    \end{equation*}
+    by replacing $x_i$ by $x_{m+i}$. So
+    \begin{equation*}
+        \begin{aligned}
+            \E_\mu\bj{Y\circ \theta_m \cdot \mathbb{I}_A} &= \int_{A_0}\mu(dx_0) \int_{A_1}p(x_0,dx_1)\cdots \int_{A_m}\E_{X_m}[Y]p(x_{m-1},dx_m) \\
+            &=\E_\mu\bj{\E_{X_m}[Y] \cdot \mathbb{I}_A}.
+        \end{aligned}\qedhere
+    \end{equation*}
+\end{proof}
+\begin{rmk}
+    By the definition of $\Pb_\mu$, for $f_i(x) = \mathbb{I}_{B_i}(x)$, 
+    \begin{equation*}
+        \E_\mu\bj{f_0(X_0)f_1(X_1)\cdots f_n(X_n)} = \int_Sf_0(x_0)\mu(dx_0)\int_S f(x_1)p(x_0,dx_1)\cdots \int_S f_n(x_n)p(x_{n-1},dx_n).
+    \end{equation*}
+\end{rmk}
+
+\begin{cor}
+    We have
+    \begin{equation*}
+        \E_\mu[Y \circ \theta_m \mid \mathcal{F}_m] = \E_\mu[ Y\circ \theta_m \mid \sigma(X_m)]
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    Because $\sigma(X_m) \subset \mathcal{F}_m$,
+    \begin{equation*}
+        \begin{aligned}
+            \E_\mu[ Y\circ \theta_m \mid \sigma(X_m)] & = \E_\mu\bj{\E_\mu[Y \circ \theta_m \mid \mathcal{F}_m] \mid \sigma(X_m) } \\
+            &=  \E_\mu\bj{\E_{X_m}[Y] \mid \sigma(X_m) } \\
+            &= \E_{X_m}[Y] = \E_\mu[Y \circ \theta_m \mid \mathcal{F}_m].
+        \end{aligned}\qedhere
+    \end{equation*}
+\end{proof}
+\begin{rmk}
+    For any Markov chain $X=(X_n)_{n \geq 0}$ on a space $(\Omega, \mathcal{F})$ and taking values on $(S, \mathcal{S})$, we can still obtain a $\Pb_\mu$ on $(S^\infty,\mathcal{S}^\infty)$, which is $\Pb_\mu = X_{\#}\Pb$. Or on the other hand, $\mu = (X_0)_{\#}\Pb$ and $\Pb_\mu$ is deduced from such $\mu$. And $(X_n)_{n \geq 0}$ on $(\Omega,\Pb)$ is equivalent to the coordinate process $(\pi_n)_{n\geq 0}$ on $(\mathcal{S}^\infty, \Pb_\mu)$. Then the Markov property is described as the above theorem.
+\end{rmk}
+    
+
+\begin{defn}
+    If $N$ is a stopping time w.s.t. $(\mathcal{F}_n)_{n \geq 0}$, then define
+    \begin{equation*}
+        \mathcal{F}_N \defeq \bb{A \colon A \cap \bb{N \leq n} \in \mathcal{F}_n,~\forall~n},
+    \end{equation*}
+    which is a $\sigma$-field.
+\end{defn}
+\begin{rmk}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $A \in \mathcal{F}_N$, then for any $n$,
+        \begin{equation*}
+            A \cap \bb{N = n} = (A \cap \bb{N \leq n}) \backslash (A \cap \bb{N \leq n-1}) \in \mathcal{F}_n.
+        \end{equation*}
+        \item Note that $X_N$ is $\mathcal{F}_N$-measurable, because for any $n$,
+        \begin{equation*}
+            \bb{X_N \in B} \cap \bb{N = n} = \bb{X_n \in B} \cap \bb{N = n} \in \mathcal{F}_n.
+        \end{equation*}
+    \end{enumerate}
+\end{rmk}
+
+\noindent For a stopping time $N$, define $\theta_N \colon \Omega_0 \sto \Omega_0$ by
+\begin{equation*}
+    \theta_N(\omega) = \begin{cases}
+        \theta_n(\omega),& \omega \in \bb{N = n},~n<\infty \\
+        *,& \omega \in \bb{N = \infty},
+    \end{cases}
+\end{equation*}
+where $*$ is an extra point adding to $\Omega_0$.
+
+\begin{thm}[Strong Markov Property]
+    On $\bb{N < \infty}$,
+    \begin{equation*}
+        \E_\mu\bj{Y \circ \theta_N \mid \mathcal{F}_N} = \E_{X_N}[Y]
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    First, because $\E_{X_N}[Y]$ is a function of $X_N$, it is $\mathcal{F}_N$-measurable. It suffices to check for any $A \in \mathcal{F}_N$,
+    \begin{equation*}
+        \E_\mu\bj{Y \circ \theta_N , A \cap \bb{N < \infty}} = \E_\mu\bj{\E_{X_N}[Y] , A \cap \bb{N < \infty}}.
+    \end{equation*}
+    Note that
+    \begin{equation*}
+        \begin{aligned}
+            \text{LHS} &= \sum_{n=0}^\infty \E_\mu\bj{Y \circ \theta_n , A \cap \bb{N = n}} \\
+            &= \sum_{n=0}^\infty \E_\mu\bj{\E_{X_n}[Y, A \cap \bb{N = n}]} \\
+            &= \E_\mu\bj{\E_{X_N}[Y, A \cap \bb{N < \infty}]}.
+        \end{aligned} \qedhere
+    \end{equation*}
+\end{proof}
+
+\noindent Define
+\begin{equation*}
+    p^k(x,y) = \Pb(X_k = y \mid X_0 = x) = \Pb_x(X_k = y)
+\end{equation*}
+where the second equality is by the Markov property.
+
+\begin{thm}[Chapman‑Kolmogorov Equation]
+    For any $x,y,z \in S$,
+    \begin{equation*}
+        p^{m+n}(x,z) = \Pb_x(X_{m+n} = z) = \sum_{y \in S}\Pb_x(X_m = y)\Pb_y(X_n = z) = \sum_{y \in S}p^m(x,y)p^n(y,z).
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    By the Markov property
+    \begin{equation*}
+        \begin{aligned}
+            \Pb_x(X_{m+n} = z) &= \E_x[\mathbb{I}_{\bb{X_{m+n} = z}}]\\
+            &=\E_x\bj{ \E_x[\mathbb{I}_{\bb{X_{m+n} = z}} \mid \mathcal{F}_m] }\\
+            &= \E_x\bj{ \E_x[\mathbb{I}_{\bb{z}}(X_{n} \circ  \theta_m) \mid \mathcal{F}_m] }\\
+            &= \E_x\bj{\E_{X_m}\bj{X_n = z}} \\
+            &= \sum_{y \in S} \E_y[X_n = z] \Pb_x(X_m = y) \\
+            &= \sum_{y \in S} \Pb_y(X_n = z)\Pb_x(X_m = y) 
+        \end{aligned}\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{rmk}
+    For any $x \in S$, by the definition of $\Pb_x$, we have
+    \begin{equation*}
+        \Pb_x(X_1 = y_1,X_2 = y_2,\cdots,X_n = y_n) = p(x,y_1)p(y_1,y_2)\cdots p(y_{n-1},y_n).
+    \end{equation*}
+    Note that it can be also obtained by the property of conditional probability.
+\end{rmk}
+
+\section{Classification of States}
+
+Let $(X_n)_{n \geq 0}$ be a Markov chain with discrete state space $S$. Let $y \in S$. Define $T^0_y = 0$ and for any $k \in \N$
+\begin{equation*}
+    T^k_y = \inf \bb{n > T^{k-1}_y \colon X_n = y},
+\end{equation*}
+i.e., the time of the $k$-th returning to $y$. Note that $T^k_y$ is a stopping time. For simplicity, let $T_y = T^1_y$. Define
+\begin{equation*}
+    \rho_{xy} = \Pb_x(T_y < \infty),
+\end{equation*}
+i.e. the probability of the chain that can reach $y$ with starting from $x$.
+
+\begin{thm}
+    The probability
+    \begin{equation*}
+        \Pb_x(T^k_y < \infty) = \rho_{xy}\rho_{yy}^{k-1}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    By induction, for $k = 1$, it is obvious. Assume $k \geq 2$ and it is true for $k-1$. Let $Y(\omega) = 1$ if $X_n(\omega) = y$ for some $n$, otherwise $Y(\omega) = 0$. So
+    \begin{equation*}
+        \bb{Y = 1} = \bb{T_y < \infty}.
+    \end{equation*}
+    Let $N = T^{k-1}_y$. Then
+    \begin{equation*}
+        \bb{Y \circ \theta_N = 1} = \bb{T^k_y < \infty}.
+    \end{equation*}
+    By the strong Markov property, on $\bb{N < \infty}$,
+    \begin{equation*}
+        \E_x\bj{Y \circ \theta_N \mid \mathcal{F}_N} = \E_{X_N}\bj{Y} = \E_y\bj{Y} =\rho_{yy}
+    \end{equation*}
+    because $X_N = y$ and $\E_y\bj{Y} = \Pb_y(Y = 1)$. Therefore,
+    \begin{equation*}
+        \begin{aligned}
+            \Pb_x(T^k_y < \infty) &= \Pb_x\bc{N < \infty, Y \circ \theta_N = 1} \\
+            &= \E_x[Y\circ \theta_N = 1, N < \infty] \\
+            &= \E_x\bj{\E_{X_N}\bj{Y}, N < \infty} \\
+            &= \rho_{yy}\E_x[\mathbb{I}_{\bb{N < \infty}}] = \rho_{yy}\Pb_x(T^{k-1}_y < \infty).
+        \end{aligned}
+    \end{equation*}
+    The by assumption of induction, it is true for $k$. \qedhere
+\end{proof}
+
+\begin{defn}[Classification of States]
+    Given Markov chain $(X_n)$ valued on discrete $(S,\mathcal{S})$, let $y \in S$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $y$ is called recurrent if $\rho_{yy} = 1$.
+        \item $y$ is called transient if $\rho_{yy} < 1$. In this case, there is a positive probability $1 - \rho_{yy}$ that the Markov chain starting from $y$ never return $y$.
+    \end{enumerate}
+\end{defn}
+
+For $y \in S$, let
+\begin{equation*}
+    N(y) = \sum_{n=1}^\infty \mathbb{I}_{\bb{X_n = y}}
+\end{equation*}
+that is the number of visits to $y$.
+
+\begin{lem}
+    If $y$ is transient,
+    \begin{equation*}
+        \E_x[N(y)] = \frac{\rho_{xy}}{1 - \rho_{yy}}.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    By definition,
+    \begin{equation*}
+        \begin{aligned}
+            \E_x[N(y)] & = \sum_{k=1}^\infty \Pb_x(N(y) \geq k) \\
+            &= \sum_{k=1}^\infty \Pb_x(T_y^k < \infty) \\
+            &= \sum_{k=1}^\infty \rho_{xy}\rho_{yy}^{k-1} = \frac{\rho_{xy}}{1 - \rho_{yy}}.
+        \end{aligned}\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    $y \in S$ is recurrent if and only if $\E_x[N(y)] = \infty$.
+\end{thm}
+\begin{proof}
+    If $y$ is recurrent, because
+    \begin{equation*}
+        \E_x[N(y)] = \sum_{k=1}^\infty \rho_{xy}\rho_{yy}^{k-1} = \infty.
+    \end{equation*}
+    Conversely, assume $y \in S$ is not recurrent, then
+    \begin{equation*}
+        \E_x[N(y)] = \frac{\rho_{xy}}{1 - \rho_{yy}} = \infty
+    \end{equation*}
+    implies that $\rho_{yy} = 1$, inducing a contradiction. \qedhere
+\end{proof}
+
+\begin{thm}
+    If $x$ is recurrent and $\rho_{xy} > 0$, then $y$ is recurrent and $\rho_{yx} = 1$.
+\end{thm}
+\begin{proof}
+    Assume $\rho_{yx} < 1$. Let 
+    \begin{equation*}
+        K = \inf\bb{k \colon p^k(x,y) > 0}.
+    \end{equation*}
+    $\rho_{xy} > 0$ implies that $K < \infty$ and there is a $y_1,\cdots,y_{K - y}$ such that
+    \begin{equation*}
+        p(x,y_0)p(y_1,y_2)\cdots p(y_{K-1},y) > 0,
+    \end{equation*}
+    because
+    \begin{equation*}
+        p^K(x,y) = \sum_{y_1,\cdots,y_{K-1} \in S} \Pb_x(X_1 = y_1,\cdots, X_{K-1} = y_{K-1},X_K = y) > 0.
+    \end{equation*}
+    Note that $y_i \neq x$ for $i=1,\cdots,{K-1}$. Because $\rho_{yx} < 1$, 
+    \begin{equation*}
+        \begin{aligned}
+            \Pb_x(T_x = \infty) &\geq p(x,y_1)\cdots p(y_{K-1},y)(1-\rho_{yx}) \\
+            &= \Pb_x(X_1=y_1,\cdots, X_K = y, T_x \circ \theta_K = \infty) > 0,
+        \end{aligned}
+    \end{equation*}
+    contradicting to the recurrence of $x$. Therefore, $\rho_{yx} = 1$.
+
+    To check that $y$ is recurrent, it suffices to prove $\E_y[N(y)] = \infty$. Since $\rho_{yx} = 1 > 0$, there exist an $\ell \in \N$ such that
+    \begin{equation*}
+        p^\ell(y,x) > 0.
+    \end{equation*}
+    Note that for $n \geq 1$, by the Chapman‑Kolmogorov Equation,
+    \begin{equation*}
+        p^{\ell + n + K}(y,y) \geq p^\ell(y,x)p^n(x,x)p^K(x,y).
+    \end{equation*}
+    So
+    \begin{equation*}
+        \sum_{n=1}^\infty  p^{\ell + n + K}(y,y) \geq p^\ell(y,x)p^K(x,y)\sum_{n=1}^\infty p^n(x,x).
+    \end{equation*}
+    Moreover,
+    \begin{equation*}
+        \E_x[N(x)] = \sum_{n=1}^\infty \E_x[\mathbb{I}_{X_n = x}] = \sum_{n=1}^\infty p^n(x,x) = \infty,
+    \end{equation*}
+    because of the recurrence of $x$. It follows that
+    \begin{equation*}
+        \E_y[N(y)] = \sum_{n=1}^\infty p^n(y,y) \geq \sum_{n=1}^\infty  p^{\ell + n + K}(y,y) = \infty. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{defn}[Closedness]
+    Let $C \subset S$. $C$ is called closed if for any $x \in C$, $\rho_{xy} > 0$ implies $y \in C$.
+\end{defn}
+\begin{rmk}
+    If $C$ is closed and $x \in C$, then $\Pb_x (X_n \in C) = 1$ for all $n$. Otherwise, there is a $y \notin C$ such that
+    \begin{equation*}
+        \Pb_x(X_n =y) > 0
+    \end{equation*}
+    which implies that $\rho_{xy} \geq \Pb_x(X_n = y) > 0$ and so $y \in C$, contradicting to the assumption.
+\end{rmk}
+
+\begin{defn}[Irreducibility]
+    $D \subset S$ is called irreducible if for any $x,y \in D$, $\rho_{xy} > 0$.
+\end{defn}
+
+\begin{thm}
+    Assume $C \subset S$ is finite and closed. Then $C$ contains a recurrent state. In particular, if $C$ is also irreducible, then every state in $C$ is recurrent. 
+\end{thm}
+\begin{proof}
+    Assume $C$ contains no recurrent state. Then for all $y \in C$, $\rho_{yy}  < 1$ and so
+    \begin{equation*}
+        \E_x[N(y)] = \frac{\rho_{xy}}{1 - \rho_{yy}} < \infty.
+    \end{equation*}
+    It implies that
+    \begin{equation*}
+        \begin{aligned}
+            \infty > \sum_{y \in C}\E_x[N(y)] &= \sum_{y \in C} \sum_{n=1}^\infty p^n(x,y) \\
+            &= \sum_{n=1}^\infty \sum_{y \in C}p^n(x,y) \\
+            &= \sum_{n=1}^\infty 1 = \infty
+        \end{aligned}
+    \end{equation*}
+    because $C$ is finite and closed, which induces a contradiction.
+\end{proof}
+
+\begin{exam}
+    Consider a Markov chain with $\abs{S} = 7$ and the transition matrix $P= (p_{ij} = \Pb(X_1 = j \mid X_0 = i))$
+    \begin{equation*}
+        P = \bc{
+            \begin{array}{ccccccc}
+                0.3 & 0 & 0 & 0 & 0.7 & 0 & 0 \\
+                0.1 & 0.2 & 0.3 & 0.4 & 0 & 0 & 0 \\
+                0 & 0 & 0.5 & 0.5 & 0 & 0 & 0  \\
+                0 & 0 & 0 & 0.5 & 0 & 0.5 &0 \\
+                0.6 & 0 & 0 & 0 &0.4 & 0 & 0 \\
+                0 & 0 & 0 & 0.1 & 0 & 0.1 & 0.8 \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0
+            \end{array}
+        }
+    \end{equation*}
+   Find all recurrent and transient states.
+   
+   \noindent \emph{Solution:} First, because $\rho_{21} > 0$ but $\rho_{12} = 0$, $2$ is transient. Similarly, $\rho_{34} > 0$ with $\rho_{43} = 0$ implies that $3$ is transient. Note that $\bb{1,5}$ is closed and irreducible, so $\bb{1,5}$ are recurrent. $\bb{4,6,7}$ is also closed and irreducible, so they are transient.
+\end{exam}
+
+\begin{thm}[Decomposition Theorem]
+    Let $R = \bb{x \in S \colon \rho_{xx} = 1}$ be the set of all recurrent states. Then
+    \begin{equation*}
+        R = \bigcup_i R_i,
+    \end{equation*}
+    where $R_i$ is closed and irreducible.
+\end{thm}
+\begin{proof}
+    For any $x \in R$, let
+    \begin{equation*}
+        C_x = \bb{y \colon \rho_{xy} > 0}.
+    \end{equation*}
+    By above theorem, $C_x \subset R$.
+
+    \noindent \textbf{Claim}: Either $C_x \cap C_y = \emptyset$ or $C_x = C_y$.
+
+    \noindent Suppose $C_x \cap C_y \neq \emptyset$. If $z \in C_x \cap C_y$, then
+    \begin{equation*}
+        \rho_{xy} \geq \rho_{xz}\rho_{zy} = \rho_{xz} > 0,
+    \end{equation*}
+    because $\rho_{xz},\rho_{yz} > 0$ and $y \in R$. For any $w \in C_y$, we have
+    \begin{equation*}
+        \rho_{xw} \geq \rho_{xy}\rho_{yw} > 0,
+    \end{equation*}
+    which implies that $w \in C_x$. So $C_y \subset C_x$. By symmetry, $C_y = C_x$.
+
+    \noindent Moreover, $C_x$ is closed and irreducible. So
+    \begin{equation*}
+        R = \bigcup_x C_x. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{exam}[Birth and Death Chain]
+    Let $S = \bb{0,1,2,\cdots}$ and $X_n$ be the size of certain population at time $n$ with
+    \begin{equation*}
+        \Pb(X_1 = i+1 \mid X_0 = i) = p_i,~\Pb(X_1 = i-1 \mid X_0 = i) = p_i, \Pb(X_1 = i \mid X_0 = i) = r_i = 1- p_i - q_i.
+    \end{equation*}
+    Note that $q_0 = 0$. Determine under which condition that the state $0$ is recurrent.
+
+    \noindent \emph{Solution:} Step 1. Construction a function $\varphi \colon S \sto \R$ such that $(\varphi(X_n))_{n \geq 0}$ is a martingale.
+
+    \noindent Let $\varphi(0) = 0$ and $\varphi(1) = 1$. In order that $\varphi(X_n)$ is a martingale, we have
+    \begin{equation*}
+        \begin{aligned}
+            \varphi(X_n) &= \E[\varphi(X_{n+1}) \mid \mathcal{F}_n]\\
+            &=\E[\varphi(X_1 \circ \theta_n) \mid \mathcal{F}_n] \\
+            &=\E_{X_n}[\varphi(X_1)]
+        \end{aligned}
+    \end{equation*}
+    If $X_n = k$, then
+    \begin{equation*}
+        \varphi(k) = \E_k[\varphi(X_1)] = p_k\varphi(k+1)+q_k\varphi(k-1)+r_k\varphi(k)
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        p_k(\varphi(k+1) - \varphi(k)) = q_k (\varphi(k) - \varphi(k-1))~\Rightarrow~ \varphi(k+1) - \varphi(k) = \prod_{j=1}^k\frac{q_j}{p_j}
+    \end{equation*}
+    and so
+    \begin{equation*}
+        \varphi(n) = \sum_{m=0}^{n-1}\prod_{j=1}^m\frac{q_j}{p_j}
+    \end{equation*}
+    with $\prod_{j=1}^0\frac{q_j}{p_j} = 1$, that is a increasing function. 
+
+    \noindent Step 2. Let $T_c = \inf \bb{n \geq 1 \colon X_n = c}$. Then we will prove that if $a < x < b$
+    \begin{equation*}
+        \Pb_x(T_a < T_b) = \frac{\varphi(b) - \varphi(x)}{\varphi(b) - \varphi(a)}
+    \end{equation*}
+    and so
+    \begin{equation*}
+        \Pb_x(T_b < T_a) = \frac{\varphi(x) - \varphi(a)}{\varphi(b) - \varphi(a)}.
+    \end{equation*}
+    Let $T = T_a \wedge T_b$ that is a stopping time. Note that $(\varphi( X_{T \wedge}))_{n \geq 0}$ is a martingale. Moreover,
+    \begin{equation*}
+        \abs{\varphi(X_{T \wedge n})} \leq \varphi(a) + \varphi(b).
+    \end{equation*}
+    So it is UI. Then
+    \begin{equation*}
+        \E_x[\varphi(X_0)] = \E_x[\varphi(X_T)].
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \begin{aligned}
+            \varphi(x) &= \varphi(a)\Pb_x(X_T = a) + \varphi(b)\Pb_x(X_T = b) \\
+            &= \varphi(a)\Pb_x(T_a < T_b) + \varphi(b)(1 - \varphi(a)\Pb_x(T_a < T_b)
+        \end{aligned}
+    \end{equation*}
+
+    \noindent Step 3. Assume $a = 0$ and $b = M$. Then
+    \begin{equation*}
+        \Pb_x(T_M < T_0) = \frac{\varphi(x) - \varphi(0)}{\varphi(M) - \varphi(0)}
+    \end{equation*}
+    Note that $T_M \geq M \sto \infty$ as $M \sto \infty$. So
+    \begin{equation*}
+        \Pb_x(T_0 = \infty) = \frac{\varphi(x)}{\varphi(\infty)}
+    \end{equation*}
+    
+    \noindent \textbf{Claim:} $0$ is recurrent if and only if $\varphi(\infty) = \infty$.
+
+    \noindent If $0$ is recurrent, then because $\rho_{0x} > 0$, $\rho{x0} = 1$ that implies that $\Pb_x(T_0 = \infty) = 0$. Conversely, if $\Pb_x(T_0 = \infty) = 0$, then $\Pb_x(T_0 < \infty) = 1$. It is also true for $x = 1$. 
+    \begin{equation*}
+        \bb{T_0 < \infty} = \bb{X_1 = 0,~ T_0 < \infty} \cup \bb{X_1 = 1,~ T_0 < \infty},
+    \end{equation*}
+    So
+    \begin{equation*}
+        \begin{aligned}
+            \Pb_0(T_0 < \infty) &= \Pb_0(X_1 = 0,~ T_0 < \infty)+ \Pb_0(X_1 = 1,~ T_0 < \infty) \\
+            &\leq \Pb_0(X_1 = 0) + \Pb_0(X_1 = 1) \Pb_{1}(T_0 < \infty) < \infty.
+        \end{aligned}
+    \end{equation*}
+\end{exam}
+
+\begin{exam}[Symmetric Random Walk]
+    $(X_n)_{n \geq 0}$ is called a random walk if $X_n = x_0 + \sum_{i=1}^n \xi_i$, where $\xi_i$ are i.i.d.. In general, $X_n$ represents the position of a particle at $n$. A symmetric (simple) random walk on $\Z^d$ is that each transition probability is equal. Note that a symmetric random walk is Markov and irreducible. So one state is recurrent and all states are recurrent. 
+
+    \noindent For a symmetric random walk with $x_0 = 0$, let $\tau_0 = 0$ and
+    \begin{equation*}
+        \tau_n = \inf \bb{k > \tau_{n-1}: X_k = 0},
+    \end{equation*}
+    i.e., the $n$-th returning time of $0$. By the strong Markov property,
+    \begin{equation*}
+        \Pb_0(\tau_n < \infty) = \Pb_0(\tau_1 < \infty)^n
+    \end{equation*}
+    \begin{proof}
+        It is true for $n = 1$. Assume it is true for $n$. Note that
+        \begin{equation*}
+            \tau_{n+1} = \tau_n + \tau_1 \circ \theta_{\tau_n}
+        \end{equation*}
+        Because $\bb{\tau_{n+1} < \infty} \subset \bb{\tau_n < \infty}$,
+        \begin{equation*}
+            \begin{aligned}
+                \Pb_0(\tau_{n+1} < \infty) &= \Pb_0(\tau_n < \infty,~\tau_{n+1} < \infty)\\
+                &= \Pb_0(\tau_n < \infty,~\tau_n + \tau_1 \circ \theta_{\tau_n} < \infty) \\
+                &= \Pb_0(\tau_n < \infty,~\tau_1 \circ \theta_{\tau_n} < \infty) \\
+                &= \E_0\bj{\mathbb{I}_{\bb{\tau_n < \infty}}\mathbb{I}_{\bb{\tau_1 < \infty}} \circ \theta_{\tau_n}}\\
+                &= \E_0\bj{\E_0\bj{\mathbb{I}_{\bb{\tau_n < \infty}}\mathbb{I}_{\bb{\tau_1 < \infty}} \circ \theta_{\tau_n} \mid \mathcal{F}_{\tau_n}}} \\
+                &= \E_0\bj{\mathbb{I}_{\bb{\tau_n < \infty}}\E_0\bj{\mathbb{I}_{\bb{\tau_1 < \infty}} \circ \theta_{\tau_n} \mid \mathcal{F}_{\tau_n}}} \\
+                &= \E_0\bj{\mathbb{I}_{\bb{\tau_n < \infty}}\E_{X_{\tau_n}}[\mathbb{I}_{\bb{\tau_1 < \infty}}]} \\
+                &= \E_0\bj{\mathbb{I}_{\bb{\tau_n < \infty}}\E_0[\mathbb{I}_{\bb{\tau_1 < \infty}}]} \\
+                &= \E_0\bj{\mathbb{I}_{\bb{\tau_n < \infty}}\Pb_0\bb{\tau_1 < \infty}} \\
+                &= \Pb_0\bb{\tau_1 < \infty}\Pb_0(\tau_n < \infty).
+            \end{aligned}
+        \end{equation*}
+        Then by induction, it is true.
+    \end{proof}
+    
+    \begin{thm}
+        For any random walk, TFAE.
+        \begin{enumerate}[label=(\arabic{*})]
+            \item $\Pb_0(\tau_1 < \infty) = 1$.
+            \item $\Pb_0(X_n = 0,~i.o.) = 1$.
+            \item $\sum_{n=0}^\infty \Pb_0(X_n = 0) = \infty$.
+        \end{enumerate}
+    \end{thm}
+    \begin{proof}
+        \noindent $(1) \Rightarrow (2)$: By above
+        \begin{equation*}
+            \Pb_0(\tau_n < \infty) = \Pb_0(\tau_1 < \infty)^n = 1,
+        \end{equation*}
+        which implies $(2)$.
+
+        \noindent $(2) \Rightarrow (3)$: Let $N(0) = \sum_{m=0}^\infty \mathbb{I}_{\bb{X_m = 0}}$. Then $(2)$ means
+        \begin{equation*}
+            \Pb_0(N(0) = \infty) = 1.
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \E_0[N(0)] = \sum_{m=0}^\infty \Pb_0(X_m = 0) = \infty.
+        \end{equation*}
+
+        \noindent $(3) \Rightarrow (1)$: Note that
+        \begin{equation*}
+            N(0) = \sum_{n=0}^\infty \mathbb{I}_{\tau_n < \infty},
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \E_0[N(0)] = \sum_{n=0}^\infty \Pb_0(\tau_n < \infty) = \sum_{n=0}^\infty \Pb_0(\tau_1 < \infty)^n =\infty
+        \end{equation*}
+        So $\Pb_0(\tau_1 < \infty) = 1$.
+    \end{proof}
+
+    \begin{thm}
+        Let $(X_n)_{n \geq 0}$ be a simple random walk in $\Z^d$. $(X_n)_{n \geq 0}$ is recurrent if $d \leq 2$. $(X_n)_{n \geq 0}$ is transient if $d \geq 3$.
+    \end{thm}
+    \begin{proof}
+        By above theorem, $(X_n)_{n \geq 0}$ is recurrent if and only if
+        \begin{equation*}
+            \sum_{n = 0}^\infty \Pb_0(X_n = 0) = \infty.
+        \end{equation*}
+        \begin{enumerate}[label=(\roman{*})]
+            \item $d= 1$: $\Pb(\xi_i = 1) = \Pb(\xi_i = -1) = 1/2$. First, it's obvious
+            \begin{equation*}
+                \Pb_0(X_{2m+1} = 0) = 0.
+            \end{equation*}
+            For $n = 2m$,
+            \begin{equation*}
+                \Pb_0(X_m = 0) = \binom{2m}{m}\bc{\frac{1}{2}}^{2m}
+            \end{equation*}
+            By Stirling's formula,
+            \begin{equation*}
+                n! \sim \sqrt{2\pi n} \bc{\frac{n}{e}}^n,\text{ as } n \sto \infty,
+            \end{equation*}
+            we have
+            \begin{equation*}
+                \binom{2m}{m}\bc{\frac{1}{2}}^{2m} \sim m^{-\frac{1}{2}}.
+            \end{equation*}
+            So
+            \begin{equation*}
+                \sum_{n = 0}^\infty \Pb_0(X_n = 0) = \infty.
+            \end{equation*}
+
+            \item $d = 2$: First, it's obvious
+            \begin{equation*}
+                \Pb_0(X_{2n+1} = 0) = 0.
+            \end{equation*}
+            To make $X_{2n} = 0$, there exists $0 \leq m \leq n$ such that $m$ steps up with $m$ steps down, and $n-m$ steps left with $n-m$ steps right. So
+            \begin{equation*}
+                \Pb_0(X_{2n} = 0) = \sum_{m=0}^n\frac{(2n)!}{m!m!(n-m)!(n-m)!} \bc{\frac{1}{4}}^{2n} =  \bc{\frac{1}{4}}^{2n}\frac{(2n)!}{n!n!}\sum_{m=0}^n\frac{n!n!}{m!m!(n-m)!(n-m)!}
+            \end{equation*}
+            Let
+            \begin{equation*}
+                C_n = \frac{(2n)!}{n!n!} = \binom{2n}{n}.
+            \end{equation*}
+            Then
+            \begin{equation*}
+                \sum_{m=0}^n\frac{n!n!}{m!m!(n-m)!(n-m)!} = \sum_{m=0}^n \binom{n}{m}\binom{n}{n-m} = \binom{2n}{n} = C_n.
+            \end{equation*}
+            So
+            \begin{equation*}
+                \Pb_0(X_{2n} = 0) = \bc{\frac{1}{4}}^{2n}C_n^2 \sim \frac{1}{n}4^{2n}
+            \end{equation*}
+
+            \item $d = 3$: First,
+            \begin{equation*}
+                \Pb_0(X_{2n+1} = 0) = 0.
+            \end{equation*}
+            Similarly, we have
+            \begin{equation*}
+                \begin{aligned}
+                    \Pb_0(X_{2n} = 0) &= \sum_{j,k=0} \frac{(2n)!}{j!j!k!k!(n-j-k)!(n-j-k)!}\bc{\frac{1}{6}}^{2n} \\
+                    &= 2^{-2n}\binom{2n}{n} \sum_{j,k}\bc{3^{-n} \frac{n!}{j!k!(n-j-k)!}}^2 \\
+                    &\leq 2^{-2n}\binom{2n}{n} \max_{j,k}\bc{3^{-n} \frac{n!}{j!k!(n-j-k)!}} \sum_{j,k}3^{-n} \frac{n!}{j!k!(n-j-k)!} \\
+                    &= 2^{-2n}\binom{2n}{n} \max_{j,k}\bc{3^{-n} \frac{n!}{j!k!(n-j-k)!}}
+                \end{aligned}
+            \end{equation*}
+            because
+            \begin{equation*}
+                (a+b+c)^n = \sum_{j,k}a^jb^kc^{n-j-k} \frac{n!}{j!k!(n-j-k)!}.
+            \end{equation*}
+            Moreover, because the maximum should be taken at $i = j \approx n / 3$, by Stirling's formula,
+            \begin{equation*}
+                 \max_{j,k}\frac{n!}{j!k!(n-j-k)!} \leq C3^n
+            \end{equation*}
+            Then
+            \begin{equation*}
+                \Pb_0(X_{2n} = 0) \leq C^\prime n^{-\frac{3}{2}}.
+            \end{equation*}
+            So it is transient. \qedhere
+        \end{enumerate}
+    \end{proof} 
+\end{exam}
+
+\section{Stationary Measure}
+
+\begin{defn}[Stationary/Invariant Measure]
+    A measure $\mu$ on $(S,\mathcal{S})$ is said to be a stationary or invariant measure if
+    \begin{equation*}
+        \sum_x \mu(x)p(x,y) = \mu(y),\quad \forall~y \in S.
+    \end{equation*}
+    In matrix form, $\mu P = \mu$ for $P = (p(x,y))$ and $\mu = (\mu(x))$. Furthermore, if $\mu$ is a probability measure, it is called a stationary distribution.
+\end{defn}
+\begin{rmk}
+    Note that
+    \begin{equation*}
+        \sum_x \mu(x)p(x,y) = \Pb_\mu(X_1 = y) = \E_\mu \bj{\Pb_{X_0}(X_1 = y)} = \mu(y),
+    \end{equation*}
+    i.e., starting from $\mu$, $X_1 \sim \mu$. Then by Markov property, $X_n \sim \mu$.
+\end{rmk}
+
+\begin{exam}[Random Walk]
+    $X_n = x_0 + \xi_1 + \cdots + \xi_n$ on $\Z^d$ with $\xi_i$ i.i.d $\Pb(\xi = z) = f(z)$. In such case,
+    \begin{equation*}
+        p(x,y) = \Pb_x(X_1 = y) = \Pb(\xi_1 = y - x) = f(y - x).
+    \end{equation*}
+    Let $\mu(x) \equiv 1$ for any $x \in S$. Then $\mu$ is a stationary measure because
+    \begin{equation*}
+        \sum_x\mu(x)p(x,y) = \sum_xf(y - x) = \sum_xf(x) = 1.
+    \end{equation*}
+\end{exam}
+
+\begin{exam}[1-dim Random Walk]
+    $X_n = \xi_1 + \cdots + \xi_n$ on $\Z$ with $\xi_i$ i.i.d $\Pb(\xi = 1) = p$ and $\Pb(\xi = -1) = q$. Assume $p \neq q$. Let
+    \begin{equation*}
+        \mu(x) = \bc{\frac{p}{q}}^x,\quad \forall~x \in \Z.
+    \end{equation*}
+    Then $\mu$ is a stationary measure.
+
+    \noindent First, the transition probability
+    \begin{equation*}
+        p(x,y) = \begin{cases}
+            p,&y = x+1, \\
+            q,&y= x-1, \\
+            0,&\text{ otherwise. }
+        \end{cases}
+    \end{equation*}
+    So
+    \begin{equation*}
+        \begin{aligned}
+            \sum_x\mu(x)p(x,y) &= \mu(y-1)p(y-1,y) + \mu(y+1)p(y+1,y) \\
+            &= \bc{\frac{p}{q}}^y = \mu(y).
+        \end{aligned}
+    \end{equation*}
+\end{exam}
+
+\begin{exam}[Birth and Death Process]
+    Let $S = \bb{0,1,2,\cdots}$ and $X_n$ be the size of certain population at time $n$ with
+    \begin{equation*}
+        p(x,x+1) = p_x,~p(x,x-1) = q_x, ~p(x,x) = r_x = 1- p_x - q_x.
+    \end{equation*}
+    with $q_0 = 0$. Let 
+    \begin{equation*}
+        \mu(x) = \prod_{k=1}^{x} \frac{p_{k-1}}{q_k}.
+    \end{equation*}
+    Then $\mu$ is an invariant measure.
+
+    \noindent Assume $y > 0$.
+    \begin{equation*}
+        \begin{aligned}
+            \sum_x\mu(x)p(x,y) &= \mu(y-1)p(y-1,y) + \mu(y+1)p(y+1,y) + \mu(y)p(y,y) \\
+            &= p_{y-1}\prod_{k=1}^{y-1} \frac{p_{k-1}}{q_k} + q_{y+1}\prod_{k=1}^{y+1} \frac{p_{k-1}}{q_k} + r_y\prod_{k=1}^{y} \frac{p_{k-1}}{q_k} \\
+            &= \mu(y).
+        \end{aligned}
+    \end{equation*}
+    It is also true for $y=0$.
+\end{exam}
+
+
+\begin{defn}[Reversible Markov Chain]
+    A measure $\mu$ on $(S,\mathcal{S})$ is said to be a reversible or symmetric measure if
+    \begin{equation*}
+        \mu(x)p(x,y) = \mu(y)p(y,x),\quad \forall~x,y \in S.
+    \end{equation*}
+\end{defn}
+\begin{rmk}
+    Note that if $\mu$ is reversible, then it is obvious invariant.
+\end{rmk}
+
+\begin{thm}
+    Assume $\mu$ is invariant and the Markov chain $(X_n)_{n \geq 0}$ with $X_0 \sim \mu$ and transition probability $p$. Then for any fixed $n$, let
+    \begin{equation*}
+        Y_m = X_{n-m},\quad m = 0,1,\cdot, n
+    \end{equation*}
+    Then $(Y_m)$ is also a Markov chain with $Y_0 \sim \mu$. Moreover, its transition probability is
+    \begin{equation*}
+        q(x,y) = \frac{\mu(y)p(y,x)}{\mu(x)}.
+    \end{equation*}
+    In particular, if $\mu$ is reversible, $p = q$.
+\end{thm}
+\begin{proof}
+    The Markov property can be easily obtained by using the Bayesian rule. For the transition probability, because $X_n \sim \mu$ for all $n$,
+    \begin{equation*}
+        \begin{aligned}
+            q(x,y) &= \Pb(Y_{m+1} = y \mid Y_m = x) \\
+            &= \Pb(X_{n-m-1} = y \mid X_{n-m} = x) \\
+            &= \frac{\Pb(X_{n-m} = x \mid X_{n-m-1} = y)\Pb(X_{n-m-1} = y)}{\Pb(X_{n-m}) = x} \\
+            &= \frac{p(y,x)\mu(y)}{\mu(x)}.
+        \end{aligned}
+    \end{equation*}
+    The followings are obvious.
+\end{proof}
+
+\begin{thm}[Existence]
+    Assume $x$ is a recurrent state. Let $T = \inf\bb{m \geq 1 \colon X_m = x}$. Then
+    \begin{equation*}
+        \mu_x(y) \defeq \E_x\bj{\sum_{n=0}^{T - 1}\mathbb{I}_{\bb{X_n = y}}} = \E_x\bj{\sum_{n=0}^\infty x\mathbb{I}_{\bb{X_n = y,n < T}}} = \sum_{n=0}^\infty \Pb_x\bc{X_n = y,T>n}
+    \end{equation*}
+    is an invariant measure.
+\end{thm}
+\begin{proof}
+    It can see $\mu_x(x) = 1$. Let 
+    \begin{equation*}
+        \bar{p}_n(x,y) = \Pb_x\bc{X_n = y,T>n}.
+    \end{equation*}
+    Then $\mu_x(y) = \sum_{n=0}^\infty \bar{p}_n(x,y)$. It should to check
+    \begin{equation*}
+        \sum_y \mu_x(y)p(y,z) = \mu_x(z).
+    \end{equation*}
+
+    By Markov property,
+    \begin{equation*}
+        \begin{aligned}
+            \mathbb{P}_x\left(X_n=y, X_{n+1}=z, T>n\right) & =\mathbb{E}_x\left[\mathbb{I}_{\left\{X_n=y, T>n\right\}} \mathbb{I}_{\left\{X_{n+1}=z\right\}}\right] \\
+            & =\mathbb{E}_x\left[\mathbb{E}_x\left[\mathbb{I}_{\left\{X_n=y, T>n\right\}} \mathbb{I}_{\left\{X_{n+1}=z\right\}} \mid \mathcal{F}_n\right]\right] \\
+            & =\mathbb{E}_x\left[\mathbb{I}_{\left\{X_n=y, T>n\right\}} \mathbb{E}_x\left[\mathbb{I}_{\left\{X_{n+1}=z\right\}} \mid \mathcal{F}_n\right]\right] \\
+            & =\mathbb{E}_x\left[\mathbb{I}_{\left\{X_n=y, T>n\right\}} \mathbb{E}_{X_n}\left[\mathbb{I}_{\left\{X_1=z\right\}}\right]\right] \\
+            & =\mathbb{E}_x\left[\mathbb{I}_{\left\{X_n=y, T>n\right\}} p\left(X_n, z\right)\right] \\
+            & =\mathbb{P}_x\left(X_n=y, T>n\right) p(y, z)
+        \end{aligned}
+    \end{equation*}
+
+    \noindent Consider the following two cases:
+
+    \noindent Case $1$: $z \neq x$. So $\Pb_x(X_n = y, X_{n+1} = z, T>n+1) = \Pb_x(X_n = y, X_{n+1} = z, T>n)$, we have
+    \begin{equation*}
+        \begin{aligned}
+            \sum_y \mu_x(y)p(y,z) &= \sum_y \sum_{n=0}^\infty \bar{p}_n(x,y) p(y,z) \\
+            &= \sum_{n=0}^\infty \bc{\sum_y \Pb_x\bc{X_n = y,T>n} p(y,z)} \\
+            &= \sum_{n=0}^\infty  \Pb_x(X_{n+1} = z, T>n+1)\\
+            &= \mu_x(z).
+        \end{aligned}
+    \end{equation*}
+
+    \noindent Case $2$: $z=x$. The right-hand side is $1$.
+    \begin{equation*}
+        \begin{aligned}
+             \sum_y \mu_x(y)p(y,z) &= \sum_{n=0}^\infty \sum_y \mathbb{P}_x\left(X_n=y, X_{n+1}=x, T>n\right)\\
+             &= \sum_{n=0}^\infty \mathbb{P}_x\left(X_{n+1}=x, T>n\right) \\
+             &= \sum_{n=0}^\infty \Pb_x(T = n+1) \\
+             &= \Pb_x(T < \infty) = 1,
+        \end{aligned}
+    \end{equation*}
+    because $x$ is recurrent.
+\end{proof}
+\begin{rmk}
+    If $S$ is finite, by above theorem, it always has a recurrent state. So for finite case, Markov chain always has an invariant measure.
+\end{rmk}
+
+\begin{thm}[Uniqueness]
+    If the Markov chain is irreducible and recurrent, then the invariant measure is unique up to constant multiples.
+\end{thm}
+\begin{proof}
+    Fix $a \in S$ that is obvious recurrent. So we have an invariant measure $\mu_a$. Given any invariant measure $\nu$. First, we have for any $z$,
+    \begin{equation*}
+        \nu(z) =\sum_y \nu(y)p(y,z) = \nu(a)p(a,z) + \sum_{y \neq a} \nu(y)p(y,z).
+    \end{equation*}
+    Using that for multiple times, we have
+    \begin{align*}
+        \nu(z) &= \nu(a)p(a,z) + \sum_{y \neq a} \bc{\nu(a)p(a,y) + \sum_{x\neq a}\nu(x)p(x,y) }p(y,z)\\
+        &=\nu(a)p(a,z) +  \sum_{y \neq a}\nu(a)p(a,y)p(y,z) + \sum_{y \neq a}\sum_{x\neq a}\nu(x)p(x,y)p(y,z) \\
+        &= \nu(a)\Pb_z(X_1 = z) +  \nu(a)\sum_{y \neq a}\Pb_a(X_1 = y,~X_2=z) \\
+        &\quad + \sum_{y \neq a}\sum_{x\neq a}\bc{ \nu(a)p(a,x) + \sum_{w \neq x} \nu(w)p(w,x) }p(x,y)p(y,z) \\
+        &= \nu(a) \mathbb{P}_a\left(X_1=z\right)+\nu(a) \mathbb{P}_a\left(X_1 \neq a, X_2=z\right)+\nu(a) \mathbb{P}_a\left(X_1 \neq a, X_2 \neq a, X_3=z\right) \\
+        &\quad + \sum_{y \neq a} \sum_{x \neq a} \sum_{w \neq a} \nu(w) p(w, x) p(x, y) p(y, z) \\
+        &= \cdots \\
+        &\geq \nu(a) \sum_{n=1}^{\infty} \mathbb{P}_a\left(X_k \neq a, 1 \leqslant k<n, X_n=z\right) \\
+        &= \nu(a)\sum_{n=1}^{\infty} \mathbb{P}_a\left(T_a>n, X_n=z\right) \\
+        &= \nu(a)\mu_a(z).
+    \end{align*}
+    Conversely, because $\nu$ is invariant
+    \begin{equation*}
+        \begin{aligned}
+            \nu(a) &= \sum_x \nu(x)p^n(x,a) \\
+            &\geq \sum_x \nu(a)\mu_a(x)p^n(x,a) \\
+            &= \nu(a)\mu_a(a) = \nu(a).
+        \end{aligned}
+    \end{equation*}
+    Therefore, 
+    \begin{equation*}
+        \sum_x \bc{\nu(x) - \nu(a)\mu_a(x)}p^n(x,a) = 0.
+    \end{equation*}
+    For any $y \in S$, 
+    \begin{equation*}
+       \bc{\nu(y) - \nu(a)\mu_a(y)}p^n(y,a) + \sum_{x\neq y} \bc{\nu(x) - \nu(a)\mu_a(x)}p^n(x,a) = 0.
+    \end{equation*}
+    Because of the irreducibility, there exists a $n$ such that $p^n(y,a) > 0$. So
+    \begin{equation*}
+        \nu(y) = \nu(a)\mu_a(y). \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    If $\pi$ is a stationary distribution, then all states $y$ that $\pi(y) > 0$ is recurrent.
+\end{thm}
+\begin{proof}
+    For any $n \in \N$, because $\pi$ is stationary,
+    \begin{equation*}
+        \sum_{n=1}^{\infty} \sum_{x \in S} \pi(x) p^n(x, y)=\sum_{n=1}^{\infty} \pi(y) = \infty.
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+        \begin{aligned}
+            \sum_{n=1}^{\infty} \sum_{x \in S} \pi(x) p^n(x, y) &= \sum_{x \in S} \pi(x) \sum_{n=1}^{\infty} p^n(x, y) \\
+            &=\sum_{x \in S} \pi(x) \frac{\rho_{xy}}{1 - \rho_{yy}} \\
+            &\leq \frac{1}{1 - \rho_{yy}}.
+        \end{aligned}
+    \end{equation*}
+    So $\rho_{yy} = 1$.
+\end{proof}
+
+\begin{thm}
+    If the Markov chain is irreducible and it has a stationary distribution $\pi$, then $\pi(x) > 0$ for all $x$ and
+    \begin{equation*}
+        \pi(x) = \frac{1}{\E_x[T_x]},
+    \end{equation*}
+    where $T_x = \inf \bb{n > 0 \colon X_n = x}$.
+\end{thm}
+\begin{proof}
+    \noindent \textbf{Claim:} For all $x$, $\pi(x) > 0$.
+
+    Because $\pi$ is invariant,
+    \begin{equation*}
+        \pi(x) = \sum_{y \in S} \pi(y) p^n(y, x).
+    \end{equation*}
+    Because there is a $z$ such that $\pi(z) > 0$ and the irreducibility implies that $p^n(z,x) > 0$ for some $n$,
+    \begin{equation*}
+        \pi(x) > \pi(z)p^n(z,x) > 0.
+    \end{equation*}
+
+    \noindent So all $x$ are recurrent, which means the Markov chain is irreducible and recurrent. By the uniqueness of the stationary distribution, for any $x$,
+    \begin{equation*}
+        \mu_x(y)=c \pi(y).
+    \end{equation*}
+    So
+    \begin{equation*}
+        \sum_{y \in S} \mu_x(y)=\sum_{n=0}^{\infty} \sum_{y \in S} \mathbb{P}_x\left(X_n=y, T_x>n\right)=\sum_{n=0}^{\infty} \mathbb{P}_x\left(T_x>n\right)=\mathbb{E}_x\left[T_x\right]
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+        c = \mathbb{E}_x\left[T_x\right] = \frac{\mu_x(y)}{\pi(y)}.
+    \end{equation*}
+    In particular, let $y = x$.
+    \begin{equation*}
+        \pi(x) = \frac{1}{\E_x[T_x]}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{defn}[Positive Recurrence]
+    Let $x$ be a recurrent state. If $\E_x[T_x] < \infty$, then $x$ is called positively recurrent, otherwise, it is called null recurrent.
+\end{defn}
+
+\begin{thm}
+    If the Markov chain is irreducible, then TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item There exists a positively recurrent state.
+        \item There exists a stationary distribution.
+        \item All states are positively recurrent state.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    \noindent $(1) ~\Rightarrow ~(2)$: If $x$ is positively recurrent, then define
+    \begin{equation*}
+        \pi(y) \defeq \frac{\mu_x(y)}{\E_x[T_x]},
+    \end{equation*}
+    which is a stationary distribution.
+
+    \noindent $(2) ~\Rightarrow ~(3)$: By above theorem,
+    \begin{equation*}
+        \pi(y) = \frac{1}{\E_y[T_y]} > 0,
+    \end{equation*}
+    so $\E_y[T_y] < \infty$.
+\end{proof}

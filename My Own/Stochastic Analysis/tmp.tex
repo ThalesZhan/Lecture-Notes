@@ -1,0 +1,692 @@
+\chapter{Symmetric Markov Operator}
+
+In this chapter, let $E$ be a Polish space that is a separable complete metric space and let $E$ be equipped with the Borel $\sigma$-field $\mathcal{F}$. Then the measure decomposition theorem implies that for any probability measure $\mu$ on the product $\sigma$-field $\mathcal{F} \otimes \mathcal{F}$ on $E \times E$ with $\mu_1 = \pi_1^{\#}\mu$, the first projection, then
+\begin{equation*}
+	\mu (dx,dy) = k(x,dy)\mu_1(dx)
+\end{equation*}
+for some probability transition kernel $k \colon E \times \mathcal{F} \sto [0,1]$. Let $(\Omega,\Sigma,\Pb)$ be a probability space.
+\begin{rmk}
+	Moreover, because of the existence of kernels, by Ionescu–Tulcea theorem, for any probability measure $\mu$ on $E^n$, there are kernels $k_i$ from $E^{i-1}$ to $E$ such that
+	\begin{equation*}
+		\mu(dx_1,dx_2,\cdots,dx_n) = \mu_1(dx_1)k_2(x_1,dx_2)k_3(x_1,x_2,dx_3)\cdots k_n(x_1,\cdots,x_{n-1},dx_n).
+	\end{equation*}		
+\end{rmk}
+For now on any measure $\mu$ is assumed to be $\sigma$-finite.
+
+\section{Markov Operator}
+
+\begin{defn}
+    A Markov operator $P$ on $(E,\mathcal{F})$ is a linear operator $P \colon \mathcal{B}_b(E) \sto \mathcal{B}_b(E)$ such that
+    \begin{enumerate}[label=(\arabic{*})]
+    	\item (\emph{Mass conversation}) $P\mathds{1} = \mathds{1}$ for constant function $\mathds{1}(x) \equiv 1$,
+		\item (Positivity preserving) for $f \geq 0$, $Pf \geq 0$.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    For $0 \leq f \leq 1$,
+    \begin{equation*}
+    	P(\mathds{1}-f) \geq 0~\Rightarrow~0 \leq P f \leq P \mathds{1} \leq \mathds{1}.
+    \end{equation*}
+    Therefore, $\|P f\|_{\infty} \leq\|f\|_{\infty}$ for all $f \in \mathcal{B}_b(E)$.
+\end{rmk}
+
+\begin{prop}[Jensen's inequality]
+    For any convex $\phi \colon \R \sto \R$ and any $f \in \mathcal{B}_b(E)$, if $P$ is a Markov operator, then
+    \begin{equation*}
+        P(\phi(f)) \geq \phi(Pf)
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Because $\phi$ is convex, for any $b \in \R$, there is $a = a(b)$ such that
+    \begin{equation*}
+        \phi(c) \geq \phi(b) + a(b)(c - b),\quad \forall~c \in \R
+    \end{equation*}
+    For any $x \in E$, let $c = f(x)$. We have
+    \begin{equation*}
+        \phi(f(x)) \geq \phi(b) + a(b)(f(x) - b)\quad \Rightarrow \quad \phi(f) \geq \phi(b) + a(b)(f - b)
+    \end{equation*}
+    By the positivity and mass properties of $P$, we have
+    \begin{equation*}
+        P(\phi(f)) \geq \phi(b) + a(b)(Pf - b)
+    \end{equation*}
+    So for any $x \in E$,
+    \begin{equation*}
+         P(\phi(f))(x) \geq \phi(b) + a(b)(Pf(x) - b)
+    \end{equation*}
+    Then let $b = Pf(x)$, we get
+    \begin{equation*}
+        P(\phi(f))(x) \geq \phi(Pf(x))
+    \end{equation*}
+    which is true for any $x \in E$.
+\end{proof}
+
+\begin{defn}[Invariant Measure]
+    A measure $\mu$ on $(E,\mathcal{F})$ is called invariant for a Markov operator $P$ if
+    \begin{equation*}
+    	\int_E Pf d\mu = \int_E f d\mu,
+    \end{equation*}
+    for all $f \in \mathcal{B}_b(E)$.
+\end{defn}
+\begin{rmk}
+    When $f \in \mathcal{B}_b(E)$ is $0$ $\mu$-a.e., $Pf = 0$ $\mu$-a.e.. Therefore, $P$ can be extended on $L^\infty(\mu)$. Moreover, $\mu$ is invariant for $P$ if
+    \begin{equation*}
+    	\int_E Pf d\mu = \int_E f d\mu,\quad \forall~f \in L^1(\mu) \cap L^\infty(\mu).
+    \end{equation*}
+\end{rmk}
+
+\noindent Note that for $1 \leq p < \infty$, $L^1(\mu) \cap L^\infty(\mu) \subset L^\infty(\mu)$ that is because
+\begin{equation*}
+	\|f\|_p^p=\int|f|^p d \mu \leq\|f\|_{\infty}^{p-1} \int|f| d \mu=\|f\|_{\infty}^{p-1}\|f\|_1.
+\end{equation*}
+So by Jensen's inequality for $\phi(x) = \abs{x}^p$ ($1 \leq p <\infty$),
+\begin{equation*}
+	\int|P f|^p d \mu \leq \int P\left(|f|^p\right) d \mu=\int|f|^p d \mu,\quad \forall~ f \in L^1(\mu) \cap L^\infty(\mu).
+\end{equation*}
+\begin{lem}
+    For any $1 \leq p < \infty$,
+    \begin{equation*}
+    	L^1(\mu) \cap L^\infty(\mu) \subset L^p(\mu)
+    \end{equation*}
+    is dense.
+\end{lem}
+\begin{proof}
+	Let $f \in L^p$ and $\varepsilon > 0$.
+	\begin{itemize}
+	    \item Step $1$: For any $n \in \N$, let 
+	    \begin{equation*}
+	    	g_n(x) \defeq \max\bc{-n,\min(f(x),n)} \in [-n,n].
+	    \end{equation*}
+	    Therefore, $g_n \in L^\infty$ and
+	    \begin{equation*}
+	    	\left\|f-g_n\right\|_p^p=\int_{|f|>n}| | f|-n|^p d \mu \leq \int_{|f|>n}|f|^p d \mu \underset{n \rightarrow \infty}{\longrightarrow} 0.
+	    \end{equation*}
+	    So let $n$ be sufficiently large such that $\left\|f-g_n\right\|_p \leq \varepsilon /2$.
+
+	    \item By $\sigma$-finiteness, choose $E_k \uparrow E$ with $\mu(E_k) < \infty$ and put $h_k = g_n\mathbb{I}_{E_k}$. So $h_k \in L^1 \cap L^\infty$. Because $\mathbb{I}_{E_k^x} \sto 0$ as $k\sto \infty$, by DCT,
+	    \begin{equation*}
+	    	\left\|g_n-h_k\right\|_p^p=\int_{E_k^c}\left|g_n\right|^p d \mu \leq \int_{E_k^c}|f|^p d \mu \underset{k \rightarrow \infty}{\longrightarrow} 0.
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	    	\left\|f-h_k\right\|_p \leq\left\|f-g_n\right\|_p+\left\|g_n-h_k\right\|_p<\varepsilon. \qedhere
+	    \end{equation*}
+	\end{itemize}
+\end{proof}
+Then because
+\begin{equation*}
+	\norm{Pf}_p \leq \norm{f}_p,\quad \forall~ f \in L^1(\mu) \cap L^\infty(\mu),
+\end{equation*}
+and the density,
+\begin{equation*}
+	P \colon L^p(\mu) \sto L^p(\mu)
+\end{equation*}
+for all $1 \leq p \leq \infty$. Note that this definition should fix an invariant $\mu$.
+
+\begin{defn}[Reversible Measure]
+    A measure $\mu$ is called reversible for a Markov operator $P$ if 
+    \begin{equation*}
+        \int f P g d \mu=\int g P f d \mu,\quad \forall~f,g \in L^2(\mu).
+    \end{equation*}
+\end{defn}
+\begin{rmk}
+    It is obviously that if $\mu$ is reversible, then it is invariant, because it can choose $g_n \in L^2(\mu)$ such that $g_n \uparrow \mathds{1}$ by the $\sigma$-finiteness of $\mu$.
+\end{rmk}
+
+\begin{defn}
+    A symmetric Markov semigroup on $(E, \mathcal{F},\mu)$ is a family of $(P_t)_{t \geq 0}$ of Markov operators such that
+    \begin{enumerate}[label=(\roman*)]
+    	\item (\emph{Initial Condition}) $P_0f = f$ for all $f \in L^\infty$;
+    	\item (\emph{Semigroup}) for every $t,s \geq 0$, $P_tP_s = P_{t+s}$;
+    	\item (\emph{Symmetry}) for every $t \geq 0$, $\mu$ is reversible for $P_t$;
+    	\item (\emph{Strong Continuity}) for all $f \in L^2(\mu)$, $P_t f \sto f$ in $L^2(\mu)$ as $t \sto 0$.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    Note that strong continuity implies that $P_t \sto P_{t_0}$ in the strong operator topology on $L^2(\mu)$ as $t \sto t_0$ with the help of the initial condition and the semigroup property.
+\end{rmk}
+
+\begin{thm}[Kernel Representation]
+    Let $P$ be a Markov operator on $(E,\mathcal{F})$ that is continuous on $L^1(\nu)$. Then there exists a probability kernel $p$ on $(E, \mathcal{F})$ such that for every $f \in L^\infty(\nu)$ and $\nu$-a.e. $x \in E$,
+    \begin{equation*}
+    	Pf(x) = \int_E f(y) p(x,dy).
+    \end{equation*}
+\end{thm}
+
+\section{Generator}
+
+For a given symmetric Markov semigroup $(P_t)_{t \geq 0}$ on $(E, \mathcal{F},\mu)$, we can similarly define the generator but the domain is different,
+\begin{equation*}
+	\mathcal{D}(L) \defeq \bb{f \in L^2(\mu)\colon \lim_{t \sto 0} \frac{Q_tf - f}{t} \text{ exists in } L^2(\mu)}.
+\end{equation*}
+And we also define $\mathcal{D}_p(L)$ for considering the convergence in $L^p(\mu)$. Except for the domain, some properties are as same as the generator of a Feller semigroup, like, $\mathcal{D}(L) \subset L^2(\mu)$ dense, and $L(P_t f) = P_t (L f)$. So
+\begin{equation*}
+	P_t f - f = \int_0^t P_s(Lf)ds = \int_0^t L(P_s f)ds.
+\end{equation*}
+Moreover, by the symmetry of $(P_t)_{t \geq 0}$, for any $f,g \in \mathcal{D}(L)$
+\begin{equation*}
+	\int_E f L g d \mu=\int_E g L f d \mu,
+\end{equation*}
+and for every $f \in \mathcal{D}_1(L)$,
+\begin{equation*}
+	\int L f d \mu=0.
+\end{equation*}
+
+\noindent Assume there exists an algebra $\mathcal{A} \subset \mathcal{D}(L)$, for example, $\mathcal{A} = C_c^\infty(\R^n)$.
+
+\begin{defn}[Carr\'e du Champ]
+    The carr\'e du champ associated to $L$ is the bilinear form $\Gamma$ on $\mathcal{A} \times \mathcal{A}$ defined by
+    \begin{equation*}
+    	\Gamma(f, g)=\frac{1}{2}(L(f g)-f L g-g L f).
+    \end{equation*}
+    $\Gamma(f) = \Gamma(f,f)$.
+\end{defn}
+
+Note that
+\begin{equation*}
+	\frac{d}{d t}\left(P_t f\right)^2=2 f \frac{d}{d t} P_t f=2 f L P_t f,
+\end{equation*}
+and by Jensen's inequality,
+\begin{equation*}
+	L\left(f^2\right)=\lim _{t \rightarrow 0} \frac{P_t\left(f^2\right)-f^2}{t} \geq \lim _{t \rightarrow 0} \frac{\left(P_t f\right)^2-f^2}{t}=\left.\frac{d\left(P_t f\right)^2}{d t}\right|_{t=0} \leq 2f Lf,
+\end{equation*}
+which implies that $\Gamma(f) \geq 0$. Then by the Cauchy-Schwartz inequality,
+\begin{equation*}
+	\Gamma(f,g)^2 \leq \sqrt{\Gamma(f)\Gamma(g)}.
+\end{equation*}
+
+\begin{prop}
+    Let $(P_t)_{t \geq 0}$ on $(E, \mathcal{F},\mu)$ be a given symmetric Markov semigroup and $L$ be its generator. Then $L$ is a self-adjoint operator on $L^{\mu}$ and so it is closed.
+\end{prop}
+
+Moreover, because
+\begin{equation*}
+    0 \leq \int_E \Gamma(f) d\mu = -\int_E fLf d\mu,
+\end{equation*}
+$L$ is non-positive definite.
+
+
+
+\paragraph{Construct semigroup from generator $L$.} Let's assume
+\begin{equation*}
+    L=\sum_{i, j=1}^n \sigma_{i j}(x) \frac{\partial^2}{\partial x_i \partial x_j}+\sum_{i=1}^n b_i(x) \frac{\partial}{\partial x_i},
+\end{equation*}
+where $b_i$ and $\sigma_{ij}$ are continuous functions and $\sigma = (\sigma_{ij}(x)) \in \R^{n \times n}$ is symmetric and nonnegative.  $\mathcal{D}(L) = C^\infty_c(\R^n)$. Moreover, of $\sigma$ is invertible, $L$ is called an elliptic diffusion operator.  A Borel measure $\mu$ is called symmetric for $L$ if for any $f,g \in C^\infty_c(\R^n)$,
+\begin{equation*}
+    \int_{\mathbb{R}^n} g L f d \mu=\int_{\mathbb{R}^n} f L g d \mu.
+\end{equation*}
+In the following, let's fix a measure $\mu$ symmetric for $L$.
+
+Note that because $\mathcal{D}(L) = C^\infty_c(\R^n) \subset L^2(\R^n,\mu)$ is dense, $L$ is a non-positive symmetric operator that is densely defined on $L^2(\R^n,\mu)$. But it is not self-adjoint. However, it can be extended to a self-adjoint operator.
+\begin{thm}[Friedrichs Extension]
+    On the Hilbert space $L^2(\R^n,\mu)$, for $L$ defined above, there exists a densely defined non-positive self-adjoint extension of $L$.
+\end{thm}
+
+In fact, if $L$ is essentially self-adjoint, then the Friedrichs extension is the closed operator $\clo{L}$. In such case,
+\begin{equation*}
+    \ker (-L^* + \lambda I) = \bb{0},~\lambda > 0.
+\end{equation*}
+It means
+\begin{equation*}
+    -Lf + \lambda f = 0~\Rightarrow~f = 0,
+\end{equation*}
+where $Lf$, the differential in the sense of distribution.
+
+Therefore, in the following, we assume $L$ is essentially self-adjoint and replace $\clo{L}$ by $L$. Then $L$ is self-adjoint on $L^2(\R^n,\mu)$. So we can define
+\begin{equation*}
+    P_t = e^{tL} = \int_{\R} e^{t\lambda} dE_L(\lambda) = \int_0^\infty e^{-t\lambda} dE_L(\lambda),\forall~t \geq 0,
+\end{equation*}
+where $E_L$ is the spectral measure associated with $L$. The $P_t \colon L^2(\R^n,\mu) \sto L^2(\R^n,\mu)$ is a bounded operator. Note that
+\begin{enumerate}[label=(\roman*)]
+	\item $P_tP_s = P_{t+s}$ for all $t,s \geq 0$.
+
+    \item for all $f \in L^2$,
+    \begin{equation*}
+        \norm{P_t f}_{2} \leq \norm{f}_{2}.
+    \end{equation*}
+
+    \item for all $f \in L^2$, $t \mapsto P_tf$ is continuous in $L^2(\mu,\R^n)$.
+
+    \item for all $f,g \in L^2$,
+    \begin{equation*}
+        \int_{\R^n} fP_tgd\mu = \int_{\R^n}gP_tf d\mu,
+    \end{equation*}
+    i.e., $\mu$ is reversible for $P_t$.
+
+    \item for all $f \in L^2$,
+    \begin{equation*}
+    	 \lim_{t \sto 0} \norm{P_t f - f}_{2} = 0
+    \end{equation*}
+
+    \item for all any $f \in \mathcal{D}(L)$,
+    \begin{equation*}
+        \lim_{t \sto 0} \norm{\frac{P_t f - f}{t} - Lf}_{2} = 0.
+    \end{equation*}
+
+    \item if $\mathds{1} \in \mathcal{D}(L)$ and $L\mathds{1} = 0$, then $P_t\mathds{1} = \mathds{1}$.
+\end{enumerate}
+
+\section{Compact Markov Operators}
+
+\begin{defn}[Diﬀusion Carr\'e du Champ]
+    Let $\mathcal{A} \subset \R^E$ be an algebra such that for any $k \in \N$, any $f_1,\cdots,f_k \in \mathcal{A}$, and any $\Psi \in C^\infty(\R^k)$, $\Psi(f_1,\cdots,f_k) \in \mathcal{A}$. We say a bilinear form $\Gamma \colon \mathcal{A} \times \mathcal{A} \sto \mathcal{A}$ is called a diffusion carr\'e du champ if for any $\Psi$ and $f_i$ as above,
+    \begin{equation*}
+     	\Gamma\left(\Psi\left(f_1, \ldots, f_k\right), g\right)=\sum_{i=1}^k \partial_i \Psi\left(f_1, \ldots, f_k\right) \Gamma\left(f_i, g\right) .
+    \end{equation*} 
+\end{defn}
+
+Consider a symmetric Markov semigroup with generator $L$ and the corresponding carr\'e du champ
+\begin{equation*}
+	\Gamma(f, g)=\frac{1}{2}(L(f g)-f L g-g L f).
+\end{equation*}
+If $\Gamma$ is a diffusion carr\'e du champ, then
+\begin{equation}\label{eq:diffusion_generator}
+	L \Psi\left(f_1, \ldots, f_k\right)=\sum_{i=1}^k \partial_i \Psi\left(f_1, \ldots, f_k\right) L f_i+\sum_{i, j=1}^k \partial_i \partial_j \Psi\left(f_1, \ldots, f_k\right) \Gamma\left(f_i, f_j\right).
+\end{equation}
+In particular, for $k = 1$,
+\begin{align*}
+	\Gamma(\psi(f), g) & =\psi^{\prime}(f) \Gamma(f, g) \\
+	L \psi(f) & =\psi^{\prime}(f) L f+\psi^{\prime \prime}(f) \Gamma(f).
+\end{align*}
+
+\begin{defn}[Diffusion Semigroup]
+    An operator $L$ satisfying (\ref{eq:diffusion_generator}) is called a diffusion generator. A symmetric Markov semigroup whose generator is a diffusion generator is called a diffusion semigroup.
+\end{defn}
+
+\begin{defn}[Dirichlet Form]
+    A bilinear form $\mathcal{E} \colon \mathcal{D}(\mathcal{E}) \times \mathcal{D}(\mathcal{E}) \sto \R$ is called a Dirichlet form if
+    \begin{enumerate}[label=(\roman*)]
+    	\item $\mathcal{D}(\mathcal{E}) \subset L^2(\mu)$ dense for some $\mu$,
+    	\item $\mathcal{E}(f,g) = \mathcal{E}(g,f)$ for $f,g \in \mathcal{D}(\mathcal{E})$,
+    	\item $\mathcal{E}(f) = \mathcal{E}(f,f) \geq 0$ for $f \in \mathcal{D}(\mathcal{E})$,
+    	\item $\mathcal{D}(\mathcal{E})$ is complete w.s.t. 
+    	\begin{equation*}
+    		\inn{f,g}_{\mathcal{E}} \defeq \int_Efgd\mu + \mathcal{E}(f,g),
+    	\end{equation*}
+    	\item for any $f \in \mathcal{D}(\mathcal{E})$, $0 \vee f \wedge 1 \in \mathcal{D}(\mathcal{E})$ and
+    	\begin{equation*}
+    		\mathcal{E}(0 \vee f \wedge 1) \leq \mathcal{E}(f).
+    	\end{equation*}
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    Note that for any symmetric, non-negative bilinear form $\mathcal{E}$ defined on some dense $D \subset L^2(\mu)$, if $\mathcal{E}$ satisfies that for any $f_n \sto 0$ in $L^2(\mu)$ and $f_n$ Cauchy w.s.t. $\inn{\cdot,\cdot}_{\mathcal{E}}$, $\mathcal{E}(f_n) \sto 0$, then $D$ can be extended to the closure of $D$ w.s.t. $\norm{\cdot}_2+\mathcal{E}(\cdot)$.
+\end{rmk}
+
+If $\Gamma$ is a diffusion carr\'e du champ on an algebra $\mathcal{A} \subset L^2(\mu)$ dense and $\Gamma(f,f) \geq 0$ for all $f \in \mathcal{A}$, then let
+\begin{equation*}
+	\mathcal{E}(f,g) \defeq \int_E \Gamma(f,g)d\mu
+\end{equation*}
+and taking $\mathcal{D}(\mathcal{E})$ be the closure of $\mathcal{A}$ w.s.t. $\inn{\cdot,\cdot}_{\mathcal{E}}$. It can prove that such $\mathcal{E}$ is a Dirichlet form. Moreover, by the symmetric and positivity of $\mathcal{E}$, Riesz representation theorem implies that we can define a a non-positive, symmetric operator $L$ by
+\begin{equation*}
+	\int g L f d \mu=-\mathcal{E}(f, g)
+\end{equation*}
+on the domain
+\begin{equation*}
+	\mathcal{D}(L)=\left\{f \in \mathcal{D}(\mathcal{E}): \exists C \text { such that } \mathcal{E}(f, g) \leq C\|g\|_2 \text { for all } g \in \mathcal{D}(\mathcal{E})\right\}.
+\end{equation*}
+Moreover, it can be extended to a self-adjoint operator $L$ by using Friedrichs extension.
+
+\begin{defn}[Compact Markov Diffusion Triple]
+    Let $(E,\mathcal{F},\mu)$ be a polished measure space and $\mu$ be a probability measure. For $\mathcal{A} \subset L^2(\mu)$, let
+    \begin{equation*}
+    	\Gamma \colon \mathcal{A} \times \mathcal{A} \sto \mathcal{A}
+    \end{equation*}
+    be a symmetric bilinear form. We say $(E,\mu,\Gamma)$ a compact Markov diffusion triple the followings are satisfied.
+    \begin{enumerate}[label=(\alph*),series=myalph1]
+    	\item $\mathcal{A}$ is dense in $L^2(\mu)$,
+    	\item $\mathcal{A}$ is an algebra closed under composition with smooth functions,
+    	\item $\Gamma(f) = \Gamma(f,f) \geq 0$ for all $f \in \mathcal{A}$,
+    	\item $\Gamma$ is a diffusion carr\'e du champ,
+    	\item $\Gamma(f) = 0$ implies that $f$ is a constant,
+    \end{enumerate}
+    and let $\mathcal{E}(f,g) = \int_E \Gamma(f,g)d\mu$ for all $f,g \in \mathcal{A}$, which satisfies
+    \begin{enumerate}[label=(\alph*), resume=myalph1]
+    	\item for every $f \in \mathcal{A}$, there exist a $C > 0$ such that $\mathcal{E}(f,g) \leq C\norm{g}_2$ for all $g \in \mathcal{A}$.
+    \end{enumerate}
+    It follows that $\mathcal{E}$ can be extended to a Dirichlet form. Let $L$ be the self-adjoint operator defined on $\mathcal{D}(L)$ such that
+    \begin{equation*}
+    	\int g L f d \mu=-\mathcal{E}(f, g).
+    \end{equation*}
+    Note that $\mathcal{A} \subset \mathcal{D}(L)$. Let $P_t = e^{tL}$ called the semigroup be assumed that
+    \begin{enumerate}[label=(\alph*),resume=myalph1]
+    	\item $L\mathcal{A} \subset \mathcal{A}$,
+    	\item $P_t \mathcal{A} \subset \mathcal{A}$.
+    \end{enumerate}
+\end{defn}
+
+\begin{prop}
+    Let $(E,\mathcal{F},\mu)$ be a compact Markov diffusion triple and $P_t$ be its semigroup.
+    \begin{enumerate}[label=(\arabic{*})]
+    	\item $P_t$ is a symmetric Markov semigroup for $\mu$.
+    	\item For any $f \in L^2(\mu)$,
+    	\begin{equation*}
+    		\lim_{t \sto \infty}P_tf = \int_E fd\mu
+    	\end{equation*}
+    	in $L^2$, which is called the ergodic property.
+    \end{enumerate}
+\end{prop}
+
+\paragraph{Curvature.} 
+\begin{defn}
+   Given a compact Markov diffusion triple $(E,\mathcal{F},\mu)$. For any $f,g \in \mathcal{A}$,
+   \begin{equation*}
+    	\Gamma_2(f, g)=\frac{1}{2}\bc{L \Gamma(f, g)-\Gamma(f, L g)-\Gamma(g, L f)},
+    \end{equation*}
+    and $\Gamma_2(f) = \Gamma_2(f, f)$.
+\end{defn}
+
+\begin{defn}[Curvature Dimension]
+    For $\rho \in \R$ and $n \in [1,\infty]$, a compact Markov diffusion triple $(E,\mathcal{F},\mu)$ is to said to satisfy the curvature-dimension condition $\op{CD}(\rho,n)$ if
+    \begin{equation*}
+    	\Gamma_2(f) \geq \rho \Gamma(f) + \frac{1}{n}(Lf)^2.
+    \end{equation*}
+\end{defn}
+
+\section{Poincar\'e Inequality}
+
+\begin{prop}
+    Let $P_t$ be the semigroup of a compact Markov triple. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+    	\item $\op{CD}(\rho,\infty)$ holds for some $\rho \in \R$.
+    	\item For every $f \in \mathcal{A}$ and $t \geq 0$,
+    	\begin{equation*}
+    		\Gamma(P_tf) \leq e^{-2\rho t}P_t \Gamma(f).
+    	\end{equation*}
+    	\item For every $f \in \mathcal{A}$ and $t \geq 0$,
+    	\begin{equation*}
+    		P_t(f^2) - (P_tf)^2 \leq \frac{1 - e^{-2\rho t}}{\rho}P_t \Gamma(f).
+    	\end{equation*}
+    	\item For every $f \in \mathcal{A}$ and $t \geq 0$,
+    	\begin{equation*}
+    		P_t(f^2) - (P_tf)^2 \geq \frac{e^{2\rho t} - 1}{\rho}\Gamma(P_tf).
+    	\end{equation*}
+    \end{enumerate}
+    For the last two conditions, if $\rho = 0$, then the coefficients in RHS can be taken as $2t$.
+\end{prop}
+\begin{proof}
+    $(1)~\Rightarrow~(2)$: for $f \in \mathcal{A}$, let
+    \begin{equation*}
+    	\Lambda(s) = e^{-2\rho}P_s\Gamma(P_{t-s}f).
+    \end{equation*}
+    Then by chain rule,
+    \begin{equation*}
+    	\Lambda^{\prime}(s)=2 e^{-2 \rho s} P_s\left(\Gamma_2\left(P_{t-s} f\right)-\rho \Gamma\left(P_{t-s} f\right)\right) \geq 0,
+    \end{equation*}
+    because of $\op{CD}(\rho,\infty)$. Therefore, $\Lambda(t) \geq \Lambda(0)$.
+
+    $(2)~\Rightarrow~(3)$: Let
+    \begin{equation*}
+    	\Lambda(s)=P_s\left(P_{t-s} f\right)^2.
+    \end{equation*}
+    So $\Lambda^{\prime}(s)=2 P_s \Gamma\left(P_{t-s} f\right)$ and
+    \begin{align*}
+    	\begin{aligned}
+			\Lambda(t)-\Lambda(0) & =2 \int_0^t P_s \Gamma\left(P_{t-s} f\right) d s \\
+			& \leq 2 \int_0^t e^{-2 \rho(t-s)} P_t \Gamma(f) d s \\
+			& =\frac{1-e^{-2 \rho t}}{\rho} P_t \Gamma(f).
+		\end{aligned}
+    \end{align*}
+
+    $(2)~\Rightarrow~(4)$: Similarly, as above, by using $P_s \Gamma\left(P_{t-s} f\right) \geq e^{2 \rho s} \Gamma\left(P_t f\right)$,
+    \begin{equation*}
+    	\Lambda(t)-\Lambda(0) \geq 2 \int_0^t e^{2 \rho s} \Gamma\left(P_t f\right) d s=\frac{e^{2 \rho t}-1}{\rho} \Gamma\left(P_t f\right).
+    \end{equation*}
+
+    $(3)~\Rightarrow~(1)$: Note that for any $h \in \mathcal{A}$,
+    \begin{equation*}
+    	P_t h=h+t L h+\frac{t^2}{2} L^2 h+o\left(t^2\right),\quad t \sto 0.
+    \end{equation*}
+    Therefore choosing $h = f$ and $h = f^2$, we have
+    \begin{align*}
+    	\begin{aligned}
+			P_t\left(f^2\right)-\left(P_t f\right)^2 & =t L\left(f^2\right)+\frac{t^2}{2} L^2\left(f^2\right)-2 t f L f-t^2(L f)^2-t^2 f L^2 f+o\left(t^2\right) \\
+			& =2 t \Gamma(f)+\frac{t^2}{2} L^2\left(f^2\right)-t^2(L f)^2-t^2 f L^2 f+o\left(t^2\right).
+		\end{aligned}
+    \end{align*}
+    On the other hand,
+    \begin{equation*}
+    	\frac{1-e^{-2 \rho t}}{\rho} P_t \Gamma(f)=2 t \Gamma(f)-2 \rho t^2 \Gamma(f)+2 t^2 L \Gamma(f)+o\left(t^2\right).
+    \end{equation*}
+    Therefore, by $(3)$,
+    \begin{equation*}
+    	\frac{1}{2} L^2\left(f^2\right)-(L f)^2- f L^2 f+o(1) \leq -2 \rho \Gamma(f)+2 L \Gamma(f)+o(1).
+    \end{equation*}
+    As $t \sto 0$, we have
+    \begin{equation*}
+    	\frac{1}{2} L^2\left(f^2\right)-(L f)^2- f L^2 f \leq -2 \rho \Gamma(f)+2 L \Gamma(f).
+    \end{equation*}
+    Then by arranging,
+    \begin{equation*}
+    	L \Gamma(f)-2 \Gamma(f, L f) \geq 2 \rho \Gamma(f).
+    \end{equation*}
+
+    $(4)~\Rightarrow~(1)$: It is similarly as above. \qedhere
+
+\end{proof}
+
+For $(3)$ in above proposition, by the ergodic property, as $t \sto \infty$,
+\begin{equation*}
+	\int f^2 d \mu-\left(\int f d \mu\right)^2 \leq \frac{1}{\rho} \int \Gamma(f) d \mu,
+\end{equation*}
+which is called a Poincar\'e inequality.
+
+\begin{defn}[Poincar\'e inequality]
+    Let $\mu$ be a probability measure and $\mathcal{E}$ be a Dirichlet form on $L^2(\mu)$. We say that $\mu$ and $\mathcal{E}$ satisfy a Poincar\'e inequality with constant $C$ if
+    \begin{equation*}
+    	\int_E f^2 d\mu - \bc{\int_E fd\mu}^2 \leq C\mathcal{E}(f),
+    \end{equation*}
+    for any $f \in \mathcal{D}(\mathcal{E})$. The Poincar\'e constant of $\mu$ and $\mathcal{E}$ is the smallest $C$ such that above inequality holds for all $f \in \mathcal{D}(\mathcal{E})$.
+\end{defn}
+\begin{rmk}
+    When considering a compact Markov triple, because $\mathcal{A} \subset \mathcal{D}(\mathcal{E})$ is dense, it suffices to check $\op{PI}$ on $\mathcal{A}$. Moreover, if a compact Markov triple satisfies $\op{CD}(\rho,\infty)$, it satisfies $\op{PI}(1/\rho)$.
+\end{rmk}
+\begin{cor}
+    The compact Markov triple $(E,\mu,\Gamma)$ satisfies $\op{CD}(\rho,\infty)$ if and only if for any $t \geq 0$ and $x \in E$ $\mu$-a.e., the measure $p_t(x,\cdot)$ satisfies $\op{PI}$ with constant $(1 - e^{-2\rho t})/\rho$.
+\end{cor}
+
+\begin{prop}[Spectral Gap]
+    If the compact Markov triple $(E,\mu,\Gamma)$ satisfies $\op{PI}(C)$ for some constant $C$, then the spectrum of $L$
+    \begin{equation*}
+    	\sigma(L) \subset (-\infty,-\frac{1}{C}] \cup \bb{0}.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Let $\lambda \in \sigma(L)$ such that $\lambda \neq 0$. Because $L$ is self-adjoint, i.e., $\sigma(L) = \sigma_{ap}(L)$, there exists $f_n \in \mathcal{D}(L)$ such that $\norm{f}_2 = 1$ and
+    \begin{equation*}
+    	\norm{Lf_n - \lambda f_n}_2 \sto 0,\quad n \sto \infty.
+    \end{equation*}
+    Note that because $\mu$ is a probability measure, $\norm{Lf_n - \lambda f_n}_1 \sto 0$. It follows that $\int f_n d\mu \sto 0$ by $\int Lf_n d\mu = 0$ for all $n$. Then $\op{PI}$ implies that
+    \begin{equation*}
+    	\int_E f_n^2 d \mu-\left(\int_E f_n d \mu\right)^2 \leq C \int_E \Gamma\left(f_n\right) d \mu=-C \int_E f_n L f_n d \mu.
+    \end{equation*}
+    As $n\sto \infty$,
+    \begin{equation*}
+    	\lambda = \int_E f_n L f_n d \mu \leq -\frac{1}{C}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\paragraph{$\op{PI}$ under $\op{CD}(\rho,n)$.} 
+
+\begin{lem}
+    Suppose the compact Markov triple $(E,\mu,\Gamma)$ satisfies $\op{CD}(\rho,\infty)$ with some $\rho > 0$. It satisfies $\op{PI}(C)$ for some $C > 0$ if and only if
+    \begin{equation*}
+    	\int_E \Gamma(f) d \mu \leq C \int_E(L f)^2 d \mu,\quad \forall~ f\in \mathcal{D}(L).
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    $\Rightarrow:$ Let
+    \begin{equation*}
+    	\Lambda(t)=\int_E\left(P_t f\right)^2 d \mu.
+    \end{equation*}
+    Then
+    \begin{equation*}
+    	\Lambda^{\prime}(t)=-2 \int_E \Gamma\left(P_t f\right) d \mu,\quad \Lambda^{\prime \prime}(t)=4 \int_E\left(L P_t f\right)^2 d \mu.
+    \end{equation*}
+    Because it satisfies $\op{CD}(\rho,\infty)$ with some $\rho > 0$, by
+    \begin{equation*}
+    	\Gamma(P_tf) \leq e^{-2\rho t}P_t \Gamma(f) \leq P_t \Gamma(f) \leq \Gamma(f)
+    \end{equation*}
+    Then by DCT, $\lim_{t \sto \infty} \Lambda^\prime(t)$ exists. And by ergodicity,
+    \begin{equation*}
+    	\lim_{t \sto \infty} \Lambda(t) = \int_E f d\mu,
+    \end{equation*}
+    $\lim_{t \sto \infty} \Lambda^\prime(t) = 0$. By assumption,
+    \begin{equation*}
+    	\Lambda^{\prime \prime}(t) \geq-\frac{2}{C} \Lambda^{\prime}(t).
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+    	\begin{aligned}
+			\int f^2 d \mu-\left(\int f d \mu\right)^2 & =-\int_0^{\infty} \Lambda^{\prime}(t) d t \\
+			& \leq \frac{C}{2} \int_0^{\infty} \Lambda^{\prime \prime}(t) d t \\
+			& =-\frac{C}{2} \Lambda^{\prime}(0) \\
+			& =C \int_E \Gamma(f) d \mu.
+		\end{aligned}
+    \end{align*}
+
+    $\Leftarrow:$ Choosing $f \in \mathcal{D}(L)$ with mean $0$ (otherwise, let $f - \int f d\mu$ and note that $\Gamma(c,g) = 0$ for any constant $c$ and function $g$). By Cauchy-Schwartz inequality,
+    \begin{align*}
+		\int_E \Gamma(f) d \mu & =\int_E f(-L f) d \mu \\
+		& \leq \sqrt{\int_E f^2 d \mu \int_E(L f)^2 d \mu} \\
+		& \leq \sqrt{C \int_E \Gamma(f) d \mu \int_E(L f)^2 d \mu}. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $(E,\mu,\Gamma)$ be a compact Markov triple. If it satisfies $\op{CD}(\rho,n)$ for some $\rho > 0$ and $n > 1$, then $\mu$ satisfies $\op{PI}(C)$ with $C =\frac{n-1}{\rho n}$.
+\end{thm}
+\begin{proof}
+    Because of $\op{CD}(\rho,n)$,
+    \begin{equation*}
+    	\int_E \Gamma_2(f) d \mu \geq \rho \int_E \Gamma(f) d \mu+\frac{1}{n} \int_E(L f)^2 d \mu.
+    \end{equation*}
+    Because $\int Lh d\mu = 0$,
+    \begin{align*}
+		\int_E \Gamma_2(f) & =\frac{1}{2} \bc{\int_E L \Gamma(f) d \mu-\int_E \Gamma(f, L f) d \mu} \\
+		& =\frac{1}{2} \int_E L \Gamma(f) d \mu-\frac{1}{2} \int_E L(f L f) d \mu+\frac{1}{2} \int_E(L f)^2+f L^2 f d \mu \\
+		& =\int_E(L f)^2 d \mu.
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+    	\frac{n-1}{\rho n} \int_E(L f)^2 d \mu \geq  \int_E \Gamma(f) d \mu.
+    \end{equation*}
+    Then by above lemma, it has the result.
+\end{proof}
+
+\section{Applications with PI}
+
+\paragraph{Decay of Variance.} For a probability measure $\mu$ and $f \in L^2(\mu)$, let
+\begin{equation*}
+	\operatorname{Var}_\mu(f)=\int_E f^2 d \mu-\left(\int_E f d \mu\right)^2.
+\end{equation*}
+
+\begin{prop}
+    The compact Markov triple $(E,\mu,\Gamma)$ satisfies $\op{PI}(C)$ if and only if
+    \begin{equation*}
+    	\Var_\mu(P_t f) \leq e^{-\frac{2t}{C}}\Var_\mu(f),\quad f \in L^2(\mu).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    $\Rightarrow:$ For $f \in \mathcal{A}$,
+    \begin{equation*}
+    	\frac{d}{d t} \int_E\left(P_t f\right)^2 d \mu=2 \int_E P_t f L P_t f d \mu=-2 \mathcal{E}\left(P_t f\right).
+    \end{equation*}
+    Define
+    \begin{equation*}
+    	\Lambda(t)=e^{2 t / C} \operatorname{Var}_\mu\left(P_t f\right),
+    \end{equation*}
+    so
+    \begin{equation*}
+    	\Lambda^{\prime}(t)=\frac{2}{C} \operatorname{Var}_\mu\left(P_t f\right)-2 \mathcal{E}\left(P_t f\right) \leq 0
+    \end{equation*}
+    by $\op{PI}(C)$. It follows that $\Lambda(t) \leq \Lambda(0)$. For general $f \in L^2(\mu)$, it can get by density.
+
+    $\Leftarrow:$ It suffices to prove that for $f \in \mathcal{A}$ with $\int f d\mu = 0$. Note that
+    \begin{equation*}
+    	P_t f=f+t L f+o(t),
+    \end{equation*}
+    and so
+    \begin{equation*}
+    	\operatorname{Var}\left(P_t f\right)=\int_E f^2 d \mu+2 t \int_E f L f d \mu+o(t).
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+    	e^{-2 t / C} \operatorname{Var}_\mu(f)=\left(1-\frac{2 t}{C}+o(t)\right) \operatorname{Var}_\mu(f).
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+    	2 t \int_E f L f d \mu+o(t) \leq \left(-\frac{2 t}{C}+o(t)\right) \operatorname{Var}_\mu(f).
+    \end{equation*}
+    Then dividing $t$ on the both sides and taking $t \sto 0$,
+    \begin{equation*}
+    	2 \int_E f L f d \mu \leq-\frac{2}{C} \operatorname{Var}_\mu(f). \qedhere
+    \end{equation*}
+\end{proof}
+
+
+\paragraph{Log-concave measures.}
+
+\begin{defn}
+    The probability measure $\mu$ on $\R^n$ defined by
+    \begin{equation*}
+    	d\mu(x) = e^{-W(x)}dx
+    \end{equation*}
+    is called log-concave if $W \colon \R^n \sto \R$ is convex. For $\rho > 0$, $\mu$ is called $\rho$-strongly log-concave if $W(x) - \rho \abs{x}^2$ is convex.
+\end{defn}
+
+Assume $W \in C^\infty(\R^n)$. And on $\R^n$,
+\begin{equation*}
+	\Gamma(f,g) = \inn{\nabla f, \nabla g}
+\end{equation*}
+is a carr\'e du champ. Then by divergence theorem,
+\begin{equation*}
+	-\int_{\mathbb{R}^n} \Gamma(f, g) d \mu=-\int_{\mathbb{R}^n}\left\langle e^{-W} \nabla f, \nabla g\right\rangle d x=\int_{\mathbb{R}^n} f(\Delta g-\langle\nabla W, \nabla g\rangle) d \mu.
+\end{equation*}
+Therefore,
+\begin{equation*}
+	L g=\Delta g-\langle\nabla W, \nabla g\rangle.
+\end{equation*}
+If all derivatives of $W(x)$ grow at most polynomially fast as $\abs{x} \sto \infty$, then $(\R^n,\mu,\Gamma)$ is a compact Markov triple with $\mathcal{A}$ being the class of smooth, bounded functions whose derivatives all vanish super-polynomially fast.
+
+Moreover,
+\begin{equation*}
+	\Gamma_2(f, g)=\left\langle\nabla^2 f, \nabla^2 g\right\rangle+(\nabla f)^\top\left(\nabla^2 W\right)\nabla g,
+\end{equation*}
+By the strongly convexity of $W$,
+\begin{equation*}
+	\Gamma_2(f, f) \geq \rho \norm{f}_2 = \rho \Gamma(f),
+\end{equation*}
+i.e., $(\R^n,\mu,\Gamma)$ is $\op{CD}(\rho,\infty)$.
+
+\begin{cor}
+    Every $\rho$-strongly log-concave probability measure satisfies $\op{PI}(1 / \rho)$, i.e.,
+    \begin{equation*}
+    	\Var_\mu(f) \leq \frac{1}{\rho} \E_\mu[\norm{\nabla f}^2].
+    \end{equation*}
+\end{cor}
+
+\section{Strong Gradient Bound}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,484 @@
+\chapter{Brownian Motion}
+
+\section{Definition and Properties}
+
+\begin{defn}
+    Let $(B_t)_{t \geq 0}$ be a stochastic process. It is called a (standard when $B_0 = 0$) Brownian motion if
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $t \sto B_t(\omega)$ is continuous a.e.
+        \item it is independent increments.
+        \item for any $s < t$, $B_t - B_s \sim \mathcal{N}(0,t-s)$.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    Note that for $s \leq t$
+    \begin{equation*}
+        \E[B_sB_t] = \E[B_s]\E[B_t - B_s]+\E[B_s^2] = s.
+    \end{equation*}
+    So for any $s,t \geq 0$, $\E[B_sB_t] = s \wedge t$.
+\end{rmk}
+
+\begin{thm}[Finite-dimensional Distribution]
+    Let $(B_t)_{t \geq 0}$ be a standard Brownian motion. For any $0 = t_0 < t_1 < \cdots < t_n$,
+    \begin{equation*}
+        (B_{t_1},\cdots,B_{t_n}) \sim \mathcal{N}(\mu,\Sigma)
+    \end{equation*}
+    with 
+    \begin{equation*}
+        p(x_1,x_2,\cdots,x_n) = \frac{(2\pi)^{-\frac{n}{2}}}{\sqrt{t_1(t_2 - t_1)\cdots (t_n-t_{n-1})}}\exp\bc{-\sum_{i=1}^{n} \frac{(x_i-x_{i-1})^2}{2(t_i-t_{i-1})}},
+    \end{equation*}
+    where $x_0 = 0$.
+\end{thm}
+\begin{proof}
+    For any measurable $f$, let $X_i = B_{t_i} - B_{t_{i-1}} \sim \mathcal{N}(0,t_i - t_{i-1})$,
+    \begin{equation*}
+        \begin{aligned}
+            \E[f(B_{t_1},\cdots,f(B_{t_n}))] &= \E\bj{f\bc{B_{t_1}, B_{t_2} - B_{t_1}+B_{t_1},\cdots,\sum_{i=1}^nB_{t_i} - B_{t_{i-1}}}} \\
+            &= \E\bj{f\bc{X_1,X_1+X_2,\cdots,\sum_iX_i}} \\
+            &= \int f(y_1,y_1+y_2,\cdots)\prod_if_{X_i}(y_i) dy_1\cdots d y_n.
+        \end{aligned}
+    \end{equation*}
+    Let $x_1 = y_1$, $x_2 = y_1+y_2,~\cdots,$ and $x_n = \sum_i y_i$. Then 
+    \begin{equation*}
+        f_{X_i}(y_i) = f_{X_i}(x_i - x_{i-1}) = \frac{1}{\sqrt{2\pi(t_i - t_{i-1})}}\exp\bc{- \frac{(x_i-x_{i-1})^2}{2(t_i - t_{i-1})}},
+    \end{equation*}
+    which implies the desired property.
+\end{proof}
+
+\begin{thm}
+    Suppose $(B_t)_{t \geq 0}$ is a Brownian motion.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $(-B_t)_{t \geq 0}$ is also a Brownian motion.
+        \item For any $\lambda > 0$, the process
+        \begin{equation*}
+            B^\lambda_t = \frac{1}{\lambda}B_{\lambda^2t}
+        \end{equation*}
+        is also a Brownian motion.
+        \item For any $s > 0$,
+        \begin{equation*}
+            B^s_t = B_{t+s} - B_s
+        \end{equation*}
+        is also a Brownian motion and independent of $\mathcal{F}_s = \sigma(B_t : t\leq s)$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    $(1)$ is obvious. For $(2)$, because
+    \begin{equation*}
+        B_{\lambda^2t} - B_{\lambda^2s} \sim \mathcal{N}(0,\lambda^2(t-s)),
+    \end{equation*}
+    $B^\lambda_t - B^\lambda_s \sim \mathcal{N}(0,t-s)$. For $(3)$, it is obvious a Brownian motion. The independence is directly obtained by
+    \begin{equation*}
+        (B_{s+t_1}-B_s,B_{s+t_2}-B_s) = (B_{s+t_1} - B_s,B_{s+t_2} - B_{s+t_1} + B_{s+t_1} - B_s) 
+    \end{equation*}
+    independent of $B_{s}$.
+\end{proof}
+\begin{rmk}
+    A direct corollary for $(3)$ is, for any $t_0 < t_1 < \cdots < t_n$, the joint $(B_{t_1},\cdots,B_{t_n})$ is independent of $B_{t_0}$.
+\end{rmk}
+
+\noindent Given a Brownian motion $B=(B_t)_{t \geq 0}$, a filtration $\mathbb{F} = (\mathcal{F}_t)_{t \geq 0}$ is called a Brownian filtration if it is a filtration and $B_t$ is $\mathcal{F}_t$-adapted and $B_t - B_s$ is $\mathcal{F}_s$-independent. It is not hard to see $B$ is a $\mathbb{F}$-martingale.
+
+
+\section{Properties of Path}
+
+\begin{thm}[0-1 Law]
+    Let $(B_t)_{t \geq 0}$ be a standard Brownian motion with the nature filtration $\mathcal{F}_t = \sigma(B_s: s \leq t)$. Define
+    \begin{equation*}
+        \mathcal{F}_{0+}= \bigcap_{t > 0} \mathcal{F}_t.
+    \end{equation*}
+    Then for any $A \in \mathcal{F}_{0+}$, either $\Pb(A) = 0$ or $\Pb(A) = 1$.
+\end{thm}
+\begin{proof}
+    First, for any $0 < t_1 < \cdots < t_n$ and any bounded continuous function $f \colon \R^n \sto \R$, we will show that $\mathbb{I}_A$ is independent with $f(B_{t_1},\cdots,B_{t_n})$. By the continuity of path and the continuity of $f$,
+    \begin{equation*}
+        \E[\mathbb{I}_Af(B_{t_1},\cdots,B_{t_n})] = \lim_{\epsilon \sto 0 }\E[\mathbb{I}_Af(B_{t_1}-B_{\epsilon},\cdots,B_{t_n}-B_{\varepsilon})].
+    \end{equation*}
+    For $0 < \varepsilon < t_1$, $B_{t_1}-B_{\epsilon},\cdots,B_{t_n}-B_{\varepsilon}$ are independent with $B_s$ for all $s \leq \varepsilon$, which means they are independent with $\mathcal{F}_\varepsilon$. Because $A \in \mathcal{F}_\varepsilon$, $f(B_{t_1}-B_{\epsilon},\cdots,B_{t_n}-B_{\varepsilon})$ is independent with $\mathbb{I}_A$. So
+    \begin{equation*}
+        \begin{aligned}
+            \E[\mathbb{I}_Af(B_{t_1},\cdots,B_{t_n})] &= \lim_{\epsilon \sto 0 } \E[\mathbb{I}_A]\E[f(B_{t_1}-B_{\epsilon},\cdots,B_{t_n}-B_{\varepsilon})]\\
+            &=  \E[\mathbb{I}_A]\E[f(B_{t_1},\cdots,B_{t_n})]
+        \end{aligned}
+    \end{equation*}
+    So $\mathbb{I}_A$ is independent of $\sigma(B_s: s > 0) = \sigma(B_s : s \geq 0)$ because $B_0 = \lim_{t \sto 0} B_t$, which implies that $A$ is independent of itself.
+\end{proof}
+\begin{rmk}
+    In general, if
+    \begin{equation*}
+        Y = \limsup_n X_{n} = \inf _{n \geq 1} \sup _{k \geq n} X_k
+    \end{equation*}
+    then $Y$ is $\sigma(X_n: n\in \N)$-measurable, because
+    \begin{equation*}
+        \{Y>a\}=\left\{\inf _n \sup _{k \geq n} X_k>a\right\}=\bigcap_{n=1}^{\infty}\left\{\sup _{k \geq n} X_k>a\right\}=\bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty}\left\{X_k>a\right\} .
+    \end{equation*}
+\end{rmk}
+
+\begin{thm}
+    Let $(B_t)_{t \geq 0}$ be a standard Brownian motion.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item We have almost surely for every $\varepsilon > 0$
+        \begin{equation*}
+            \sup_{0 \leq s \leq \varepsilon} B_s > 0,\quad \inf_{0 \leq s \leq \varepsilon} B_s < 0.
+        \end{equation*}
+
+        \item For every $a \in \R$, let
+        \begin{equation*}
+            T_a = \inf \bb{t \geq 0 \colon B_t = a}.
+        \end{equation*}
+        Then $\Pb(T_a < \infty) = 1$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $\varepsilon_p$ be a sequence of positive numbers decreasing to $0$. Let
+        \begin{equation*}
+            A = \bigcap_{p > 0}\bb{\sup_{0 \leq \varepsilon \leq \varepsilon_p} B_\varepsilon > 0}.
+        \end{equation*}
+        Note for any $p_0 > 0$,
+        \begin{equation*}
+            A = \bigcap_{p \geq p_0}\bb{\sup_{0 \leq \varepsilon \leq \varepsilon_p} B_\varepsilon > 0}.
+        \end{equation*}
+        So $A \in \mathcal{F}_{\varepsilon_{p_0}}$ because $\varepsilon_p$ is decreasing in $p$, which follows that
+        \begin{equation*}
+            A \in \bigcap_{p_0}\mathcal{F}_{\varepsilon_{p_0}} = \mathcal{F}_{0^+}.
+        \end{equation*}
+        On the other hand,
+        \begin{equation*}
+            \Pb(A) = \lim_{p \sto \infty} \Pb\bc{\sup_{0 \leq \varepsilon \leq \varepsilon_p} B_\varepsilon > 0}.
+        \end{equation*}
+        Moreover, for any $p$,
+        \begin{equation*}
+            \Pb\bc{\sup_{0 \leq \varepsilon \leq \varepsilon_p} B_\varepsilon > 0} \geq \Pb(B_{\varepsilon_p} > 0) = \frac{1}{2}
+        \end{equation*}
+        So $\Pb(A) \geq \frac{1}{2}$. By 0-1 Law,
+        \begin{equation*}
+            \Pb(A) = 1~\Rightarrow~ \Pb\bc{\sup_{0 \leq \varepsilon \leq \varepsilon_p} B_\varepsilon > 0} = 1.
+        \end{equation*}
+        For the other one, it is because of $(-B_t)$ also a Brownian motion.
+
+        \item First,
+        \begin{equation*}
+            \bb{T_a < \infty} = \bigcup_{t=0}^\infty \bb{B_t = a}.
+        \end{equation*}
+        It follows that we only need
+        \begin{equation*}
+            \Pb\bc{\bigcup_{t=0}^\infty \bb{B_t = a}} = 1.
+        \end{equation*}
+        
+        \noindent \textbf{Claim:} For any $M > 0$,
+        \begin{equation*}
+            \Pb(\sup_s B_s > M) = 1,\quad \Pb(\inf_s B_s < -M) = 1.
+        \end{equation*}
+        By $(1)$, we have
+        \begin{equation*}
+            1 = \Pb(\sup_{0 \leq s \leq 1} B_s > 0) = \lim_{\delta \sto 0} \Pb(\sup_{0 \leq s \leq 1} B_s > \delta).
+        \end{equation*}
+        For the right hand side
+        \begin{equation*}
+            \Pb(\sup_{0 \leq s \leq 1} B_s > \delta) = \Pb\bc{\sup_{0 \leq s \leq 1} \frac{1}{\delta} B_s > 1}.
+        \end{equation*}
+        Because $\frac{1}{\delta} B_s \stackrel{d}{=} B_{\frac{1}{\delta^2}s}$,
+        \begin{equation*}
+            \Pb(\sup_{0 \leq s \leq 1} B_s > \delta) = \Pb\bc{\sup_{0 \leq s \leq 1} B_{\frac{1}{\delta^2}s} > 1} = \Pb\bc{\sup_{0 \leq u \leq {1}/{\delta^2}} B_{u} > 1}.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \lim_{\delta \sto 0} \Pb\bc{\sup_{0 \leq u \leq {1}/{\delta^2}} B_{u} > 1} = \Pb\bc{\sup_s B_s > 1} = 1.
+        \end{equation*}
+        Then for any $M > 0$, 
+        \begin{equation*}
+            \Pb\bc{\sup_s B_s > M} = \Pb\bc{\sup_s \frac{1}{M}B_s > 1} = \Pb\bc{\sup_s B_{\frac{1}{M^2}s} > 1} =  \Pb\bc{\sup_s B_s > 1} = 1.
+        \end{equation*}
+        For the infimum, it is because $(-B_t)$ is also a Brownian motion.
+
+
+        \noindent Then if $a > 0$, there is an $M$ such that $a < M$. By the continuity of path and $B_0 = 0$,
+        \begin{equation*}
+            \bb{\sup_s B_s > M} \subset \bigcup_{t=0}^\infty \bb{B_t = a}
+        \end{equation*}
+        So $\Pb\bc{\cup_{t} \bb{B_t = a}} = 1$. Similarly, for $a \leq 0$, it can get by $\inf B_s$. \qedhere
+    \end{enumerate}
+\end{proof}
+\begin{cor}
+    For a standard Brownian motion $(B_t)_{t \geq 0}$,
+    \begin{equation*}
+        \limsup_{t \sto \infty} B_t = \infty,\quad \liminf_{t \sto \infty} B_t = -\infty.
+    \end{equation*}
+\end{cor}
+
+\begin{prop}
+    Let $0 = t^n_0 < t^n_1 < \cdots < t^n_{p_n} = t$ be a sequence of partition of $[0,t]$ such that $\max_i (t^n_i - t^n_{i-1}) \sto 0$ as $n\sto \infty$. Then
+    \begin{equation*}
+        \lim_{n \sto \infty} \sum_{i=1}^{p_n} \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 = t
+    \end{equation*}
+    in $L^2(\Omega)$.
+\end{prop}
+\begin{proof}
+    To show $L^2$ convergence, we need 
+    \begin{equation*}
+        \begin{aligned}
+            \lim_{n \sto \infty} \E\bj{\bc{\sum_{i=1}^{p_n} \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 -t}^2} = 0.
+        \end{aligned}
+    \end{equation*}
+    Let $t = \sum_i t_i^n - t^n_{i-1}$. Then
+    \begin{align*}
+        &\quad\E\bj{\bc{\sum_{i=1}^{p_n} \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 -t}^2} = \E\bj{\bc{\sum_{i=1}^{p_n}\bc{ \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 - (t_i^n - t^n_{i-1})}}^2} \\
+        &= \E\bj{ \sum_{i,j}  \bc{ \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 - (t_i^n - t^n_{i-1})}\bc{ \bc{B_{t^n_j} - B_{t^n_{j-1}}}^2 - (t_j^n - t^n_{j-1})}} \\
+        &= \sum_{i\neq j}\E\bj{ \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 - (t_i^n - t^n_{i-1})}\E\bj{ \bc{B_{t^n_j} - B_{t^n_{j-1}}}^2 - (t_j^n - t^n_{j-1})} \\
+        &\quad + \sum_i \E\bj{\bc{ \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 - (t_i^n - t^n_{i-1})}^2} \\
+        &=  \sum_i \E\bj{\bc{ \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 - (t_i^n - t^n_{i-1})}^2} \\
+        &\leq 2\sum_i \bc{ \E\bj{\bc{B_{t^n_i} - B_{t^n_{i-1}}}^4} + (t_i^n - t^n_{i-1})^2 } \\
+        &= 2(c+1) \sum_i(t_i^n - t^n_{i-1})^2 \leq 2(c+1)t\max_i (t_i^n - t^n_{i-1}) \sto 0
+    \end{align*}
+    Note the $X \sim \mathcal{N}(0,\sigma^2)$, $\E[X^4] = c \sigma^4$. \qedhere
+\end{proof}
+\begin{cor}
+    For a.e. $t \mapsto B_t$ has infinite variation on any finite interval.
+\end{cor}
+\begin{proof}
+    Let $0 = t^n_0 < t^n_1 < \cdots < t^n_{p_n} = t$ be a sequence of partition of $[0,t]$.
+    \begin{equation*}
+        \sum_i \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 \leq \max_i \abs{B_{t^n_i} - B_{t^n_{i-1}}} \sum_i \abs{B_{t^n_i} - B_{t^n_{i-1}}}
+    \end{equation*}
+    By the continuity, $\max_i \abs{B_{t^n_i} - B_{t^n_{i-1}}} \sto 0$. If $\sum_i \abs{B_{t^n_i} - B_{t^n_{i-1}}} < \infty$,
+    \begin{equation*}
+        \sum_i \bc{B_{t^n_i} - B_{t^n_{i-1}}}^2 \sto 0,
+    \end{equation*}
+    which induces a contradiction.
+\end{proof}
+
+\begin{thm}
+    Given a Brownian motion $B=(B_t)_{t \geq 0}$, for a.e. $\omega \in \Omega$,
+    \begin{equation*}
+        \limsup _{t \downarrow 0} \frac{W_t(\omega)}{\sqrt{2 t \log \log (1 / t)}}=1,\quad \liminf _{t \downarrow 0} \frac{W_t(\omega)}{\sqrt{2 t \log \log (1 / t)}}=-1
+    \end{equation*}
+    and
+    \begin{equation*}
+        \limsup _{t \rightarrow \infty} \frac{W_t(\omega)}{\sqrt{2 t \log \log (1 / t)}}=1,\quad \liminf _{t \rightarrow \infty} \frac{W_t(\omega)}{\sqrt{2 t \log \log (1 / t)}}=-1.
+    \end{equation*}
+\end{thm}
+
+\section{Strong Markov Property}
+
+Given a standard Brownian motion $(B_t)_{t \geq 0}$, let $\mathcal{F}_t = \sigma(B_s \colon s \leq t)$ and $\mathcal{F}_\infty = \sigma(B_t \colon t \geq 0)$, i.e. $(\mathcal{F}_t)_{t \geq 0}$ is the natural filtration of $B_t$.
+
+\noindent First, for Markov property, we already know $B_{t+s} - B_s$ is independent with $B_s$, which directly implies the Markov property by the following lemma.
+\begin{lem}\label{lem1}
+    Let $X$ and $Y$ be two random variables on a probability space Let $(\Omega, \mathcal{F}, \mathbb{P})$ and $\mathcal{G}$ is a $\sigma$-subalgebra of $\mathcal{F}$. If $X$ is $\mathcal{G}$-measurable and $Y$ is independent with $\mathcal{G}$, then for any Borel measurable function $g \colon \mathbb{R}^2 \rightarrow \mathbb{R}$,
+    \begin{equation*}
+        \mathbb{E}[g(X,Y) \mid \mathcal{G}] = \mathbb{E}[g(X,Y) \mid \sigma(X)]
+    \end{equation*}
+\end{lem}
+\begin{rmk}
+    First, assume $g(x,y) =\mathbb{I}_A(x)\mathbb{I}_B(y)$ and it can clearly true so that it is also true for all simple function $g$. Then by applying the Monotone Class Theorem, it can prove that.
+\end{rmk}
+\noindent So
+\begin{align*}
+    \mathbb{E}\left[f\left(B_{t+s}\right) \mid \mathcal{F}_t\right] & =\mathbb{E}\left[f\left(B_t+\left(B_{t+s}-B_t\right)\right) \mid \mathcal{F}_t\right] \\
+    & =\mathbb{E}\left[f\left(B_t+\left(B_{t+s}-B_t\right)\right) \mid \sigma\left(B_t\right)\right] \\
+    & =\mathbb{E}\left[f\left(B_{t+s}\right) \mid \sigma\left(B_t\right)\right]
+\end{align*}
+
+
+\noindent For the strong Markov property, first, we need the stopping time.
+\begin{defn}[Stopping Time]
+    A random time $T \colon \Omega \sto [0,\infty]$ is a stopping time with respect to $(\mathcal{F}_t)_{t \geq 0}$ if for any $t$,
+    \begin{equation*}
+        \bb{T \leq t} \in \mathcal{F}_t.
+    \end{equation*}
+\end{defn}
+\begin{rmk}
+    Note that
+    \begin{equation*}
+        \bb{T < t} = \bigcup_{q \in \Q,q < t} \bb{T \leq q} \in \mathcal{F}_t.
+    \end{equation*}
+    so that $\bb{T \geq t} \in \mathcal{F}_t$.
+\end{rmk}
+
+\begin{exam}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For any $a \in \R$,
+        \begin{equation*}
+            T_a = \inf \bb{s \geq 0 \colon B_s = a}
+        \end{equation*}
+        is a stopping time because
+        \begin{equation*}
+            \bb{T \leq t} = \bb{ \inf_{0\leq s\leq t} \abs{B_s - a} = 0 } \in \mathcal{F}_t.
+        \end{equation*}
+
+        \item Let
+        \begin{equation*}
+            T = \sup \bb{s \leq 1 \colon B_s = 0}.
+        \end{equation*}
+        Then it is not a stopping time because it needs information in $[0,1]$.
+    \end{enumerate}
+\end{exam}
+
+\begin{defn}
+    Given a stopping time $T$,
+    \begin{equation*}
+        \mathcal{F}_T = \bb{A \in \mathcal{F}_\infty \colon A \cap \bb{T \leq t} \in \mathcal{F}_t,~\forall~t\geq 0},
+    \end{equation*}
+    which is a $\sigma$-field.
+\end{defn}
+\begin{rmk}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $T$ is $\mathcal{F}_T$-measurable, where the reasoning is as same as that of the discrete case.
+        \item For any $s \geq 0$, $B_s\mathbb{I}_{s \leq T}$ is $\mathcal{F}_T$-measurable.
+
+        \noindent For any $A \in \mathcal{R}$ and WTLG assuming $0 \notin A$ (otherwise considering $A^c$),
+        \begin{align*}
+            \bb{B_s\mathbb{I}_{s \leq T} \in A} \cap \bb{T \leq t} = 
+            \begin{cases}
+                \emptyset,&\quad t < s \\
+                \bb{B_s \in A} \cap \bb{s \leq T \leq t},&\quad s\leq T \leq t.
+            \end{cases}
+        \end{align*}
+        Because $s \leq t$, $\bb{B_s \in A} \in \mathcal{F}_t$. Furthermore, $\bb{T \geq s} \in \mathcal{F}_s \subset \mathcal{F}_t$, so $\bb{B_s\mathbb{I}_{s \leq T} \in A} \cap \bb{T \leq t} \in \mathcal{F}_t$.
+    \end{enumerate}
+\end{rmk}
+
+\noindent For a stopping time $T$, consider $\mathbb{I}_{T < \infty}B_T$, which is $\mathcal{F}_T$-measurable. Let $n \in \N$. If
+\begin{equation*}
+    \frac{k}{2^n} \leq T \leq \frac{k+1}{2^n},
+\end{equation*}
+then define $B^n_T = B_{k/2^n}$. By the continuity of path, $\lim_n B^n_T = B^T$. So
+\begin{align*}
+    \mathbb{I}_{\bb{T < \infty}}B_T &= \lim_{n\sto \infty} \sum_{i = 0}^\infty \mathbb{I}_{\bb{\frac{i}{2^n} \leq T \leq \frac{i+1}{2^n}}} B_{\frac{i}{2^n}} \\
+    &= \lim_{n\sto \infty} \sum_{i = 0}^\infty \mathbb{I}_{\bb{T \geq \frac{i}{2^n} }}\mathbb{I}_{\bb{T \leq \frac{i+1}{2^n}}} B_{\frac{i}{2^n}}. 
+\end{align*}
+Both $\mathbb{I}_{\bb{T \leq \frac{i+1}{2^n}}} B_{\frac{i}{2^n}}$ and $\mathbb{I}_{\bb{T \geq \frac{i}{2^n} }}$ are $\mathcal{F}_T$-measurable, which implies that $\mathbb{I}_{T < \infty}B_T$ is $\mathcal{F}_T$-measurable.
+
+\begin{thm}[Strong Markov Property]
+    Give a stopping time $T$. Assume $\Pb(T < \infty) > 0$. Set
+    \begin{equation*}
+        B^{(T)}_t = \mathbb{I}_{\bb{T< \infty}} (B_{T+t} - B_T),\quad t\geq 0.
+    \end{equation*}
+    Then under the probability $\Pb(\cdot \mid T < \infty)$, $(B^{(T)}_t)_{t \geq 0}$ is a Brownian motion and independent of $\mathcal{F}_T$.
+\end{thm}
+\begin{proof}
+    WTLG assume $\Pb(T < \infty) = 1$. For any $A \in \mathcal{F}_T$ and $0 \leq t_1 < t_2 < \cdots < t_p$ and any bounded continuous function $F \colon \R^p \sto \R$, it suffices to show that 
+    \begin{equation*}
+        \E\bj{\mathbb{I}_A F(B^{(T)}_{t_1},\cdots,B^{(T)}_{t_p})} = \Pb(A)\E\bj{F(B_{t_1},\cdots,B_{t_p})}.
+    \end{equation*}
+    Define $[t]_n = k / 2^n$ if $(k-1) / 2^n < t \leq k / 2^n$. Observe that
+    \begin{equation*}
+        F(B^{(T)}_{t_1},\cdots,B^{(T)}_{t_p}) = \lim_{n\sto\infty} F\bc{B^{([T]_n)}_{t_1},\cdots,B^{([T]_n)}_{t_p}}
+    \end{equation*}
+    by the continuity of $F$ and $B_t$.
+    \begin{align*}
+        &\quad\E\bj{\mathbb{I}_A F(B^{(T)}_{t_1},\cdots,B^{(T)}_{t_p})} = \lim_{n\sto \infty} \E\bj{\mathbb{I}_AF\bc{B^{([T]_n)}_{t_1},\cdots,B^{([T]_n)}_{t_p}}} \\
+        &= \lim_{n\sto \infty} \sum_{k=0}^\infty \E\bj{\mathbb{I}_A\mathbb{I}_{\bb{ \frac{k-1}{2^n}\leq T \leq \frac{k}{2^n} }} F\bc{ B^{(k/2^n)}_{t_1},\cdots,B^{(k/2^n)}_{t_p} }} \\
+        &= \lim_{n\sto \infty} \sum_{k=0}^\infty \E\bj{\mathbb{I}_A\mathbb{I}_{\bb{ \frac{k-1}{2^n}\leq T \leq \frac{k}{2^n} }} F\bc{B_{\frac{k}{2^n}+t_1} - B_{\frac{k}{2^n}},\cdots,B_{\frac{k}{2^n}+t_p}-B_{\frac{k}{2^n}} }}
+    \end{align*}
+    Because $T$ is a stopping time and $A \in \mathcal{F}_T$,
+    \begin{equation*}
+        A \cap \bb{ \frac{k-1}{2^n} \leq T \leq \frac{k}{2^n} } \in \mathcal{F}_{\frac{k}{2^n}}.
+    \end{equation*}
+    Because $B_{\frac{k}{2^n}+t_1} - B_{\frac{k}{2^n}},\cdots,B_{\frac{k}{2^n}+t_p}-B_{\frac{k}{2^n}}$ are independent of $\mathcal{F}_{\frac{k}{2^n}}$,
+    \begin{align*}
+        \E\bj{\mathbb{I}_A F(B^{(T)}_{t_1},\cdots,B^{(T)}_{t_p})} &= \lim_{n\sto \infty} \sum_{k=0}^\infty \E\bj{\mathbb{I}_A\mathbb{I}_{\bb{ \frac{k-1}{2^n}\leq T \leq \frac{k}{2^n} }}}\E\bj{F\bc{B_{\frac{k}{2^n}+t_1} - B_{\frac{k}{2^n}},\cdots,B_{\frac{k}{2^n}+t_p}-B_{\frac{k}{2^n}} }} \\
+        &= \lim_{n\sto \infty} \sum_{k=0}^\infty \E\bj{\mathbb{I}_A\mathbb{I}_{\bb{ \frac{k-1}{2^n}\leq T \leq \frac{k}{2^n} }}}\E\bj{F\bc{\tilde{B}_{t_1},\cdots, \tilde{B}_{t_p}}}\\
+        &= \Pb(A) \E\bj{F\bc{B_{t_1},\cdots, B_{t_p}}},
+    \end{align*}
+    where the final equality is because $ \tilde{B}_t= B_{\frac{k}{2^n}+t}-B_{\frac{k}{2^n}}$ is also a Brownian motion.
+\end{proof}
+\begin{rmk}
+    A direct corollary of this is
+    \begin{equation*}
+        \E[f(B_{T+s}) \mid \mathcal{F}_T] = \E[f(B_{T+s}) \mid X_T],
+    \end{equation*}
+    which is the strong Markov property.
+\end{rmk}
+
+\begin{thm}[Reflexive Principle]
+    For any $t > 0$, let 
+    \begin{equation*}
+        S_t = \sup_{0\leq s \leq t}B_s \geq 0.
+    \end{equation*}
+    If $a \geq 0$ and $b \leq a$, then
+    \begin{equation*}
+        \Pb(S_t \geq a, B_t \leq b) = \Pb(B_t \geq 2a - b).
+    \end{equation*}
+    In particular, $S_t$ has the same distribution as $\abs{B_t}$.
+\end{thm}
+\begin{proof}
+    Let $T_a = \inf\bb{t \geq 0\colon B_t = a}$. By the continuity of $B_t$, $\bb{S_t \geq a} = \bb{T_a \leq t}$. So
+    \begin{align*}
+        \Pb(S_t \geq a,~ B_t \leq b) &= \Pb(T_a \leq t,~B_{t - T_a + T_a} \leq b) \\
+        &= \Pb\bc{T_a \leq t,~B_{t - T_a + T_a} - B_{T_a} \leq b-a} \\
+        &= \Pb\bc{T_a \leq t,~B^{(T_a)}_{t-T_a} \leq b-a}.
+    \end{align*}
+    Let $B^\prime_t = B^{(T_a)}_{t-T_a}$ that is a Brownian motion independent of $T_a$ because $T_a$ is $\mathcal{F}_{T_a}$-measurable. So
+    \begin{align*}
+        \Pb\bc{T_a \leq t,~B^{(T_a)}_t \leq b-a} &= \Pb\bc{T_a \leq t}\Pb\bc{-B^\prime_t \geq a-b} \\
+        &= \Pb\bc{T_a \leq t}\Pb\bc{B^\prime_t \geq a-b} \\
+        &= \Pb(T_a \leq t,~B^\prime_t \geq a-b) \\
+        &= \Pb(T_a \leq t,~B_t - B_{T_a} \geq a-b) \\
+        &= \Pb(T_a \leq t,~B_t \geq 2a-b).
+    \end{align*}
+    But $\bb{T_a \leq t} \subset \bb{B_t \geq 2a-b}$ because of $B_t \geq 2a-b \geq a$ and the continuity of $B_t$. So
+    \begin{equation*}
+        \Pb(S_t \geq a,~ B_t \leq b) = \Pb(B_t \geq 2a-b).
+    \end{equation*}
+
+    \noindent For the other one,
+    \begin{align*}
+        \Pb(S_t \geq a) &= \Pb(S_t \geq a,~ B_t \geq a) + \Pb(S_t \geq a,~ B_t \leq a) \\
+        &=  \Pb(B_t \geq a) + \Pb(B_t \geq 2a-a) \\
+        &= 2\Pb(B_t \geq a) = \Pb(\abs{B_t} \geq a). \qedhere
+    \end{align*}
+\end{proof}
+\begin{cor}
+    $T_a$ has the same distribution as $\frac{a^2}{B_1^2}$ with the density function
+    \begin{equation*}
+        f(t) = \frac{a}{\sqrt{2\pi t}}e^{-\frac{a^2}{2t}}\mathbb{I}_{\bb{t > 0}}
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    Because $\bb{S_t \geq a} = \bb{T_a \leq t}$,
+    \begin{equation*}
+        \Pb\bc{T_a \leq t} = \Pb\bc{S_t \geq a} = \Pb(\abs{B_t} \geq a). \qedhere
+    \end{equation*}
+\end{proof}
+
+\section{High-dimensional Brownian Motion}
+
+\begin{defn}
+    A $d$-dimensional stochastic process $(\bd{B}_t = (B^1_t,\cdots,B^d_t))_{t \geq 0}$ is called a $d$-dimensional Brownian motion if for each $i$, $(B^i_t)_{t \geq 0}$ is a Brownian motion and $(B^i_t)_{t \geq 0}$ ($i=1,\cdots,d$) are independent of each other.
+\end{defn}
+\begin{rmk}
+    A $d$-dimensional Brownian motion is a martingale with
+    \begin{equation*}
+        \inn{B^i,B^j}_t = \delta_{ij} t.
+    \end{equation*}
+\end{rmk}
+
+\begin{thm}[L\'evy Theorem]
+    Let $\bd{M} = (M^1,\cdots,M^d)$ be $d$-dimensional continuous local martingale with respect to $\mathbb{F}=(\mathcal{F}_t)_{t\geq 0}$ and $M_0 = 0$. If 
+    \begin{equation*}
+        \inn{M^i,M^j} = \delta_{ij}t,
+    \end{equation*}
+    then $\bd{M}$ is a $d$-dimensional Brownian motion.
+\end{thm}
+
+\begin{thm}
+    Let $M$ be a continuous local martingale w.s.t. $\mathbb{F}=(\mathcal{F}_t)_{t\geq 0}$ with $M_0 = 0$ and
+    \begin{equation*}
+        \lim_{t \sto \infty} \inn{M}_t = \infty.
+    \end{equation*}
+    For each $t \geq 0 $, define the stopping time
+    \begin{equation*}
+        \tau_t \defeq \inf\bb{s \colon \inn{M}_s > t}.
+    \end{equation*}
+    Then $(M_{\tau_t})_{t \geq 0}$ is a Brownian motion.
+\end{thm}
+
+\begin{rmk}
+    Let $\bd{B}$ be a $d$-dimensional Brownian motion.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $d = 1$, we have seen $B_t = 0$ for infinitely many $t$.
+        \item If $d = 2$, $\bd{B}_t \neq 0$ for $t \neq 0$ but it hits every ball centered at $0$.
+        \item If $d \geq 3$, $\norm{\bd{B}_t(\omega)} \sto \infty$ as $t \sto \infty$.
+    \end{enumerate}
+\end{rmk}

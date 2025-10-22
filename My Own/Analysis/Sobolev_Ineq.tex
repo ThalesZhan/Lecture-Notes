@@ -1,0 +1,842 @@
+\chapter{Sobolev Inequalities in \texorpdfstring{$\R^n$}{Rn}} 
+Let $\R^n$ with the Lebesgue measure $\mu_n$.
+
+\section{Sobolev Inequalities}
+
+For $f \in C_c^\infty$, we have
+\begin{equation*}
+	|f(x)| \leq \frac{1}{2} \int_{-\infty}^{+\infty}\left|f^{\prime}(x)\right| dx
+\end{equation*}
+So the main idea is to control $f \in C_c^\infty(\R^n)$ by its gradient $\nabla f$, that is we want
+\begin{equation*}
+	\norm{f}_q \leq C\norm{\nabla f}_p
+\end{equation*}
+for some $C> 0$. But if replacing $f$ by $f(t\cdot)$, this will imply
+\begin{equation*}
+	t^{-n / q}\|f\|_q \leq C t^{1-n / p}\|\nabla f\|_p
+\end{equation*}
+As $t \sto 0$ and $t \sto \infty$, only if
+\begin{equation*}
+	\frac{1}{q}=\frac{1}{p}-\frac{1}{n} ~\Rightarrow~ q=\frac{n p}{n-p}
+\end{equation*}
+
+\begin{thm}\label{thm:sobovineq}
+	Fix an integer $n \geq 2$ and $1 \leq p < n$ and set $q = \frac{np}{n-p}$. Then there is a constant $C=C(n,p)$ such that
+	\begin{equation*}
+		\forall~f \in C_c^\infty(\R^n),\quad \|f\|_q \leq C\|\nabla f\|_{p}
+	\end{equation*}
+\end{thm}
+
+\begin{proof}[Proof \RNum{1}]
+	Set
+	\begin{equation*}
+		F_i(x)=\int_{-\infty}^{+\infty}\left|\partial_i f\left(x_1, \ldots, x_{i-1}, t, x_{i+1}, \ldots, x_n\right)\right| d t,
+	\end{equation*}
+	which only dependents on $n-1$ variables. And
+	\begin{equation*}
+		F_{i, m}(x)=
+			\left\{\begin{array}{cl}
+				\int_{-\infty}^{+\infty} \cdots \int_{-\infty}^{+\infty}\left|\partial_i f(x)\right| d x_1 \ldots d x_m & \text { if } i \leq m \\
+				\int_{-\infty}^{+\infty} \cdots \int_{-\infty}^{+\infty} F_i(x) d x_1 \ldots d x_m & \text { if } i>m
+			\end{array}\right.,
+	\end{equation*}
+	which only dependents on $n-m$ variables or $n-m-1$ variables, and in particular, for $m=n$,
+	\begin{equation*}
+		F_{i,n}(x) = \int_{\R^n} \abs{\partial_if(y)}dy
+	\end{equation*}
+	By the $\R$ case, we have
+	\begin{equation*}
+		|f(x)| \leq \frac{1}{2} \int_{-\infty}^{+\infty}\left|\partial_i f\left(x_1, \ldots, x_{i-1}, t, x_{i+1}, \ldots, x_n\right)\right| d t
+	\end{equation*}
+	for any $i = 1,2,\cdots,n$. Then we have
+	\begin{equation*}
+		|f| \leq \frac{1}{2}\left(F_1 \ldots F_n\right)^{\frac{1}{n}} ~\Rightarrow~ |f|^{\frac{n}{n-1}} \leq \bc{\frac{1}{2}}^{\frac{n}{n-1}}\left(F_1 \ldots F_n\right)^{\frac{1}{n-1}}
+	\end{equation*}
+	By H\"older's Inequality, 
+	\begin{equation*}
+		\left|\int f_1 f_2 \ldots f_k d \mu\right| \leq\left\|f_1\right\|_{p_1}\left\|f_2\right\|_{p_2} \ldots\left\|f_k\right\|_{p_k}
+	\end{equation*}
+	for $f_i \in L^{p_i}$, $1 \leq p_i \leq \infty$ with $1/p_1 + \cdots +1 / p_k =1$. Then by setting $k = n-1, p_1= \cdots = p_k = n-1$, we have
+	\begin{equation*}
+		\int \cdots \int|f(x)|^{\frac{n}{n-1}} d x_1 \ldots d x_m \leq\bc{\frac{1}{2}}^{\frac{n}{n-1}}\left(F_{1, m}(x) \ldots F_{n, m}(x)\right)^{\frac{1}{n-1}}
+	\end{equation*}
+	For $m = n$,
+	\begin{equation*}
+		\norm{f}_{\frac{n}{n-1}} \leq \frac{1}{2}\bc{\prod_{i=1}^n \norm{\partial_if}_1}^{\frac{1}{n}}
+	\end{equation*}
+	As $\left(\prod_1^n a_i\right)^{1 / n} \leq \frac{1}{n} \sum_1^n a_i$,
+	\begin{equation*}
+		\norm{f}_{\frac{n}{n-1}} \leq \frac{1}{2 n} \sum_1^n\left\|\partial_i f(x)\right\|_1 d x \leq \frac{1}{2 \sqrt{n}}\|\nabla f\|_1
+	\end{equation*}
+	Then we have proved the case of $p=1$ and $q = \frac{n}{n-1}$.
+
+	\noindent Next, fix $p > 1$. For any $\alpha > 1$ and $f \in C_c^\infty(\R^n)$, $\abs{f}^\alpha$ is $C^1$ with compact support and satisfies
+	\begin{equation*}
+		\left.\left.|\nabla| f\right|^\alpha|=\alpha| f\right|^{\alpha-1}|\nabla f|
+	\end{equation*}
+	Because $C_c^\infty$ is dense in $C^1$, there is a sequence $\bb{f_k}_{k \in \N}$ in $C_c^\infty$ such that $f_k \sto \abs{f}^\alpha$ and $\nabla f_k \sto \nabla \abs{f}^\alpha$. Therefore, it can replace $f$ in $\|f\|_{n /(n-1)} \leq C\|\nabla f\|_{1}$ by $\norm{f}^\alpha$, we have
+	\begin{equation*}
+		\begin{aligned}
+			\|f\|_{\frac{\alpha n}{n-1}}^\alpha & \leq C \alpha \int|f(x)|^{\alpha-1}|\nabla f(x)| d x \\
+			& \leq C \alpha\left(\int|f(x)|^{(\alpha-1) p^{\prime}} d x\right)^{1 / p^{\prime}}\left(\int|\nabla f(x)|^p d x\right)^{1 / p}
+		\end{aligned}
+	\end{equation*}
+	where $p^\prime$ is the conjugate of $p$. If we pick
+	\begin{equation*}
+		\alpha = \frac{(n-1)p}{n-p}~\Rightarrow~ (\alpha-1)q = \frac{np}{n-p}
+	\end{equation*}
+	then
+	\begin{equation*}
+		\|f\|_{n p /(n-p)}^{(n-1) p /(n-p)} \leq C \frac{(n-1) p}{n-p}\|f\|_{n p /(n-p)}^{n(p-1) /(n-p)}\|\nabla f\|_p .
+	\end{equation*}
+	and by $(n-1) p /(n-p)-n(p-1) /(n-p)=1$,
+	\begin{equation*}
+		\|f\|_{n p /(n-p)} \leq C \frac{(n-1) p}{n-p}\|\nabla f\|_p
+	\end{equation*}
+\end{proof}
+
+\section{Riesz Potential}
+
+\begin{prop}\label{prop:rieszineq}
+	For any $f \in C_c^{\infty}(\R^n)$,
+	\begin{equation*}
+		|f(x)| \leq \frac{1}{\omega_{n-1}} \int_{\mathbb{R}^n} \frac{|\nabla f(y)|}{|y-x|^{n-1}} d y
+	\end{equation*}
+	where $\omega_{n-1}$ is the $(n-1)$-dimensional volume of the unit sphere $\mathbb{S}^{n-1} \subset \R^n$ ($\omega_{n-1}=n \Omega_n=2 \pi^{n / 2} / \Gamma(n / 2)$).
+\end{prop}
+\begin{proof}
+	Using the polar coordinate $(r,\theta)$ with $r> 0$ and $\theta \in \mathbb{S}^{n-1}$, we have
+	\begin{equation*}
+		f(x)=-\int_0^{\infty} \partial_r f(x+r \theta) d r
+	\end{equation*}
+	Then integrating along $\mathbb{S}^{n-1}$,
+	\begin{equation*}
+		\begin{aligned}
+			f(x) & =-\frac{1}{\omega_{n-1}} \int_{\mathrm{S}^{n-1}} \int_0^{\infty} \partial_r f(x+r \theta) d r d \theta \\
+			& =-\frac{1}{\omega_{n-1}} \int_{\mathrm{S}^{n-1}} \int_0^{\infty} \frac{\partial_r f(x+r \theta)}{r^{n-1}} r^{n-1} d r d \theta
+		\end{aligned}
+	\end{equation*}
+	By setting $y = x + r\theta$, we have $r = \abs{y-x}$ and
+	\begin{equation*}
+		d y=r^{n-1} d r d \theta,\quad \partial_r f(x+r \theta)=|y-x|^{-1} \sum_{i=1}^n\left(y_i-x_i\right) \partial_i f(y)
+	\end{equation*}
+	Therefore
+	\begin{equation*}
+		f(x)=\frac{1}{\omega_{n-1}} \int_{\mathbb{R}^n} \frac{\langle x-y, \nabla f(y)\rangle}{|y-x|^n} d y
+	\end{equation*}
+	In particular,
+	\begin{equation*}
+		|f(x)| \leq \frac{1}{\omega_{n-1}} \int_{\mathbb{R}^n} \frac{|\nabla f(y)|}{|y-x|^{n-1}} d y
+	\end{equation*}
+\end{proof}
+
+\noindent For $0 < \alpha < N$, define the Riesz potential operator (Riesz kernel)
+\begin{equation*}
+	(I_\alpha f)(x) = \frac{1}{c_\alpha}\int_{\R^n}\frac{f(y)}{\abs{y-x}^\alpha}dy
+\end{equation*}
+where
+\begin{equation*}
+	c_\alpha = 2^{\alpha-\frac{n}{2}} \Gamma(\frac{\alpha}{2})\Gamma(\frac{n-\alpha}{2})
+\end{equation*}
+\begin{rmk}
+	For the Laplace operator $\Delta = -\sum_i \partial_i f$ and $\beta \in \R$,
+	\begin{equation*}
+		\Delta^{\frac{\beta}{2}} f \defeq \mathcal{F}^{-1}\bc{\abs{\cdot}^\beta\widehat{f}}
+	\end{equation*}
+	Then by Proposition \ref{prop:fouriesz}, we have known
+	\begin{equation*}
+		I_\alpha f = \Delta^{-\frac{\alpha}{2}} f
+	\end{equation*}
+\end{rmk}
+For $0 < \alpha < n$, by setting $a = n-\alpha$ in Hardy-Littlewood-Sobolev's Inequality (Theorem \ref{thm:hlsineq}), then for any $1 < p < \infty$ and $q = \frac{np}{n-\alpha p}$ ,
+\begin{equation*}
+	\left\|I_\alpha f\right\|_q \leq C\|f\|_p
+\end{equation*}
+Therefore, when $p > 1$ and $q = \frac{np}{n-p}$, by
+\begin{equation*}
+	(I_1\nabla f)(x) =  \frac{1}{\omega_{n-1}} \int_{\mathbb{R}^n} \frac{\nabla f(y)}{|y-x|^{n-1}} d y
+\end{equation*}
+we have
+\begin{equation*}
+	\norm{f}_q \leq C_0\norm{I_1\nabla f}_q \leq C\norm{\nabla f}_p
+\end{equation*}
+for some $C > 0$.
+\begin{rmk}
+	$a > 0$ implies $n \geq \alpha$. In Sobolev Inequality, $\alpha = 1$ implies $n \geq 2$.
+\end{rmk}
+
+\section{Different Cases in \texorpdfstring{$p$}{p}}
+
+\begin{enumerate}[label=\Roman*.]
+	\item The case $p = 1$: Isoperimetry.
+
+	\noindent Let $\mathbb{B}_n(r)$ and $\mathbb{S}^{n-1}(r)$ be the ball and the sphere of radius $r$ centered at $0$ in $\R^n$. Let $\Omega_n = \mu_n(\mathbb{B}_n(1))$ and $\omega_{n-1} = \mathbb{S}^{n-1}(1) = n\Omega_n$. Let $\Omega$ be a bounded domain in $\R^n$ having a smooth boundary of given finite $(n-1)$-dimensional measure, that is
+	\begin{equation*}
+		\mu_{n-1}(\partial \Omega)=\mu_{n-1}\left(\mathbb{S}^{n-1}(r)\right)=\omega_{n-1} r^{n-1}
+	\end{equation*}
+	where $r$ is chosen such that above equality is satisfied. Then
+	\begin{equation*}
+		\mu_n(\Omega) \leq \mu_n\left(\mathbb{B}^n(r)\right)=\Omega_n r^n
+	\end{equation*}
+	which is called the isoperimetric inequality, that is
+	\begin{equation*}
+		\left[\mu_n(\Omega)\right]^{(n-1) / n} \leq C_n \mu_{n-1}(\partial \Omega)
+	\end{equation*}
+	for
+	\begin{equation*}
+		C_n=\frac{\Omega_n^{1-1 / n}}{\omega_{n-1}}=\frac{[\Gamma((n-1) / 2)]^{1 / n}}{\sqrt{\pi} n}
+	\end{equation*}
+	The isoperimetric inequality is equivalent to Sobolev's Inequality of the case $p=1$, that is
+	\begin{equation*}
+		\|f\|_{n /(n-1)} \leq C_n\|\nabla f\|_1
+	\end{equation*}
+
+	\begin{thm}[Co-area Formula]\label{thm:coarea}
+		For any $f \in C_c^\infty(\R^n)$ and $g \in \mathbb{\R^n}$,
+		\begin{equation*}
+			\int g|\nabla f| d \mu_n=\int_{-\infty}^{+\infty}\left(\int_{f(x)=t} g(x) d \mu_{n-1}(x)\right) d t
+		\end{equation*}
+	\end{thm}
+
+	\noindent First, Sobolev's Inequality implies the isoperimetric inequality is by choosing a sequence of $f_n \in C_c^\infty$ such that $f_n \sto \chi_\Omega$. Then clearly, we have
+	\begin{equation*}
+		\left\|f_n\right\|_{n /(n-1)} \rightarrow \mu_n(\Omega)^{(n-1) / n}
+	\end{equation*}
+	Moreover, in the co-area formula, by setting $g(x) = 1$ and $f(x) = f_n(x)$,
+	\begin{equation*}
+		\int_{\mathbb{R}^n}\left|\nabla f_n\right| d x=\int_{-\infty}^{\infty} \mu_{n-1}\left(\left\{x \in \mathbb{R}^n: f_n(x)=t\right\}\right) d t
+	\end{equation*}
+	Then $\left\|\nabla f_n\right\|_1 \rightarrow \mu_{n-1}(\partial \Omega)$. Therefore, by taking limits in Sobolev's Inequality of $f_n$, we have
+	\begin{equation*}
+		\left[\mu_n(\Omega)\right]^{(n-1) / n} \leq C_n \mu_{n-1}(\partial \Omega)
+	\end{equation*}
+	Conversely, for $f \in C_c^\infty(\Omega)$ with $f \geq 0$,
+	\begin{equation*}
+		\begin{aligned}
+			\int|f(x)|^{n /(n-1)} d x & \leq \int_0^{\infty} \mu_n(\{f>t\})^{(n-1) / n} d t \\
+			& \leq C_n \int_0^{\infty} \mu_{n-1}(\{f=t\}) d t \\
+			& =C_n \int|\nabla f| d \mu_n=\|\nabla f\|_1
+		\end{aligned}
+	\end{equation*}
+	where the first inequality is because
+	\begin{equation*}
+		\begin{aligned}
+			\left\|\int_0^{\infty} 1_{\{f(\cdot)>t\}}(t) d t\right\|_{n /(n-1)} & \leq \int_0^{\infty}\left\|1_{\{f(\cdot)>t\}}\right\|_{n /(n-1)} d t \\
+			& =\int_0^{\infty} \mu_n(\{z: f(z)>t\})^{(n-1) / n} d t .
+		\end{aligned}
+	\end{equation*}
+	and by $f(x)=\int_0^{\infty} \chi_{\{f(x)>t\}}(t) d t$.
+
+	\item The case $1 \leq p < n$:
+
+	\begin{thm}
+		For $1 \leq p < n$, the Sobolev Inequality
+		\begin{equation*}
+			\forall~f \in C_c^\infty(\R^n),\quad \|f\|_{n/(n-p)} \leq C\|\nabla f\|_p
+		\end{equation*}
+		holds with $C = C(n,p)$, where
+		\begin{equation*}
+			C(n, p)=\frac{p-1}{n-p}\left(\frac{n-p}{n(p-1)}\right)^{1 / q}\left(\frac{\Gamma(n+1)}{\Gamma(n / p) \Gamma(n+1-n / p) \omega_{n-1}}\right)^{1 / n}
+		\end{equation*}
+		for $1 < p < \infty$ and 
+		\begin{equation*}
+			C(n, 1)=\frac{1}{n}\left(\frac{n}{\omega_{n-1}}\right)^{1 / n}
+		\end{equation*}
+	\end{thm}
+
+	\item The case $p > n$:
+	\begin{thm}
+		For $p > n$, there is a $C = C(n,p)$ such that for any $\Omega$ of $\mu_n(\Omega) < \infty$, we have
+		\begin{equation*}
+			\forall~f \in C_c^\infty(\Omega),\quad \|f\|_{\infty} \leq C \mu_n(\Omega)^{1 / n-1 / p}\|\nabla f\|_p
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		By above, we already have
+		\begin{equation*}
+			|f(x)| \leq \frac{1}{\omega_{n-1}} \int_{\mathbb{R}^n} \frac{|\nabla f(y)|}{|x-y|^{n-1}} d y
+		\end{equation*}
+		Let $p^\prime$ be the conjugate of $p$. Note that $(n-1)\left(p^{\prime}-1\right)=(n-1) /(p-1)<1$. Let $R=\left(\mu_n(\Omega) / \Omega_n\right)^{1 / n}$ and so $\mu_n(\Omega)=\mu_n(\mathbb{B}(R))$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\int_{\Omega} \frac{1}{|x-y| p^{p^{\prime}(n-1)}} d y & \leq \int_{\mathrm{B}(R)} \frac{1}{|x-y|^{p^{\prime}(n-1)}} d y \\
+				& \leq \omega_{n-1} \int_0^R r^{(1-n) p^{\prime}+n-1} d r \\
+				& =\omega_{n-1}\left(1-(n-1)\left(p^{\prime}-1\right)\right)^{-1} R^{1-(n-1)\left(p^{\prime}-1\right)} \\
+				& =\omega_{n-1}\left(1-(n-1)\left(p^{\prime}-1\right)\right)^{-1} R^{(p-n) /(p-1)} \\
+				& =\frac{\omega_{n-1} \mu_n(\Omega)^{(p-n) / n(p-1)}}{\Omega_n^{(p-n) / n(p-1)}\left(1-(n-1)\left(p^{\prime}-1\right)\right)} \\
+				& =B \mu_n(\Omega)^{(p-n) / n(p-1)}
+			\end{aligned}
+		\end{equation*}
+		So by H\"older's Inequality,
+		\begin{equation*}
+			\begin{aligned}
+				\|f\|_{\infty} & \leq\left(\frac{1}{\omega_{n-1}} \int_{\Omega} \frac{1}{|x-y|^{p^{\prime}(n-1)}} d y\right)^{1 / p^{\prime}}\|\nabla f\|_p \\
+				& \leq C \mu_n(\Omega)^{1 / n-1 / p}\|\nabla f\|_p .
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\begin{thm}\label{thm:sob_p_larg_n}
+		For $p > n$, there is a $C = C(n,p)$ such that for any $f \in C^\infty(\R^n)$ with $\norm{f}_p < \infty$,
+		\begin{equation*}
+			\sup _{\substack{x, y \in \mathbb{R}^n \\ x \neq y}}\left\{\frac{|f(x)-f(y)|}{|x-y|^\alpha}\right\} \leq C\|\nabla f\|_p
+		\end{equation*}
+		with $\alpha = 1 - n/p$
+	\end{thm}
+
+	\begin{lem}
+		Let $B$ be a ball of radius $r > 0$. Then
+		\begin{equation*}
+			\forall f \in C^{\infty}(B), \quad \forall x \in B, \quad\left|f(x)-f_B\right| \leq \frac{2^n}{\omega_{n-1}} \int_B \frac{|\nabla f(y)|}{|x-y|^{n-1}} d y
+		\end{equation*}
+		where
+		\begin{equation*}
+			f_B=\frac{1}{\mu_n(B)} \int_B f(x) d x
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		For any $x,y \in B$,
+		\begin{equation*}
+			f(x)-f(y)=-\int_0^{|x-y|} \partial_\rho f\left(x+\rho \frac{y-x}{|y-x|}\right) d \rho
+		\end{equation*}
+		So we have
+		\begin{equation*}
+			|f(x)-f(y)| \leq \int_0^{\infty} F\left(x+\rho \frac{y-x}{|y-x|}\right) d \rho
+		\end{equation*}
+		where
+		\begin{equation*}
+			F(z)=\left\{\begin{array}{cl}
+					|\nabla f(z)| & \text { if } x \in B \\
+					0 & \text { otherwise }
+				\end{array}\right.
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\begin{aligned}
+				\left|f(x)-f_B\right| & =\left|f(x)-\frac{1}{\mu_n(B)} \int_B f(y) d y\right| \\
+				& \leq \frac{1}{\mu_n(B)} \int_B |f(x)-f(y)| d y \\
+				& \leq \frac{1}{\Omega_n r^n} \int_B d y\left\{\int_0^{\infty} F\left(x+\rho \frac{y-x}{|y-x|}\right) d \rho\right\} \\
+				& \leq \frac{1}{\Omega_n r^n} \int_{\{y:|x-y| \leq 2 r\}} d y\left\{\int_0^{\infty} F\left(x+\rho \frac{y-x}{|y-x|}\right) d \rho\right\} \\
+				& =\frac{1}{\Omega_n r^n} \int_0^{\infty} \int_{\mathbb{S}^{n-1}} \int_0^{2 r} F(x+\rho \theta) s^{n-1} d s d \theta d \rho \\
+				& =\frac{2^n}{n \Omega_n} \int_0^{\infty} \int_{S^{n-1}} F(x+r \theta) d \theta d r \\
+				& =\frac{2^n}{\omega_{n-1}} \int_B \frac{|\nabla f(y)|}{|y-x|^{n-1}} d y .
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\begin{proof}[Proof of Theorem \ref{thm:sob_p_larg_n}]
+		By above lemma and H\"older's Inequality,
+		\begin{equation*}
+			\left|f(x)-f_B\right| \leq C \mu_n(B)^{1 / n-1 / p}\left(\int_B|\nabla f|^p d \mu_n\right)^{1 / p} \leq C \mu_n(B)^{1 / n-1 / p}\|\nabla f\|_p
+		\end{equation*}
+		for any ball $B \subset \R^n$ and $x \in B$. So for any $x,y$ with $\abs{x-y}\leq r$, by choosing $B$ with radius $r$ containing $x,y$
+		\begin{equation*}
+			\begin{aligned}
+				|f(x)-f(y)| &\leq |f(x)-f_B| + |f_B-f(y)|\\ 
+				&\leq 2 C \Omega_n r^{1-n / p}\|\nabla f\|_p \\
+				&\leq 2 C \Omega_n|x-y|^{1-n / p}\|\nabla f\|_p .
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\item The case $p = n$:
+
+	\noindent First, consider
+	\begin{equation*}
+		\int_{\Omega} \frac{1}{|x-y|^{r(n-1)}} d y
+	\end{equation*}
+	where $r < \frac{n}{n-1}$. By above estimating, we 
+	\begin{equation*}
+		\int_{\Omega} \frac{1}{|x-y|^{r(n-1)}} d y \leq \frac{\omega_{n-1}}{1-(r-1)(n-1)}\left[\mu_n(\Omega) / \Omega_n\right]^{-(n+r-n r) / n}
+	\end{equation*}
+	For any $n < q < \infty$, set $1/n - 1/q = \delta$ and $1 / r = 1 + 1/q - 1/n = 1-\delta$. Then we have
+	\begin{equation*}
+		\begin{aligned}
+			|f(x)| & \leq \frac{1}{\omega_{n-1}} \int \frac{|\nabla f(y)|}{|x-y|^{n-1}} d y \\
+			& = \frac{1}{\omega_{n-1}} \int \frac{|\nabla f(y)|^{n / q}}{|x-y|^{r(n-1) / q}} \times|\nabla f(y)|^{n \delta} \times \frac{1}{|x-y|^{r(n-1)(1-1 / n)}} d y
+		\end{aligned}
+	\end{equation*}
+	and by setting $p_1 = q,p_2 = 1/\delta$, and $p_3 = n / (n-1)$ in H\"older's Inequality,
+	\begin{equation*}
+		\begin{aligned}
+			|f(x)| \leq \frac{1}{\omega_{n-1}} & \left(\int \frac{|\nabla f(y)|^n}{|x-y|^{\gamma(n-1)}} d y\right)^{1 / q} \times \\
+			& \left(\int|\nabla f(y)|^n d y\right)^\delta\left(\int_{\operatorname{supp}(f)} \frac{1}{|x-y|^{r(n-1)}} d y\right)^{1-1 / n}
+		\end{aligned}
+	\end{equation*}
+	So if $f$ is supported in $\Omega$, by Hardy-Littlewood-Sobolev's Inequality
+	\begin{equation*}
+		\begin{aligned}
+			\|f\|_q & \leq \frac{1}{\omega_{n-1}}\|\nabla f\|_n^{n / q+n \delta}\left(\int_{\Omega} \frac{1}{|x-y|^{r(n-1)}} d y\right)^{1 / q+1-1 / n} \\
+			& \leq \frac{1}{\omega_{n-1}}\|\nabla f\|_n\left(\int_{\Omega} \frac{1}{|x-y|^{r(n-1)}} d y\right)^{1 / r}
+		\end{aligned}
+	\end{equation*}
+	Then by the estimating of $\int_{\Omega} {1}/{|x-y|^{r(n-1)}} d y$,
+	\begin{equation*}
+		\|f\|_q \leq \frac{\omega_{n-1}^{-1+1 / r}}{[1-(r-1)(n-1)]^{1 / r} \Omega_n^{(n+r-n r) / n r}} \mu_n(\Omega)^{(n+r-n r) / n r}\|\nabla f\|_r
+	\end{equation*}
+	As $1 / r = 1 + 1/q - 1/n$,
+	\begin{equation*}
+		\begin{aligned}
+			\|f\|_q & \leq \frac{\omega_{n-1}^{1 / q-1 / n}}{[1-(r-1)(n-1)]^{1 / r} \Omega_n^{1 / q}} \mu_n(\Omega)^{1 / q}\|\nabla f\|_n \\
+			& =\frac{n^{1 / q}}{[1-(r-1)(n-1)]^{1 / r} \omega_{n-1}^{1 / n}} \mu_n(\Omega)^{1 / q}\|\nabla f\|_n
+		\end{aligned}
+	\end{equation*}
+	Note that $1-(r-1)(n-1)=n(n+1) /(n q+n-q) \geq(n+1) / q$ by $q > n$. Hence, we get
+	\begin{equation*}
+		\|f\|_q^q \leq q^{1+q(n-1) / n} \omega_{n-1}^{-q / n} \mu_n(\Omega)\|\nabla f\|_n^q
+	\end{equation*}
+	It follows that for any $k = n,n+1,\cdots$,
+	\begin{equation*}
+		\int_{\Omega}\left(\frac{|f(x)|}{\|\nabla f\|_n}\right)^{k n /(n-1)} d x \leq[k n /(n-1)]^{1+k} \omega_{n-1}^{-k /(n-1)} \mu_n(\Omega)
+	\end{equation*}
+	Besides, by the following Poincar\'e's Inequality, we have
+	\begin{equation*}
+		\norm{f}_n \leq C_0\norm{\nabla f}_n
+	\end{equation*}
+	So for any $1< q < n$,
+	\begin{equation*}
+		\int_{\Omega} \abs{f(x)}^q dx \leq \norm{f}_n^q\mu_n(\Omega)^{1-\frac{q}{n}} \leq C_0^q\norm{\nabla f}_n^q\mu_n(\Omega)^{-\frac{q}{n}}\mu_n(\Omega) = C\mu_n(\Omega)
+	\end{equation*}
+	and if $q = 0$, the above inequality is clearly true. So for $k = 0, 1, \cdots,n-1$,
+	\begin{equation*}
+		\int_{\Omega}\left(\frac{|f(x)|}{\|\nabla f\|_n}\right)^{k n /(n-1)} d x \leq C\mu_n(\Omega)
+	\end{equation*}
+	Then because for small $\alpha>0$ ($\alpha<(n-1) \omega_{n-1}^{1 /(n-1)} / e n$),
+	\begin{equation*}
+		\sum_0^{\infty} \frac{\alpha^k k^k}{(k-1)!}\left(\frac{n}{(n-1) \omega_{n-1}^{1 /(n-1)}}\right)^k
+	\end{equation*}
+	is convergent,
+	\begin{equation*}
+		\begin{aligned}
+			\int_{\Omega} \exp \left(\alpha\left(\frac{|f(x)|}{\|\nabla f\|_n}\right)^{n /(n-1)}\right) d x & \leq \sum_0^{\infty} \frac{\alpha^k}{k!} \int_{\Omega}\left(\frac{|f(x)|}{\|\nabla f\|_n}\right)^{k n /(n-1)} d x \\
+			& \leq C \mu_n(\Omega)
+		\end{aligned}
+	\end{equation*}
+\end{enumerate}
+
+\section{Sobolev-Poincar\'e Inequalities}
+
+\begin{thm}[Poincar\'e Inequality]
+	Let $B = B(z,r)$ be a Euclidean ball with radius $r$ centered at $z$ in $\R^n$. For any $1 \leq p < \infty$, we have
+	\begin{equation*}
+		\forall~f\in C_c^\infty(B),\quad \left(\int_B|f|^p d \mu_n\right)^{1 / p} \leq r\left(\int_B|\nabla f|^p d \mu_n\right)^{1 / p}
+	\end{equation*}
+	and for
+	\begin{equation*}
+		\forall~f\in C^\infty(B),\quad \left(\int_B\left|f-f_B\right|^p d \mu_n\right)^{1 / p} \leq 2^n r\left(\int_B|\nabla f|^p d \mu_n\right)^{1 / p}
+	\end{equation*}
+	where $f_B=\mu(B)^{-1} \int_B f d \mu_n$.
+\end{thm}
+\begin{proof}
+	It is sufficient to assume $B = \mathbb{B}$, the unit ball. First, we have
+	\begin{equation*}
+		|f(x)| \leq \frac{1}{\omega_{n-1}} \int \frac{|\nabla f(y)|}{|y-x|^{n-1}} d y
+	\end{equation*}
+	This yields
+	\begin{equation*}
+		\int_{\mathbb{B}}|f| d \mu \leq \frac{1}{\omega_{n-1}} \int_{\mathbb{B}}|\nabla f(y)|\left(\int_{\mathbb{B}} \frac{d x}{|x-y|^{n-1}}\right) d y
+	\end{equation*}
+	As
+	\begin{equation*}
+		\int_{\mathbb{B}} \frac{d x}{|x-y|^{n-1}} \leq \int_{\mathbb{B}} \frac{d x}{|x|^{n-1}}=\omega_{n-1}
+	\end{equation*}
+	we get
+	\begin{equation*}
+		\int_{\mathbb{B}}|f| d \mu \leq \int_{\mathbb{B}}|\nabla f| d \mu
+	\end{equation*}
+	which is the case of $p = 1$.
+
+	\noindent For $p > 1$, let $c(x) = \int_{\mathrm{B}}|x-y|^{1-n} d y$. Then consider the measure $d\rho = c(x)^{-1}\abs{x-y}^{-n+1}\chi_{\mathbb{B}}(y)dy$, which is a normalized measure on $\R^n$. Then by Jensen's Inequality of $d\rho$
+	\begin{equation*}
+		\begin{aligned}
+			\bc{\int \frac{|\nabla f(y)|}{|y-x|^{n-1}} d y}^p &= \bc{\int \frac{|\nabla f(y)|}{|y-x|^{n-1}}\chi_{\mathbb{B}}(y) d y}^p \\
+			&= c(x)^p\bc{\int {|\nabla f(y)|}d\rho}^p \\
+			&\leq c(x)^p \int |\nabla f(y)|^p d\rho \\
+			&= c(x)^{p-1} \int_{\mathbb{B}} \frac{|\nabla f(y)|^p}{|y-x|^{n-1}}dy
+		\end{aligned}
+	\end{equation*}
+	Therefore, by $c(x) \leq \omega_{n-1}$,
+	\begin{equation*}
+		|f(x)|^p \leq \frac{c(x)^{p-1}}{\omega_{n-1}^p} \int_{\mathbb{B}} \frac{|\nabla f(y)|^p}{|y-x|^{n-1}} d y \leq \frac{1}{\omega_{n-1}} \int_{\mathbb{B}} \frac{|\nabla f(y)|^p}{|y-x|^{n-1}} d y .
+	\end{equation*}
+	Then, as similar as above we have
+	\begin{equation*}
+		\int_{\mathbb{B}}|f|^p d \mu \leq \int_{\mathbb{B}}|\nabla f|^p d \mu
+	\end{equation*}
+
+	\noindent For the $C^\infty(\R^n)$, case, we have the similar prove by using the inequality,
+	\begin{equation*}
+		\left|f(x)-f_B\right| \leq \frac{2^n}{\omega_{n-1}} \int_B \frac{|\nabla f(y)|}{|x-y|^{n-1}} d y
+	\end{equation*}
+\end{proof}
+
+\noindent For any open set $\Omega$ and $1 \leq p \leq \infty$, we set
+\begin{equation*}
+	\|f\|_{p, \Omega}=\left(\int_{\Omega}|f|^p d \mu\right)^{1 / p}
+\end{equation*}
+Then Poincar\'e Inequality says
+\begin{equation*}
+	\begin{gathered}
+		\forall f \in C_c^{\infty}(B), \quad\|f\|_{p, B} \leq r\|\nabla f\|_{p, B}, \\
+		\forall f \in C^{\infty}(B), \quad\left\|f-f_B\right\|_{p, B} \leq 2^n r\|\nabla f\|_{p, B}
+	\end{gathered}
+\end{equation*}
+
+\noindent Above Poincar\'e Inequality can be obtained from Sobolev Inequality in a more general way.
+\begin{thm}\label{thm:genepoincare}
+	Fix $1 \leq p < n$ and set $q = np / (n-p)$. Then there is a constant $C = C(n,p)$ such that for any $f \in C_c^\infty(B)$, where $B \subset \R^n$ is a ball with radius $r$, we have
+	\begin{equation*}
+		\|f\|_{s, B} \leq C r^{1+n(1 / s-1 / p)}\|\nabla f\|_{p, B}
+	\end{equation*}
+	for all $1 \leq s \leq q$. Moreover, for any $f \in C^\infty(B)$,
+	\begin{equation*}
+		\left\|f-f_B\right\|_{s, B} \leq C r^{1+n(1 / s-1 / p)}\|\nabla f\|_{p, B}
+	\end{equation*}
+\end{thm}
+\begin{proof}
+	Let
+	\begin{equation*}
+		K(x, y)=\chi_{B}(x) \chi_{B}(y) \frac{1}{|x-y|^{n-1}}
+	\end{equation*}
+	Then by above and $1 \leq s \leq q = np/(n-p)$ and Sobolev Inequality,
+	\begin{equation*}
+		\|f\|_{s, B} \leq C_0\norm{Kf}_{s,B} \leq C_0 \mu(B)^{1/s -1/p + 1/n}\norm{Kf}_{np/(n-p),B} \leq C r^{1 + n(1/s-1/p)}\norm{f}_{p,B}
+	\end{equation*}
+	And the next inequality can also be obtained by similar kernel with the inequality $\left|f(x)-f_B\right| \leq \frac{2^n}{\omega_{n-1}} \int_B \frac{|\nabla f(y)|}{|x-y|^{n-1}} d y$.
+\end{proof}
+Note that $1\leq p < q$, so above is true for $s = p$, which is Poincar\'e Inequality.
+\begin{rmk}
+	Clearly, we have similar result for any bounded domain $\Omega \subset \R^n$,
+	\begin{equation*}
+		\forall f \in C_c^{\infty}(\Omega), \quad\|f\|_{s, \Omega} \leq C \mu(\Omega)^{1 / s-1 / q}\|\nabla f\|_{p, \Omega}
+	\end{equation*}
+	for $1 \leq p < n$, $1 \leq s < q = np/(n-p)$. Moreover, if $\Omega$ has smooth boundary, then
+	\begin{equation*}
+		\forall f \in C^{\infty}(\Omega), \quad\left\|f-f_{\Omega}\right\|_{p, \Omega} \leq C(p, \Omega)\|\nabla f\|_{p, \Omega}
+	\end{equation*}
+\end{rmk}
+
+\section{Elliptic Operator}
+
+Consider a second order differential operator
+\begin{equation*}
+	L = -\sum_{i,j}a_{ij}(x)\partial_i\partial_j + \sum_ic_i(x)+c(x)
+\end{equation*}
+which can also be expressed as
+\begin{equation*}
+	L=-\sum_{i, j} \partial_i\left(a_{i, j}(x) \partial_j\right)+\sum_i b_i(x) \partial_i+c(x),\quad b_i(x)=c_i(x)+\sum_{\ell} \partial_{\ell} a_{\ell, i}
+\end{equation*}
+Then denote $A(x) = (a_{ij}(x))_{1\leq i, j \leq n}$ and $b(x) = (b_i(x),\cdots,b_n(x))$, for any smooth $X \colon \R^n \sto \R^n$,
+\begin{equation*}
+	L f=-\operatorname{div}(A \nabla f)+\langle b, \nabla f\rangle+c
+\end{equation*}
+called the divergence form of $L$. 
+
+\noindent Consider certain properties of (weak) solutions of equation
+\begin{equation*}
+	Lu = 0
+\end{equation*}
+on an Euclidean ball $B$, where
+\begin{equation}\label{eq:lpeq}
+	L f=-\sum_{i, j} \partial_i\left(a_{i, j} \partial_j f\right)
+\end{equation}
+and $A = (a_{ij})$ is uniformly elliptic, that is, there is $0 < \lambda \leq 1$ such that
+\begin{equation*}
+	\forall x \in \mathbb{R}^n, \quad \forall \xi, \zeta \in \mathbb{R}^n,\left\{\begin{array}{cl}
+	\lambda|\xi|^2 & \leq \sum_{i, j} a_{i, j}(x) \xi_i \xi_j, \\
+	\lambda^{-1}|\xi||\zeta| & \geq\left|\sum_{i, j} a_{i, j}(x) \xi_i \zeta_j\right|
+	\end{array}\right.
+\end{equation*}
+Note that if $A$ is symmetric, it means eigenvalues of $A(x)$ lying in $[\lambda,\lambda^{-1}]$.
+
+\noindent Consider $W^{1,2}(B)$ with its norm $\norm{\cdot}_{W^{1,2}}$, which is
+\begin{equation*}
+	\norm{f}_{W^{1,2}} = \sqrt{\|f\|_2^2+\|\nabla f\|_2^2}
+\end{equation*}
+and consider $W_c^{1,2}(B) = \clo{C^\infty_c(B)}^{\norm{\cdot}_{W^{1,2}}}$. 
+\begin{defn}
+	\begin{enumerate}[label = (\arabic{*})]
+		\item A (weak) solution of (\ref{eq:lpeq}) in the ball $B$ is a $u \in W^{1,2}(B)$ such that
+	\begin{equation*}
+		\forall \phi \in W_0^{1,2}(B), \quad \int_{\mathbb{R}^n} \sum_{i, j} a_{i, j}(x) \partial_i u(x) \partial_j \phi(x) d x=0
+	\end{equation*}
+		\item A (weak) subsolution is a $u \in W_c^{1,2}(B)$ such that
+		\begin{equation*}
+			\int \sum_{i, j} a_{i, j}(x) \partial_i u(x) \partial_j \phi(x) d x \leq 0
+		\end{equation*}
+		for all $\phi \in W_0^{1,2}(B), \phi \geq 0$. And $u$ is called a supersolution if $-u$ is a subsolution.
+	\end{enumerate}
+\end{defn}
+
+\begin{thm}\label{thm:harnack}
+	Consider the settings in equation (\ref{eq:lpeq}). For any $\delta > 0$, there exists $C = C(n,\lambda,\delta) > 0$ such that any positive solution $u$ of $(\ref{eq:lpeq})$ in a ball $B$ satisfies Harnack Inequality
+	\begin{equation*}
+		\sup _{\delta B}\{u\} \leq C \inf _{\delta B}\{u\}
+	\end{equation*}
+	Moreover, for any $\delta \in (0,1)$, there exist $C^\prime = C^\prime(n,\lambda,\delta) > 0$ and $\alpha = \alpha(n,\lambda,\delta) > 0$ such that any solution $u$ of $(\ref{eq:lpeq})$ in a ball $B$ satisfies Harnack continuity estimate
+	\begin{equation*}
+		\sup_{x,y\in\delta B}\bb{\frac{\abs{u(x)-u(y)}}{\abs{x-y}^\alpha}} \leq C^\prime r^{-\alpha}\norm{u}_{\infty,B}
+	\end{equation*}
+	where $r$ is the radius of $B$.
+\end{thm}
+
+\begin{lem}
+	If $u$ is a subsolution of (\ref{eq:lpeq}) in $B$ and $\varepsilon \leq u \leq c$ for some $0 < \varepsilon \leq c < \infty$, then $u^\alpha$ is also a subsolution for all $\alpha \geq 1$.
+\end{lem}
+\begin{proof}
+	For any $\phi \in C_c^\infty(B)$ with $\phi \geq 0$,
+	\begin{equation*}
+		\begin{aligned}
+			\sum_{i, j} a_{i, j} \partial_i u^\alpha \partial_j \phi & =\alpha \sum_{i, j} a_{i, j} u^{\alpha-1} \partial_i u \partial_j \phi \\
+			& =\alpha \sum_{i, j} a_{i, j} \partial_i u \partial_j\left(u^{\alpha-1} \phi\right) -\alpha(\alpha-1)\left(\sum_{i, j} a_{i, j} \partial_i u \partial_j u\right) u^{\alpha-2} \phi \\
+			&\leq \alpha \sum_{i, j} a_{i, j} \partial_i u \partial_j\left(u^{\alpha-1} \phi\right)
+		\end{aligned}
+	\end{equation*}
+	Moreover, $u^{\alpha-1} \phi \in L^2(B)$ and
+	\begin{equation*}
+		\nabla\left(u^{\alpha-1} \phi\right)=(\alpha-1) u^{\alpha-2} \phi \nabla u+u^{\alpha-1} \nabla \phi
+	\end{equation*}
+	Then because $\varepsilon \leq u \leq c$, by the boundedness of $u^{\alpha-2}$ and $u^{\alpha-1}$, $\nabla\left(u^{\alpha-1} \phi\right) \in L^2(B)$, so $u^{\alpha-1} \phi \in W^{1,2}(B)$. And since $\phi \in C_c^\infty(B)$ with $\phi \geq 0$, $u^{\alpha-1}\phi \in W_c^{1,2}(B)$ with $u^{\alpha-1}\phi \geq 0$. Then because $u$ is a subsolution,
+	\begin{equation*}
+		\int_B \sum_{i, j} a_{i, j} \partial_i u^\alpha \partial_j \phi d \mu \leq \alpha \int_B \sum_{i, j} a_{i, j} \partial_i u \partial_j\left(u^{\alpha-1} \phi\right) d \mu \leq 0
+	\end{equation*}
+\end{proof}
+
+\noindent Before proving Theorem \ref{thm:harnack}, let's consider the following properties.
+\begin{enumerate}[label=\Roman*.]
+	\item Sobolev-type Inequality for Moser's Iteration: Let $\mathbb{B}$ be the unit ball in $\R^n$. For $n > 2$, Theorem \ref{thm:genepoincare} implies
+	\begin{equation*}
+		\forall f \in C_c^{\infty}(\mathbb{B}), \quad\|f\|_{q, \mathbb{B}} \leq C_n\|\nabla f\|_{2, \mathbb{B}},~q \defeq \frac{2n}{n-2}
+	\end{equation*}
+	Moreover, for any $1 \leq p \leq 1$, set $\gamma \in [0,1]$ such that
+	\begin{equation*}
+		\frac{1}{p}=\frac{\gamma}{q}+\frac{1-\gamma}{2} .
+	\end{equation*}
+	by Proposition \ref{pro:geneholder},
+	\begin{equation*}
+		\|f\|_{p, \mathbb{B}} \leq\|f\|_{q, \mathbb{B}}^\gamma\|f\|_{2, \mathbb{B}}^{1-\gamma}
+	\end{equation*}
+	In particular, for $p = 2(1+2/n)$ \emph{i.e.} $\gamma = n / (n+2)$,
+	\begin{equation*}
+		\int|f|^{2(1+2 / n)} d \mu \leq\|f\|_q^2\|f\|_2^{4 / n}
+	\end{equation*}
+	Then combining with the Sobolev Inequality, we get
+	\begin{equation}\label{eq:ineqmose}
+		\forall f \in \mathcal{C}_c^{\infty}(\mathbb{B}), \quad \int_{\mathbb{B}}|f|^{2(1+2 / n)} d \mu \leq C_n^2\left(\int_{\mathbb{B}}|\nabla f|^2 d \mu\right)\left(\int_{\mathbb{B}}|f|^2 d \mu\right)^{2 / n}
+	\end{equation}
+	Note it is also true for any $f \in W_c^{1,2}(\mathbb{B})$ by taking limits.
+
+	\noindent In fact, $n \geq 2$ can guarantee the validity of Theorem \ref{thm:genepoincare}. But in order to apply Proposition \ref{pro:geneholder} for ${1}/{p}={\gamma}/{q}+{1-\gamma}/{2}$, since $q > 2$, $p \geq 2$. But $p < n$, so $n > 2$. However, for $n = 1,2$, above inequality is also true by replacing $n$ with $\nu \geq 2$, like $\nu = 3$
+	\begin{equation}\label{eq:mineqmose}
+		\int_{\mathbb{B}}|f|^{2(1+2 / 3)} d \mu \leq C^2\left(\int_{\mathbb{B}}|\nabla f|^2 d \mu\right)\left(\int_{\mathbb{B}}|f|^2 d \mu\right)^{2 / 3}
+	\end{equation}
+	for all $f \in C_c^\infty(\mathbb{B})$.
+
+	\item Subsolution: Let $B$ be a ball in $\R^n$ with $V = \mu(B)$. WLTG, assume $B$ is the unit ball. 
+
+	\begin{lem}
+		Let $u$ be a positive subsolution in $B$. There is a constant $C_1 = C_1(n,\lambda)$ such that for any $0<\rho^{\prime}<\rho \leq 1$ and $p \geq 2$,
+		\begin{equation*}
+			\int_{\rho^\prime B} u^{p\theta} d\mu \leq C_1(\rho - \rho^\prime)^{-2}V^{1-\theta}\bc{p^2 \int_{\rho B}u^pd\mu}^\theta
+		\end{equation*}
+		with $\theta = 1+\frac{2}{n}$ if $n > 2$ and $\theta = 1 + \frac{2}{3}$ for $n = 1, 2$.
+	\end{lem}
+	\begin{proof}
+		By replacing $u$ with $u+\varepsilon$, we can assume $u$ is bounded below away from $0$. First, for any $\phi \in W_0^{1,2}(B)$ with $\phi \geq 0$, we have
+		\begin{equation*}
+			\int_{\mathbb{R}^n} \sum_{i, j} a_{i, j}(x) \partial_i u(x) \partial_j \phi(x) d\mu \leq 0
+		\end{equation*}
+
+		\noindent Define a function $G \colon (0,\infty) \sto (0,\infty)$ such that it is piecewise $C^1$, non-decreasing, has non-negative $G^\prime$ with $G(s) \leq sG^\prime(s)$, and $G(s) = as$ for large $s$. Finally, define $H(s) \geq 0$by $H^\prime(s) = \sqrt{G^\prime(s)}$, $H(0) = 0$. Also, we have $H(s) \leq sH^\prime(s)$.
+
+		\noindent Let $\psi \in C_c^\infty(B)$ be non-negative. Set $\phi = \psi^wG(u)$. Then $\phi \geq 0$ and $\phi \in W^{1,2}_c(B)$ because $G$ is non-decreasing and $G(s) = as$ for large $s$. Because $u$ is a subsolution,
+		\begin{equation*}
+			\sum_{i, j} a_{i, j} \partial_i u \partial_j \phi=\psi^2 G^{\prime}(u) \sum_{i, j} a_{i, j} \partial_i u \partial_j u+2 \psi G(u) \sum_{i, j} a_{i, j} \partial_i u \partial_j \psi \leq 0
+		\end{equation*}
+		So by $G(u) \leq u G^{\prime}(u)$,
+		\begin{equation*}
+			\begin{aligned}
+				\int_B \psi^2 G^{\prime}(u) \sum_{i, j} a_{i, j} \partial_i u \partial_j u d \mu &\leq 2\abs{\int_B \psi G(u) \sum_{i, j} a_{i, j} \partial_i u \partial_j \psi d \mu} \\
+				&\leq 2\int_B \psi uG^\prime(u) \abs{\sum_{i, j} a_{i, j} \partial_i u \partial_j \psi} d \mu
+			\end{aligned}
+		\end{equation*}
+		Moreover, by the uniform ellipticity,
+		\begin{equation*}
+			\begin{aligned}
+				\int_B \psi^2 G^{\prime}(u) \abs{\nabla u}^2 d \mu &\leq \int_B \psi^2 G^{\prime}(u) {\sum_{i, j} a_{i, j} \partial_i u \partial_j u} d \mu \\
+				&\leq 2 \lambda^{-1}\int_B \psi u G^{\prime}(u)|\nabla u||\nabla \psi| d \mu
+			\end{aligned}
+		\end{equation*}
+		Then by Cauchy-Schwartz Inequality,
+		\begin{equation*}
+			\begin{aligned}
+				& \int_B \psi^2 G^{\prime}(u)|\nabla u|^2 d \mu \\
+				& \qquad \quad \leq 2 \lambda^{-1}\left(\int_B \psi^2 G^{\prime}(u)|\nabla u|^2 d \mu\right)^{1 / 2}\left(\int_B u^2 G^{\prime}(u)|\nabla \psi|^2 d \mu\right)^{1 / 2}
+			\end{aligned}
+		\end{equation*}
+		Thus
+		\begin{equation*}
+			\int_B \psi^2 G^{\prime}(u)|\nabla u|^2 d \mu \leq 4 \lambda^{-2} \int_B u^2 G^{\prime}(u)|\nabla \psi|^2 d \mu
+		\end{equation*}
+		As $\nabla(\psi H(u))=\psi H^{\prime}(u) \nabla u+H(u) \nabla \psi$ and
+		\begin{equation*}
+			\begin{aligned}
+				|\nabla \psi H(u)|^2 & \leq 2\left(\psi^2\left|H^{\prime}(u)\right|^2|\nabla u|^2+H(u)^2|\nabla \psi|^2\right) \\
+				& \leq 2\left(\psi^2 G^{\prime}(u)|\nabla u|^2+u^2 G^{\prime}(u)|\nabla \psi|^2\right)
+			\end{aligned}
+		\end{equation*}
+		we obtain
+		\begin{equation*}
+			\int_B|\nabla \psi H(u)|^2 d \mu \leq 2\left(1+4 \lambda^{-2}\right) \int_B u^2 G^{\prime}(u)|\nabla \psi|^2 d \mu
+		\end{equation*}
+		Therefore, $\psi H(u) \in W^{1,2}_c(B)$. Then by inequality (\ref{eq:ineqmose}),
+		\begin{equation*}
+			\begin{aligned}
+				& \int_B|\psi H(u)|^{2(1+2 / n)} d \mu \\
+				& \quad \leq C_n^2\left(\int_B|\nabla \psi H(u)|^2 d \mu\right)\left(\int_B|\psi H(u)|^2 d \mu\right)^{2 / n} \\
+				& \leq 2 C_n^2\left(1+4 \lambda^{-2}\right)\left(\int_B|\nabla \psi|^2|u|^2 G^{\prime}(u) d \mu\right)\left(\int_B|\psi|^2 u^2 G^{\prime}(u) d \mu\right)^{2 / n} \\
+				& \leq 2 C_n^2\left(1+4 \lambda^{-2}\right)\|\nabla \psi\|_{\infty}^2\|\psi\|_{\infty}^{4 / n}\left(\int_{\operatorname{supp}(\psi)} u^2 G^{\prime}(u) d \mu\right)^{1+2 / n}
+			\end{aligned}
+		\end{equation*}
+		Given $0<\rho^{\prime}<\rho<1$, we pick $\psi \in C_c^\infty(B)$ such that $0 \leq \psi \leq 1$, $\psi = 1$ on $\rho^\prime B$, $\psi = 0$ on $\rho B \backslash \rho^\prime B$, and $|\nabla \psi| \leq 2 /\left(\rho-\rho^{\prime}\right)$. Then
+		\begin{equation*}
+			\int_{\rho^{\prime} B}|H(u)|^{2 \theta} d \mu \leq 8 C_n^2\left(1+4 \lambda^{-2}\right)\left(\rho-\rho^{\prime}\right)^{-2}\left(\int_{\rho B} u^2 G^{\prime}(u) d \mu\right)^\theta
+		\end{equation*}
+		with $\theta = 1 + 2/n$. Fix $p \geq 1$ and some large $N$,
+		\begin{equation*}
+			H_N(s)=\left\{
+				\begin{array}{cc}
+					s^{p / 2} & \text { if } s \leq N \\
+					N^{(p / 2)-1} s & \text { if } s>N
+				\end{array}\right.
+		\end{equation*}
+		and let
+		\begin{equation*}
+			\begin{array}{rlr}
+				G_N(s) & =\int_0^s H^{\prime}(t)^2 d t \\
+				& =\frac{p^2}{4(p-1)}\left\{
+				\begin{array}{cc}
+					s^{p-1} & \text { if } s \leq N \\
+					\frac{4(p-1)}{p^2} N^{p-2}(s-N)+N^{p-1} & \text { if } s>N .
+				\end{array}\right.
+			\end{array}
+		\end{equation*}
+		Then $G_N$ and $H_N$ have our required properties for any $p > 2$. And
+		\begin{equation*}
+			H_N(s) \rightarrow s^{p / 2},\quad G_N^{\prime}(s) \rightarrow(p / 2)^2 s^{p-2}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\int_{\rho^{\prime} B} u^{p \theta} d \mu \leq 2 C_n^2\left(1+4 \lambda^{-2}\right)\left(\rho-\rho^{\prime}\right)^{-2}\left(p^2 \int_{\rho B} u^p d \mu\right)^\theta
+		\end{equation*}
+	\end{proof}
+
+	\begin{thm}
+		There is $C_2 = C_2(n,\lambda)$ such that for any $0 < \delta < 1$, any $p \geq 2$, and any positive subsolution $u$ in a ball $B$ of volume $V$,
+		\begin{equation*}
+			\sup _{\delta B}\left\{u^p\right\} \leq C_2(1-\delta)^{-n}\left(V^{-1} \int_B u^p d \mu\right)
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		Fix $p \geq 2$ and $0 < \delta < 1$. For each $i \in \N_0$, set $p_i = p\theta^i$, $\rho_0 = 1$, and
+		\begin{equation*}
+			\rho_i=1-(1-\delta) \sum_{j=1}^{j=i} 2^{-j}, \quad i \geq
+		\end{equation*}
+		Then $\rho_{i+1}-\rho_i=(1-\delta) 2^{-i-1}, p_{i+1}=p_i \theta$, and by above lemma
+		\begin{equation*}
+			\int_{\rho_{i+1} B} u^{p_{i+1}} d \mu \leq C(1-\delta)^{-2} 2^{2(i+1)}\left(p_i^2 \int_{\rho_i B} u^{p_i} d \mu\right)^\theta
+		\end{equation*}
+		or
+		\begin{equation*}
+			\left(\int_{\rho_{i+1} B} u^{p_{i+1}} d \mu\right)^{1 / p_{i+1}} \leq\left[C(1-\delta)^{-2}\right]^{1 / p_{i+1}} 2^{2(i+1) / p_{i+1}} p_i^{2 / p_i}\left(\int_{\rho_i B} u^{p_i} d \mu\right)^{1 / p_i}
+		\end{equation*}
+		for $i = 0,1,\cdots$ with $C = 2 C_n^2\left(1+4 \lambda^{-2}\right)$. This yields
+		\begin{equation*}
+			\left(\int_{\rho_{i+1} B} u^{p_{i+1}} d \mu\right)^{1 / p_{i+1}} \leq\left[C(n) C(p)\left[C(1-\delta)^{-2}\right]^{\left(\sum_1^{i+1} \theta^{-j}\right)} \int_B u^p d \mu\right]^{1 / p}
+		\end{equation*}
+		where
+		\begin{equation*}
+			C(n)=2^{2\left(\sum_1^{\infty} j \theta^{-j}\right)}, \quad C(p)=e^{2 \sum_0^{\infty} \theta^{-i} \log \left(p \theta_i\right)}
+		\end{equation*}
+		Observe that $\rho_i \sto \delta$,
+		\begin{equation*}
+			\sum_1^{\infty} \theta^{-j}=\theta^{-1}\left(1-\theta^{-1}\right)^{-1}=n / 2
+		\end{equation*}
+		and 
+		\begin{equation*}
+			\lim _{p \rightarrow \infty}\|f\|_{p, B}=\|f\|_{\infty}
+		\end{equation*}
+		Hence
+		\begin{equation*}
+			\sup _{\delta B}\{u\} \leq\left(C(n) C(p) C^n(1-\delta)^n\right)^{1 / p}\|u\|_{p, B}
+		\end{equation*}
+		Moreover, by setting $G(t) = t^{p-1}$ in above lemma, instead of $G(s) \leq s G^{\prime}(s)$, we can find a sharper version
+		\begin{equation*}
+			\int_{\rho^{\prime} B} u^{p \theta} d \mu \leq C_1\left(\rho-\rho^{\prime}\right)^{-2} V^{1-\theta}\left(\int_{\rho B} u^p d \mu\right)^\theta
+		\end{equation*}
+		Then the $C_2$ in above is independent with $p \geq 2$.
+	\end{proof}
+
+	\begin{thm}
+		Fix $0 < p \leq 2$. There is $C_2 = C_2(n,\lambda)$ such that for any $0 < \delta < 1$ , and any positive subsolution $u$ in a ball $B$ of volume $V$,
+		\begin{equation*}
+			\sup _{\delta B}\{u\} \leq C_3(1-\delta)^{n / p}\left(V^{-1} \int_B u^p d \mu\right)^{1 / p}
+		\end{equation*}
+	\end{thm}
+
+	\item Supersolution: Let $B$ be a fixed ball with volume $V$ and $u$ be a positive supersolution.
+
+	\begin{thm}
+		There is a constant $C_4=C_4(n, \lambda)$ such that for any $0 < \delta < 1$ and any $p \in (0,\infty)$, we have
+		\begin{equation*}
+			\sup _{\delta B}\left\{u^{-p}\right\} \leq C_4(1-\delta)^{-n} \frac{1}{V} \int_B u^{-p} d \mu
+		\end{equation*}
+	\end{thm}
+
+	\begin{thm}
+		Fix $0<p_0<\theta=1+2 / n$ ($\theta = 1 + 2/3$ if $n=1,2$). There is a constant $C_5 = C_5(n,\lambda,p_0)$ such that for any $\delta \in (0,1)$ and any $p \in (0,p_0/\theta)$,
+		\begin{equation*}
+			\left(\frac{1}{V} \int_{\delta B} u^{p_0} d \mu\right)^{1 / p_0} \leq\left[C_5(1-\delta)^{-2 n+2}\right]^{1 / p-1 / p_0}\left(\frac{1}{V} \int_B u^p d \mu\right)^{1 / p}
+		\end{equation*}
+	\end{thm}
+\end{enumerate}
+
+\noindent Consider a collection of measurable subsets $U_\sigma, 0<\sigma \leq 1$, of a fixed measure space endowed with a measure $\mu$, such that $U_{\sigma^{\prime}} \subset U_\sigma$ if $\sigma^{\prime} \leq \sigma$. In our application, $U_\sigma$ will be $\sigma B$ for some fixed ball $B \subset \mathbb{R}^n$.
+
+\begin{lem}
+	Fix $\delta \in (0,1)$. Let $\gamma, C > 0$ and $\alpha_0 \in (0,\infty]$. Let $f$ be positive and measurable on $U_1 = U$ which satisfies
+	\begin{equation*}
+		\|f\|_{\alpha_0, U_{\sigma^{\prime}}} \leq\left[C\left(\sigma-\sigma^{\prime}\right)^{-\gamma} \mu(U)^{-1}\right]^{1 / \alpha-1 / \alpha_0}\|f\|_{\alpha, U_\sigma}
+	\end{equation*}
+	for all $0<\delta \leq \sigma^{\prime}<\sigma \leq 1$ and $0<\alpha \leq \min \left\{1, \alpha_0 / 2\right\}$. Assume further that 
+	\begin{equation*}
+		\mu(\log f>\lambda) \leq C \mu(U) \lambda^{-1}
+	\end{equation*}
+	for all $\lambda > 0$. Then
+	\begin{equation*}
+		\|f\|_{\alpha_0, U_\delta} \leq A \mu(U)^{1 / \alpha_0}
+	\end{equation*}
+	where $A=A(\delta,\gamma,C,\alpha_0)$.
+\end{lem}
+
+\begin{enumerate}[label = \arabic*.]
+	\item Harnack Inequality:
+	\begin{thm}
+		Fix $0<p_0<\theta=1+2 / n$ ($\theta = 1 + 2/3$ if $n=1,2$). There is a constant $C = C(n,\lambda,\delta,p)$ such that for any ball $B$ and any positive supersolution $u$ in $B$ we have
+		\begin{equation*}
+			\frac{1}{\mu(\delta B)} \int_{\delta B} u^p d \mu \leq C \inf _{\delta B}\left\{u^p\right\}
+		\end{equation*}
+	\end{thm}
+
+	\item H\"older Continuity: Let $u$ be a positive solution. Then
+	\begin{equation*}
+		\sup _{x, y \in \delta B}\left\{\frac{|u(x)-u(y)|}{|x-y|^\alpha}\right\} \leq C r^{-\alpha} \sup _B\{u\}
+	\end{equation*}
+	The following lemma provides a more rigorous speaking.
+	\begin{lem}
+		There is a $\alpha = \alpha(n,\lambda)$ such that for any solution $u$ in a ball $B$,
+		\begin{equation*}
+			\forall \rho \in(0,1), \sup _{x, y \in \rho B}\{|u(x)-u(y)|\} \leq 2^{1+\alpha} \rho^\alpha \sup _B\{u\} .
+		\end{equation*}
+	\end{lem}
+\end{enumerate}

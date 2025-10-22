@@ -1,0 +1,1642 @@
+\chapter{Shortest Curves in Riemannian Manifolds}
+
+\section{Riemannian Metric}
+
+Let $(M,g)$ be a $m$-dimensional Riemannian manifold (always assumed being connected). And we use the Einstein summation convention.
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item {\emph{\textbf{Riemannian metric:}}} For open $U \subset M$, let homeomorphism $x \colon U \sto x(U) \subset \R^m$ be local coordinates, that is, for any $p \in U \subset M$, $x(p) = (x^1(p),\cdots,x^m(p))$. Then the local expression of $g$ is a symmetric matrix
+	\begin{equation*}
+		\bc{g_{ij}(x)}_{1\leq i,j \leq m}
+	\end{equation*}
+	or in tensor form
+	\begin{equation*}
+		g(x) = g_{ij}(x)dx^i\otimes dx^j
+	\end{equation*}
+	Then for any $v,w \in T_pM$ with local coordinates $v = (v^1,\cdots,v^m)$ and $w = (w^1,\cdots,w^m)$,
+	\begin{equation*}
+		\inn{v,w}_p \defeq g_p(v,w) = g_{ij}(x(p))v^iw^j
+	\end{equation*}
+	Moreover, $g$ induces a canonical measure defined on $M$. Let
+	\begin{equation*}
+		\sqrt{\abs{g}(x)} \defeq \sqrt{\det\bc{g_{ij}(x)}} 
+	\end{equation*}
+	Then for any smooth $F \colon U \sto \R$,
+	\begin{equation*}
+		\int_U F(p)d\mu(p) \defeq \int_{x(U)} F\circ x^{-1}\sqrt{g}dx^1\cdots dx^m
+	\end{equation*}
+	\begin{rmk}
+		So $d\mu$ is basically the push-forward of measure $\sqrt{\det(g_{ij})}dx^1\cdots dx^m$ on $x(U) \subset \R^m$ by $x^{-1}\colon x(U) \sto U$, that is
+		\begin{equation*}
+			d\mu = x^{-1}_\#\bc{\sqrt{\det(g_{ij})}dx^1\cdots dx^m}
+		\end{equation*}
+	\end{rmk}
+	Note that we usually do not distinguish $x(p)$ and $p$, so the integral is usually expressed as
+	\begin{equation*}
+		\int_{U} F(x)\sqrt{\abs{g}(x)}dx^1\cdots dx^m
+	\end{equation*}
+	Moreover, for $F\in C_c^\infty(M)$, we can also define
+	\begin{equation*}
+		\int_M F(x)\sqrt{\abs{g}(x)}dx^1\cdots dx^m
+	\end{equation*}
+	by the partition of unity.
+
+	\noindent For any $p \in M$, $g_p \colon T_pM \times T_pM \sto \R$ with matrix expression $(g_{ij})$. Then let $(g^{ij}) = (g_{ij})^{-1}$, \emph{i.e.}
+	\begin{equation*}
+		g^{ik}g_{kj} = \delta^i_j
+	\end{equation*}
+	Then for any $\omega,\eta \in T_p^*M$ with coordinates
+	\begin{equation*}
+		\omega=\omega_i d x^i, \quad \quad \eta=\eta_i d x^i
+	\end{equation*}
+	we define $g_p \colon T_p^*M \times T_p^*M \sto \R$,
+	\begin{equation*}
+		g_p^*(\omega, \eta)=\langle\omega, \eta\rangle_p^*:=g^{i j}(p) \omega_i(p) \eta_j(p)
+	\end{equation*}
+	Then we can see $g^*_p$ is independent with the choice of coordinates. Moreover, by the continuity of $g^{ij}$,
+	\begin{equation*}
+		g^* \colon \Gamma(T^*M) \times \Gamma(T^*M) \sto C^\infty(M)
+	\end{equation*}
+	is a $(2,0)$-tensor field.
+
+	\noindent For $p \in M$, consider two isomorphism.
+	\begin{equation*}
+		\flat: T_p M \rightarrow T_p^* M, \quad \flat\left(X_p\right)\left(Y_p\right):=g_p\left(X_p, Y_p\right)
+	\end{equation*}
+	In local coordinate, for $X = X^i\frac{\partial}{\partial x_i}$,
+	\begin{equation*}
+		\flat(X^i\frac{\partial}{\partial x_i}) = g_{i j} X^i d x^j
+	\end{equation*}
+	Then second isomorphism is
+	\begin{equation*}
+		\sharp: T_p^* M \rightarrow T_p M
+	\end{equation*}
+	in local coordinates, it is defined as
+	\begin{equation*}
+		\sharp\left(w_i d x^i\right)=g^{i j} w_i \frac{\partial}{\partial x_j}
+	\end{equation*}
+	and thus
+	\begin{equation*}
+		g_p(\sharp \omega, \sharp \eta)=g_{i j} g^{k i} \omega_k g^{l j} \eta_l=\delta_j^k \omega_k \eta_l g^{l j}=g^{k l} \omega_k \eta_l = g_p^*(\omega, \eta)
+	\end{equation*}
+
+	\noindent For any $f \in C^\infty(M)$, let $\nabla f = \sharp(df)$ and in local coordinates
+	\begin{equation*}
+		\nabla f = g^{ij}\frac{\partial f}{\partial x_j}\frac{\partial}{\partial x_i}
+	\end{equation*}
+	Clearly, when $c$ is regular value of $f$, then $f^{-1}(c)$ is a hyper-surface and $\nabla f$ is perpendicular to it.
+
+	\item {\emph{\textbf{Change of coordinates:}}} Let $x=(x^1,\cdots,x^m)$ and $y=(y^1,\cdots,y^m)$ be two coordinates on $U$. Let $y = f(x)$ be the transition map. Then for $p \in U$ and $v,w \in T_pM$, if on $(x,U)$,
+	\begin{equation*}
+		v = v^i\frac{\partial}{\partial x_i},\quad w = w^i\frac{\partial}{\partial x_i}
+	\end{equation*}
+	and on $(y,U)$,
+	\begin{equation*}
+		v = \tilde{v}^\alpha\frac{\partial}{\partial y_\alpha},\quad w = \tilde{w}^\alpha\frac{\partial}{\partial y_\alpha}
+	\end{equation*}
+	then by
+	\begin{equation*}
+		\begin{aligned}
+			v &= v^i\frac{\partial}{\partial x_i} = v^i\frac{\partial f^\alpha}{\partial x_i}\frac{\partial}{\partial y_\alpha}\\
+			w &= w^i\frac{\partial}{\partial x_i} = w^i\frac{\partial f^\alpha}{\partial x_i}\frac{\partial}{\partial y_\alpha}
+		\end{aligned}
+	\end{equation*}
+	we get
+	\begin{equation*}
+		\tilde{v}^\alpha = v^i\frac{\partial f^\alpha}{\partial x_i},\quad \tilde{w}^\alpha = w^i\frac{\partial f^\alpha}{\partial x_i}
+	\end{equation*}
+	If $g$ has matrix form $(g_{ij}(x))$ on $(x,U)$ and $(h_{\alpha \beta}(x))$ on $(x,U)$, then
+	\begin{equation*}
+		\begin{aligned}
+			\inn{v,w}_p &= v^ig_{ij}(x)w^j \\
+			&= \tilde{v}^\alpha h_{\alpha \beta}(f(x))\tilde{w}^\beta \\
+			&= v^i\frac{\partial f^\alpha}{\partial x_i}h_{\alpha \beta}(f(x))\frac{\partial f^\beta}{\partial x_j}w^j
+		\end{aligned}
+	\end{equation*}
+	Therefore, we get
+	\begin{equation*}
+		g_{ij}(x) = \frac{\partial f^\alpha}{\partial x_i}h_{\alpha \beta}(f(x))\frac{\partial f^\beta}{\partial x_j}~\Rightarrow~ (g_{ij}(x))_{ij} = \bj{\frac{\partial f^\alpha}{\partial x_i}}^{\top}_{\alpha i}(h_{\alpha \beta}(f(x)))_{\alpha \beta}\bj{\frac{\partial f^\beta}{\partial x_j}}_{\alpha j}
+	\end{equation*}
+	Besides, for any $\Phi \in C_c^\infty(M)$, the integral
+	\begin{equation*}
+		\int_M \Phi(y)\sqrt{h(y)}dy^1\cdots dy^m = \int_M\Phi(f(x))\sqrt{\abs{g}(x)}dx^1\cdots dx^m
+	\end{equation*}
+	\begin{rmk}
+		Or in tensor form, we can have an easier proof. By
+		\begin{equation*}
+			dy^\alpha = \frac{\partial f^\alpha}{\partial x_i} dx_i
+		\end{equation*}
+		we get
+		\begin{equation*}
+			\begin{aligned}
+				h_{\alpha \beta} dy^\alpha \otimes dy^\beta &= h_{\alpha \beta} \bc{\frac{\partial f^\alpha}{\partial x_i} dx_i} \otimes \frac{\partial f^\beta}{\partial x_j} dx_j \\
+				&= h_{\alpha \beta}\frac{\partial f^\alpha}{\partial x_i}\frac{\partial f^\beta}{\partial x_j}dx^i\otimes dx^j
+			\end{aligned}
+		\end{equation*}
+	\end{rmk}
+
+	\begin{rmk}
+		Let's review some basic knowledge about the tensor field. Considering a map
+		\begin{equation*}
+			\theta \colon \underbrace{\Gamma(T^*M)\times \cdots \times \Gamma(T^*M)}_{r} \times \underbrace{\Gamma(TM)\times \cdots \times \Gamma(TM)}_{s} \sto C^\infty(M)
+		\end{equation*}
+		such that $\theta$ is function-linear for each component. Then $\theta$ is called a $(r,s)$-tensor field. For a $(r,s)$-tensor field $\theta$ and any $p \in M$,
+		\begin{equation*}
+			\theta_p \colon \underbrace{T_p^*M\times \cdots \times T_p^*M}_{r} \times \underbrace{T_pM\times \cdots \times T_pM}_{s} \sto \R
+		\end{equation*}
+		is linear for each component and so $\theta_p\in \bigotimes^{r,s}T_pM$. When employing a chart $(x,U)$ containing $p$,
+		\begin{equation*}
+			\theta_p = \theta_{j_1,\cdots,j_s}^{i_1,\cdots,i_r}\frac{\partial}{\partial x_{i_1}}\otimes \cdots \otimes\frac{\partial}{\partial x_{i_r}}\otimes dx^{j_1}\otimes\cdots \otimes dx^{j_s}
+		\end{equation*}
+		for $1\leq i_1,\cdots,i_r \leq m$ and $1\leq j_1,\cdots,j_s \leq m$, where
+		\begin{equation*}
+			\theta_{j_1,\cdots,j_s}^{i_1,\cdots,i_r} = \theta_p\bc{dx^{i_1},\cdots , dx^{i_r},\frac{\partial}{\partial x_{j_1}}, \cdots ,\frac{\partial}{\partial x_{j_s}}}
+		\end{equation*}
+		Let $(y,U)$ be another chart and $\theta_p$ has 
+		\begin{equation*}
+			\theta_p = \tilde{\theta}_{l_1,\cdots,l_s}^{k_1,\cdots,k_r}\frac{\partial}{\partial y_{k_1}}\otimes \cdots \otimes\frac{\partial}{\partial y_{k_r}}\otimes dy^{l_1}\otimes\cdots \otimes dy^{l_s}
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\begin{aligned}
+				\tilde{\theta}_{l_1,\cdots,l_s}^{k_1,\cdots,k_r} &= \theta_p\bc{dy^{k_1},\cdots , dy^{k_r},\frac{\partial}{\partial y_{l_1}}, \cdots ,\frac{\partial}{\partial y_{l_s}}} \\
+				&= \theta_p\bc{\frac{\partial y^{k_1}}{\partial x^{i_1}}dx^{i_1},\cdots , \frac{\partial y^{k_r}}{\partial x^{i_r}}dx^{i_r},\frac{\partial x^{j_1}}{\partial y^{l_1}}\frac{\partial}{\partial x_{j_1}}, \cdots ,\frac{\partial x^{j_s}}{\partial y^{l_s}}\frac{\partial}{\partial x_{j_s}}} \\
+				&= \frac{\partial y^{k_1}}{\partial x^{i_1}}\cdots \frac{\partial y^{k_r}}{\partial x^{i_r}}\frac{\partial x^{j_1}}{\partial y^{l_1}}\cdots\frac{\partial x^{j_s}}{\partial y^{l_s}}\theta_{j_1,\cdots,j_s}^{i_1,\cdots,i_r}
+			\end{aligned}
+		\end{equation*}
+		This formula of the coefficients $\theta_{j_1,\cdots,j_s}^{i_1,\cdots,i_r}$ is so-called the tensor transformation law. The converse is true.
+	\end{rmk}
+	\begin{lem}
+		$\theta$ is a smooth $(r,s)$-tensor field if and only on smooth manifold $M$ if and only if for any chart $(x,U)$,
+		\begin{equation*}
+			\theta = \theta_{j_1,\cdots,j_s}^{i_1,\cdots,i_r}\frac{\partial}{\partial x_{i_1}}\otimes \cdots \otimes\frac{\partial}{\partial x_{i_r}}\otimes dx^{j_1}\otimes\cdots \otimes dx^{j_s}
+		\end{equation*}
+		and so satisfy the tensor transformation law, and $\theta_{j_1,\cdots,j_s}^{i_1,\cdots,i_r}$ is smooth on $U$.
+	\end{lem}
+
+	\item {\emph{\textbf{Induced Metric:}}} Let $N \subset M$ be a submanifold with dimension $n \leq m$. Let $i \colon N \hookrightarrow M$ be an inclusion map. Then metric $h$ on $N$ is induced by $g$ if
+	\begin{equation*}
+		i^*h = g
+	\end{equation*}
+	which means for any $p \in N$, the map
+	\begin{equation*}
+		i_{*,p} \colon T_pN \sto T_pM
+	\end{equation*}
+	preserves the metric, that is
+	\begin{equation*}
+		h(v,w) \defeq g(i_{*,p}(v),i_{*,p}(w)),\quad v,w \in T_pN
+	\end{equation*}
+	More explicitly, when viewing $v$ as same as $i_{*,p}(v)$, it means
+	\begin{equation*}
+		h(v,w) = g(v,w),\quad v,w \in T_pN
+	\end{equation*}
+	Locally, let $(x=(x^1,\cdots,x^m),U)$ be coordinate on $U \subset M$ and $(\theta=(\theta^1,\cdots,\theta^n),U\cap N)$ be coordinates on $N$ and $x = f(\theta)$, where $f \colon N \hookrightarrow M$. Then we have
+	\begin{equation*}
+		f_{*,p}\bc{\frac{\partial}{\partial \theta^\alpha}} = \frac{\partial f^i}{\partial \theta^\alpha}\frac{\partial}{\partial x^i}
+	\end{equation*}
+	If $g$ of $M$ has the matrix form $g_{ij}$ and $h$ of $N$ has the form $h_{\alpha \beta}$, then for any $v,w \in T_pN \subset T_pM$ with
+	\begin{equation*}
+		v = \tilde{v}^\alpha\frac{\partial}{\partial \theta^\alpha},\quad w = \tilde{w}^\alpha\frac{\partial}{\partial \theta^\alpha}
+	\end{equation*}
+	we have
+	\begin{equation*}
+		\begin{aligned}
+			h(v,w) &= h_{\alpha \beta} \tilde{v}^\alpha \tilde{w}^\beta \\
+			&= g(f_{*,p}(v),f_{*,p}(w)) \\
+			&= \tilde{v}^\alpha\tilde{w}^\beta g\bc{f_{*,p}\bc{\frac{\partial}{\partial \theta^\alpha}},f_{*,p}\bc{\frac{\partial}{\partial \theta^\beta}}} \\
+			&=  g_{ij}\frac{\partial f^i}{\partial \theta^\alpha} \frac{\partial f^j}{\partial \theta^\beta}\tilde{v}^\alpha\tilde{w}^\beta
+		\end{aligned}
+	\end{equation*}
+	It follows that
+	\begin{equation*}
+		h_{\alpha \beta} = g_{ij}\frac{\partial f^i}{\partial \theta^\alpha} \frac{\partial f^j}{\partial \theta^\beta} ~\Rightarrow~ (h_{\alpha \beta})_{\alpha \beta} = \bj{\frac{\partial f^i}{\partial \theta^\alpha}}_{i\alpha}^\top (g_{ij})_{ij}\bj{\frac{\partial f^j}{\partial \theta^\beta}}_{j\beta}
+	\end{equation*}
+	\begin{rmk}
+		Also, we can use the tensor form to obtain a easier proof. By
+		\begin{equation*}
+			dx^i = \frac{\partial f^i}{\partial \theta^\alpha}d\theta^\alpha~\Rightarrow~f^*(dx^i) = \frac{\partial f^i}{\partial \theta^\alpha}d\theta^\alpha
+		\end{equation*}
+		because $x^i \circ f = f^i$ and $f^*g = h$,
+		\begin{equation*}
+			\begin{aligned}
+				h &= h_{\alpha \beta}d\theta^\alpha \otimes d\theta^\beta \\
+				&= f^*g \\
+				&= f^*\bc{g_{ij}dx^i \otimes dx^j}\\
+				&= g_{ij}f^*\bc{dx^i} \otimes f^*\bc{dx^j} \\
+				&=g_{ij}\frac{\partial f^i}{\partial \theta^\alpha}\frac{\partial f^j}{\partial \theta^\beta}d\theta^\alpha \otimes d\theta^\beta
+			\end{aligned}
+		\end{equation*}
+	\end{rmk}
+	\begin{rmk}
+		If we consider two Riemannian manifolds $(M,g)$ and $(N,h)$ with same dimension. And $f \colon N \sto M$ is a local isometry, \emph{i.e.} $f^*g = h$. If $(\theta,V)$ is a chart of $N$ around $\theta_0$ and $(x,U)$ is a chart of $M$ around $x_0 = f(\theta_0)$, then on matrix expression of $g$ and $h$ also satisfy above formula,
+		\begin{equation*}
+			h_{\alpha \beta} = g_{ij}\frac{\partial f^i}{\partial \theta^\alpha}\frac{\partial f^j}{\partial \theta^\beta}
+		\end{equation*} 
+		Note that it is as same as the change of coordinates. So local isometric $f$ does basically as same as change of coordinates, \emph{i.e.} locally $M$ and $N$ are same.
+	\end{rmk}
+
+	\begin{exam}\label{exam:spheremetric}
+		Let $\mathbb{S}^2 \subset \R^2$ with the induced metric by 
+		\begin{center}
+			\begin{tabular}{cccc}
+				$i \colon$ & $\mathbb{S}^2$ & $\hookrightarrow$ & $\R^3$ \\
+				~& $(\theta,\varphi)$ & $\mapsto$ & $(x,y,z)$
+			\end{tabular}
+		\end{center}
+		where
+		\begin{equation*}
+			\left \{
+				\begin{aligned}
+					x &= \cos \theta \cos \varphi \\
+					y &= \sin \theta \cos \varphi \\
+					z &= \sin \varphi
+				\end{aligned}
+			\right.
+		\end{equation*}
+		Then the metric $g$ on $\mathbb{S}^2$ is
+		\begin{equation*}
+			g = d\varphi \otimes d\varphi + \cos^2 d\theta \otimes d\theta
+		\end{equation*}
+	\end{exam}
+
+	\item {\emph{\textbf{More on Riemannian measure:}}} We have defined the Riemannian measure $d\mu$ on $(M,g)$. Then it gives
+	\begin{equation*}
+		\Phi \colon C_c^\infty(M) \sto \R,\quad \Phi(f) \defeq \int_M f d\mu
+	\end{equation*}
+	Then we can equip $C_c^\infty(M)$ with $L^p$ norm for $1 \leq p < \infty$ by
+	\begin{equation*}
+		\|f\|_{p}:=\left(\int_M|f|^p d \mu\right)^{1 / p}
+	\end{equation*}
+	Then we can define
+	\begin{equation*}
+		L^p(M,g) = \clo{C_c^\infty(M)}^{\norm{\cdot}_p}
+	\end{equation*}
+	We have seen impact of the change of coordinates for $d\mu$. In general, if $\varphi \colon (N,h) \sto (M,g)$ is a local isometry, then
+	\begin{equation*}
+		\int_N f \circ \varphi d\mu_h = \int_M f \mu_g,\quad \forall~f \in L^1(M,g)
+	\end{equation*}
+	Or more generally, for $\varphi \colon (N,h) \sto (M,g)$ diffeomorphism,
+	\begin{equation*}
+		\int_N f \circ \varphi d\mu_{\varphi^*g} = \int_M f d\mu_g,\quad \forall~f \in L^1(M,g)
+	\end{equation*}
+	A direct consequence is if $\varphi \colon (N,h) \hookrightarrow (M,g)$ is an embedding and $\iota \colon \varphi(N) \hookrightarrow M$ is an inclusion, then
+	\begin{equation*}
+		\int_N f \circ \varphi \frac{d V_{\varphi^* g}}{d \mu_h} d \mu_h=\int_{\varphi(N)} f d \mu_{\iota^* g}, \quad \forall f \in L^1(M, g),
+	\end{equation*}
+
+	\noindent Fix $u \in C^\infty(M)$. Let
+	\begin{equation*}
+		\Omega_t:=u^{-1}((-\infty, t)), \quad \Gamma_t:=u^{-1}(t)
+	\end{equation*}
+	If $t$ is a regular value of $u$, $\Gamma_t$ is a hyper-surface. And by Sard's Theorem, the measure of critical point of $\mu$ is actually $0$.
+	\begin{thm}[Co-area Formula]
+		Let $(M,g)$ be a Riemannian manifold with measure $\mu_g$. For a regular value $t$ of $u$, let $\Gamma_t$ be equipped with the induced metric $g_t$ and the corresponding measure $\mu_t$. Then for any $f \in L^1(M,g)$, we have
+		\begin{equation*}
+			\int_M f \abs{\nabla u}d\mu_g = \int_{\R} \bc{\int_{\Gamma_t} f d\mu_t} dt
+		\end{equation*}
+	\end{thm}
+	\begin{proof}
+		Let $C$ be the set of all critical points. By Sard's Theorem, $C$ is closed has measure $0$. So $M \backslash C$ is an open submanifold. By replacing $M$ with $M\backslash C$, we can assume $u$ has no critical point. Consider the vector field
+		\begin{equation*}
+			X=\frac{\nabla u}{|\nabla u|^2}
+		\end{equation*}
+		which is perpendicular to $T_q \Gamma_c$ at any $q \in \Gamma_c$ for any $c$. Let $\varphi_t$ be the (local) flow generated by $X$. So
+		\begin{equation*}
+			\frac{d}{d t} u\left(\varphi_t(q)\right)=d u\left(X\left(\varphi_t(q)\right)\right)=\langle\nabla u, X\rangle_{\varphi_t(q)}=1
+		\end{equation*}
+		It follows that if $q \in \Gamma_c$, then $\varphi_t(q) \in \Gamma_{c+t}$ for $t$ small enough. Choose a neighborhood $A$ of $q$ in $\Gamma_c$ such that the map
+		\begin{equation*}
+			\psi:(-\varepsilon, \varepsilon) \times A \rightarrow M, \quad(t, y) \mapsto \varphi_t(y)
+		\end{equation*}
+		is a diffeomorphism onto open $U=\psi((-\varepsilon, \varepsilon) \times A)$ in $M$. By shrinking $A$ such that $A$ is contained in a chart of $\Gamma_c$, denoted by $(y^1,\cdots,y^{m-1})$. Then $(t,y^1,\cdots,y^{m-1})$ forms a chart on $U$. By viewing $X = \frac{\partial}{\partial t}$, because $X \top \frac{\partial}{\partial y^i}$,
+		\begin{equation*}
+			g=\langle X, X\rangle d t \otimes d t+h_{i j} d y^i \otimes d y^j,\quad h_{i j}=g\left(\frac{\partial}{\partial y^i}, \frac{\partial}{\partial y^j}\right)
+		\end{equation*}
+		Since $\langle X, X\rangle={1}/{|\nabla u|^2}$,
+		\begin{equation*}
+			d \mu_g=\frac{1}{|\nabla u|} \sqrt{\operatorname{det}\left(h_{i j}\right)} d t d y^1 \cdots d y^{m-1}=\frac{1}{|\nabla u|} d t d \mu_t
+		\end{equation*}
+		So we conclude that for any $\rho \in C_c(U)$,
+		\begin{equation*}
+			\int_M \rho f|\nabla u| d \mu_g=\int_U \rho f \sqrt{\operatorname{det} g_t} d t d y^1 \cdots d y^{m-1}=\int_{c-\varepsilon}^{c+\varepsilon}\left(\int_{\Gamma_t \cap U} \rho f d mu_t\right) d t \qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{cor}
+		Suppose the critical values of $u$ form a closed subset in $\mathbb{R}$, and $\operatorname{Vol}\left(\Omega_t\right)<\infty$, then the function $t \mapsto \operatorname{Vol}\left(\Omega_t\right)$ is smooth at regular value $t$, and
+		\begin{equation*}
+			\frac{d}{d t} \operatorname{Vol}\left(\Omega_t\right)=\int_{\Gamma_t} \frac{1}{|\nabla u|} d S_t
+		\end{equation*}
+	\end{cor}
+	\begin{proof}
+		For any regular $t$, take $\varepsilon>0$ so that $(t, t+\varepsilon)$ is free of critical values. By taking $f=\frac{1}{|\nabla u|}$ we get, for $h \in(0, \varepsilon)$,
+		\begin{equation*}
+			\operatorname{Vol}\left(\Omega_{t+h}\right)-\operatorname{Vol}\left(\Omega_t\right)=\int_t^{t+h}\left(\int_{\Gamma_t} \frac{1}{|\nabla u|} d \mu_t\right) d t
+		\end{equation*}
+		It follows
+		\begin{equation*}
+			\frac{d}{d t} \operatorname{Vol}\left(\Omega_t\right)=\lim _{h \rightarrow 0} \frac{1}{h} \int_t^{t+h}\left(\int_{\Gamma_t} \frac{1}{|\nabla u|} d \mu_t\right) d t=\int_{\Gamma_t} \frac{1}{|\nabla u|} d \mu_t \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\item {\emph{\textbf{Length and distance:}}} For any smooth curve $\gamma \colon [a,b] \sto M$, the length of $\gamma$ is defined as
+	\begin{equation*}
+		L(\gamma) \defeq \int_a^b \norm{\dot{\gamma}(t)}dt
+	\end{equation*}
+	that is, when working in coordinates $x(t) = (x^i(t))$,
+	\begin{equation*}
+		L(\gamma) = \int \sqrt{g_{ij}(x(t))x^i(t)x^j(t)}dt
+	\end{equation*}
+	Note that the length can be also defined for piecewise smooth curves.
+	\begin{rmk}
+		The length is independent with the choice of parametrization, that is
+		\begin{equation*}
+			L(\gamma \circ \psi)=L(\gamma)
+		\end{equation*}
+		for any change of variable $\psi:[\alpha, \beta] \rightarrow[a, b]$, because
+		\begin{equation*}
+			L(\gamma \circ \psi)=\int_\alpha^\beta\left(g_{i j}(x(\gamma(\psi(\tau)))) \dot{x}^i(\psi(\tau)) \dot{x}^j(\psi(\tau))\left(\frac{d \psi}{d \tau}\right)^2\right)^{\frac{1}{2}} d \tau = L(\gamma)
+		\end{equation*}
+	\end{rmk}
+
+	\noindent For any $p,q \in M$, the distance of $p,q$ is
+	\begin{equation*}
+		d(p,q) \defeq \inf\bb{L(\gamma) \colon \gamma \colon [a,b] \sto M \text{ piecewise smooth with }\gamma(a)=p,\gamma(b)=q}
+	\end{equation*}
+	And by the connectedness of $M$, $d(p,q)$ is always well-defined.
+	\begin{lem}\label{lem:distancedef}
+		$(M,d)$ is a metric space, that is,
+		\begin{enumerate}[label=(\roman*)]
+			\item $d(p,q) \geq 0$ for any $p,q \in M$,
+			\item $d(p,q) > 0$ for any $p \neq q$, 
+			\item $d(p,q) = d(q,p)$ for any $p,q \in M$,
+			\item $d(p,q) \leq d(p,r) + d(q,r)$ for any $p,q,r \in M$.
+		\end{enumerate}
+	\end{lem}
+	\begin{proof}
+		It is sufficient to prove the non-degeneratity and the triangular inequality. First, for the triangular inequality, let $\sigma_1$ and $\sigma_2$ be two smooth curves connecting $p$ with $r$ and connecting $r$ with $q$. Then there are $\varepsilon_1,\varepsilon_2 > 0$ such that
+		\begin{equation*}
+			d(p,q) \leq L(\sigma_1)+L(\sigma_2) \leq d(p,r)+d(r,q)+\varepsilon_1 + \varepsilon_2
+		\end{equation*}
+		Then as $\varepsilon_1,\varepsilon_2 \sto 0$, we have the triangular inequality.
+
+		\noindent Let $(x,U)$ be a chart containing $p$. Then there is a $\varepsilon > 0$ with
+		\begin{equation*}
+			D_{\varepsilon}(x(p)):=\left\{y \in \mathbb{R}^d:|y-x(p)| \leq \varepsilon\right\} \subset x(U)
+		\end{equation*}
+		and $q \notin x^{-1}\left(D_{\varepsilon}(x(p))\right)$. Let $\left(g_{i j}(x)\right)$ be the metric matrix on $(x,U)$ and so continuous in $x$ on $D_{\varepsilon}(x(p))$. So, by the compactness of $D_{\varepsilon}(x(p))$ and the positivity of $g$, there is a $\lambda > 0$ such that
+		\begin{equation*}
+			g_{i j}(y) \xi^i \xi^j \geq \lambda|\xi|^2
+		\end{equation*}
+		for all $y \in D_{\varepsilon}(x(p)), \xi=\left(\xi^1, \ldots, \xi^d\right) \in \mathbb{R}^d$. Therefore, for any smooth curve $\gamma \colon [a,b] \sto M$ with $\gamma(a)=p, \gamma(b)=q$,
+		\begin{equation*}
+			\begin{aligned}
+				L(\gamma) & \geq L\left(\gamma \cap x^{-1}\left(D_{\varepsilon}(x(p))\right)\right) \\
+				& \geq \lambda \varepsilon>0,
+			\end{aligned}
+		\end{equation*}
+		where the first inequality is because $\gamma$ contains $z \in \partial D_{\varepsilon}(x(p))$.
+	\end{proof}
+	\begin{rmk}
+	 	Let $A(x) \in R^{n\times n}$ be symmetric for any $x \in [a,b]$ and has eigenvalues $\lambda_1(x),\cdots,\lambda_n(x)$. If $A(x)$ is continuous in $x$, then $\lambda_i(x)$ continuous in $x$ for all $i = 1,2,\cdots,n$.
+	\end{rmk} 
+
+	\begin{cor}\label{cor:metrixspace}
+		The topology on $M$ induced by $d$ coincides with the original topology on $M$.
+	\end{cor}
+	\begin{proof}
+		Only need to compare the distance topology with the topology in Euclidean space, so we consider it on Euclidean space. For any $x$ in some chart, there is a $\varepsilon > 0$ such that $D_\varepsilon(x)$ is in the same chart. By the proof of above theorem, there are $\lambda,\mu > 0$ such that
+		\begin{equation*}
+			\lambda^2|\xi|^2 \leq g_{i j}(x) \xi^i \xi^j \leq \mu^2|\xi|^2 \quad \text { for all } y \in D_{\varepsilon}(x), \xi \in \mathbb{R}^d
+		\end{equation*}
+		Thus
+		\begin{equation*}
+			\lambda|y-x| \leq d(y, x) \leq \mu|y-x| \quad \text { for all } y \in D_{\varepsilon}(x)
+		\end{equation*}
+		which means, if we set $B(z, \delta):=\{y \in M: d(z, y) \leq \delta\}$, then
+		\begin{equation*}
+			\stackrel{\circ}{D}_{\lambda \delta}(x) \subset \stackrel{\circ}{B}(x, \delta) \subset \stackrel{\circ}{D}_{\mu \delta}(x) \qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{rmk}
+		The important result of this is $d$ on $M$ is continuous with respect to its original topology.
+	\end{rmk}
+\end{enumerate}
+
+\section{Geodesic}
+
+\begin{exam}\label{exam:shortestinr2}
+	For $\R^2$ with the Euclidean metric $g$, if we use the $(x,y)$ coordinate, it can be expressed as
+	\begin{equation*}
+		g = dx\otimes dx + dy\otimes dy
+	\end{equation*}
+	If we use the polar coordinates $(r,\theta)$, by
+	\begin{equation*}
+		\left\{
+			\begin{aligned}
+				x &= r\cos\theta \\
+				y &= r\sin \theta
+			\end{aligned}
+		\right.
+	\end{equation*}
+	then with this coordinates
+	\begin{equation*}
+		g = dr \otimes dr + r^2d\theta \otimes d\theta
+	\end{equation*}
+	So for any curve with the polar coordinates
+	\begin{equation*}
+		\gamma(t) = \bc{r(t),\theta(t)}
+	\end{equation*}
+	its length
+	\begin{equation*}
+		\begin{aligned}
+			L(\gamma) &= \int_a^b \sqrt{g(\dot{\gamma}(t),\dot{\gamma}(t))}dt \\
+			&= \int_a^b \sqrt{r^\prime(t)^2 + r^2(t)\theta^\prime(t)^2} \\
+			&\geq \abs{r(b) - r(a)}
+		\end{aligned}
+	\end{equation*}
+	``$=$'' if and only if $\theta^\prime \equiv = 0$ and $r(t)$ is monotonic.
+
+\end{exam}
+\begin{exam}\label{exam:sphereshortest}
+	Considering the settings in Example \ref{exam:spheremetric}. For any curve
+	\begin{equation*}
+		\gamma(t) = \bc{\theta(t),\varphi(t)}
+	\end{equation*}
+	its length 
+	\begin{equation*}
+		\begin{aligned}
+			L(\gamma) &= \int_a^b \sqrt{g(\dot{\gamma}(t),\dot{\gamma}(t))}dt \\
+			&= \int_a^b \sqrt{\varphi^\prime(t)^2 + \cos^2\varphi(t)\theta^\prime(t)^2} \\
+			&\geq \abs{\varphi(b) - \varphi(a)}
+		\end{aligned}
+	\end{equation*}
+	``$=$'' if and only if $\theta^\prime \equiv = 0$ and $\varphi(t)$ is monotonic., which is the arc.
+\end{exam}
+Because the globally shortest implies the locally shortest, we first consider the locally shortest property.
+\begin{defn}[Energy function]
+	For any $p,q \in M$, let $\gamma \in C_{p,q}$, the set of all piecewise smooth curves connecting $p,q \in M$.
+	\begin{equation*}
+		E(\gamma) \defeq \frac{1}{2}\int_a^bg(\dot{\gamma}(t),\dot{\gamma}(t))dt
+	\end{equation*}
+\end{defn}
+Note that $E$ dependents on the choice of parametrization.
+\begin{lem}
+	For any $\gamma \in C_{p,q}$, $\gamma \colon [a,b] \sto M$,
+	\begin{equation*}
+		L(\gamma)^2 \leq 2(b-a)E(\gamma)
+	\end{equation*}
+	and ``$=$'' if and only if $\norm{\dot{\gamma}(t)} = const.$.
+\end{lem}
+\begin{proof}
+	It is by H\"older's Inequality,
+	\begin{equation*}
+		\int_a^b\left\|\dot{\gamma}(t)\right\| d t \leq(b-a)^{\frac{1}{2}}\left(\int_a^b\left\|\dot{\gamma}(t)\right\|^2 d t\right)^{\frac{1}{2}}
+	\end{equation*}
+	and ``$=$'' if and only if $\norm{\dot{\gamma}(t)} = c$ for some $c$.
+\end{proof}
+\begin{rmk}
+	Therefore, if $\gamma$ is parametrized by arc length, then $\norm{\dot{\gamma}(t)} = 1$ and $b-a = L(\gamma)$. So
+	\begin{equation*}
+		L(\gamma) = 2E(\gamma)
+	\end{equation*}
+\end{rmk}
+Next, given a chart $(x,U)$, assume $\gamma \colon [a,b] \sto U$, let
+\begin{equation*}
+	x(t) \defeq x(\gamma(t)) = (x^1(t),\cdots,x^n(t))
+\end{equation*}
+For any smooth curve $y \in C^\infty([a,b],x([a,b]))$ with $y(a)=y(b) = 0$, 
+\begin{equation*}
+	\gamma_\varepsilon(t) = x(t)+\varepsilon y(t)
+\end{equation*}
+\begin{lem}
+	If $\gamma$ is a smooth curve with the shortest length, then $\gamma$ with parametrization $\gamma \colon [a,b] \sto U$ such that $\norm{\dot{\gamma}(t)} = c$ s a critical point of $E$, \emph{i.e.}
+	\begin{equation*}
+		\lv{\frac{d}{d\varepsilon}}_{\varepsilon = 0} E(\gamma_\varepsilon) = 0
+	\end{equation*}
+\end{lem}
+\begin{proof}
+	By assumptions,
+	\begin{equation*}
+		\begin{aligned}
+			L(\gamma) & = \sqrt{2(b-a)E(\gamma)} \\
+			&\leq L(\gamma_\varepsilon) \\
+			&\leq \sqrt{2(b-a)E(\gamma_\varepsilon)}
+		\end{aligned}
+	\end{equation*}
+	So $E(\gamma) \leq E(\gamma_\varepsilon)$.
+\end{proof}
+Therefore, to find the shortest curve, it is sufficiently to find the critical point of $E$.
+\begin{equation*}
+	E(\gamma_\varepsilon) = E(\varepsilon) = \frac{1}{2}\int_a^bg_{ij}(x(t) + \varepsilon y(t))\frac{d(x^i(t)+\varepsilon y^i(t))}{dt}\frac{d(x^j(t)+\varepsilon y^j(t))}{dt}dt
+\end{equation*}
+So
+\begin{equation*}
+	\begin{aligned}
+		0 = \lv{\frac{d}{d\varepsilon}}_{\varepsilon = 0} E(\varepsilon) &=  \frac{1}{2}\int_a^b \frac{\partial g_{ij}(x(t))}{\partial x_k}y^k(t)\frac{dx^i(t)}{dt}\frac{dx^j(t)}{dt}dt \\
+		&\quad + \frac{1}{2}\int_a^b g_{ij}(x(t))\frac{dy^i(t)}{dt}\frac{dx^j(t)}{dt}dt \\
+		&\quad + \frac{1}{2}\int_a^b g_{ij}(x(t))\frac{dx^i(t)}{dt}\frac{dy^j(t)}{dt}dt
+	\end{aligned}
+\end{equation*}
+Let $\frac{\partial g_{ij}}{\partial x_k} = g_{ij,k}$. Because of integral by parts,
+\begin{equation*}
+	\begin{aligned}
+		0 &= \frac{1}{2}\int_a^b \bc{g_{ij,k}\frac{dx^i}{dt}\frac{dx^j}{dt}}y^kdt-\frac{1}{2}\int_a^b \frac{d}{dt}\bc{\bc{g_{ij}\frac{dx^i}{dt}}}y^jdt-\frac{1}{2}\int_a^b \frac{d}{dt}\bc{\bc{g_{ij}\frac{dx^j}{dt}}}y^idt \\
+		&= \frac{1}{2}\int_a^b\bc{g_{ij,k}\frac{dx^i}{dt}\frac{dx^j}{dt} - \frac{d}{dt}\bc{g_{kj}\frac{dx^j}{dt}} -\frac{d}{dt}\bc{g_{ik}\frac{dx^i}{dt}}}y^k dt
+	\end{aligned}
+\end{equation*}
+So for any $k=1,2,\cdots,m$
+\begin{equation*}
+	\begin{aligned}
+		0 &= g_{ij,k}\frac{dx^i}{dt}\frac{dx^j}{dt} - \frac{d}{dt}\bc{g_{kj}\frac{dx^j}{dt}} -\frac{d}{dt}\bc{g_{ik}\frac{dx^i}{dt}} \\
+		&= g_{ij,k}\frac{dx^i}{dt}\frac{dx^j}{dt} - g_{kj,l}\frac{dx^j}{dt}\frac{dx^l}{dt} - g_{kj}\frac{d^2x^j}{dt^2} \\
+		&\quad - g_{ik,l}\frac{dx^i}{dt}\frac{dx^l}{dt} - g_{ik}\frac{d^2x^i}{dt^2} \\
+		&=\bc{g_{ij,k}-g_{kj,i}-g_{ik,j}}\frac{dx^i}{dt}\frac{dx^j}{dt}-2g_{ik}\frac{d^2x^i}{dt^2}
+	\end{aligned}
+\end{equation*}
+Because $(g^{ij}) = (g_{ij})^{-1}$, \emph{i.e.} $g^{il}g_{lj} = \delta^i_j$, by multiplying with $g^{lk}$ on both sides in above equation, we get
+\begin{equation*}
+	\begin{aligned}
+		0 &= 2\delta_i^l\frac{d^2x^i}{dt^2} - g^{lk}\bc{g_{ij,k}-g_{kj,i}-g_{ik,j}}\frac{dx^i}{dt}\frac{dx^j}{dt} \\
+		&=2\frac{d^2x^l}{dt^2}+g^{lk}\bc{g_{kj,i} + g_{ik,j} - g_{ij,k}}\frac{dx^i}{dt}\frac{dx^j}{dt}
+	\end{aligned}
+\end{equation*}
+By $g_{kj,i} = g_{jk,i}$ and $g_{ik,j} = g_{ki,j}$, we get
+\begin{equation*}
+	\frac{d^2x^l}{dt^2}+\frac{1}{2}g^{lk}\bc{g_{jk,i} + g_{ki,j} - g_{ij,k}}\frac{dx^i}{dt}\frac{dx^j}{dt} = 0
+\end{equation*}
+Let
+\begin{equation*}
+	\Gamma_{ij}^l = \frac{1}{2}g^{lk}\bc{g_{jk,i} + g_{ki,j} - g_{ij,k}} = \Gamma_{ji}^l
+\end{equation*}
+which is called the Christoffel symbol. We have the so-called geodesic equation.
+\begin{defn}
+	Let $(x,U)$ be a chart of $M$. A smooth (regular) curve $\gamma \colon [a,b] \sto U$ is called a geodesic if it satisfies
+	\begin{equation}\label{eq:geodesic}
+		\frac{d^2x^l}{dt^2}+\Gamma_{ij}^l\frac{dx^i}{dt}\frac{dx^j}{dt} = 0,\quad \forall~l=1,2,\cdots,m
+	\end{equation}
+\end{defn}
+\begin{rmk}
+	In the following, we can see that the left hand side of geodesic equation is the coefficient of a $(1,0)$-tensor field. In other words, it satisfies the tensor transformation law. So it is independent with the choice of coordinates and it can be defined globally.
+\end{rmk}
+Note that geodesic equation is dependent with the parametrization of curve. In above, if the parametrization of $\gamma$ satisfies $\norm{\dot{\gamma}(t)} = c$ and $\gamma$ satisfies the geodesic equation, then $\gamma$ is a critical point of $E$. The problem is if these two condition of $\gamma$ can be both satisfied.
+\begin{lem}
+	Any smooth curve $\gamma$ satisfies the geodesic equation is parametrized proportionally by arc length, that is $\norm{\dot{\gamma}(t)} = c$.
+\end{lem}
+\begin{rmk}
+	Note that it means that the regularity condition of geodesic is not important. Besides, we have known geodesics are critical points of $E$. 
+\end{rmk}
+\begin{proof}
+	First,
+	\begin{equation*}
+		\frac{d}{dt}\bc{g_{ij}\frac{dx^i}{dt}\frac{dx^j}{dt}} = g_{ij,l}\frac{dx^i}{dt}\frac{dx^j}{dt}\frac{dx^l}{dt}+g_{ij}\frac{d^2x^i}{dt^2}\frac{dx^j}{dt}+g_{ij}\frac{dx^i}{dt}\frac{d^2x^j}{dt^2} 
+	\end{equation*}
+	By replacing $\frac{d^2x^i}{dt^2},\frac{d^2x^j}{dt^2}$ with the geodesic equation, we have
+	\begin{equation*}
+		\frac{d}{dt}\bc{g_{ij}\frac{dx^i}{dt}\frac{dx^j}{dt}} = \bc{g_{ij,l}-g_{kj}\Gamma^k_{il}-g_{ik}\Gamma^k_{jl}}\frac{dx^i}{dt}\frac{dx^j}{dt}\frac{dx^l}{dt}
+	\end{equation*}
+	
+	\noindent\textbf{Claim:} $g_{ij,l}=g_{kj}\Gamma^k_{il}+g_{ik}\Gamma^k_{jl}$.
+
+	\noindent For the RHS,
+	\begin{equation*}
+		\begin{aligned}
+			\text{RHS} &= \frac{1}{2}g_{kj}g^{kp}\bc{g_{pi,l}+g_{il,p}-g_{lp,i}} + \frac{1}{2}g_{ik}g^{kp}\bc{g_{pj,l}+g_{jl,p}-g_{lp,j}} \\
+			&=\frac{1}{2}\bc{g_{ji,l}+g_{il,j}-g_{lj,i}} + \frac{1}{2}\bc{g_{ij,l}+g_{jl,i}-g_{li,j}} \\
+			&= g_{ij,l}
+		\end{aligned}
+	\end{equation*}
+\end{proof}
+\begin{rmk}
+	By this, if $\gamma(t)$ is a geodesic for $t \in [0,a]$ with $\norm{\dot{\gamma}(0)} = c$, then
+	\begin{equation*}
+		L(\gamma) = ca
+	\end{equation*}
+\end{rmk}
+
+\noindent Moreover, from the theory of ODE, geodesics exist.
+\begin{thm}
+	Let $p \in M$ and $v \in T_pM$. Then there is a $\varepsilon > 0$ and a unique geodesic
+	\begin{equation*}
+		\gamma\colon (-\varepsilon,\varepsilon) \sto M
+	\end{equation*}
+	such that $\gamma(0) = p$ and $\dot{\gamma}(0) = v$. Such $\gamma$ is also denoted by $\gamma_{q,v}$
+\end{thm}
+\begin{rmk}
+	The geodesic equation is a ODE by considering $t \mapsto (\gamma(t),\dot{\gamma}(t)) \in TM$.
+\end{rmk}
+
+And also by the smoothness of ODE with respect to initial conditions, we have the following theorem.
+\begin{thm}
+	For any $p \in M$, there are
+	\begin{equation*}
+		\mathcal{U}_{V,\delta} \defeq \bb{(q,v) \colon p,q \in V \subset_{\text{open}} M,~v\in T_pM,~\norm{v}\leq \delta}
+	\end{equation*}
+	and $\varepsilon > 0$ and smooth
+	\begin{equation*}
+		\gamma \colon (-\varepsilon,\varepsilon) \times \mathcal{U}_{V,\delta} \sto M
+	\end{equation*}
+	such that for any $(q,v) \in \mathcal{U}_{V,\delta}$, $\gamma_{q,v}(t) = \gamma(t,q,v)$ is a geodesic.
+\end{thm}
+
+\begin{prop}[Homogeneity]
+	If $\gamma(t,q,v)$ is a geodesic defined on $(-\varepsilon,\varepsilon)$, then the geodesic $\gamma(t,q,\lambda v)$ is defined on $(-\varepsilon/\lambda, \varepsilon/\lambda)$ and
+	\begin{equation*}
+		\gamma(t,q,\lambda v) = \gamma(\lambda t,q, v)
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	Let $\varphi(t) = \gamma(\lambda t,q, v) = (\varphi^1(t),\cdots,\varphi^m(t))$, where $\varphi^i(t) = x^i(\lambda t)$. Then
+	\begin{equation*}
+		\begin{aligned}
+			&\quad \frac{d^2\varphi^i(t)}{dt^2} + \Gamma^i_{jk}(\varphi(t))\frac{d\varphi^j(t)}{dt}\frac{d\varphi^k(t)}{dt} \\
+			&= \lambda^2\bc{\frac{d^2x^i(\lambda t)}{dt^2} + \Gamma^i_{jk}(x(\lambda t))\frac{dx^j(\lambda t)}{dt}\frac{dx^k(\lambda t)}{dt}} = 0
+		\end{aligned}
+	\end{equation*}
+	So $\varphi(t)$ is a geodesic with $\varphi(0) = p$ and $\varphi^\prime(0) = \lambda v$. By the uniqueness,
+	\begin{equation*}
+		\varphi(t) = \gamma(t,q,\lambda v) \qedhere
+	\end{equation*}
+\end{proof}
+
+\section{Exponential Map}
+
+For any $p \in M$, the exponential map is defined as
+\begin{center}
+	\begin{tabular}{cccc}
+		$\exp_p \colon$ & $V_p$ & $\longrightarrow$ & $M$ \\
+		~& $v$ & $\mapsto$ & $\gamma(1,p,v)$
+	\end{tabular}
+\end{center}
+where $V_p \defeq \bb{v \in T_pM \colon \gamma(t,p,v) \text{ is defined on } [0,1]}$. By above homogeneity of geodesics, we have the following results.
+\begin{prop}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For any $v \in V_p$, $\lambda v \in V_p$ for all $\lambda \in [0,1]$.
+		\item For any $p \in M$, there is $\varepsilon > 0$ such that $B(0,\varepsilon) = \bb{v \in T_pM \colon \norm{v} < \varepsilon} \subset V_p$.
+	\end{enumerate}
+\end{prop}
+
+\begin{thm}
+	Then exponential map $\exp_p \colon B(0,\varepsilon) \subset T_pM \sto M$ is diffeomorphic for some $\varepsilon > 0$.
+\end{thm}
+\begin{proof}
+	We can assume that $\exp_p(B(0,\varepsilon)) \subset U$ for some chart $(x,U)$ by choosing sufficiently small $\varepsilon^\prime > 0$. Let $T_pM \simeq \R^m$. For $v = (v^1,\cdots,v^m) \in B(0,\varepsilon^\prime)$, let
+	\begin{equation*}
+		x(\exp_p(v)) = x(\gamma(1,p,v^i\frac{\partial}{\partial x^i})) = (y^1,\cdots,y^m)
+	\end{equation*}
+	Then $\lv{d\exp_p}_O \colon T_O(T_pM) \simeq \R^m \sto T_pM$ in $U$ can be expressed as
+	\begin{equation*}
+		\lv{d\exp_p}_O = \lv{\bc{
+						\begin{array}{cccc}
+							\frac{\partial y^1}{\partial v^1} & \frac{\partial y^1}{\partial v^2} & \cdots &\frac{\partial y^1}{\partial v^m} \\
+							\frac{\partial y^2}{\partial v^1} & \frac{\partial y^2}{\partial v^2} & \cdots &\frac{\partial y^2}{\partial v^m} \\
+							\vdots & \vdots & \ddots & \vdots \\
+							\frac{\partial y^m}{\partial v^1} & \frac{\partial y^m}{\partial v^2} & \cdots &\frac{\partial y^m}{\partial v^m}
+						\end{array}
+			}}_O
+	\end{equation*}
+	Because
+	\begin{equation*}
+		\begin{aligned}
+			\frac{\partial y^k}{\partial v^i} &= \lv{\frac{d y^k(0,\cdots,t,\cdots,0)}{dt}}_{t=0} \\
+			&= \lv{\frac{d}{dt}}_{t=0}x^k(\gamma(1,p,t\frac{\partial}{\partial x^i})) \\
+			&= \lv{\frac{d}{dt}}_{t=0}x^k(\gamma(t,p,\frac{\partial}{\partial x^i})) \\
+			&= \delta_{ki}
+		\end{aligned}
+	\end{equation*}
+	we have $\lv{d\exp_p}_O = I$. So there is a smaller $\varepsilon > 0$ such that $\exp_p \colon B(0,\varepsilon) \subset T_pM \sto M$ is a diffeomorphism.
+\end{proof}
+
+By this result, we have the normal coordinates.
+\begin{defn}
+	For $p\in M$, there is a diffeomorphism $\exp_p^{-1} \colon \exp_p(B_p) \sto B_p$ for some ball $B_p \subset \R^m\simeq T_pM$. Therefore, $\bb{(B_p,\exp_p^{-1})}_{p \in M}$ is an atlas of $M$. Such coordinates system is called the normal coordinate.
+\end{defn}
+\begin{rmk}
+	Any geodesic starting from $p$ is $\gamma(t,p,v)$ for some $v \in T_pM$. Because
+	\begin{equation*}
+		\gamma(t,p,v) = \gamma(1,p,tv) = \exp_p(tv),\quad t \in (-\delta,\delta)
+	\end{equation*}
+	for small $\delta > 0$, $tv = (tv^1,\cdots,tv^m) = \exp_p^{-1}(\gamma(t,p,v))$, which means on the normal chart $(B_p,\exp_p^{-1})$, radical lines in $\R^m$ are corresponding to the geodesics in $M$.
+\end{rmk}
+
+\begin{exam}
+	Consider $n$-dimensional sphere $\Sp^n \subset \R^{n+1}$, let $\Sp^n$ with the induced metric. Then we have shown the small arc of the greatest circle is the geodesic, \emph{i.e.} for any given $p \in \Sp^n$ and $0 \neq v \in T_p\mathbb{S}^n$,
+	\begin{equation*}
+		\gamma(t,p,v) = \cos(t\norm{v})p+\sin(t\norm{v})\frac{v}{\norm{v}}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\exp_p(v) = \cos(\norm{v})p+\sin(\norm{v})\frac{v}{\norm{v}},
+	\end{equation*}
+	and $\exp_p(0) = p$. So $\exp_p$ is well-defined on $T_p\Sp^n$. Furthermore, let $p^\prime$ be the antipodal point of $p$. Then
+	\begin{equation*}
+		\exp_p \colon B(O,\pi) \subset T_p\Sp^n \longrightarrow \Sp^n \backslash \bb{p^\prime}
+	\end{equation*}
+	is a diffeomorphism.
+\end{exam}
+
+\begin{thm}
+	In a normal coordinate, we have for any $i,j,k =1,2,\cdots,m$
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $g_{ij}(0) = \delta_{ij}$,
+		\item $\Gamma^i_{jk}(0) = 0$,
+		\item $g_{ij,k}(0) = 0$.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For the isomorphism $T_pM \simeq \R^m$, we can choose a basis in $T_pM$ such that it is orthonormal with respect to $g_p$.
+		\item We know any geodesic in a normal coordinate should be $x(t) = tv$. Thus, by the geodesic equation, we have
+		\begin{equation*}
+			\Gamma_{\ell n}^i(t v) v^\ell v^n=0,\quad \forall~i=1,2,\cdots,m
+		\end{equation*}
+		In particular, $\Gamma_{\ell n}^i(0) v^j v^k=0$. Then by choosing $v = \frac{1}{2}(e_j+e_k)$ for all $j,k=1,\cdots,m$,
+		\begin{equation*}
+			\Gamma_{j k}^i(0) = 0,\quad i,j,k = 1,2,\cdots,m
+		\end{equation*}
+		\item By above claim, we have
+		\begin{equation*}
+			g_{ij,l}(0)=g_{kj}(0)\Gamma^k_{il}(0)+g_{ik}\Gamma^k_{jl}(0)
+		\end{equation*}
+		So we have the desired result. \qedhere
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}
+	When choosing a normal coordinate for $M$ and applying the polar coordinate $(r,\varphi) \in (0,\infty)\times \mathbb{S}^{m-1}$ on $\R^m$ (called the Riemannian polar coordinates), we have
+	\begin{equation*}
+		g_{i j}=\left(
+			\begin{array}{cccc}
+				1 & 0 & \cdots & 0 \\
+				0 & & & \\
+				\vdots & & g_{\varphi \varphi}(r, \varphi) & \\
+				0 & & &
+			\end{array}
+			\right)
+	\end{equation*}
+	where $g_{\varphi \varphi}(r, \varphi) \R^{(m-1)\times (m-1)}$ is positive.
+\end{thm}
+\begin{proof}
+	In such case, any geodesic has the form
+	\begin{equation*}
+		x(t) = (t,\varphi_0)
+	\end{equation*}
+	for some fixed $\varphi_0$. Therefore, by the geodesic equation, we have
+	\begin{equation*}
+		\Gamma_{rr}^i = 0,\quad \forall~i=1,2,\cdots,m
+	\end{equation*}
+	and thus
+	\begin{equation*}
+		g^{i \ell}\left(2 g_{r \ell, r}-g_{r r, \ell}\right)=0,\quad \forall~i=1,2,\cdots,m
+	\end{equation*}
+	By multiplying $g_{\ell i}$,
+	\begin{equation*}
+		2 g_{r \ell, r}-g_{r r, \ell}=0,\quad \forall~\ell=1,2,\cdots,m
+	\end{equation*}
+	In particular, let $\ell = r$,
+	\begin{equation*}
+		g_{rr,r} = 0
+	\end{equation*}
+	and so $g_{rr}(t,\varphi_0) = g_{rr}(0) = 1$ by continuity. Since $\varphi_0$ is general, $g_{rr}(r,\varphi) = 1$ for any $(r,\varphi)$. So $g_{rr,\ell} = 0$ for all $\ell$, and it implies
+	\begin{equation*}
+		g_{r \ell, r}(t,\varphi_0) = 0,\quad \forall~\ell = 1,2,\cdots,m
+	\end{equation*}
+	So $g_{r \ell}(t,\varphi_0) = g_{r\ell}(0) = 0$ for all $\ell = 2,\cdots,m$. Similarly, we have $g_{r\varphi}(r,\varphi) = 1$ for any $(r,\varphi)$.
+\end{proof}
+
+\section{Local Shortest Curve}
+
+First, let's see the shortest curve connecting $p,q$ when they are closed enough. First, there is a result that can be obtained directly by using Riemannian polar coordinates.
+\begin{cor}[Locally Shortest]
+	For any $p \in M$, there is a $\rho > 0$ such that $B(p,\rho) \defeq \bb{q \in M \colon d(p,q) \leq \rho}$ is contained in a normal chart. Then for any $q \in \partial B(p,\rho)$, there is a unique one geodesic of shortest length $(=\rho)$ connecting $p,q$, which is given by $x(t) = (t,\varphi_0)$. Here ``shortest length'' means over all curves connecting $p,q$ in $M$.
+\end{cor}
+\begin{proof}
+	Using the Riemannian polar coordinates, let $c(t) = (r(t),\varphi(t))$ with $t \in [0,T]$ be any curve connecting $p,q$ and note that $c(t)$ may be not fully contained in $B(p,\rho)$. So let
+	\begin{equation*}
+		t_0 \defeq \inf\bb{t \leq T \colon d(c(t),p) \geq \rho}
+	\end{equation*}
+	Then $c|_{[0,t_0]}$ if fully contained in $B(p,\rho)$ and clearly $L(c) \geq L(c|_{[0,t_0]})$. Then by above theorem, we get
+	\begin{equation*}
+		\begin{aligned}
+			L\left(c_{\left[0, t_0\right]}\right) & =\int_0^{t_0}\left(g_{i j}(c(t)) \dot{c}^i \dot{c}^j\right)^{\frac{1}{2}} d t \\
+			& \geq \int_0^{t_0}\left(g_{r r}(c(t)) \dot{r} \dot{r}\right)^{\frac{1}{2}} d t \\
+			&= \abs{\int_0^{t_0}|\dot{r}| d t} \\
+			&\geq \int_0^{t_0} \dot{r} d t = r(t_0) = \rho
+		\end{aligned}
+	\end{equation*}
+	where the equality is obtained by
+	\begin{equation*}
+	 	g_{\varphi \varphi} \dot{\varphi} \dot{\varphi} \equiv 0~\Leftrightarrow~\varphi(t)\equiv const.
+	\end{equation*}
+	and $r(t)$ is monotonic. So $c(t)$ is the geodesic.
+\end{proof}
+\begin{rmk}
+	Therefore, for any $p \in M$, there is a $\rho > 0$ such that
+	\begin{equation*}
+		d_\rho(0):=\left\{y \in \mathbb{R}^d:|y| \leq \rho\right\} \subset T_p M\simeq \R^m
+	\end{equation*}
+	is diffeomorphic to $B(p,\rho)$ by map $\exp_p$. So $(B(p,\rho),\exp_p^{-1})$ is a Riemannian polar coordinates. But we should note that such $\rho$ is dependent on $p$. Clearly, if $M$ is compact, we can get a uniform $\rho_0$.
+\end{rmk}
+
+\begin{cor}\label{cor:cptshort}
+	If $M$ is compact, then there is a $\rho_0$ such that for any $p,q \in M$ with $d(p,q) \leq \rho_0$, there is a unique shortest geodesic connecting $p,q$. Moreover, by the theory from ODE, such geodesic is continuous with respect to end points $p$ and $q$.
+\end{cor}
+
+\begin{cor}
+	For any $p,q \in M$, if there is a piecewise smooth curve $\gamma \colon [0,l]$ such that $\gamma(0) = p$ and $\gamma(l) = q$ of shortest length, then $\gamma$ should be a (smooth) geodesic.
+\end{cor}
+\begin{proof}
+	By the compactness of $\gamma([0,l])$, there is a $\varepsilon_0$ such that for any $t_1<t_2 \in [0,l]$ with $t_2-t_1 < \varepsilon_0$, there a geodesic $\gamma_{t_1,t_2}$ connecting $\gamma_{t_1}$ and $\gamma(t_2)$. Then $\gamma_{t_1,t_2} = \lv{\gamma}_{[t_1,t_2]}$ by the shortestness and uniqueness of geodesic. Therefore, $\gamma$ is smooth and a geodesic.
+\end{proof}
+\begin{rmk}
+	However, in a Riemannian manifold, there may be two points $p,q$ and no shortest curve can connect them. For example, on $\R^2 \backslash \bb{0}$, there is no shortest curve that can connect $p = x$ with $q = -x$. Also, shortest curves are geodesics but it does not mean the shortest curve is uniquely exists. For example, in $\mathbb{S}^2$, there are infinitely many shortest curves connecting $p=x$ with $q = -x$.
+\end{rmk}
+
+\noindent To see the uniformness of $\rho$, we need more details.
+\begin{defn}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item Let $p \in M$. If an open set $U$ contains $p$ and $(U,\exp_p^{-1})$ is a normal coordinates, then $U$ is called a normal neighborhood for $p$.
+		\item Let $p \in M$. If $p \in W$ and $W$ is a normal neighborhood such that for any $q \in W$, $W$ is a normal neighborhood for $q$, then $W$ is called a totally normal neighborhood.
+	\end{enumerate}
+\end{defn}
+\begin{rmk}
+	Ball $B(0,\varepsilon) \subset T_pM$ on which $\exp_p$ is well-defined is called a normal ball and a geodesic in $\exp_p(B(0,\varepsilon))$ starting from $p$ is called a radical geodesic.
+\end{rmk}
+
+\noindent Considering the map
+\begin{center}
+	\begin{tabular}{cccc}
+		$\exp \colon$ & $TM$ & $\longrightarrow$ & $M \times M$ \\
+		~& $(p,v)$ & $\mapsto$ & $(p,\exp_p(v))$
+	\end{tabular}
+\end{center}
+\begin{lem}
+	For $\exp$,
+	\begin{equation*}
+		d\exp(p,O_p) \colon T_{(p,O_p)}TM \longrightarrow T_{(p,p)}(M \times M) \simeq T_pM \times T_pM
+	\end{equation*}
+	is non-singular.
+\end{lem}
+\begin{proof}
+	First, for any $p \in M$ and $v \in T_pM$, consider the curve $c(t)$ on $TM$ defined as
+	\begin{equation*}
+		c(t) = (\gamma(t,p,v),O_{\gamma(t,p,v)})
+	\end{equation*}
+	Then we have
+	\begin{equation*}
+		c(0) = (p,O_p),\quad \dot{c}(0) = (v,0)
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			d\exp(p,O_p)(v,0) &= \lv{\frac{d}{dt}}_{t=0}\exp(c(t)) = \lv{\frac{d}{dt}}_{t=0}\exp(\gamma(t,p,v),O_{\gamma(t,p,v)}) \\
+			&= \lv{\frac{d}{dt}}_{t=0} (\gamma(t,p,v),\exp_{\gamma(t,p,v)}(O_{\gamma(t,p,v)})) \\
+			&= \lv{\frac{d}{dt}}_{t=0} (\gamma(t,p,v),\gamma(t,p,v))\\
+			&= (v,v)
+		\end{aligned}
+	\end{equation*}
+	Next, considering $\bar{c}(t) = (p,tv)$ with
+	\begin{equation*}
+		\bar{c}(0) = (p,O_p),\quad \dot{\bar{c}}(0) = (0,v) 
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			d\exp(p,O_p)(0,v) &= \lv{\frac{d}{dt}}_{t=0}\exp(\bar{c}(t)) = \lv{\frac{d}{dt}}_{t=0}\exp(p,tv) \\
+			&= \lv{\frac{d}{dt}}_{t=0}(p,\exp_p(tv)) \\
+			&= (0,v)
+		\end{aligned}
+	\end{equation*}
+	Combining these two results, we can see
+	\begin{equation*}
+		d\exp(p,O_p)(0,v) = \bc{
+			\begin{array}{cc}
+				I & O \\
+				I & I
+			\end{array}
+		}\qedhere
+	\end{equation*}
+\end{proof}
+
+\begin{thm}
+	For any $p \in M$, there are a neighborhood $W$ of $p$ and $\delta > 0$ such that for any $q \in W$, $\exp_q$ is a diffeomorphism on $B(O_q,\delta) \subset T_qM$ and $W \subset \exp_p(B(O_q,\delta))$, that is, $W$ is contained in a normal chart of any $q \in W$, \emph{i.e.} $W$ is a totally normal neighborhood.
+\end{thm}
+\begin{proof}
+	By above lemma, there is a neighborhood $\mathcal{U}$ of $(p,O_p)$ in $TM$ such that
+	\begin{equation*}
+		\exp \colon \mathcal{U} \longrightarrow \exp(\mathcal{U}) = \Phi 
+	\end{equation*}
+	is a diffeomorphism, where $(p,p) \in \Phi \subset M \times M$. By shrinking, we can set
+	\begin{equation*}
+		\mathcal{U} \defeq \bb{(q,v) \colon q \in V \subset M,~v \in B(O_q,\delta) \subset T_qM}
+	\end{equation*}
+	by the topology defined on $TM$, where $p \in V$. Since $(p,p) \in \Phi$, we can find a neighborhood $W$ of $p$ such that
+	\begin{equation*}
+		W \times W \subset \Phi = \bb{(q,\tilde{q}) \colon q \in V,~\tilde{q} \in \exp_q(B(O_q,\delta))}
+	\end{equation*}
+	For any $\tilde{q} \in W$, because $q \in W$,
+	\begin{equation*}
+		(q,\tilde{q}) \in W \times W \subset \bb{(q,\tilde{q}) \colon q \in V,~\tilde{q} \in \exp_q(B(O_q,\delta))}
+	\end{equation*}
+	which means $\tilde{q} \in \exp_q(B(O_q,\delta))$. So $W \subset \exp_q(B(O_q,\delta))$.
+\end{proof}
+\begin{rmk}
+    Note that such $\delta$ is independent with choice of $q$. So $W$ is also called a $\delta$-uniform totally normal neighborhood of $p$.
+\end{rmk}
+
+\section{Cut Locus}
+
+Consider the maximal geodesic $\gamma(t,p,v)$ for $t \in [0,b)$ with $\R_\infty$, where the right end point should be open by the theory of ODE. Let
+\begin{equation*}
+	A \defeq \bb{t > 0 \colon d(p,\gamma(t)) = t}
+\end{equation*}
+Then if $A = (0,a]$ with $a < b$, then $\gamma(a)$ is called a cut point. Otherwise, when $A = (0,b)$, there is not cut point. Let
+\begin{equation*}
+	C(p) \defeq \bb{\text{all cut points of geodesics starting from }p}
+\end{equation*}
+For $v \in T_pM$ with $\norm{v} = 1$, let
+\begin{equation*}
+	\tau(v) \defeq \left\{
+		\begin{aligned}
+			a,&\quad\text{if }\exp_p(av)\text{ is a cut point}\\
+			b,&\quad\text{if no cut point}
+		\end{aligned}
+	\right.
+\end{equation*}
+\begin{rmk}
+	If $S_p = \bb{v\in T_pM \colon \norm{v} = 1}$, then
+	\begin{equation*}
+		\tau \colon S_p \sto \R_\infty
+	\end{equation*}
+	Moreover, let $\tilde{C}(p) \defeq \bb{tv \colon v \in S_p,~t = \tau(v)}$. Note that $\tilde{C}(p) \cap E(p) = \varnothing$.
+\end{rmk}
+Let
+\begin{equation*}
+	E(p) \defeq \bb{tv \colon v \in T_pM,~\norm{v} = 1,~0 \leq t < \tau(v)}
+\end{equation*}
+\begin{prop}\label{prop:}
+	The map $\exp_p\colon E(p) \sto M$ is injective.
+\end{prop}
+\begin{proof}
+	First, for any $p,q \in M$, if there are two shortest curves (geodesics) $\gamma_1,\gamma_2$ connecting $p,q$, then clearly at $q$, $v_1=\dot{\gamma}_1 \neq \dot{\gamma}_2$, otherwise, by the uniqueness of geodesic, $\gamma_1 = \gamma_2$. Then at $q$, we can find a geodesic $\gamma_3$ with $\gamma_3(0)= q$ and $\dot{\gamma}_3(0) = v_1$. Let $q^\prime = \gamma_3(\varepsilon)$. If $q$ is not a cut point of $p$, then there is a small $\varepsilon > 0$ such that the geodesic $\gamma_1 \cup \gamma_3$ is a shortest curve connect $p$ with $q^\prime$. Then $\gamma_2 \cup \gamma_3$ is also a shortest curve connecting $p$ with $q^\prime$. But it is contradicted to the smoothness of shortest curves. So $q$ is a cut point of $p$.
+
+	\noindent If there are $v \neq w \in E(p)$ such that
+	\begin{equation*}
+		\exp_p(v) = \exp_p(w) = q
+	\end{equation*}
+	then there are two geodesics
+	\begin{equation*}
+		t\mapsto \exp_p\bc{t\frac{v}{\norm{v}}}~(t \in [0,\norm{v}]),\quad t\mapsto \exp_p\bc{t\frac{w}{\norm{w}}} ~(t \in [0,\norm{w}])
+	\end{equation*}
+	connecting $p$ with $q$. Because $v,w \in E(p)$, they are shortest curves and so $q$ is a cut point, which is contradicted to $v,w \in E(p)$.
+\end{proof}
+
+\begin{rmk}
+	In fact, $\exp_p \colon E(p) \sto \exp_p(E(p))$ is a diffeomorphism when $(M,g)$ is complete, which is followed by two facts:
+	\begin{enumerate}[label=(\roman{*})]
+		\item $\exp_p$ is a local diffeomorphism on $E(p)$ because $E(p)$ contains no conjugate points of $p$;
+		\item any bijective local diffeomorphism is a diffeomorphism.
+	\end{enumerate}
+\end{rmk}
+
+\begin{cor}
+	$\exp_p(E(p)) \cap C(p) = \varnothing$.
+\end{cor}
+\begin{proof}
+	Assume there is a $q \in \exp_p(E(p)) \cap C(p)$. Then there are $v \in \tilde{C}(p)$ and $w \in E(p)$ such that
+	\begin{equation*}
+		\exp_p(v) = \exp_p(w) = q
+	\end{equation*}
+	because
+	\begin{equation*}
+		\gamma_1(t) \exp_p\bc{t\frac{v}{\norm{v}}}~(t \in [0,\norm{v}]),\quad \gamma_2(t)= \exp_p\bc{t\frac{w}{\norm{w}}} ~(t \in [0,\norm{w}])
+	\end{equation*}
+	 are two different shortest geodesics connecting $p$ with $q$ by $v \neq w$, we cannot have either $\norm{v} < \norm{w}$ or $\norm{v} > \norm{w}$. Assume $\norm{v} = \norm{w}$. Then because $w \in E(p)$, there is a small $\varepsilon > 0$ such that $\gamma_2(t)$ is defined on $[0,\norm{w}+\varepsilon]$ and it is a shortest curve connecting $p$ and $q^\prime = \gamma_2(\norm{w}+\varepsilon)$. But because $\norm{v} = \norm{w}$, \emph{i.e.} $L(\gamma_1) = L(\gamma_2|_{[0,\norm{w}]})$, $\gamma_1 \cup \gamma_2|_{[\norm{w},\norm{w}+\varepsilon]}$ is also a shortest curve, which contradicts to the smoothness of shortest curve.
+\end{proof}
+
+\section{Existence: Hopf-Rinow Theorem}
+
+The next problem is when for any $p,q \in M$, they can be connected by a shortest curve. First, by starting from $p$, choose a normal ball $B(p,\rho_0)$, we can choose $p_0 \in \partial B(p,\rho_0)$ such that
+\begin{equation*}
+	p_0 = \min_{r_0 \in B(p,\rho_0)}d(r_0,q)
+\end{equation*}
+and the existence of $p_0$ is by the continuity of $d$ and compactness of $\partial B(p,\rho_0)$. Then let $\gamma_0$ be the unique geodesic connecting $p$ and $p_0$. Then by starting from $p_0$, we can choose normal ball $B(p_0,\rho_1)$ and similarly find $p_1 \in \partial B(p_0,\rho_)$ and the geodesic $\gamma_1$ connecting $p_0$ and $p_1$. Then we have $\bb{p_n}_{n=0}^\infty$, $\bb{\rho_n}_{n=0}^\infty$, and $\bb{\gamma_n}_{n=0}^\infty$. Then let 
+\begin{equation*}
+	\gamma = \bigcup_{n=0}^\infty \gamma_n
+\end{equation*}
+There are two problems.
+\begin{enumerate}[label=\Roman*.]
+	\item Whether $\gamma$ is shortest, \emph{i.e.} $\gamma$ is a smooth geodesic: The answer is always yes. It is sufficient to prove $\gamma_0\cup\gamma_1$ is a shortest curve connecting $p$ and $p_1$, \emph{i.e.} $d(p,p_1) = \rho_0+\rho_1$. Let $r = d(p,q)$.
+
+	\noindent \textbf{Claim:} $d(p_0,q) = r-\rho_0$.
+	\begin{equation*}
+	 	d(p_0,q) + d(p,p_0) \geq d(p,q)~\Rightarrow~d(p_0,q) \geq r - \rho_0
+	\end{equation*} 
+	The let $\tilde{\gamma}$ be any curve connecting $p,q$ and let $\tilde{\gamma} = \tilde{\gamma}_1 \cup \tilde{\gamma}_2$, where $\tilde{\gamma}_1 = \tilde{\gamma} \cap B(p,\rho_0)$. Then
+	\begin{equation*}
+		L(\tilde{\gamma}) = L(\tilde{\gamma}_1) + L(\tilde{\gamma}_2) \geq \rho_0 + d(p_0,q)
+	\end{equation*}
+	By taking infimum on the both sides, we have
+	\begin{equation*}
+		d(p,q) \geq \rho_0 + d(p_0,q)~\Rightarrow~d(p_0,q) \leq r - \rho_0
+	\end{equation*}
+	\noindent \textbf{Claim:} $d(p,p_1) = \rho_0+\rho_1$.
+
+	\noindent Because $d(p_0,q) = r-\rho_0$, by above we similarly have $d(p_1,q) = r-\rho_0-\rho_1$. So
+	\begin{equation*}
+		\begin{aligned}
+			d(p,p_1) &\geq d(p,q) - d(p_1,q) \\
+			&= r - (r-\rho_0-\rho_1) \\
+			&= \rho_0+\rho_1
+		\end{aligned}
+	\end{equation*}
+	but $L(\gamma_0 \cup \gamma_1) = \rho_0+\rho_1$, so $d(p,p_1) = \rho_0+\rho_1$ and $\gamma_0 \cup \gamma_1$ is the smooth geodesic.
+
+	\item Whether $\gamma$ can reach at $q$: The answer is not always. So we need more assumptions.
+	\begin{enumerate}[label=(\roman*)]
+		\item By compactness: $\gamma$ may not reach at $q$ because $\rho_n \sto 0$. To solve such problem, we need to avoid this situation.
+		\begin{defn}[Injective Radius]
+			For any $p \in M$,
+			\begin{equation*}
+				i(p) = \sup\bb{\rho > 0 \colon B(O_p,\rho) \text{ is a normal ball.}}
+			\end{equation*}
+			and for any $U \subset M$, let $i(U) = \inf_{p \in U}i(p)$.
+		\end{defn}
+		\begin{prop}
+			For $p,q \in M$ with $d(p,q) = r$, if $\clo{B(p,r)}$ is compact, then $p,q$ can be connected by a geodesic of shortest length.
+		\end{prop}
+		\begin{proof}
+			Clearly, by the compactness of $\clo{B(p,r)}$,
+			\begin{equation*}
+				\rho_0 = i\bc{\clo{B(p,r)}} > 0
+			\end{equation*}
+			Then in above sequence, we can choose each $\rho_n = \rho_0$. Then at finitely many steps, $\gamma$ can reach at $q$.
+		\end{proof}
+
+		\item By completeness of geodesics:
+		\begin{prop}
+			For $p,q \in M$ with $d(p,q) = r$, if $\exp_p$ can be defined on $T_pM$, then $p,q$ can be connected by a geodesic of shortest length.
+		\end{prop}
+		\begin{proof}
+			For $v \in T_pM$ with $\norm{v}=1$,
+			\begin{equation*}
+				c(t) = \exp_p(tv)
+			\end{equation*}
+			can be well-define on $t \in [0,\infty)$. Consider the set
+			\begin{equation*}
+				I \defeq \bb{t \in [0,r] \colon d(c(t),q) = r-t}
+			\end{equation*}
+
+			\noindent \textbf{Check:} $I = [0,r]$.
+			\begin{itemize}
+				\item First, $I \neq \varnothing$ by $0 \in I$.
+
+				\item $I$ is closed, because
+				\begin{equation*}
+					I = f^{-1}(0) \cap [0,r]
+				\end{equation*}
+				where
+				\begin{equation*}
+					f(t) = d(c(t),q) - r - t
+				\end{equation*}
+				is continuous.
+
+				\item $I$ is open: Let $t \in I$, \emph{i.e.} $d(c(t),q) = r - t$. So
+				\begin{equation*}
+					d(p,c(t)) \geq r - (r-t) = t
+				\end{equation*}
+				and clearly $d(p,c(t)) \leq t$. So $d(p,c(t)) = t$, which means $c|_{[0,t]}$ is the shortest geodesic connecting $p$ and $c(t)$. Then for any $t_1 \in [0,t]$, $c|_{[0,t_1]}$ is the shortest geodesic connecting $p$ and $c(t_1)$, so
+				\begin{equation*}
+					d(p,c(t_1)) = t_1
+				\end{equation*}
+				Moreover, we have
+				\begin{equation*}
+					d(c(t_1),q) \leq d(c(t_1),c(t))+d(c(t),q) = r-t_1
+				\end{equation*}
+				and 
+				\begin{equation*}
+					d(c(t_1),q) \geq d(p,q) - d(p,c(t_1)) = r-t_1
+				\end{equation*}
+				Therefore, $d(c(t_1),q) = r-t_1$, that is $t_1 \in I$. Thus, $[0,t] \subset I$. On the other direction, there is a $\delta > 0$, such that $B(c(t),\delta)$ is a normal ball. And by above construction, we can find a $p^\prime \in \partial B(c(t),\delta)$ such that $c(t)$ can be extended to $[0, t+\delta]$ with $c(t+\delta) = q$ and $d(c(t+\delta),q) = r - t - \delta$. Therefore, $t+\delta \in I$ and thus $[0,t+\delta) \subset I$, so $I$ is open. \qedhere
+			\end{itemize}
+		\end{proof}
+	\end{enumerate}
+\end{enumerate}
+
+\begin{thm}[Hopf-Rinow]
+	Let $(M,g)$ be a Riemannian manifold, then TFAE.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $(M,g)$ is a complete metric space.
+		\item All bounded and closed subset of $M$ is compact.
+		\item There is a $p \in M$ such that $\exp_p$ can be defined on $T_pM$.
+		\item For all $p \in M$, $\exp_p$ can be defined on $T_pM$.
+	\end{enumerate}
+\end{thm}
+\begin{rmk}
+	By above propositions, we know that each one of above conditions implies that for any $p,q \in M$, there is a geodesic connects $p,q$ of shortest length.
+\end{rmk}
+\begin{proof}
+	$(4) ~\Rightarrow~ (3)$ is clear.
+
+	\noindent $(3) ~\Rightarrow~ (2)$: Let $p \in M$ such that $\exp_p$ can be defined on $T_pM$. Choose an arbitrary $r > 0$.
+
+	\noindent \textbf{Check:} $\clo{B(p,r)} = \exp_p{\clo{B(O_p,r)}}$.
+
+	\noindent For any $v \in \clo{B(O_p,r)}$, we get
+	\begin{equation*}
+		d(p,\exp_p(v)) = \norm{v} \leq r~\Rightarrow~ \exp_p(v) \in \clo{B(p,r)}
+	\end{equation*}
+	Conversely, for any $q \in \clo{B(p,r)}$, then there is a unique shortest geodesic connecting $p,q$, \emph{i.e.}
+	\begin{equation*}
+		q = \exp_p(v),\quad \norm{v} = d(p,q) \leq r
+	\end{equation*}
+	So $q \in \exp_p{\clo{B(O_p,r)}}$. Then
+	\begin{equation*}
+		\clo{B(p,r)} = \exp_p{\clo{B(O_p,r)}}
+	\end{equation*}
+	And by the compactness of $\exp_p{\clo{B(O_p,r)}}$, $\clo{B(p,r)}$ is compact. So because any bounded set is contained in some $\clo{B(p,r)}$, closedness implies that it is compact.
+
+	\noindent $(2) ~\Rightarrow~ (1)$: Let $\bb{p_n}_{n \in \N}$ be a Cauchy sequence in $M$. So for any $p \in M$, by the triangular inequality, $\bb{d(p,p_n)}_{n \in \N}$ is Cauchy in $\R$ and thus $\lim_{n \sto \infty} d(p,p_n)$ exists. First, assume $\bb{p_n}_{n \in \N}$ has no accumulative point, which means the set
+	\begin{equation*}
+		\bb{p_n \colon n \in \N}
+	\end{equation*}
+	is closed. And the Cauchy property implies that it is bounded. Then it is a compact set but this cannot happen. So $\bb{p_n}_{n \in \N}$ has an accumulative point $p_0$. Then by choosing $p = p_0$,
+	\begin{equation*}
+		\lim_{n \sto \infty} d(p_0,p_n) = 0~\Rightarrow~\lim_{n \sto \infty} p_n = p_0 \in M
+	\end{equation*}
+
+	\noindent $(1) ~\Rightarrow~ (4)$:  For any $p \in M$ and $v \in T_pM$,
+	\begin{equation*}
+		\exp_p(\cdot v) \colon [0,b) \longrightarrow M,\quad b < \infty
+	\end{equation*}
+	Choosing $\bb{t_n}_{n\in \N}$ such that $t_n < b$ and $t_n \sto b$. Then we know $\bb{\exp_p(t_nv)}_{n \in \N}$ is Cauchy, so
+	\begin{equation*}
+		\lim_{n \sto \infty} \exp_p(t_nv) = p_0 \in M
+	\end{equation*}
+	Therefore, for any $\delta > 0$, there is an $N \in \N$ such that
+	\begin{equation*}
+		\exp_p(t_nv) \in \clo{B(p_0,\delta)},\quad \forall~n > N
+	\end{equation*}
+	but it is contradicted to the assumption $b < \infty$ by the following lemma because there is a sufficiently small $\delta$ such that $\clo{B(p_0,\delta)}$ is compact.
+\end{proof}
+\begin{lem}
+	Let $p \in M$ and $v \in T_pM$ such that $\exp_p(tv)$ defined on $[0,b)$ with $b < \infty$. For any compact $\Omega \subset M$ such that $\exp_p(t_0v) \in \Omega$. Then there is $t_1 \in [t_0,b)$ such that $\exp_p(t_1v) \notin \Omega$.
+\end{lem}
+\begin{proof}
+	By the compactness of $\Omega$, there is a $\rho_0 > 0$ such that $\exp_q$ is diffeomorphic on $B(O_q,\rho_0)$ for any $q \in \Omega$. So if for any $t \in [t_0,b)$, $\exp_p(tv) \in \Omega$. But it means for all $t \in [t_0,b)$, $t + \rho_0 / \norm{v} \in [t_0,b)$, which is contradicted to $b < \infty$.
+\end{proof}
+\begin{cor}
+	Let $(M,g)$ be a complete Riemannian manifold. For any $p \in M$,
+	\begin{equation*}
+		M = \exp_p(E(p))\sqcup C(p)
+	\end{equation*}
+\end{cor}
+
+\begin{thm}\label{thm:cutpoint}
+	Let $(M,g)$ be a complete Riemannian manifold. Let $\gamma \colon [0,\infty) \sto M$ be a geodesic with $\gamma(0)=p,\dot{\gamma}(0)=v$. Let $\gamma(a)$ be a cut point. Then at least one of the following holds.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $d\exp_p$ is singular at $av \in T_pM$, that is, for any $\delta > 0$, there is $\tilde{a} \in [a,a+\delta)$ and $\tilde{v} \in E(p) \cap B(av,\delta)$ such that $\exp_p(\tilde{v}) = \exp_p(\tilde{a}v)$.
+		\item There are at least two shortest curves from $\gamma(0)=p$ to $\gamma(a)=q$ and $a$ is the minimal value such that it happens.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	Choose a decreasing sequence $\bb{a_n}_{n \in \N}$ with $a_n \sto a$. By completeness, there is a $v_i \in T_pM$ with $\norm{v_i}=1$ such that
+	\begin{equation*}
+		\gamma_i(t) = \exp_p(tv_i),\quad t \in [0,b_i]
+	\end{equation*}
+	is a shortest curve from $\gamma(0)$ to $\gamma(a_i)$, where $b_i = d(p,\gamma(a_i))$. Note $v_i \neq v$ because of uniqueness of geodesics. 
+	\begin{equation*}
+		\lim_{i \sto \infty} b_i = \lim_{i \sto \infty} d(p,\gamma(a_i)) = d(p,\gamma(a)) = a
+	\end{equation*}
+	So the set $\bb{b_iv_i \colon i\in\N}$ is contained in a compact subset in $E(p)$, which means it has a convergent subsequence. WLTG, assume $\bb{b_iv_i}_{i\in\N}$ is convergent,
+	\begin{equation*}
+		\lim_{i \sto \infty} b_iv_i = aY,\quad Y \in T_pM,~\norm{Y}=1
+	\end{equation*}
+	So
+	\begin{equation*}
+		\exp_p(aY) = \lim_{i \sto \infty} \exp_p(b_iv_i) = \lim_{i \sto \infty} \gamma(a_i) = \gamma(a) = \exp_p(av)
+	\end{equation*}
+	Then $t \mapsto \exp_p(tY)$ with $t \in [0,a]$ is a geodesic.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $v \neq Y$: we have two shortest curve connecting $p,q$.
+		\item $v = Y$: then
+		\begin{equation*}
+			\lim_{i \sto \infty} b_iv_i = av = \lim_{i\sto \infty} a_iv
+		\end{equation*}
+		and because $\exp_p(b_iv_i) = \exp_p(a_iv)$, $\exp_p$ is not injective around $av$. \qedhere
+	\end{enumerate}
+\end{proof}
+
+\section{Shortest Curve in Homotopic Class}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item {\emph{\textbf{Compact Case:}}} Considering the shortest curve in a homotopic class.
+	\begin{defn}
+		Two closed curves $c_0,c_1$ in $M$,
+		\begin{equation*}
+			c_0,c_1 \colon \mathbb{S}^1 \longrightarrow M
+		\end{equation*}
+		is called homotopic if there is a continuous map
+		\begin{equation*}
+			C \colon \mathbb{S}^1 \times [0,1] \longrightarrow M
+		\end{equation*}
+		such that $c(t,0) = c_0(t)$ and $c(t,1) = c_1(t)$ for all $t \in \mathbb{S}^1$.
+	\end{defn}
+
+	\begin{thm}\label{thm:homocpt}
+		Let $(M,g)$ be a compact Riemannian manifold. Then every homotopic class of closed curve in $M$ contains a curve which is shortest in the homotopic class and a geodesic.
+	\end{thm}
+
+	\begin{lem}
+		Let $(M,g)$ be a compact Riemannian manifold. There is a $\rho_0 > 0$ such that for all $\gamma_0,\gamma_1$ closed curves with $d(\gamma_0(t),\gamma_1(t)) < \rho_0$, $\gamma_0$ is homotopic to $\gamma_1$.
+	\end{lem}
+	\begin{proof}
+		Since $M$ is compact,
+		\begin{equation*}
+			\rho_0 = i(M) > 0
+		\end{equation*}
+		Therefore, for any fixed $t$, $d(\gamma_0(t),\gamma_1(t)) < \rho_0$ implies there is a shortest geodesic $\Gamma(t,s)$ connecting $\gamma_0(t)$ and $\gamma_1(t)$
+		\begin{equation*}
+			\Gamma(t,s) = \exp_{\gamma_0(t)}\bc{s\exp_{\gamma_0(t)}^{-1}(\gamma_1(t))}
+		\end{equation*}
+		The continuity of $t$ is by Corollary \ref{cor:cptshort}.
+	\end{proof}
+	\begin{cor}
+		Let $(M,g)$ be a compact Riemannian manifold. A shortest curve in a homotopic class is a geodesic.
+	\end{cor}
+	\begin{proof}
+		Suppose it is not a geodesic. First, $\rho_0 = i(M) > 0$. There there are $p,q$ in such curve with $d(p,q) < \rho_0$ and the curve from $p$ to $q$ is not a geodesic. Then we can find a geodesic connecting $p$ and $q$ in the same normal ball , whose length is shorter. Then by replacing this part with the geodesic part, the new curve is homotopic to the original one by above lemma, but it has shorter length, which is contradicted to the shortest condition.
+	\end{proof}
+
+	\begin{proof}[Proof of Theorem \ref{thm:homocpt}]
+		Assume all curves in the homotopic class are parametrized by arc length. Let $\bb{\gamma_n}_{n \in \N}$ in the homotopic class such that $L(\gamma_n) \sto \inf$. Choose a partition of $\mathbb{S}^1$,
+		\begin{equation*}
+			0 =t_0 < t_1 < \cdots < t_{k+1} = 2\pi
+		\end{equation*}
+		such that $L(\gamma_n|_{[t_i,t_{i+1}]}) \leq \rho_0 / 2$, where $\rho_0 = i(M)$. Because $L(\gamma_n) \sto \inf$, $k$ can be chosen independent with $n$. For $\gamma_n$, by replacing $\gamma_n|_{[t_i,t_{i+1}]}$ with a geodesic, we obtain a curve $\gamma_n^\prime$, which is homotopic to $\gamma_n$ by above lemma (by $L(\gamma_n|_{[t_i,t_{i+1}]}) \leq \rho_0 / 2$). For $i = 1,\cdots,k$, let $p_i = \lim_{n\sto \infty} \gamma_n(i)$ by compactness of $M$. Let $\gamma$ be curve obtained by connecting $p_i$ and $p_{i+1}$ with a geodesic. Then  $\gamma^\prime_n \sto \gamma$ by the continuity of geodesic with respect to end points. So by above lemma, $\gamma$ is in the homotopic class. Moreover, 
+		\begin{equation*}
+			\inf \leq \lim_{n\sto \infty}L(\gamma^\prime_n) = L(\gamma) \leq \lim_{n\sto \infty}L(\gamma_n) = \inf
+		\end{equation*}
+		So $L(\gamma) = \inf$. And by above corollary, $\gamma$ is a geodesic.
+	\end{proof}
+	\begin{rmk}
+		Above result can be easily extended to homotopic class of curves connecting $p \neq q$ in a compact Riemannian manifold.
+	\end{rmk}
+
+	\item {\emph{\textbf{Covering Spaces:}}} The next problem is if above result can be extended to a complete Riemannian manifold. To do that, we need a new technique from the theory from covering spaces.
+
+	\begin{defn}[Covering Space]
+		Let $X$ be a topological space. A covering space of $X$ is a topological space $\widetilde{X}$ with a surjective continuous map $\pi \colon \widetilde{X} \sto X$, called covering map, such that for any $x \in X$, there is a open $U$ containing $x$ with the property
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $\pi^{-1}(U) = \bigcup_\alpha V_\alpha$, where $V_\alpha$'s are open and disjoint in $\widetilde{X}$,
+			\item for each $\alpha$, $\pi_\alpha = \pi|_{V_\alpha} \colon V_\alpha \sto U$ is a homeomorphism.
+		\end{enumerate}
+	\end{defn}
+	\begin{rmk}
+		\begin{enumerate}[label=(\roman{*})]
+			\item Smoothness: Let $\widetilde{X}, X$ be equipped with smooth structure and $\pi$ be $C^\infty$ map and $\pi_\alpha$ be diffeomorphic.
+			\item Riemannian: Let $\widetilde{X}=\widetilde{M}, X = M$ be Riemannian manifolds with metrics $\widetilde{g}$ and $g$. Then we require $\pi^*g = \widetilde{g}$. 
+		\end{enumerate}
+	\end{rmk}
+
+	\begin{defn}[Lifting]
+		Let $\widetilde{X}$ be a covering space of $X$ with covering map $\pi$ and $Y$ be a topological space and $f \colon Y \sto X$ be a continuous map. Then a lifting of $f$ is a continuous map $\widetilde{f} \colon Y \sto \widetilde{X}$ such that $f = \pi \circ \widetilde{f}$.
+	\end{defn}
+
+	\begin{prop}
+		Let $\pi \colon \widetilde{X} \sto X$ be a covering map and $f \colon Y \sto X$ be a continuous map. Let $\widetilde{f}_1,\widetilde{f}_2 \colon Y \sto \widetilde{X}$ be two liftings of $f$. Suppose $Y$ is connected and there exists $y_0 \in Y$ such that $\widetilde{f}_1\left(y_0\right)=\widetilde{f}_2\left(y_0\right)$. Then $\widetilde{f}_1=\widetilde{f}_2$ on $Y$.
+	\end{prop}
+	\begin{proof}
+		Let $Y_0=\left\{y \in Y \mid \tilde{f}_1(y)=\tilde{f}_2(y)\right\}$. Then by $y_0 \in Y$, $Y \neq \varnothing$. It is sufficient to prove $Y_0$ open and closed.
+		\begin{itemize}
+			\item $Y$ is closed: Suppose $y \neq Y_0$. Let $U$ be an open neighborhood of $f(y)$ in $X$ such that
+			\begin{equation*}
+				\pi^{-1}(U)=\bigcup_\beta V_\beta
+			\end{equation*}
+			and $\pi_\beta \defeq \pi|_{V_\beta} \colon V_\beta \sto U$ homeomorphism. Take $V_1$ and $V_2$ such that $\widetilde{f}_1(y) \in V_1$ and $\widetilde{f}_2(y) \in V_2$. Then $V_1 \neq V_2$. Otherwise, if $V_1 = V_2$, $\widetilde{f}_1(y) = \widetilde{f}_2(y)$ because $\pi \circ \widetilde{f}_1(y) = \pi \circ \widetilde{f}_2(y)$ and $\pi$ is homeomorphic on $V_1$. Thus $V_1 \cap V_2 = \varnothing$. By continuity of $\widetilde{f}_1$ and $\widetilde{f}_2$, there is an open neighborhood $W \subset Y$ of $y$ such that
+			\begin{equation*}
+				\widetilde{f}_1(W) \subset V_1,\quad \widetilde{f}_2(W) \subset V_2
+			\end{equation*}
+			So $W \cap Y_0 = \varnothing$ and thus $Y_0^c$ is closed.
+
+			\item $Y$ is open: Suppose $y \in Y_0$. Similarly, we have $V_1$ and $V_2$. Because $V_1 \cap V_2 \neq \varnothing$, $V_1 = V_2 = V$. Then by homeomorphism of $\pi$, $\widetilde{f}_1 = \widetilde{f}_2$ on $V$. So $V\subset Y_0$. \qedhere
+		\end{itemize}
+	\end{proof}
+
+	\begin{thm}[Universal Covering]
+		If $X$ is a connected and locally simply connected topological space, there exists a simply connected topological space $\tilde{X}$ and a covering map $\pi: \tilde{X} \rightarrow X$, which is unique up to homeomorphism. If $\hat{\pi}: \hat{X} \rightarrow X$ is any other simply connected covering of $X$, there is a homeomorphism $\varphi: \widetilde{X} \rightarrow \hat{X}$ such that $\hat{\pi} \circ \varphi=\pi$.
+	\end{thm}
+
+	\begin{cor}
+		If $X$ is simply connected, then every covering $\pi \colon \widetilde{X} \sto X$ is a homeomorphism.
+	\end{cor}
+
+	\begin{lem}[Homotopy Lifting]\label{lem:homolift}
+		Let $\pi \colon \widetilde{X} \sto X$ be a covering map. Given any continuous $F \colon P \times [0,1] \sto X$ and lifting $\widetilde{F}_0 \colon P \times \bb{0} \sto \widetilde{X}$ of $F_0 = F|_{P \times \bb{0}} \colon P \times \bb{0} \sto X$, there is a unique lifting $\widetilde{F}: P \times [0,1] \rightarrow \widetilde{X}$ of $F$ s.t. $\widetilde{F}|_{P \times\{0\}}=\widetilde{F}_0$.
+	\end{lem}
+	\begin{rmk}
+		By setting $P=\{*\}$, we have the so-called path-lifting lemma, for any continuous curve $\gamma \colon [0,1] \sto X$, if there is a $\widetilde{p} \in \widetilde{X}$ such that $\pi(\widetilde{p}) = \gamma(0)$, then there is a unique lifting $\widetilde{\gamma} \colon [0,1] \sto \widetilde{X}$ of $\gamma$ with $\tilde{\gamma}(0) = \widetilde{p}$.
+	\end{rmk}
+	To prove this lemma, we need the Lebesgue covering lemma for $[0,1]$.
+	\begin{lem}[Lebesgue Covering Lemma]
+		Let $(X,d)$ be a compact metric space. For any open covering $\fml{U}$ of $X$, there is a $\delta > 0$ such that for any $A \subset X$ with $\text{diam}(X) < \delta$, there is $U \in \fml{U}$ \emph{s.t.} $A \subset U$.
+	\end{lem}
+	\begin{proof}
+		Assume for any $n \in \N$, there is a $C_n \subset X$ with $\text{diam}(C_n) < 1/n$ such that $C_n$ is not contained in any $U \in \fml{U}$. And we pick some $x_n \in C_n$. By the compactness of $X$, there is a subsequence such that $x_{n_k} \sto x_0 \in X$. Since $\fml{U}$ is an open covering, there is a $U \in \fml{U}$ such that $x_0 \in U$. Then we choose a $\varepsilon_0 > 0$ such that $B(x_0,\varepsilon_0) \subset U$. Choose a $n_k$ such that
+		\begin{equation*}
+			\frac{1}{n_k}<\frac{\varepsilon_0}{2}, \quad \quad d\left(x_{n_k}, x_0\right)<\frac{\varepsilon_0}{2}
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			C_{n_k} \subset B\left(x_{n_k}, \frac{1}{n_k}\right) \subset B\left(x_0, \varepsilon_0\right) \subset U
+		\end{equation*}
+		which contracts the assumption.
+	\end{proof}
+
+	\begin{lem}[Tube Lemma]
+		Let $X,Y$ be two topological spaces. If $A \subset X$ is compact and $B \subset Y$ is compact, $N \subset X \times Y$ is open and $A \times B \subset N$, then there are $U \subset X$ open and $V \subset Y$ open such that
+		\begin{equation*}
+			A \times B \subset U \times V \subset N
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		First, let $A=\bb{x_0}$. Then for any $y_0$ with $(x_0,y_0) \in N$, there is are open $U_{x_0}^{y_0}$ in $X$ and $V_{y_0}$ in $Y$ such that
+		\begin{equation*}
+			\left(x_0, y_0\right) \in U_{x_0}^{y_0} \times V_{y_0} \subset N
+		\end{equation*}
+		Since $B=\bigcup_{y \in B}\{y\} \subset \bigcup_{y \in Y} V_y$, we can find $y_1, \cdots, y_k \in Y$ \emph{s.t.}
+		\begin{equation*}
+			B \subset \bigcup_{i=1}^k V_{y_i}=: V 
+		\end{equation*}
+		Let $U = \bigcap_{i=1}^k U_{x_0}^{y_i}$. Then $U$ is an open neighborhood of $x_0$ and so
+		\begin{equation*}
+			N \supset \bigcup_y\left(U_{x_0}^y \times V_y\right) \supset \bigcup_{i=1}^k\left(U_{x_0}^{y_i} \times V_{y_i}\right) \supset \bigcup_{i=1}^k\left(U \times V_{y_i}\right)=U \times \bigcup_{i=1}^k V_{y_i}=U \times V \supset \bb{x_0} \times B
+		\end{equation*}
+		So for any $x_0 \in A$, there are open $U_{x_0}$ and $V_{y_0}$ such that
+		\begin{equation*}
+			\left\{x_0\right\} \times B \subset U_{x_0} \times V_{x_0} \subset N
+		\end{equation*}
+		By the compactness of $A$,
+		\begin{equation*}
+			A \subset U_{x_1} \cup \cdots \cup U_{x_m}=: U
+		\end{equation*}
+		Let $V=\cap_{i=1}^m V_{x_i}$, then $B \subset V$ and $V$ is open. So
+		\begin{equation*}
+			A \times B \subset U \times V \subset \bigcup_{i=1}^m\left(U_{x_i} \times V_{x_i}\right) \subset N \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\begin{proof}[Proof of Lemma \ref{lem:homolift}]
+		Considering an open covering $\{U_\alpha\}$ of $X$ such that for each $\alpha$ there is a disjoint collection $\bb{V_\alpha^\beta}_\beta$ of $\widetilde{X}$ such that $\pi^{-1}(U_\alpha) = \bigcup_\beta V_\alpha^\beta$ and $\pi|_{V_\alpha^\beta} \colon V_\alpha^\beta \sto U_\alpha$ homeomorphism. For each $(\alpha,\beta)$, let $q_{\alpha, \beta}: U_\alpha \rightarrow V_\alpha^\beta$ the inverse of this homeomorphism. Let $I = [0,1]$.
+		\begin{enumerate}[label=\Roman*.]
+			\item Local lifting of $p_0 \in P$: For $(p_0,t) \in P \times I$, there is a $U_{\alpha(t)}$ such that
+			\begin{equation*}
+				(p_0,t) \in F^{-1}(U_{\alpha(t)})
+			\end{equation*}
+			So $\bb{p_0} \times \bb{t} \subset F^{-1}(U_{\alpha(t)})$. Because $\bb{p_0}$ in $P$ is compact and $\bb{t}$ in $I$ is compact, by the Tube Lemma, there are open sets $V \subset P$ and $I_{t} \subset I$ such that
+			\begin{equation*}
+				\bb{p_0} \times \bb{t} \subset V \times I_{t} \subset  F^{-1}(U_{\alpha(t)})
+			\end{equation*}
+			So $F(V \times I_{t}) \subset U_{\alpha(t)}$. Moreover, such $V$ can be chosen as connected. Because $\bb{I_t}_{t \in I}$ is an open covering of $I$, by the Lebesgue Covering Lemma for $I$, there is a partition $0=t_0 < t_1 < \cdots < t_{n+1}=1$ such that $[t_i,t_{i+1}] \subset I_t$ for some $t$. So
+			\begin{equation*}
+				F(V \times [t_i,t_{i+1}]) \subset U_{\alpha(t)}
+			\end{equation*}
+			That is, for a fixed $p_0 \in P$, there is an open neighborhood $V$ of $p_0$ and a partition $0=t_0 < t_1 < \cdots < t_{n+1}=1$ such that for all $i$, $F(V \times [t_i,t_{i+1}]) \subset U_{\alpha}$ for some $\alpha$.
+
+			\noindent \textbf{Claim:} There is a sequence of maps $\widetilde{F}_V^k$ such that
+			\begin{enumerate}[label=(\roman*)]
+				\item $\widetilde{F}_V^k \colon V \times [0,t_k] \sto \widetilde{X}$ is a lift of $F|_{V \times [0,t_k]}$,
+				\item $(\widetilde{F}_V^k)|_{V \times \bb{0}} = \widetilde{F}_0|_{V}$,
+				\item $\widetilde{F}_V^{k+1}|_{V \times [0,t_k]} = \widetilde{F}_V^k$
+			\end{enumerate}
+			\begin{proof}[Proof of Claim]
+				For $k = 0$, define $\widetilde{F}_V^0 \colon V \times \bb{0} \sto \widetilde{X}$ as
+				\begin{equation*}
+					\widetilde{F}_V^0 = \widetilde{F}_0|_{V}
+				\end{equation*}
+				Then we construct the sequence inductively. Assume we already have $\widetilde{F}_V^j$ for $j=k$. For $k+1$, first, by above, there is an $\alpha$ such that
+				\begin{equation*}
+					F(V \times [t_k,t_{k+1}]) \subset U_{\alpha}
+				\end{equation*}
+				Because $\pi \circ \widetilde{F}_V^k = F_{V \times [0,t_k]}$,
+				\begin{equation*}
+					\widetilde{F}_V^k(V \times [t_k,t_{k+1}]) \subset \pi^{-1}(U_{\alpha}) = \bigcup_\beta V_\alpha^\beta
+				\end{equation*}
+				Then by the connectedness of $V$ and continuity of $\widetilde{F}_V^k$, there is a $\beta$,
+				\begin{equation*}
+					\widetilde{F}_V^k(V \times [t_k,t_{k+1}]) \subset V_\alpha^\beta
+				\end{equation*}
+				and if we define
+				\begin{equation*}
+					\widetilde{E} \defeq q_{\alpha}^\beta \circ F_{V \times [t_k,t_{k+1}]}
+				\end{equation*}
+				then 
+				\begin{equation*}
+					\widetilde{E}|_{V \times \bb{t_k}} = \widetilde{F}_V^k|_{V \times \bb{t_k}}
+				\end{equation*}
+				We define
+				\begin{equation*}
+					\widetilde{F}_V^{k+1}(p,t) \defeq \left\{
+						\begin{array}{ll}
+							\widetilde{F}_V^k(p,t),& t \in [0,t_k] \\
+							\widetilde{E}(p,t),& t \in [t_k,t_{k+1}]
+						\end{array}
+					\right.
+				\end{equation*}
+				Then by Pasting Lemma, $\widetilde{F}_V^{k+1}$ is continuous on $V \times [0,t_{k+1}]$ and satisfies above three conditions. 
+			\end{proof}
+			Therefore, $\widetilde{F}_V$ is a lifting of $F|_{V \times I}$ satisfying $(\widetilde{F}_V)|_{V \times \bb{0}} = \widetilde{F}_0|_{V}$.
+
+			\item Uniqueness of $\widetilde{F}_V$: Above three conditions determine such sequence uniquely and so we denote $\widetilde{F}_V = \widetilde{F}_V^n$. Otherwise, assume there are two constructions $\widetilde{F}_V = \widetilde{F}_V^\prime$. We only need to check if
+			\begin{equation*}
+				\widetilde{F}_V|_{\bb{p}\times I} = \widetilde{F}_V^\prime|_{\bb{p}\times I},\quad \forall~p \in V
+			\end{equation*}
+			As before, by replacing $p_0$ with $p$, there is a partition $0=t_0 < t_1 < \cdots < t_{n+1}=1$ such that for all $i$, $F(\bb{p}\times [t_i,t_{i+1}]) \subset U_{\alpha}$ for some $\alpha$. First, it is clear that
+			\begin{equation*}
+				\widetilde{F}_V|_{\bb{p}\times \bb{0}} = \widetilde{F}_V^\prime|_{\bb{p}\times \bb{0}}
+			\end{equation*}
+			We can prove the result by induction. Assume $\widetilde{F}_V|_{\bb{p}\times [0,t_k]} = \widetilde{F}_V^\prime|_{\bb{p}\times [0,t_k]}$. Similarly, by connectedness, there is a $\beta$ such that $\widetilde{F}_V(\bb{p}\times [t_k,t_{k+1}]) \subset V_\alpha^\beta$ and there is a $\beta^\prime$ such that $\widetilde{F}^\prime_V(\bb{p}\times [t_k,t_{k+1}]) \subset V_\alpha^{\beta^\prime}$. But by assumption $\tilde{F}_N\left(p, t_k\right)=\tilde{F}_N^{\prime}\left(p, t_k\right)$, $\beta = \beta^\prime$. Then because$q_{\alpha}^\beta = \pi^{-1} \colon V_{\alpha}^\beta \sto U_\alpha$ is a homeomorphism and
+			\begin{equation*}
+				\pi \circ \widetilde{F}_V|_{\bb{p}\times [t_k,t_{k+1}]} = \pi \circ \widetilde{F}^\prime_V|_{\bb{p}\times [t_k,t_{k+1}]}
+			\end{equation*}
+			we have $\widetilde{F}_V|_{\bb{p}\times [t_k,t_{k+1}]} = \widetilde{F}^\prime_V|_{\bb{p}\times [t_k,t_{k+1}]}$. So we get
+			\begin{equation*}
+				\widetilde{F}_V|_{\bb{p}\times [0,t_{k+1}]} = \widetilde{F}^\prime_V|_{\bb{p}\times [0,t_{k+1}]}
+			\end{equation*}
+			And this also implies that, for $V,W$ open,
+			\begin{equation*}
+				\widetilde{F}_V|_{V\cap W \times I} = \widetilde{F}_W|_{V\cap W \times I}
+			\end{equation*}
+
+			\item Global Lifting: By above, for any $p \in P$, there is a $V_p$ such that $\widetilde{F}_p \defeq \widetilde{F}_{V_p}$ is a lifting of $F|_{V_p \times I}$ satisfying $(\widetilde{F}_p)|_{V_p \times \bb{0}} = \widetilde{F}_0|_{V_p}$. Because $\bb{V_p}_{p \in P}$ is an open covering, we define $\tilde{F} \colon P \times I \sto \tilde{X}$ by
+			\begin{equation*}
+				\widetilde{F}|_{V_p \times I}=\widetilde{F}_p
+			\end{equation*}
+			which is well-defined and continuous and the uniqueness is by the uniqueness of $\widetilde{F}_p$. \qedhere
+		\end{enumerate}
+	\end{proof}
+
+	\item \emph{\textbf{Complete Case:}} For a complete Riemannian manifold $(M,g)$, we will use its Riemannian covering $\pi \colon (\widetilde{M},\tilde{g}) \sto (M,g)$ to prove the existence of shortest curve in homotopic class in $(M,g)$. But the first two questions are if the Riemannian covering exists and if it is also complete.
+
+	\begin{defn}[Local Isometry]
+		Let $\varphi \colon (M,g) \sto (N,h)$ be $C^\infty$ between two Riemannian manifolds. If for any $p \in M$,
+		\begin{equation*}
+			d\varphi_p \colon T_pM \longrightarrow T_{\varphi(p)}N
+		\end{equation*}
+		is orthogonal, \emph{i.e.} $\varphi^*h = g$, then $\varphi$ is called a local isometry.
+	\end{defn}
+	Note that any Riemannian covering map is locally isometric.
+
+	\begin{prop}\label{prop:isoprop}
+		Let $\varphi \colon (M,g) \sto (N,h)$ be a local isometry.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $\varphi$ map geodesics in $M$ to geodesics in $N$.
+			\item For any $p \in M$, the following diagram is commutative
+			\begin{center}
+				\begin{tikzcd}
+					T_pM \arrow[r, "d\varphi_p"] \arrow[d, "\exp_p"]
+						& T_{\varphi(p)}N \arrow[d, "\exp_{\varphi(p)}"] \\
+					M \arrow[r, "\varphi"]
+						& N
+				\end{tikzcd}
+			\end{center}
+			\item For any $p,q \in M$,
+			\begin{equation*}
+				d_N(\varphi(p),\varphi(q)) \leq d_M(p,q)
+			\end{equation*}
+			\item If $\varphi$ is bijective, then $\varphi$ is an isometry.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item It is because $\varphi$ is a local diffeomorphism and isometry. So it is as same as the change of coordinates. But the geodesic equation is independent with the change of coordinates. So $\varphi$ preserves geodesics.
+
+			\item For any $v \in T_{\varphi(p)}N$, let $\tilde{v} = (d\varphi_p)^{-1}(v) \in T_pM$. By $(1)$, consider the geodesic
+			\begin{equation*}
+				\gamma \colon t \mapsto \varphi(\exp_p(t\tilde{v}))
+			\end{equation*}
+			which satisfies $\gamma(0) = \varphi(p)$ and
+			\begin{equation*}
+				\dot{\gamma}(0) = \lv{\frac{d}{dt}}_{t = 0}\varphi(\exp_p(t\tilde{v})) = d\varphi_p(\tilde{v}) = v
+			\end{equation*}
+			By the uniqueness of geodesic,
+			\begin{equation*}
+				\varphi(\exp_p(t\tilde{v})) = \exp_{\varphi(p)}(tv)
+			\end{equation*}
+
+			\item It is because $\varphi$ preserves the distance of curves.
+			\begin{equation*}
+				\begin{aligned}
+					d(p,q) &= \inf\bb{L(\gamma) \colon \gamma(0) = p,\gamma(1)=q} \\
+					&= \inf\inf\bb{L(\tilde{\gamma}) \colon \tilde{\gamma}=\varphi(\gamma)} \\
+					&\geq \inf\inf\bb{L(\tilde{\gamma}) \colon \tilde{\gamma}(0) = \varphi{p},\tilde{\gamma}(1)=\varphi{q}} = d(\varphi({p}),\varphi({q}))
+				\end{aligned}
+			\end{equation*}
+			\item It is clear by $(3)$. \qedhere
+		\end{enumerate}
+	\end{proof}
+
+	\begin{prop}
+		If $\pi \colon (\widetilde{M},\widetilde{g}) \sto (M,g)$ is a Riemannian covering, then $(M,g)$ is complete if and only if $(\widetilde{M},\widetilde{g})$ is complete.
+	\end{prop}
+	\begin{proof}
+		$(\Rightarrow)$: For any $\tilde{p} \in \widetilde{M}$ and $\tilde{v} \in T_{\tilde{p}}\widetilde{M}$, let $p = \pi(\tilde{p})$ and $v = d\pi_{\tilde{p}}(\tilde{v})$. The we have the geodesic
+		\begin{equation*}
+			\gamma(t) = \exp_p(tv) \in M,\quad t\in[0,\infty)
+		\end{equation*}
+		by the completeness of $M$. Then by the path lifting property, there is a lifting $\tilde{\gamma}(t) \colon [0,\infty) \sto \tilde{M}$ of $\gamma$, \emph{i.e.} $\tilde{\gamma}(0) = \tilde{p}$ and $\pi \circ \tilde{\gamma} = \gamma$, which implies
+		\begin{equation*}
+			v = \lv{\frac{d}{dt}}_{t = 0}\gamma = \lv{\frac{d}{dt}}_{t = 0} \pi \circ \tilde{\gamma} = d\pi_{\tilde{p}}(\dot{\tilde{\gamma}}(0))~\Rightarrow~\dot{\tilde{\gamma}}(0) = \tilde{v}
+		\end{equation*}
+		Besides, because $\pi$ is locally isometric, $\tilde{\gamma}$ is also a geodesic. So
+		\begin{equation*}
+			\tilde{\gamma}(t) = \exp_{\tilde{p}}(t\tilde{v}),\quad t \in [0,\infty)
+		\end{equation*}
+		which implies the completeness of $(\widetilde{M},\widetilde{g})$ by Hopf-Rinow Theorem.
+
+		\noindent $(\Leftarrow)$: For any $p \in M$ and $v \in T_pM$, let $\tilde{p} \in \widetilde{M}$ be $\pi(\tilde{p}) = p$ and $\tilde{v} = \tilde{v} = (d\pi_p)^{-1}(v)$, then we have
+		\begin{equation*}
+			\pi(\exp_{\tilde{p}}(t\tilde{v})) = \exp_{p}(tv)
+		\end{equation*}
+		where $t \in [0,\infty)$ by the completeness of $(\widetilde{M},\widetilde{g})$. Therefore, $(M,g)$ is complete by Hopf-Rinow Theorem.
+	\end{proof}
+	\begin{rmk}
+		The $(\Leftarrow)$ only needs the local isometry of $\pi$, which means if $\pi \colon (\widetilde{M},\widetilde{g}) \sto (M,g)$ is a local isometry, then the completeness of $\widetilde{M}$ implies the completeness of $M$.
+	\end{rmk}
+	
+	\begin{thm}
+		Let $(M,g)$ be a complete Riemannian manifold and $p,q \in M$. Then every homotopic class of curves contain a shortest curve.
+	\end{thm}
+	\begin{proof}
+		Because $M$ is connected and locally simply connected, by the Universal Covering Theorem, there is a covering $\pi \colon \widetilde{M} \sto M$, where $\widetilde{M}$ is simply connected. Then we can equip $\widetilde{M}$ with a smooth structure such that $\pi \in C^\infty$ and a Riemannian metric $\widetilde{g} = \pi^*g$. So $\pi \colon (\widetilde{M},\widetilde{g}) \sto (M,g)$ is a Riemannian covering and $(\widetilde{M},\widetilde{g})$ is complete. 
+
+		\noindent Let $\sigma \colon [0,1] \sto M$ be a curve connecting $p,q$ in the given homotopic class. Let $\tilde{p} \in \pi^{-1}(p)$, then there is a unique lifting $\tilde{\sigma} \colon [0,1] \sto \widetilde{M}$ of $\sigma$ such that $\tilde{\sigma}(0) = \tilde{p}$. Because $(\widetilde{M},\widetilde{g})$ is complete, there is a minimizing geodesic $\tilde{\gamma}$ connecting $\tilde{p} = \tilde{\sigma}(0)$ and $\tilde{q} \defeq \tilde{\sigma}(1)$ and so $\gamma = \pi \circ \tilde{\gamma}$ is a geodesic with $\gamma(0) = p$ and $\gamma(1)=q$, because $\pi$ is locally isometric. Since $\widetilde{M}$ is simply connected, $\tilde{\gamma}$ is homotopic to $\tilde{\sigma}$. So $\gamma$ is homotopic to $\sigma$, \emph{i.e.} $\gamma$ is in the give homotopic class. Finally, suppose $\sigma_1$ be any piecewise smooth curve connecting $p,q$ in the given homotopic class. Let $\tilde{\sigma}_1$ be its lifting in $\widetilde{M}$ with $\tilde{\sigma}_1(0) = \tilde{p}$. Then it must end at $\tilde{\sigma}_1(1) = \tilde{q}$ by the Homotopy Lifting Lemma. Then
+		\begin{equation*}
+			L(\gamma) = L(\tilde{\gamma}) \leq L(\tilde{\sigma}_1) = L(\sigma_1)
+		\end{equation*}
+		So $\gamma$ is shortest.
+	\end{proof}
+
+	\begin{thm}[Ambrose]\label{thm:ambro}
+		Let $\pi \colon (\widetilde{M},\widetilde{g}) \sto (M,g)$ be a local isometry. If $(\widetilde{M},\widetilde{g})$ is complete, then $(M,g)$ is complete and $\pi$ is a Riemannian covering.
+	\end{thm}
+	\begin{lem}
+		Let $\pi \colon (\widetilde{M},\widetilde{g}) \sto (M,g)$ be a local isometry and $(\widetilde{M},\widetilde{g})$ be complete. Given any geodesic $\gamma \colon [0,a] \sto M$ with $\gamma(0) = p$ and any $\tilde{p} \in \pi^{-1}(p)$, we have a unique geodesic $\tilde{\gamma} \colon [0,a] \sto \widetilde{M}$ such that $\tilde{\gamma}(0) = \tilde{p}$ and $\gamma(t) = \pi \circ \tilde{\gamma}(t)$, and such $\tilde{\gamma}$ is also called a geodesic lifting.
+	\end{lem}
+	\begin{proof}
+		By local isometry of $\pi$, let $\tilde{v} = (d\pi_{\tilde{p}})^{-1}(\dot{\gamma}(0))$. By completeness of $(\widetilde{M},\widetilde{g})$, the geodesic
+		\begin{equation*}
+			\tilde{\gamma}(t) \defeq \exp_{\tilde{p}}(t\tilde{v})
+		\end{equation*}
+		can be defined on $t \in [0,a]$ and so
+		\begin{equation*}
+		 	\pi(\exp_{\tilde{p}}(t\tilde{v})) = \exp_p(tv) = \gamma(t),\quad t \in [0,a]
+		\end{equation*}
+		The uniqueness is by the local isometry of $\pi$ and the uniqueness of geodesic.
+	\end{proof}
+
+	\begin{proof}[Proof of Theorem \ref{thm:ambro}]
+		First, $(M,g)$ is complete by above. Next, we need to show $\pi$ is a covering.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $\pi$ is surjective: For any $\tilde{p} \in \widetilde{M}$, let $p = \pi(\tilde{p})$. For any $q \in M$, because $M$ is complete, there is a shortest geodesic $\gamma$ from $p$ to $q = \gamma(t_0)$. By above lemma, $\gamma$ has a lifting $\tilde{\gamma}$ in $\widetilde{M}$ such that $\tilde{\gamma}(0) = \tilde{p}$ and
+			\begin{equation*}
+				\pi(\tilde{\gamma}(t)) = {\gamma}(t)
+			\end{equation*}
+			So let $\tilde{q} = \tilde{\gamma}(t_0)$, then $\pi(\tilde{q}) = q$.
+
+			\item $\pi$ is a evenly covering: For any $p \in M$, let $U = B(p,\varepsilon)$ be a normal ball. Consider $\pi^{-1}(p) = \bb{\tilde{p}_\alpha}_{\alpha \in \Lambda}$. Let $\tilde{U}_\alpha = B(\tilde{p}_\alpha,\varepsilon)$.
+			\begin{enumerate}[label=\Roman*.]
+				\item $\pi^{-1}(U) = \bigcup_\alpha \tilde{U}_\alpha$: For any $\tilde{q} \in \tilde{U}_\alpha$ for some $\alpha$, let $\tilde{\gamma}$ be the shortest geodesic from $\tilde{p}_\alpha$ to $\tilde{q}$. Then $\pi \circ \tilde{\gamma}$ is the shortest geodesic from $p$ to $q \defeq \pi(\tilde{q})$. Therefore, 
+				\begin{equation*}	
+					d(p,q) \leq d(\tilde{p}_\alpha,\tilde{q}) < \varepsilon
+				\end{equation*}
+				and so $q \in U$, \emph{i.e.} $\tilde{q}\in \pi^{-1}(U)$. 
+
+				Conversely, for any $\tilde{q}\in \pi^{-1}(U)$, let $q = \pi(\tilde{q}) \in U$. Let $\gamma \colon [0,a] \sto M$ be the shortest geodesic connecting $\gamma(0) = q, \gamma(1)=p$ and let $\tilde{\gamma} \colon [0,a] \sto \widetilde{M}$ be the geodesic lifting of $\gamma$ starting from $\tilde{\gamma}(0) = \tilde{q}$. Then $\pi(\tilde{\gamma}(1)) = \gamma(1) = p$. So $\tilde{\gamma}(1) = \tilde{p}_\alpha$ for some $\alpha$. Then
+				\begin{equation*}
+					d(\tilde{q},\tilde{p}_\alpha) \leq L(\tilde{\gamma}) = L(\gamma) = d(p,q) < \varepsilon
+				\end{equation*}
+				So $\tilde{q} \in \tilde{U}_\alpha$.
+
+				\item $\pi \colon \tilde{U}_\alpha \sto U$ diffeomorphic: By above, we already have $\pi(U_\alpha) \subset U$. First, for sujectivity, let $q \in U$, choose a geodesic $\gamma \colon [0,a] \sto M$ in $U$ connecting $\gamma(0) = p$ and $\gamma(a) = q$. Then there is a geodesic lifting $\tilde{\gamma} \colon [0,a] \sto M$ starting from $\tilde{\gamma}(0) = \tilde{p}_\alpha$ to $\tilde{\gamma}(a) \defeq \tilde{q}_\alpha$. Because
+				\begin{equation*}
+					d(\tilde{p}_\alpha,\tilde{q}) \leq L(\tilde{\gamma}) = L(\gamma) < \varepsilon
+				\end{equation*}
+				$\tilde{q} \in U_\alpha$. And we have
+				\begin{equation*}
+					\pi(\tilde{q}) = \pi(\tilde{\gamma}(a)) = \gamma(a) = q
+				\end{equation*}
+				For the injectivity, let $\tilde{q}_1 \neq \tilde{q}_2 \in \tilde{U}_\alpha$ with 
+				\begin{equation*}
+					\pi(\tilde{q}_1) = \pi(\tilde{q}_2) = q
+				\end{equation*}
+				Similarly, let $\gamma$ be a geodesic in $U$ from $q$ to $p$ and $\tilde{\gamma}_i$ be two geodesic liftings from $\tilde{q}_i$ to $\tilde{p}_\alpha$ in $U_\alpha$. Let $\tilde{v}_i = \dot{\gamma}_i(a)$. Then $\tilde{v}_1 \neq \tilde{v}_2$. But because $\pi \circ \tilde{\gamma}_1 =\pi \circ \tilde{\gamma}_1$,
+				\begin{equation*}
+					d\pi_{\tilde{p}_\alpha}(\tilde{v}_1) = d\pi_{\tilde{p}_\alpha}(\tilde{v}_2)
+				\end{equation*}
+				contradicted to the local isometry of $\pi$.
+
+				\item $\tilde{U}_\alpha \cap \tilde{U}_\beta = \varnothing$ for $\alpha \neq \beta$: Assume $\tilde{q} \in \tilde{U}_\alpha \cap \tilde{U}_\beta$. Let $\tilde{\gamma}_i$ the shortest geodesics connecting $\tilde{p}_i,\tilde{q}$ in $\tilde{U}_i$ for $i = \alpha,\beta$. Because by above $\pi \colon U_i \sto U$ is isometric, $\pi(\tilde{\gamma}_\alpha)$ and $\pi(\tilde{\gamma}_\beta)$ are two shortest geodesics connecting $p,\pi(\tilde{q})$. So $\pi(\tilde{\gamma}_\alpha) = \pi(\tilde{\gamma}_\beta)$. Then by the uniqueness of geodesic lifting $\tilde{p}_\alpha = \tilde{p}_\beta$, which induces a contradiction.\qedhere
+			\end{enumerate}
+		\end{enumerate}
+	\end{proof}
+\end{enumerate}

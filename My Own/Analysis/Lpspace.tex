@@ -1,0 +1,2041 @@
+\chapter{\texorpdfstring{$L^p$}{Lp} Space}
+Let $(X,\fml{A},\mu)$ be a measure space in the following sections.
+
+\section{Basic Properties}
+
+For $1 \leq p < \infty$, let $L^p(X,\fml{A},\mu) = L^p(X,d\mu) = L^p(X)$ be the space of $\C$-measurable functions with equivalent class $u(x) = v(x)$ $\mu-a.e.$ and 
+\begin{equation*}
+	\|u\|_{L^p(X)} = \|u\|_{p} :=\left(\int_X|u(x)|^p d \mu(x)\right)^{1 / p} < \infty
+\end{equation*}
+
+\noindent An $\fml{A}$-measurable function $u$ on $X$ is essentially bounded if there is an $M > 0$ such that
+\begin{equation*}
+	\abs{u(x)} \leq M,\quad \mu-a.e.
+\end{equation*}
+and $\esssup_{x \in X}\abs{u(x)}$ denotes the infimum of such $M$. If no such $M$, $\esssup_{x \in X}\abs{u(x)} = \infty$ and $u$ is called essentially unbounded. In fact,
+\begin{equation}
+	\esssup_{x \in X}\abs{u(x)} = \inf \bb{t \geq 0 \mid \mu\bc{\bb{x \in X \mid \abs{u(x)} > t}} = 0}
+\end{equation}
+Let $L^\infty(X,\fml{A},\mu) = L^\infty(X,d\mu) = L^\infty(X)$ be the space of all essentially bounded $u$ with the equivalent class $u(x) = v(x)$ $\mu-a.e.$ and denote
+\begin{equation*}
+	\|u\|_{L^{\infty}(X)} = \|u\|_{\infty}:=\esssup_{x \in X}\abs{u(x)}
+\end{equation*}
+
+\begin{rmk}
+	On $\R^N$, let $\fml{L}_N$ be the set of all Lebesgue measurable sets. And let $E \in \fml{L}_N$. Then define
+	\begin{equation*}
+		\lv{\fml{L}_N}_E:=\left\{B \in \fml{L}_N \mid B \subset E\right\}
+	\end{equation*}
+	Let $m_N$ denote the Lebesgue measure on $\R^N$. Denote $L^p\left(E,\left.\mathscr{L}_N\right|_E, m_N\right) = L^p(E)$. Besides, denote $dm_N(x) = dx$.
+\end{rmk}
+
+\begin{prop}[H\"older's Inequality]
+	For $1 \leq p \leq \infty$, let $q$ be its conjugate ($1/p+1/q = 1$). Then for any $u \in L^p(X)$ and $v \in L^q(X)$,
+	\begin{equation*}
+		\int_X|u(x) v(x)| d \mu(x) \leq\|u\|_{p}\|v\|_{q}
+	\end{equation*}
+\end{prop}
+
+\begin{thm}
+	Let $\varnothing \neq \Omega \subset \R^N$ be open. Then for any $1 \leq p, q < \infty$, $C^\infty_c(\Omega)$ is dense in $L^p(\Omega) \cap L^q(\Omega)$.
+\end{thm}
+
+\section{Dual Space of \texorpdfstring{$L^p$}{Lp} Space}
+
+For $1 \leq p \leq \infty$, let $q$ be its conjugate of $p$. For $g \in L^q(X)$, define
+\begin{equation*}
+	\Phi_g(u):=\int_X u(x) g(x) d \mu(x),\quad u \in L^p(X)
+\end{equation*}
+Then by the H\"older's Inequality we have
+\begin{equation*}
+	\abs{\Phi_g(u)} \leq \norm{g}_q\norm{u}_p
+\end{equation*}
+So $\Phi_g \in L^p(X)^*$ and
+\begin{equation*}
+	\left\|\Phi_g\right\|_{L^p(X)^*} \leq\|g\|_{L^q(X)}
+\end{equation*}
+
+\begin{prop}
+	For $1 \leq p \leq \infty$, let $q$ be its conjugate of $p$. When $p=1$ and $q = \infty$, we further assume $(X,\fml{A},\mu)$ $\sigma$-finite. Then for $g \in L^q(X)$, 
+	\begin{equation*}
+		\left\|\Phi_g\right\|_{L^p(X)^*} =\|g\|_{q}
+	\end{equation*}
+	In particular, define $J \colon L^q(X) \sto L^p(X)^*$ by
+	\begin{equation*}
+		J(g):=\Phi_g,\quad g \in L^q(X)
+	\end{equation*}
+	Then $J$ is an isometric linear map from $L^q(X)$ to $L^p(X)^*$.
+\end{prop}
+\noindent Note that for $z \in \C$,
+\begin{equation*}
+	\operatorname{sgn} z= \begin{cases}0, & z=0 \\ \frac{\bar{z}}{|z|}, & z \in \mathbb{C} \backslash \bb{0}\end{cases}
+\end{equation*}
+and so we have
+\begin{equation*}
+	z \operatorname{sgn} z=|z|, \quad|\operatorname{sgn} z|= \begin{cases}0, & z=0 \\ 1, & z \in \mathbb{C}\backslash \bb{0}\end{cases}
+\end{equation*}
+For $a \in \R$,
+\begin{equation*}
+	\operatorname{sgn} a= \begin{cases}1, & a>0 \\ 0, & a=0 \\ -1, & a<0\end{cases}
+\end{equation*}
+\begin{proof}
+	Only need to prove $\left\|\Phi_g\right\|_{L^p(X)^*} \geq\|g\|_{q}$. If $\|g\|_{q} = 0$, it's clear. So we assume $\|g\|_{q} > 0 (g \in L^q(X) \backslash\{0\})$.
+	\begin{enumerate}[label=(\roman*)]
+		\item $1 < p \leq \infty$: So $1 \leq q < \infty$. Define $\fml{A}$-measurable function $v_g$ as
+		\begin{equation*}
+			v_g(x):=|g(x)|^{q-1} \operatorname{sgn}(g(x)), \quad x \in X
+		\end{equation*}
+		So $v_g(x) g(x)=|g(x)|^q$ for $x \in X$ and $v_g \in L^q(X) \backslash\{0\}$.
+
+		\noindent \textbf{Claim:} $\left\|v_g\right\|_{p}=\|g\|_{q}^{q-1}$.
+
+		\noindent First, for $1 < p < \infty$, $1 < q < \infty$ and $p = \frac{q}{q - 1}$. For $x \in X$,
+		\begin{equation*}
+			\left|v_g(x)\right|=|g(x)|^{q-1}|\operatorname{sgn}(g(x))|=|g(x)|^{q-1}
+		\end{equation*}
+		and so $\left|v_g(x)\right|^p=|g(x)|^{(q-1) p}=|g(x)|^q$ and thus
+		\begin{equation*}
+			\left\|v_g\right\|_{p}=\left(\int_X\left|v_g(x)\right|^p d \mu(x)\right)^{\frac{1}{p}}=\left(\int_X|g(x)|^q d \mu(x)\right)^{\frac{q-1}{q}}=\|g\|_{L^q(X)}^{q-1}<\infty
+		\end{equation*}
+		If $p = \infty$, then $q = 1$. So $g \in L^1(X) \backslash \bb{0}$. So for $x \in X$,
+		\begin{equation*}
+			\left|v_g(x)\right|=|\operatorname{sgn}(g(x))|= \begin{cases}0, & g(x)=0 \\ 1, & g(x) \neq 0\end{cases}
+		\end{equation*}
+		Therefore, $\left\|v_g\right\|_{\infty}=1$.
+
+		\noindent Next, let's continue the proof. Note that $v_g \in L^p(X) \backslash\{0\}$ and $v_g \cdot g \in L^1(X)$. Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				\left|\Phi_g\left(v_g\right)\right| & =\left|\int_X v_g(x) g(x) d \mu(x)\right|=\int_X|g(x)|^q d \mu(x) \\
+				& =\|g\|_{L^q(X)}^q=\|g\|_{L^q(X)}\|g\|_{L^q(X)}^{q-1}=\|g\|_{L^q(X)}\left\|v_g\right\|_{L^p(X)}
+			\end{aligned}
+		\end{equation*}
+		Therefore, 
+		\begin{equation*}
+			\left\|\Phi_g\right\|_{L^p(X)^*} \geq\|g\|_{q}
+		\end{equation*}
+
+		\item $P = 1$: Then $q = \infty$, $g \in L^{\infty}(X) \backslash\{0\}$ and $\Phi_g \in L^1(X)^*$. 
+
+		\noindent For any $\varepsilon$ with $0 < \varepsilon < \norm{g}_\infty$, let
+		\begin{equation*}
+			A_{\varepsilon}:=\left\{x \in X| | g(x) \mid>\|g\|_{\infty}-\varepsilon\right\}
+		\end{equation*}
+		Then $A_{\varepsilon} \in \fml{A}$ and $\mu(A_{\varepsilon}) > 0$ by the definition of $\norm{\cdot}_\infty$. Since $(X,\fml{A},\mu)$ is $\sigma$-finite, there is a $B_{\varepsilon} \in \fml{A}$ such that
+		\begin{equation*}
+			B_{\varepsilon} \subset A_{\varepsilon}, \quad 0<\mu\left(B_{\varepsilon}\right)<\infty
+		\end{equation*}
+		Define a $\fml{A}$-measurable function $w_{\varepsilon,g}$ on $X$ as
+		\begin{equation*}
+			w_{\varepsilon, g}(x):=\chi_{B_{\varepsilon}}(x) \operatorname{sgn}(g(x)),\quad x \in X
+		\end{equation*}
+		Because for any $x \in B_{\varepsilon}$, $|g(x)|>\|g\|_{L^{\infty}(X)}-\varepsilon>0$, $|\operatorname{sgn}(g(x))|=1$. Thus,
+		\begin{equation*}
+			\left|w_{\varepsilon, g}(x)\right|=\chi_{B_{\varepsilon}}(x)|\operatorname{sgn}(g(x))|=\chi_{B_{\varepsilon}}(x),\quad x \in X
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\int_X\left|w_{\varepsilon, g}(x)\right| d \mu(x)=\int_X \chi_{B_{\varepsilon}}(x) d \mu(x)=\mu\left(B_{\varepsilon}\right)<\infty
+		\end{equation*}
+		which means $w_{\varepsilon, g} \in L^1(X) \backslash\{0\}$ with $\left\|w_{\varepsilon, g}\right\|_{1}=\mu\left(B_{\varepsilon}\right)$. Besides,
+		\begin{equation*}
+			w_{\varepsilon, g}(x) g(x)=\chi_{B_{\varepsilon}}(x)\{\operatorname{sgn}(g(x))\} g(x)=\chi_{B_{\varepsilon}}(x)|g(x)|
+		\end{equation*}
+		so $w_{\varepsilon, g} \cdot g \in L^1(X)$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\left|\Phi_g\left(w_{\varepsilon, g}\right)\right| & =\left|\int_X w_{\varepsilon, g}(x) g(x) d \mu(x)\right|=\int_X \chi_{B_{\varepsilon}}(x)|g(x)| d \mu(x) \\
+				& =\int_{B_{\varepsilon}}|g(x)| d \mu(x)>\int_{B_{\varepsilon}}\left(\|g\|_{\infty}-\varepsilon\right) d \mu(x) \\
+				& =\left(\|g\|_{\infty}-\varepsilon\right) \mu\left(B_{\varepsilon}\right)=\left(\|g\|_{\infty}-\varepsilon\right)\left\|w_{\varepsilon, g}\right\|_{1}
+			\end{aligned}
+		\end{equation*}
+		So
+		\begin{equation*}
+			\left\|\Phi_g\right\|_{L^1(X)^*} \geq\|g\|_{\infty}-\varepsilon \quad \Rightarrow \quad \left\|\Phi_g\right\|_{L^1(X)^*} \geq\|g\|_{\infty}
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\begin{defn}
+	For measure space $(X,\fml{A},\mu)$, let $S_0(X,\fml{A},\mu) = S_0(X)$ be the set of all $\fml{A}$-measurable simple functions $\phi$ with $\mu(\bb{x \in X \mid \phi(x)\neq 0}) < \infty$.
+\end{defn}
+\begin{rmk}
+	\begin{enumerate}[label=(\arabic*)]
+		\item If $(X,\fml{A},\mu)$ is finite, then $S_0$ is the set of all simple functions.
+		\item For $1 \leq p \leq \infty$, $S_0(X) \subset L^p(X)$.
+	\end{enumerate}
+\end{rmk}
+
+\begin{prop}\label{prop:s0dense}
+	For $1 \leq p < \infty$, if $f \in L^p(X)$, then there is a sequence $\bb{\phi_n}_{n \in \N}$ in $S_0(X)$ such that
+	\begin{enumerate}[label=(\arabic{*})]
+		\item for any $n \in \N$ and $x \in X$,
+		\begin{equation*}
+			\left|\phi_n(x)\right| \leq\left|\phi_{n+1}(x)\right|,\left|\phi_n(x)\right| \leq|f(x)|;
+		\end{equation*}
+		\item for any $x \in X$, 
+		\begin{equation*}
+			\lim_{n \sto \infty} \phi_n(x) = f(x)
+		\end{equation*}
+		\item moreover,
+		\begin{equation*}
+			\lim _{n \rightarrow \infty}\left\|\phi_n-f\right\|_{L^p(X)}=0
+		\end{equation*}
+	\end{enumerate}
+	In particular, for $1 \leq p < \infty$, then $S_0(X)$ is dense in $L^p(X)$.
+\end{prop}
+
+\begin{thm}\label{thm:mqf}
+	Let $(X,\fml{A},\mu)$ be $\sigma$-finite. For $1 \leq p \leq \infty$, let $q$ be its conjugate. $f$ is a complex-valued $\fml{A}$-measurable function and for any $\phi \in S_0(X)$ with
+	\begin{equation*}
+		\int_X|\phi(x) f(x)| d \mu(x)<\infty
+	\end{equation*}
+	and
+	\begin{equation*}
+		\sup \left\{\left|\int_X \phi(x) f(x) d \mu(x)\right| \mid \phi \in S_0(X),\|\phi\|_{L^p(X)}=1\right\}<\infty
+	\end{equation*}
+	Then $f \in L^q(X)$,
+	\begin{equation*}
+		\|f\|_{q}=\sup \left\{\left|\int_X \phi(x) f(x) d \mu(x)\right| \mid \phi \in S_0(X),\|\phi\|_{p}=1\right\}
+	\end{equation*}
+\end{thm}
+\begin{proof}
+	Let
+	\begin{equation*}
+		M_q(f):=\sup \left\{\left|\int_X \phi(x) f(x) d \mu(x)\right| \mid \phi \in S_0(X),\|\phi\|_{L^p(X)}=1\right\}
+	\end{equation*}
+	Therefore, it is sufficient to check for any $f \in L^q(X)$
+	\begin{equation*}
+		\|f\|_{q} = M_q(f)
+	\end{equation*}
+	If $\mu(X) = 0$, it is clear. Besides, if $\|f\|_{q} = 0$, it is also clear. So assume $0 < \mu(X) \leq \infty$ and $\|f\|_{q} \neq 0$.
+	\begin{enumerate}[label=(\roman*)]
+		\item \textbf{Check:} If $v$ is complex-valued, bounded, $\fml{A}$-measurable, and
+		\begin{equation*}
+			\mu(\{x \in X \mid v(x) \neq 0\})<\infty, \quad\|v\|_{L^p(X)}=1
+		\end{equation*}
+		then $v \cdot f \in L^1(X)$ and
+		\begin{equation*}
+			\left|\int_X v(x) f(x) d \mu(x)\right| \leq M_q(f)
+		\end{equation*}
+		First, let $E:=\{x \in X \mid v(x) \neq 0\}$. For $x \in X$,
+		\begin{equation*}
+			|v(x) f(x)|=\left|v(x) \chi_E(x) f(x)\right| \leq\|v\|_{L^{\infty}(X)} \chi_E(x)|f(x)|
+		\end{equation*}
+		Because $\mu(E) < \infty$, $\chi_E \in S_0(X)$ and so $\chi_E \cdot f \in L^1(X)$. And $v \cdot f \in L^1(X)$. There is a sequence of $\fml{A}$-measurable functions $\bb{\phi_n}_{n \in \N}$ such that
+		\begin{itemize}
+			\item $\left|\phi_n(x)\right| \leq\left|\phi_{n+1}(x)\right|$ and $\left|\phi_n(x)\right| \leq|v(x)|$;
+			\item $\phi_n(x) \rightarrow v(x)$ point-wisely;
+			\item $\left\|\phi_1\right\|_{p}>0$.
+		\end{itemize}
+		In particular, $\phi_n \in S_0(X)$ and
+		\begin{equation}
+			0<\left\|\phi_n\right\|_{L^p(X)} \leq\|v\|_{L^p(X)}=1
+		\end{equation}
+		Then we have
+		\begin{equation*}
+			\left|\int_X \phi_n(x) f(x) d \mu(x)\right| \leq M_q(f)\left\|\phi_n\right\|_{L^p(X)} \leq M_q(f)
+		\end{equation*}
+		By DCT, as $n \sto \infty$,
+		\begin{equation*}
+			\left|\int_X v(x) f(x) d \mu(x)\right| \leq M_q(f)
+		\end{equation*}
+
+		\item For $1 \leq q < \infty$, $1 < p \leq \infty$. For $f$, there is a sequence of $\fml{A}$-measurable functions $\bb{\psi_n}_{n \in \N}$ such that
+		\begin{itemize}
+			\item $\left|\psi_n(x)\right| \leq\left|\phi_{n+1}(x)\right|$ and $\left|\psi_n(x)\right| \leq|v(x)|$;
+			\item $\psi_n(x) \rightarrow v(x)$ point-wisely;
+			\item It is not that $\psi_1(x) = 0$ for $\mu-a.e.$ $x \in X$.
+		\end{itemize}
+		Since $(X,\fml{A},\mu)$ is $\sigma$-finite with $\mu(X) > 0$, there is a sequence $\bb{E_n}_{n \in \N}$ such that
+		\begin{itemize}
+			\item $X = \bigcup_n E_n$,
+			\item $E_n \subset E_{n+1}$ and $0 < \mu(E_n) < \infty$,
+			\item $\norm{\psi_1\chi_{E_1}}_q > 0$
+		\end{itemize}
+		Then $\psi_n \chi_{E_n} \in L^q(X),\left\|\psi_n \chi_{E_n}\right\|_{L^q(X)}>0$. Define
+		\begin{equation*}
+			f_n(x):=\psi_n(x) \chi_{E_n}(x),\quad x\in X
+		\end{equation*}
+		So $f_n \in S_0(X)$ with $\norm{f_n}_q = \norm{\psi_n\chi_{E_n}}_q > 0$. Moreover, we have
+		\begin{itemize}
+			\item for any $x \in X$,
+			\begin{equation*}
+				f_n(x)=\psi_n(x) \chi_{E_n}(x) \longrightarrow f(x) \cdot 1=f(x)
+			\end{equation*}
+			\item for any $n \in \N$ and $x \in X$,
+			\begin{equation*}
+				\left|f_n(x)\right| \leq\left|\psi_n(x)\right| \leq|f(x)| .
+			\end{equation*}
+		\end{itemize}
+		By Fatou's lemma,
+		\begin{equation*}
+			\left(\int_X|f(x)|^q d \mu(x)\right)^{\frac{1}{q}} \leq \liminf_{n \sto \infty} \left(\int_X|f_n(x)|^q d \mu(x)\right)^{\frac{1}{q}}
+		\end{equation*}
+		\begin{rmk}
+			In fact, it is the idea of the proof of Proposition \ref{prop:s0dense}.
+		\end{rmk}
+		Define
+		\begin{equation*}
+			v_n(x):=\frac{1}{\left\|f_n\right\|_{q}^{q-1}}\left|f_n(x)\right|^{q-1} \chi_{E_n}(x) \operatorname{sgn}(f(x)),\quad x \in X
+		\end{equation*}
+		Then for any $n \in \N$ and $x \in X$,
+		\begin{equation*}
+			\left|v_n(x)\right|= \begin{cases}\frac{1}{\left\|f_n\right\|_{L^q(X)}^{q-1}}\left|f_n(x)\right|^{q-1}, & 1<q<\infty \\ \chi_{E_n}(x)|\operatorname{sgn}(f(x))|, & q=1\end{cases}
+		\end{equation*}
+		First, for any $n$, $v_n$ is bounded and $\fml{A}$-measurable and 
+		\begin{equation*}
+			\mu\left(\left\{x \in X \mid v_n(x) \neq 0\right\}\right)<\infty
+		\end{equation*}
+		\textbf{Check:} $\left\|v_n\right\|_{p}=1$.
+		\begin{enumerate}[label=(\alph*)]
+			\item For $1 < q < \infty$, $1 < p = \frac{q}{q-1} < \infty$, by the definition
+			\begin{equation*}
+				\begin{aligned}
+					\left\|v_n\right\|_{L^p(X)} & =\left(\int_X\left|v_n(x)\right|^p d \mu(x)\right)^{\frac{1}{p}} \\
+					& =\frac{1}{\left\|f_n\right\|_{L^q(X)}^{q-1}}\left(\int_X\left|f_n(x)\right|^{(q-1) p} d \mu(x)\right)^{\frac{q-1}{q}} \\
+					& =\frac{1}{\left\|f_n\right\|_{L^q(X)}^{q-1}}\left\|f_n\right\|_{L^q(X)}^{q-1}=1
+				\end{aligned}
+			\end{equation*}
+			\item For $q = 1$, $p = \infty$. Clearly, $v_n \in L^\infty(X)$. For any $x \in X$,
+			\begin{equation*}
+				\left|v_n(x)\right|=\chi_{E_n}(x)|\operatorname{sgn}(f(x))|
+			\end{equation*}
+			Therefore,
+			\begin{equation*}
+				\left|\operatorname{sgn}\left(f_n(x)\right)\right|=\chi_{E_n}(x)\left|\operatorname{sgn}\left(f_n(x)\right)\right| \leq\left|v_n(x)\right| \leq 1
+			\end{equation*}
+			Because $\norm{f_n}_1 > 0$, $\norm{\operatorname{sgn}\left(f_n\right)}_\infty =1$. Thus, $\norm{v_n}_\infty = 1$.
+		\end{enumerate}
+		Besides, by the definition of $v_n$, we have
+		\begin{equation*}
+			\begin{aligned}
+				\left|v_n(x) f_n(x)\right| & =\left|v_n(x) \| f_n(x)\right|= \begin{cases}\frac{1}{\left\|f_n\right\|_{q}^{q-1}}\left|f_n(x)\right|^q, & 1<q < \infty \\
+				\chi_{E_n}(x)|\operatorname{sgn}(f(x))|\left|f_n(x)\right|, & q=1\end{cases} \\
+				& =\frac{1}{\left\|f_n\right\|_{q}^{q-1}}\left|f_n(x)\right|^q
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\left(\int_X\left|f_n(x)\right|^q d \mu(x)\right)^{\frac{1}{q}}=\int_X\left|v_n(x) f_n(x)\right| d \mu(x)
+		\end{equation*}
+		\textbf{Check:} $v_n(x)f(x) = \abs{v_n(x)f(x)}$.
+
+		\noindent For $1 < q < \infty$,
+		\begin{equation*}
+			\begin{aligned}
+				v_n(x) f(x) & =\frac{1}{\left\|f_n\right\|_{L^q(X)}^{q-1}}\left|f_n(x)\right|^{q-1} \chi_{E_n}(x) \operatorname{sgn}(f(x)) \cdot f(x) \\
+				& =\frac{1}{\left\|f_n\right\|_{L^q(X)}^{q-1}}\left|f_n(x)\right|^{q-1}|f(x)|=\left|v_n(x) \| f(x)\right|
+			\end{aligned}
+		\end{equation*}
+		and for $q = 1$,
+		\begin{equation*}
+			\begin{aligned}
+				v_n(x) f(x) & =\chi_{E_n}(x) \operatorname{sgn}(f(x)) \cdot f(x)=\chi_{E_n}(x)|f(x)| \\
+				& =\chi_{E_n}(x)|\operatorname{sgn}(f(x))||f(x)|=\left|v_n(x)\right||f(x)|
+			\end{aligned}
+		\end{equation*}
+
+		\noindent Combining these results, we have
+		\begin{equation*}
+			\begin{aligned}
+				\left(\int_X\left|f_n(x)\right|^q d \mu(x)\right)^{\frac{1}{q}} & =\int_X\left|v_n(x) f_n(x)\right| d \mu(x) \\
+				\leq \int_X\left|v_n(x)\right||f(x)| d \mu(x) & =\int_X v_n(x) f(x) d \mu(x) \leq M_q(f)
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\left(\int_X|f(x)|^q d \mu(x)\right)^{\frac{1}{q}} \leq \liminf_{n \sto \infty} \left(\int_X|f_n(x)|^q d \mu(x)\right)^{\frac{1}{q}} \leq M_q(f)
+		\end{equation*}
+		So $f \in L^q(X)$ with $\norm{f}_q \leq M_q(f)$. For the other side, let $\phi \in S_0(X)$ with $\norm{\phi}_p =1$. By the H\"older's Inequality,
+		\begin{equation*}
+			\left|\int_X \phi(x) f(x) d \mu(x)\right| \leq\|\phi\|_{p}\|f\|_{q}=\|f\|_{q}
+		\end{equation*}
+		So $M_q(f) \leq\|f\|_{q}$. Therefore, for $1 \leq q < \infty$,
+		\begin{equation*}
+			\|f\|_{q}=M_q(f)
+		\end{equation*}
+
+
+		\item For $q = \infty$, $p = 1$. Check $f \in L^\infty$ and $\norm{f}_\infty = M_\infty(f)$. For any $\varepsilon > 0$, let $A_\varepsilon \in \fml{A}$
+		\begin{equation*}
+			A_{\varepsilon}:=\left\{x \in X| | f(x) \mid \geq M_{\infty}(f)+\varepsilon\right\}
+		\end{equation*}
+		\textbf{Check:} $\mu(A_{\varepsilon})$ for all $\varepsilon > 0$.
+
+		\noindent Assume there is a $\varepsilon_0 > 0$ such that $\mu(A_{\varepsilon_)}) > 0$. The by the $\sigma$-finiteness of $(X,\fml{A},\mu)$, there is $B_{\varepsilon_0} \in \fml{A}$ such that
+		\begin{equation*}
+			B_{\varepsilon_0} \subset A_{\varepsilon_0}, \quad 0<\mu\left(B_{\varepsilon_0}\right)<\infty
+		\end{equation*}
+		Define
+		\begin{equation*}
+			v_{\varepsilon_0}(x):=\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \chi_{B_{\varepsilon_0}}(x) \operatorname{sgn}(f(x)),\quad x \in X
+		\end{equation*}
+		Then $v_{\varepsilon_0}$ is bounded and $\fml{A}$-measurable and
+		\begin{equation*}
+			\mu\left(\left\{x \in X \mid v_{\varepsilon_0}(x) \neq 0\right\}\right)<\infty
+		\end{equation*}
+		and in particular, $v_{\varepsilon_0} \in L^1(X)$. Moreover, for $x \in B_{\varepsilon_0}$, $|f(x)| \geq M_{\infty}(f)+\varepsilon_0 > 0$ and so $|\operatorname{sgn}(f(x))|=1$. Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				\left\|v_{\varepsilon_0}\right\|_{L^1(X)} & =\int_X\left|v_{\varepsilon_0}(x)\right| d \mu(x)=\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \int_X \chi_{B_{\varepsilon_0}}(x)|\operatorname{sgn}(f(x))| d \mu(x) \\
+				& =\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \int_{B_{\varepsilon_0}}|\operatorname{sgn}(f(x))| d \mu(x)=\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \int_{B_{\varepsilon_0}} 1 d \mu(x)=1
+			\end{aligned}
+		\end{equation*}
+		The by (i), $v_{\varepsilon_0} \cdot f \in L^1(X)$. Moreover,
+		\begin{equation*}
+			v_{\varepsilon_0}(x) f(x)=\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \chi_{B_{\varepsilon_0}}(x) \operatorname{sgn}(f(x)) \cdot f(x)=\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \chi_{B_{\varepsilon_0}}(x)|f(x)| \geq 0
+		\end{equation*}
+		by (i),
+		\begin{equation*}
+			\int_X v_{\varepsilon_0}(x) f(x) d \mu(x) \leq M_{\infty}(f)
+		\end{equation*}
+		On the other hand,
+		\begin{equation*}
+			\begin{aligned}
+				& \int_X v_{\varepsilon_0}(x) f(x) d \mu(x) \\
+				& =\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \int_X \chi_{B_{\varepsilon_0}}(x) \operatorname{sgn}(f(x)) \cdot f(x) d \mu(x) \\
+				& =\frac{1}{\mu\left(B_{\varepsilon_0}\right)} \int_{B_{\varepsilon_0}}|f(x)| d \mu(x) \\
+				& \geq \frac{1}{\mu\left(B_{\varepsilon_0}\right)} \int_{B_{\varepsilon_0}}\left(M_{\infty}(f)+\varepsilon_0\right) d \mu(x)=M_{\infty}(f)+\varepsilon_0
+			\end{aligned}
+		\end{equation*}
+		which induces a contradiction. 
+
+		\noindent Because $\mu(A_{\varepsilon}) = 0$ for all $\varepsilon > 0$, $f \in L^\infty(X)$ with
+		\begin{equation*}
+			\|f\|_{\infty} \leq M_{\infty}(f)+\varepsilon
+		\end{equation*}
+		Therefore, $\|f\|_{\infty} \leq M_{\infty}(f)$. 
+
+		\noindent For any $\phi \in S_0(X)$ with $\norm{\phi}_1 = 1$, the H\"older's Inequality implies that
+		\begin{equation*}
+			\left|\int_X \phi(x) f(x) d \mu(x)\right| \leq\|\phi\|_{L^1(X)}\|f\|_{L^{\infty}(X)}=\|f\|_{L^{\infty}(X)}
+		\end{equation*}
+		Therefore, $M_{\infty}(f) \leq\|f\|_{\infty}$.
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}
+	Let $(X,\fml{A},\mu)$ be a $\sigma$-finite measure space and $1 \leq p < \infty$ with conjugate $q$. Let $\Phi \in L^p(X)^*$. Then there is a unique $g \in L^q(X)$ such that $\Phi = \Phi_g$. Moreover, $\|g\|_{q}=\|\Phi\|_{L^p(X)^*}$
+\end{thm}
+\begin{proof}
+	Note that $1 < q \leq \infty$.
+	\begin{itemize}
+		\item Uniqueness of $g \in L^q(X)$.
+
+		\noindent If there are $g_1,g_2 \in L^q(X)$ such that $\Phi = \Phi_{g_1} = \Phi_{g_2}$. Then for any $u \in L^p(X)$,
+		\begin{equation*}
+			\begin{aligned}
+				\Phi_{g_1-g_2}(u) & =\int_X u(x)\left\{g_1(x)-g_2(x)\right\} d \mu(x) \\
+				& =\Phi_{g_1}(u)-\Phi_{g_2}(u)=\Phi(u)-\Phi(u)=0
+			\end{aligned}
+		\end{equation*}
+		Therefore, $\Phi_{g_1-g_2} = 0$ and
+		\begin{equation*}
+			\left\|g_1-g_2\right\|_{q}=\left\|\Phi_{g_1-g_2}\right\|_{L^p(X)^*}=0
+		\end{equation*}
+		So $g_1 = g_2$.
+
+		\item Existence of $g \in L^q(X)$.
+		\begin{enumerate}[label=(\roman*)]
+			\item Consider $\mu(X) < \infty$. Note that $\chi_B \in L^p(X)$ for any $B \in \fml{A}$. Define $\nu \colon \fml{A} \sto \C$ as
+			\begin{equation*}
+				\nu(B):=\Phi\left(\chi_B\right),\quad B \in \fml{A}
+			\end{equation*}
+
+			\noindent \textbf{Check:} $\nu$ is a complex measure on $(X,\fml{A})$.
+
+			\noindent First, $\nu(\varnothing) = 0$ clearly. So it only needs to prove the $\sigma$-aditivity. Let $B_k \in \mathscr{A}(k \in \mathbb{N}), B_j \cap B_k=\emptyset(j \neq k)$ and $B=\bigcup_{k=1}^{\infty} B_k$. Because for any $1 \leq p < \infty$, $\mu(X) < \infty$, by DCT
+			\begin{equation*}
+				\left\|\sum_{k=1}^N \chi_{B_k}-\chi_B\right\|_{p} \longrightarrow 0
+			\end{equation*}
+			So by the continuity of $\Phi$,
+			\begin{equation*}
+				\Phi\left(\sum_{k=1}^N \chi_{B_k}\right) \longrightarrow \Phi\left(\chi_B\right.
+			\end{equation*}
+			and by the linearity of $\Phi$,
+			\begin{equation*}
+				\sum_{k=1}^N \nu\left(B_k\right)=\sum_{k=1}^N \Phi\left(\chi_{B_k}\right)=\Phi\left(\sum_{k=1}^N \chi_{B_k}\right) \longrightarrow \Phi\left(\chi_B\right)=\nu(B)
+			\end{equation*}
+
+			\noindent\textbf{Check:} $\nu \ll \mu$.
+
+			\noindent For any $B \in \fml{A}$ with $\mu(B) = 0$. Then $\chi_B(x) = 0$ $\mu-a.e.$, \emph{i.e.} $\chi_B =0$ in $L^p(X)$. So
+			\begin{equation*}
+				\nu(B)=\Phi\left(\chi_B\right)=\Phi(0)=0
+			\end{equation*}
+
+			\noindent Then by Radon-Nikodym Theorem, there is a unique $g \in L^1(X,\fml{A},\mu)$ such that for any $B \in \fml{B}$,
+			\begin{equation*}
+				\Phi\left(\chi_B\right)=\nu(B)=\int_B g(x) d \mu(x)=\int_X \chi_B(x) g(x) d \mu(x)
+			\end{equation*}
+			More generally, for any $v \in S_0(X,\fml{A},\mu)$, 
+			\begin{equation*}
+				\Phi(v)=\int_X v(x) g(x) d \mu(x)
+			\end{equation*}
+			Note that $v \in L^p(X,\fml{A},\mu)$ and $v \cdot g \in L^1s(X,\fml{A},\mu)$. Moreover,
+			\begin{equation*}
+				\left|\int_X v(x) g(x) d \mu(x)\right|=|\Phi(v)| \leq\|\Phi\|_{L^p(X)^*}\|v\|_{p}
+			\end{equation*}
+			and so
+			\begin{equation*}
+				\sup \left\{\left|\int_X \phi(x) g(x) d \mu(x)\right| \mid \phi \in S_0(X),\|\phi\|_{L^p(X)}=1\right\} \leq\|\Phi\|_{L^p(X)^*} < \infty
+			\end{equation*}
+			By above theorem, we have $g \in L^q(X)$. 
+
+			\noindent Let $u \in L^p(X)$. Because $S_0(X)$ is dense in $L^p(X)$ for all $1 \leq p < \infty$, there is $\bb{v_n}_{n \in \N} \subset S_0(X)$ such that $\left\|v_n-u\right\|_{p} \rightarrow 0$, which means
+			\begin{equation*}
+				\Phi\left(v_n\right)=\int_X v_n(x) g(x) d \mu(x) \sto \Phi(u)
+			\end{equation*}
+			On the other hand,
+			\begin{equation*}
+				\begin{aligned}
+					& \left|\int_X v_n(x) g(x) d \mu(x)-\int_X u(x) g(x) d \mu(x)\right| \\
+					& \leq\left\|v_n-u\right\|_{L^p(X)}\|g\|_{L^q(X)} \longrightarrow 0
+				\end{aligned}
+			\end{equation*}
+			Therefore, 
+			\begin{equation*}
+				\Phi(u)=\int_X u(x) g(x) d \mu(x)
+			\end{equation*}
+			\emph{i.e.} $\Phi = \Phi_g$. Moreover, by above proposition
+			\begin{equation*}
+				\|g\|_{L^q(X)}=\left\|\Phi_g\right\|_{L^p(X)^*}=\|\Phi\|_{L^p(X)^*}
+			\end{equation*}
+
+			\item $\mu(X) = \infty$ and $(X,\fml{A}, \mu)$ is $\sigma$-finite. Then there is a sequence $\bb{E_n}_{n \in \N}$ in $\fml{A}$ such that $X = \bigcup_n E_n$ and $E_n \subset E_{n+1}$ with $0 < \mu(E_n) < \infty$. For any $n \in \N$, let
+			\begin{equation*}
+				\left.\mathscr{A}\right|_{E_n}:=\left\{B \in \mathscr{A} \mid B \subset E_n\right\}
+			\end{equation*}
+			For $r \in [1,\infty]$ and $f \in L^r(E_n) = L^r\left(E_n,\left.\mathscr{A}\right|_{E_n}, \mu\right)$, extending $f$ on $X$ by setting
+			\begin{equation*}
+				f(x) = 0,\quad x \in X \backslash E_n
+			\end{equation*}
+			Similarly, extending it on $E_{n+1}$. So wwe have
+			\begin{equation*}
+				\|f\|_{L^r\left(E_n\right)}=\|f\|_{L^r\left(E_{n+1}\right)}, \quad\|f\|_{L^r\left(E_n\right)}=\|f\|_{L^r(X)}
+			\end{equation*}
+			Let $\Phi \in L^p(X)^*$. Clearly, by restriction, $\Phi \in L^p(E_n)^*$ with
+			\begin{equation*}
+				\|\Phi\|_{L^p\left(E_n\right)^*} \leq\|\Phi\|_{L^p(X)^*}
+			\end{equation*}
+			Note that $\left(E_n,\left.\mathscr{A}\right|_{E_n}, \mu\right)$ is a finite measure space. Therefore, by (i), there is a unique $g_n \in L^q(E_n)$ such that for any $u \ in L^p(X)$,
+			\begin{equation*}
+				\begin{aligned}
+					\Phi\left(u \chi_{E_n}\right) & =\int_{E_n} u(x) \chi_{E_n}(x) g_n(x) d \mu(x) \\
+					& =\int_X u(x) \chi_{E_n}(x) g_n(x) d \mu(x)
+				\end{aligned}
+			\end{equation*}
+			and moreover
+			\begin{equation*}
+				\left\|g_n\right\|_{L^q(X)}=\left\|g_n\right\|_{L^q\left(E_n\right)}=\|\Phi\|_{L^p\left(E_n\right)^*} \leq\|\Phi\|_{L^p(X)^*}
+			\end{equation*}
+			Because such $g_n \in L^q(E_n)$ uniquely exists,
+			\begin{equation*}
+				g_n(x)=g_{n+1}(x), \quad \mu-a.e.~ x \in E_n
+			\end{equation*}
+			Then define $g$ on $X$ as
+			\begin{itemize}
+				\item when $x \in E_1$, $g(x) \defeq g_1(x)$;
+				\item when $x \in E_n \backslash E_{n-1}$, $g(x) \defeq g_n(x)$.
+			\end{itemize}
+			So we have
+			\begin{equation*}
+				g(x) \chi_{E_n}(x)=g_n(x),\quad \mu-a.e.~ x \in X
+			\end{equation*}
+			and thus $g_n \sto g$ \emph{a.e.}.
+
+			\noindent \textbf{Check:} $g \in L^q(X)$.
+
+			\noindent When $1 < q < \infty$, by MCT,
+			\begin{equation*}
+				\begin{aligned}
+					\int_X|g(x)|^q d \mu(x) & =\lim _{n \rightarrow \infty} \int_X|g(x)|^q \chi_{E_n}(x) d \mu(x) \\
+					& =\lim _{n \rightarrow \infty} \int_X\left|g_n(x)\right|^q d \mu(x) \leq\|\Phi\|_{L^p(X)^*}^q<\infty
+				\end{aligned}
+			\end{equation*}
+			and so $g \in L^q(X)$.
+
+			\noindent When $q = \infty$ and $p = 1$, by $\left\|g_n\right\|_{L^{\infty}(X)} \leq\|\Phi\|_{L^1(X)^*}$,
+			\begin{equation*}
+				|g(x)| \chi_{E_n}(x)=\left|g_n(x)\right| \leq\|\Phi\|_{L^1(X)^*},\quad \mu-a.e.~ x \in X
+			\end{equation*}
+			So as $n \sto \infty$, $\abs{g(x)} \leq \|\Phi\|_{L^1(X)^*}$ and $g \in L^\infty(X)$.
+
+			\noindent \textbf{Check:} $\Phi = \Phi_g$.
+
+			\noindent For any $u \in L^p(X)$,
+			\begin{equation*}
+				\begin{aligned}
+					\Phi\left(u \chi_{E_n}\right) & =\int_X u(x) \chi_{E_n}(x) g_n(x) d \mu(x) \\
+					& =\int_X u(x) \chi_{E_n}(x) g(x) d \mu(x)
+				\end{aligned}
+			\end{equation*}
+			For any $1 \leq p < \infty$, by DCT, $\left\|u \chi_{E_n}-u\right\|_{L^p(X)} \longrightarrow 0$. So on the LHS,
+			\begin{equation*}
+				\Phi\left(u \chi_{E_n}\right) \longrightarrow \Phi(u)
+			\end{equation*}
+			On the RHS,
+			\begin{equation*}
+				\begin{aligned}
+					& \left|\int_X u(x) \chi_{E_n}(x) g(x) d \mu(x)-\int_X u(x) g(x) d \mu(x)\right| \\
+					& \leq\left\|u \chi_{E_n}-u\right\|_{L^p(X)}\|g\|_{L^q(X)} \longrightarrow 0
+				\end{aligned}
+			\end{equation*}
+			So
+			\begin{equation*}
+				\Phi(u)=\int_X u(x) g(x) d \mu(x)
+			\end{equation*}
+			and by above proposition
+			\begin{equation*}
+				\|g\|_{L^q(X)}=\left\|\Phi_g\right\|_{L^p(X)^*}=\|\Phi\|_{L^p(X)^*}
+			\end{equation*}
+		\end{enumerate}
+	\end{itemize}
+\end{proof}
+
+\section{Riesz-Thorin Interpolation Theorem}
+Let $\mathbb{M}(X)=\mathbb{M}(X,\fml{A},\mu)$ be the set of all complex-valued $\fml{A}$-measurable functions with equivalence $f(x)=g(x)$ $\mu-a.e.$.
+
+\begin{prop}\label{pro:geneholder}
+	Let $1 \leq p < r < q \leq \infty$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $\theta \in (0,1)$ with
+		\begin{equation*}
+			\frac{1}{r} = \frac{1 - \theta}{p} + \frac{\theta}{q}
+		\end{equation*}
+		Then if $f \in L^p(X) \cap L^q(X)$, $f \in L^r(X)$ with
+		\begin{equation*}
+			\norm{f}_r \leq \norm{f}^{1-\theta}_p\norm{f}^\theta_q
+		\end{equation*}
+		In particular, $L^p(X) \cap L^q(X) \subset L^r(X)$.
+
+		\item $L^r(X) \subset L^p(X) + L^q(X)$.
+	\end{enumerate}
+	So we have for any $1 \leq p < r < q \leq \infty$,
+	\begin{equation*}
+		L^p(X) \cap L^q(X) \subset L^r(X) \subset L^p(X)+L^q(X)
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For $\theta \in (0,1)$ with
+		\begin{equation*}
+			\frac{1}{r} = \frac{1 - \theta}{p} + \frac{\theta}{q} = \frac{1}{\frac{p}{1-\theta}} + \frac{1}{\frac{q}{\theta}}
+		\end{equation*}
+		then
+		\begin{equation*}
+			\frac{1}{\frac{p}{(1-\theta) r}}+\frac{1}{\frac{q}{\theta r}}=1
+		\end{equation*}
+		And for $f \in L^p(X) \cap L^q(X)$, we have
+		\begin{equation*}
+			\abs{f}^{(1-\theta) r} \in L^{\frac{p}{(1-\theta) r}},\quad \abs{f}^{\theta r} \in L^{\frac{q}{\theta r}}
+		\end{equation*}
+		The by H\"older's Inequality,
+		\begin{equation*}
+			\begin{aligned}
+				\int_X \abs{f(x)}^rd\mu(x) &= \int_X \abs{f(x)}^{(1-\theta)r}\abs{f(x)}^{\theta r}d\mu(x) \\
+				&\leq \norm{\abs{f}^{(1-\theta)r}}_{\frac{p}{(1-\theta)r}}\norm{\abs{f}^{\theta r}}_{\frac{q}{\theta r}} = \norm{{f}}^{(1-\theta)r}_{p}\norm{{f}}^{\theta r}_{q}
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\|f\|_{r} \leq\|f\|_{p}^{1-\theta}\|f\|_{q}^\theta
+		\end{equation*}
+
+		\item For $g \in L^r(X)$, let $B \in \fml{A}$ be
+		\begin{equation*}
+			B:=\{x \in X| | g(x) \mid>1\}
+		\end{equation*}
+		Considering $g = g \cdot \chi_B + g \cdot \chi_{X\backslash B}$.
+		\begin{itemize}
+			\item \textbf{Check:} $g \cdot \chi_B \in L^p(X)$.
+
+			\noindent For $p < r$,
+			\begin{equation}
+				\abs{g(x)\chi_B(x)}^p \leq \abs{g(x)\chi_B(x)}^r \leq \abs{g(x)}^r
+			\end{equation}
+			Because $g \in L^p(X)$, $g \cdot \chi_B \in L^p(X)$.
+
+			\item \textbf{Check:} $g \cdot \chi_{X\backslash B} \in L^q(X)$.
+
+			\noindent When $q \neq \infty$, for any $x \in X$, by $r < q$,
+			\begin{equation*}
+				\left|g(x) \chi_{X \backslash B}(x)\right|^q \leq\left|g(x) \chi_{X \backslash B}(x)\right|^r \leq|g(x)|^r
+			\end{equation*}
+			So $g \chi_{X \backslash B} \in L^q(X)$.
+
+			\noindent When $q = \infty$, by $\left|g(x) \chi_{X \backslash B}(x)\right| \leq 1$, $g \cdot \chi_{X \backslash B} \in L^\infty(X)$
+		\end{itemize}
+		Therefore, $L^r(X) \subset L^p(X) + L^q(X)$.
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}[Riesz-Thorin Interpolation]\label{thm:rieszthorin}
+	Let $(X,\fml{A},\mu)$ and $(Y,\fml{B},\nu)$ be two $\sigma$-finite measure spaces. Let $1 \leq p_0,p_1,q_0,q_1 \leq \infty$. For $t \in (0,1)$, let $p_t,q_t \in [1,\infty]$ be
+	\begin{equation*}
+		\frac{1}{p_t}=\frac{1-t}{p_0}+\frac{t}{p_1}, \quad \frac{1}{q_t}=\frac{1-t}{q_0}+\frac{t}{q_1}
+	\end{equation*}
+	Let $T \colon L^{p_0}(X) + L^{p_1}(X) \sto L^{q_0}(X) + L^{q_1}(X)$ be a linear map satisfying the following two conditions
+	\begin{itemize}
+		\item $T(L^{p_0}(X)) \subset L^{q_0}(X)$ and there is an $M_0 \geq 0$ such that
+		\begin{equation*}
+			\|T f\|_{L^{q_0}(Y)} \leq M_0\|f\|_{L^{p_0}(X)},\quad \forall~f \in L^{p_0}(X)
+		\end{equation*}
+		\item $T(L^{p_1}(X)) \subset L^{q_1}(X)$ and there is an $M_1 \geq 0$ such that
+		\begin{equation*}
+			\|T f\|_{L^{q_1}(Y)} \leq M_1\|f\|_{L^{p_1}(X)},\quad \forall~f \in L^{p_1}(X)
+		\end{equation*}
+	\end{itemize}
+	Then for any $f \in L^{p_t}(X) \subset L^{p_0}(X) + L^{p_1}(X)$, $Tf \in L^{q_t}(Y)$ with
+	\begin{equation*}
+		\|T f\|_{L^{q_t}(Y)} \leq M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)}
+	\end{equation*}
+\end{thm}
+\begin{rmk}
+	Note that if $p_0 \neq p_1$, $p_t$ is between $p_0$ and $p_1$. If $p_0 = p_1$, then $p_t = p_0 = p_1$. Besides,  by $t \in (0,1)$, if $p_t = 1$, $p_0 = p_1 = 1$, and if $p_t = \infty$, then $p_0 = p_1 = \infty$. Similarly, $q_0,q_1,q_t$ have the same results.
+\end{rmk}
+\begin{rmk}
+	In other words, if $T \in \mathcal{B}\left(L^{p_0}(X), L^{q_0}(Y)\right)$ and $T \in \mathcal{B}\left(L^{p_1}(X), L^{q_1}(Y)\right)$, then $T \in \mathcal{B}\left(L^{p_t}(X), L^{q_t}(Y)\right)$ with
+	\begin{equation*}
+		\|T\|_{\mathcal{B}\left(L^{p_t}(X), L^{q_t}(Y)\right)} \leq\|T\|_{\mathcal{B}\left(L^{p_0}(X), L^{q_0}(Y)\right)}^{1-t}\|T\|_{\mathcal{B}\left(L^{p_1}(X), L^{q_1}(Y)\right)}^t
+	\end{equation*}
+	where $\mathcal{B}(V,W)$ is the set of all bounded linear map from $V$ to $W$.
+\end{rmk}
+
+\begin{prop}[Hadamard Three-lines Theorem]\label{prop:threelines}
+	Let $D \subset \C$ be a strip-shaped area
+	\begin{equation*}
+		D:=\{z \in \mathbb{C} \mid 0 \leq \operatorname{Re} z \leq 1\}
+	\end{equation*}
+	$F \colon D \sto \C$ is continuous and bounded and regular on
+	\begin{equation*}
+		D^{\circ}=\{z \in \mathbb{C} \mid 0<\operatorname{Re} z<1\}
+	\end{equation*}
+	Assume there are $L_0,L_1 \geq 0$ such that for any $y \in \R$
+	\begin{equation*}
+		|F(i y)| \leq L_0, \quad|F(1+i y)| \leq L_1
+	\end{equation*}
+	Then for any $t \in (0,1)$ and any $y \in \R$, we have
+	\begin{equation*}
+		|F(t+i y)| \leq L_0^{1-t} L_1^t
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item $L_0,L_1 > 0$: For $a > 0$, define $F_a \colon D \sto \C$ as
+		\begin{equation*}
+			F_a(z) \defeq e^{a(z^2 - 1)}L_0^{z-1}L_1^{-z}F(z),\quad \forall~z \in D
+		\end{equation*}
+		Then $F_a$ is continuous on $D$ and regular on $D^\circ$. Let $z \in D$ with $z = t+iy$ for $t \in [0,1]$ and $y \in \R$.
+		\begin{equation*}
+			F_a(t+i y)=e^{a\left(t^2-1-y^2\right)+2 i a t y} L_0^{t+i y-1} L_1^{-(t+i y)} F(t+i y)
+		\end{equation*}
+		and so we have
+		\begin{equation*}
+			\begin{aligned}
+				\left|F_a(t+i y)\right| & =e^{a\left(t^2-1-y^2\right)} L_0^{t-1} L_1^{-t}|F(t+i y)| \\
+				|F(t+i y)| & =e^{a\left(1-t^2+y^2\right)} L_0^{1-t} L_1^t\left|F_a(t+i y)\right|
+			\end{aligned}
+		\end{equation*}
+
+		\noindent \textbf{Check:} for any $a > 0$, $t \in (0,1)$ and $y \in \R$, 
+		\begin{equation*}
+			\left|F_a(t+i y)\right| \leq 1
+		\end{equation*}
+		For $N \in \N$, consider
+		\begin{equation*}
+			D_N:=\{z \in \mathbb{C}|0 \leq \operatorname{Re} z \leq 1,|\operatorname{Im} z| \leq N\}
+		\end{equation*}
+		we have $D_N \subset D_{N+1}$. Therefore, we only need to show that there is an $N_0$ such that if $N \geq N_0$, for any $z \in D_N$,
+		\begin{equation*}
+			\abs{F_a(z)} \leq 1
+		\end{equation*}
+		Since $F_N$ is continuous on compact $D_N$, $\abs{F_a}$ can take a maximum on $D_N$. Moreover, because $F_a$ is regular on $D_N^\circ$, $\abs{F_a}$'s maximum is valued on $\partial D_N$. Note that the $\partial D_N$ contains points as $iy,1+iy$ for $y \in [-N,N]$ and points as $t \pm i N$ for $t \in (0,1)$. For the first case, by assumption
+		\begin{equation*}
+			\begin{aligned}
+				\left|F_a(i y)\right|&=e^{-a\left(1+y^2\right)} L_0^{-1}|F(i y)| \leq L_0^{-1} L_0=1 \\
+				\left|F_a(1+i y)\right|&=e^{-a y^2} L_1^{-1}|F(1+i y)| \leq L_1^{-1} L_1=1,
+			\end{aligned}
+		\end{equation*}
+		For the second case, because $F$ is bounded on $D$, $\abs{F(z)} \leq  K$ on $D$ for some $K > 0$. So
+		\begin{equation*}
+			\left|F_a(t \pm i N)\right| \leq e^{a\left(t^2-N^2-1\right)} L_0^{t-1} L_1^{-t} K \leq C_0 e^{-a N^2}
+		\end{equation*}
+		Therefore, for sufficiently large $N$, $C_0 e^{-aN^2} \leq 1$ and thus $\left|F_a(t \pm i N)\right| \leq 1$. 
+
+
+		\noindent Therefore, base on this result, we have
+		\begin{equation*}
+			|F(t+i y)| \leq e^{a\left(1-t^2+y^2\right)} L_0^{1-t} L_1^t
+		\end{equation*}
+		As $a \sto 0^+$, we get for any $t \in (0,1)$,
+		\begin{equation*}
+			|F(t+i y)| \leq L_0^{1-t} L_1^t
+		\end{equation*}
+
+		\item $L_0 = 0, L_1 > 0$ (or $L_0> 0, L_1 = 0$): For any $\varepsilon > 0$, we have
+		\begin{equation*}
+			|F(i y)| \leq \varepsilon, \quad|F(1+i y)| \leq L_1
+		\end{equation*}
+		for all $y \in \R$. By (i), we have for any $t \in (0,1)$ and any $y \in \R$,
+		\begin{equation*}
+			|F(t+i y)| \leq \varepsilon^{1-t} L_1^t
+		\end{equation*}
+		So let $\varepsilon \sto 0^+$,
+		\begin{equation*}
+			|F(t+i y)| = 0,\quad \forall~t \in (0,1),~\forall~ y \in \R
+		\end{equation*}
+
+		\item $L_0 = L_1 = 0$: Similarly, we have
+		\begin{equation*}
+			|F(i y)| \leq \varepsilon, \quad|F(1+i y)| \leq \varepsilon
+		\end{equation*}
+		for all $y \in \R$ and thus
+		\begin{equation*}
+			|F(t+i y)| \leq \varepsilon^{1-t} \varepsilon^t
+		\end{equation*}
+		So
+		\begin{equation*}
+			|F(t+i y)| = 0,\quad \forall~t \in (0,1),~\forall~ y \in \R
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:rieszthorin}]
+	Fix $t \in (0,1)$.
+	\begin{enumerate}[label=(\Roman*)]
+		\item $p_0 = p_1$: Note that it implies $p_t=p_0=p_1$. For any $f \in L^{p_t}(X)$, that is $f \in L^{p_0}(X) = L^{p_1}(X)$. So by assumptions,
+		\begin{equation*}
+			T f \in L^{q_0}(Y) \cap L^{q_1}(Y) \subset L^{q_t}(X)
+		\end{equation*}
+		By above proposition,
+		\begin{equation*}
+			\begin{aligned}
+				\|T f\|_{L^{q_t}(Y)} & \leq\|T f\|_{L^{q_0}(Y)}^{1-t}\|T f\|_{L^{q_1}(Y)}^t \\
+				& \leq\left(M_0\|f\|_{L^{p_0}(X)}\right)^{1-t}\left(M_1\|f\|_{L^{p_1}(X)}\right)^t=M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)}
+			\end{aligned}
+		\end{equation*}
+
+		\item $p_0 \neq p_1$: Note that $1 < p_t < \infty$ and for any $\phi \in S_0(X)$, because $\phi \in L^{p_0}(X) \cap L^{p_1}(X)$, 
+		\begin{equation*}
+			T\phi \subset L^{q_0}(Y) \cap L^{q_1}(Y) \subset L^{q_t}(Y)
+		\end{equation*}
+		\begin{enumerate}[label=\theenumi-\arabic{*}]
+			\item \textbf{Check:} For any $\phi \in S_0(X)$,
+			\begin{equation*}
+				\|T \phi\|_{q_t} \leq M_0^{1-t} M_1^t\|\phi\|_{p_t(X)} .
+			\end{equation*}
+			By Theorem \ref{thm:mqf}, it is sufficient to prove for any $\phi \in S_0(X)$ with $\norm{\phi}_{p_t} = 1$
+			\begin{equation*}
+				|\langle T \phi, \psi\rangle| \leq M_0^{1-t} M_1^t
+			\end{equation*}
+			for any $\psi \in S_0(Y)$ with $\|\psi\|_{q_t^{\prime}(Y)}=1$, where $q_t^{\prime}$ is the conjugate of $q_t$ and $\inn{u,v} = \int_Y u(y)v(y)d\nu(y)$. First,
+			\begin{equation*}
+				\begin{aligned}
+					\phi(x) & =\sum_{j=1}^M a_j \chi_{A_j}(x), \quad x \in X \\
+					\psi(y) & =\sum_{k=1}^N b_k \chi_{B_k}(y), \quad y \in Y ,
+				\end{aligned}
+			\end{equation*}
+			\begin{enumerate}[label=(\roman*)]
+				\item $1 < q_t \leq \infty$: Then $1 \leq q_t^\prime < \infty$. Consider the strip-shaped closed area
+				\begin{equation*}
+					D:=\{z \in \mathbb{C} \mid 0 \leq \operatorname{Re} z \leq 1\}
+				\end{equation*}
+				For $z \in D$, define $\alpha(z),\beta(z)$ as
+				\begin{equation*}
+					\alpha(z):=\frac{1-z}{p_0}+\frac{z}{p_1}, \quad \beta(z):=\frac{1-z}{q_0}+\frac{z}{q_1}
+				\end{equation*}
+				So $\alpha(t)=\frac{1}{p_t}, \beta(t)=\frac{1}{q_t}, 1-\beta(t)=\frac{1}{q_t^{\prime}}$ and $0<\alpha(t)<1, 0 \leq \beta(t)<1, 0<1-\beta(t) \leq 1$. Let
+				\begin{equation*}
+					\xi_j=\arg a_j, \eta_k=\arg b_k \quad \Rightarrow \quad a_j=\left|a_j\right| e^{i \xi_j}, b_k=\left|b_k\right| e^{i \eta_k}
+				\end{equation*}
+				and define $\phi_z \colon X \sto \C$ and $\psi_z \colon Y \sto \C$ as
+				\begin{equation*}
+					\begin{aligned}
+						& \phi_z(x):=\sum_{j=1}^M\left|a_j\right|^{\frac{\alpha(z)}{\alpha(t)}} e^{i \xi_j} \chi_{A_j}(x)=\sum_{j=1}^M\left|a_j\right|^{p_t \alpha(z)} e^{i \xi_j} \chi_{A_j}(x), \\
+						& \psi_z(y):=\sum_{k=1}^N\left|b_k\right|^{\frac{1-\beta(z)}{1-\beta(t)}} e^{i \eta_k} \chi_{B_k}(y)=\sum_{k=1}^N\left|b_k\right|^{\left.\right|_t ^{\prime}(1-\beta(z))} e^{i \eta_k} \chi_{B_k}(y)
+					\end{aligned}
+				\end{equation*}
+				Note that $\phi_z \in S_0(X)$, $\psi_z \in S_0(Y)$ and $\phi_t = \phi$, $\psi_t = \phi$. Also, by $\phi_z \in L^{p_0}(X) \cap L^{p_1}(X)$, $T \phi_z \in L^{q_0}(Y) \cap L^{q_1}(Y) \subset L^{q_t}(Y)$. Besides, we have $\psi_z \in L^{q_t^{\prime}}(Y)$.
+
+				\noindent Define $F \colon D \sto \C$ by
+				\begin{equation*}
+					\begin{aligned}
+						F(z)&:=\left\langle T \phi_z, \psi_z\right\rangle=\int_Y\left(T \phi_z\right)(y) \psi_z(y) d \nu(y),\quad z \in D \\
+						&= \sum_{j=1}^M \sum_{k=1}^N\left|a_j\right|^{\frac{\alpha(z)}{\alpha(t)}}\left|b_k\right|^{\frac{1-\beta(z)}{1-\beta(t)}} e^{i\left(\xi_j+\eta_k\right)}\left\langle T \chi_{A_j}, \chi_{B_k}\right\rangle
+					\end{aligned}
+				\end{equation*}
+				Note that $F$ is continuous on $D$ and regular on $D^\circ$. Moreover, for $z = c + id \in D$ with $c \in [0,1],d\in \R$,
+				\begin{equation*}
+					\begin{aligned}
+						\left|\left|a_j\right|^{\frac{\alpha(z)}{\alpha(t)}}\right| & =\left|\left(\left|a_j\right|^{\frac{1}{\alpha(t)}}\right)^{\frac{1-z}{p_0}+\frac{z}{p_1}}\right|=\left(\left|a_j\right|^{\frac{1}{\alpha(t)}}\right)^{\frac{1-c}{p_0}+\frac{c}{p_1}} \\
+						& \leq \max _{l \in[0,1]}\left\{\left(\left|a_j\right|^{\frac{1}{\alpha(t)}}\right)^{\frac{1-l}{p_0}+\frac{l}{p_1}}\right\}
+					\end{aligned}
+				\end{equation*}
+				So $\left|a_j\right|^{\frac{\alpha(\cdot)}{\alpha(t)}}$ is bounded on $D$, and similarly for $\left|b_k\right|^{\frac{1-\beta(\cdot)}{1-\beta(t)}}$.
+
+				\noindent Therefore, the main goal is to apply Hadamard Three-lines Theorem. To do that, we need the bound of $\abs{F(is)}$ and $\abs{F(1+is)}$. First, note that
+				\begin{equation*}
+					\begin{aligned}
+						& \sum_{j=1}^M\left|a_j\right|^{p_t} \mu\left(A_j\right)=\|\phi\|_{L^{p_t}(X)}^{p_t}=1, \\
+						& \sum_{k=1}^N\left|b_k\right|^{q_t^{\prime}} \nu\left(B_k\right)=\|\psi\|_{L^{q_t}(Y)}^{q^{\prime}}=1
+					\end{aligned}
+				\end{equation*}
+				Next, we want to show
+				\begin{equation*}
+					\left\|\phi_{i s}\right\|_{L^{p_0}(X)}=\left\|\phi_{1+i s}\right\|_{L^{p_1}(X)}=1
+				\end{equation*}
+				By $\alpha(i s)=\frac{1-i s}{p_0}+\frac{i s}{p_1}, \alpha(t)=\frac{1}{p_t}$, we van get
+				\begin{equation*}
+					\begin{aligned}
+						\left\|\phi_{i s}\right\|_{L^{p_0}(X)}^{p_0} & =\left\|\sum_{j=1}^M\left|a_j\right|^{\frac{\alpha(i s)}{\alpha(t)}} e^{i \xi_j} \chi_{A_j}\right\|_{L^{p_0}(X)}^{p_0}=\left\|\sum_{j=1}^M\left|a_j\right|^{p_t\left(\frac{1-i s}{p_0}+\frac{i s}{p_1}\right)} e^{i \xi_j} \chi_{A_j}\right\|_{L^{p_0}(X)}^{p_0} \\
+						& =\left\|\sum_{j=1}^M\left|a_j\right|^{\frac{p_t}{p_0}} \chi_{A_j}\right\|_{L^{p_0}(X)}^{p_0}=\int_X\left(\sum_{j=1}^M\left|a_j\right|^{p_t} \chi_{A_j}(x)\right) d \mu(x) \\
+						& =\sum_{j=1}^M\left|a_j\right|^{p_t} \mu\left(A_j\right)=\|\phi\|_{L^{p_t}(X)}^{p_t}=1 .
+					\end{aligned}
+				\end{equation*}
+				Similarly, by $\alpha(1+i s)=\frac{-i s}{p_0}+\frac{1+i s}{p_1}$,
+				\begin{equation*}
+					\begin{aligned}
+						\left\|\phi_{1+i s}\right\|_{L^{p_1}(X)}^{p_1} & =\left\|\sum_{j=1}^M\left|a_j\right|^{\frac{\alpha(1+i s)}{\alpha(t)}} e^{i \xi_j} \chi_{A_j}\right\|_{L^{p_1}(X)}^{p_1} \\
+						& =\left\|\sum_{j=1}^M\left|a_j\right|^{p_t\left(\frac{-i s}{p_0}+\frac{1+i s}{p_1}\right)} e^{i \xi_j} \chi_{A_j}\right\|_{L^{p_1(X)}}^{p_1} \\
+						& =\left\|\sum_{j=1}^M\left|a_j\right|^{\frac{p_t}{p_1}} \chi_{A_j}\right\|_{L^{p_1}(X)}^{p_1}=\int_X\left(\sum_{j=1}^M\left|a_j\right|^{p_t} \chi_{A_j}(x)\right) d \mu(x) \\
+						& =\sum_{j=1}^M\left|a_j\right|^{p_t} \mu\left(A_j\right)=\|\phi\|_{L^{p_t}(X)}^{p_t}=1
+					\end{aligned}
+				\end{equation*}
+				Moreover, by similar calculation, we have
+				\begin{equation*}
+					\left\|\psi_{i s}\right\|_{L^{q_0^{\prime}}(Y)}=\left\|\psi_{1+i s}\right\|_{L^{q_1^{\prime}}(Y)}=1
+				\end{equation*}
+				Then by the H\"older's Inequality,
+				\begin{equation*}
+					\begin{aligned}
+						|F(i s)| & =\left|\left\langle T \phi_{i s}, \psi_{i s}\right\rangle\right| \leq\left\|T \phi_{i s}\right\|_{L^{q_0}(Y)}\left\|\psi_{i s}\right\|_{L^{q_0^{\prime}}(Y)} \\
+						& \leq M_0\left\|\phi_{i s}\right\|_{L^{p_0}(X)}\left\|\psi_{i s}\right\|_{L^{q_0^{\prime}}(Y)}=M_0
+					\end{aligned}
+				\end{equation*}
+				and
+				\begin{equation*}
+					\begin{aligned}
+						|F(1+i s)| & =\left|\left\langle T \phi_{1+i s}, \psi_{1+i s}\right\rangle\right| \leq\left\|T \phi_{1+i s}\right\|_{L^{q_1}(Y)}\left\|\psi_{1+i s}\right\|_{L^{q_1^{\prime}}(Y)} \\
+						& \leq M_1\left\|\phi_{1+i s}\right\|_{L^{p_1}(X)}\left\|\psi_{1+i s}\right\|_{L^{q_1^{\prime}}(Y)}=M_1
+					\end{aligned}
+				\end{equation*}
+				Therefore, Hadamard Three-line Theorem implies
+				\begin{equation*}
+					|\langle T \phi, \psi\rangle|=\left|\left\langle T \phi_t, \psi_t\right\rangle\right|=|F(t)|=|F(t+i 0)| \leq M_0^{1-t} M_1^t
+				\end{equation*}
+
+				\item $q_t = 1$: Then $q_0 = q_1 = 1 = q_t$, $q_0^{\prime}=q_1^{\prime}=q_t^{\prime}=\infty$. It has the same proof by replacing $\psi_z$ with $\psi$ in above proof.
+			\end{enumerate}
+
+			\item \textbf{Check:} For $f \in L^{p_t}(X)$, $Tf \in L^{q_t}(Y)$ with
+			\begin{equation*}
+				\|T f\|_{L^{q_t}(Y)} \leq M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)}
+			\end{equation*}
+			Because $1 < p_t < \infty$, there is a sequence $\bb{f_n}_{n \in \N}$ in $S_0(X)$ such that
+			\begin{itemize}
+				\item $\abs{f_n(x)} \leq \abs{f(x)}$,
+				\item $\lim_{n \sto \infty}f_n(x) = f(x)$,
+				\item $\lim _{n \rightarrow \infty}\left\|f_n-f\right\|_{L^{p_t}(X)}=0$.
+			\end{itemize}
+			Let $E:=\{x \in X| | f(x) \mid>1\}$ and define
+			\begin{equation*}
+				\begin{gathered}
+					g:=f \cdot \chi_E, \quad h:=f-g=f \cdot \chi_{E^c}, \\
+					g_n:=f_n \cdot \chi_E, \quad h_n:=f_n-g_n=f_n \cdot \chi_{E^c}
+				\end{gathered}
+			\end{equation*}
+			Assume $p_0 < p_1$. Then $p_0 < p_ t < p_1$ and so
+			\begin{equation*}
+				g \in L^{p_0}(X) \cap L^{p_t}(X), \quad h \in L^{p_1}(X) \cap L^{p_t}(X), \quad g_n, h_n \in S_0(X)
+			\end{equation*}
+			Therefore, by $T$,
+			\begin{equation*}
+				T g \in L^{q_0}(Y), \quad T g_n \in L^{q_0}(Y), \quad T h \in L^{q_1}(Y), \quad T h_n \in L^{q_1}(Y)
+			\end{equation*}
+			By DCT,
+			\begin{equation*}
+				\left\|g_n-g\right\|_{L^{p_0}(X)} \longrightarrow 0, \quad\left\|h_n-h\right\|_{L^{p_1}(X)} \longrightarrow 0
+			\end{equation*}
+			And thus
+			\begin{equation*}
+				\begin{aligned}
+					&\left\|T g_n-T g\right\|_{L^{q_0}(Y)} \leq M_0\left\|g_n-g\right\|_{L^{p_0}(X)} \longrightarrow 0 \\
+					&\left\|T h_n-T h\right\|_{L^{q_1}(Y)} \leq M_1\left\|h_n-h\right\|_{L^{p_1}(X)} \longrightarrow 0
+				\end{aligned}
+			\end{equation*}
+			So there are subsequence $\left\{g_{n_k}\right\}_{k=1}^{\infty}$ and $\left\{h_{n_k}\right\}_{k=1}^{\infty}$ such that
+			\begin{equation*}
+				\begin{array}{ll}
+					\left(T g_{n_k}\right)(y) \longrightarrow(T g)(y), & \nu-a.e.~ y \in Y, \\
+					\left(T h_{n_k}\right)(y) \longrightarrow(T h)(y), & \nu-a.e.~ y \in Y
+				\end{array}
+			\end{equation*}
+			And we have
+			\begin{equation*}
+				\begin{aligned}
+					& \left(T f_{n_k}\right)(y)=\left(T g_{n_k}\right)(y)+\left(T h_{n_k}\right)(y) \\
+					& \longrightarrow(T g)(y)+(T h)(y)=(T f)(y), \quad \nu-a.e.~ y \in Y
+				\end{aligned}
+			\end{equation*}
+			By above, we already have
+			\begin{equation*}
+				\left\|T f_{n_k}\right\|_{L^{q_t}(Y)} \leq M_0^{1-t} M_1^t\left\|f_{n_k}\right\|_{L^{p_t}(X)}
+			\end{equation*}
+			If $1 \leq q_t < \infty$, then by Fatou's lemma and $\lim _{k \rightarrow \infty}\left\|f_{n_k}-f\right\|_{L^{p_t}(X)}=0$,
+			\begin{equation*}
+				\begin{aligned}
+					\left(\int_Y|T f(y)|^{q_t} d \mu(x)\right)^{\frac{1}{q_t}} & \leq \varliminf_{k \rightarrow \infty}\left\|T f_{n_k}\right\|_{L^{q_t}(Y)} \leq \varliminf_{k \rightarrow \infty}\left(M_0^{1-t} M_1^t\left\|f_{n_k}\right\|_{L^{p_t}(X)}\right) \\
+					& =M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)}<\infty
+				\end{aligned}
+			\end{equation*}
+			Therefore, $Tf \in L^{q_t}(X)$ with
+			\begin{equation*}
+				\|T f\|_{L^{q_t}(Y)} \leq M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)}
+			\end{equation*}
+			If $q_t = \infty$,
+			\begin{equation*}
+				\left|\left(T f_{n_k}\right)(y)\right| \leq\left\|T f_{n_k}\right\|_{L^{\infty}(Y)} \leq M_0^{1-t} M_1^t\left\|f_{n_k}\right\|_{L^{p_t}(X)},\quad \nu-a.e.~ y \in Y
+			\end{equation*}
+			Then by $\lim _{k \rightarrow \infty}\left\|f_{n_k}-f\right\|_{L^{p_t}(X)}=0$,
+			\begin{equation*}
+				|(T f)(y)| \leq M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)},\quad \nu-a.e.~ y \in Y
+			\end{equation*}
+			Thus $Tf \in L^\infty(Y)$ with
+			\begin{equation*}
+				\|T f\|_{L^{\infty}(Y)} \leq M_0^{1-t} M_1^t\|f\|_{L^{p_t}(X)}
+			\end{equation*}
+		\end{enumerate}
+	\end{enumerate}
+\end{proof}
+
+\begin{prop}[Minkowski's Inequality]
+	Let $(X,\fml{A},\mu)$ and $(Y,\fml{B},\nu)$ be two $\sigma$-finite measure spaces. $F \colon X \times Y \sto \C$ is a $\fml{A} \otimes \fml{B}$-measurable function with $F(x,y) \geq 0$ for any $(x,y) \in X \times Y$. For $1 \leq p < \infty$,
+	\begin{equation*}
+		\left[\int_X\left(\int_Y F(x, y) d \nu(y)\right)^p d \mu(x)\right]^{\frac{1}{p}} \leq \int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}} d \nu(y)
+	\end{equation*}
+\end{prop}
+\begin{rmk}
+	In other words,
+	\begin{equation*}
+		\left\|\int_Y F(\cdot, y) d \nu(y)\right\|_{L^p(X)} \leq \int_Y\|F(\cdot, y)\|_{L^p(X)} d \nu(y)
+	\end{equation*}
+\end{rmk}
+\begin{proof}
+	If $\int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}} d \nu(y)=\infty$, then it is clear. So we assume $\int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}} d \nu(y) < \infty$.
+
+	\noindent When $p = 1$, because $F$ is nonegative and $\int_Y\int_X F(x, y) d \mu(x) d \nu(y) < \infty$, by Fubini's Theorem,
+	\begin{equation*}
+		\int_X\left(\int_Y F(x, y) d \nu(y)\right) d \mu(x)=\int_Y\left(\int_X F(x, y) d \mu(x)\right) d \nu(y)
+	\end{equation*}
+
+	\noindent $1 < p <\infty$. Let $p^\prime$ be the conjugate of $p$. For any $g \in L^{p^\prime}$, by Fubini's Theorem and H\"older's Inequality, we have
+	\begin{equation*}
+		\begin{aligned}
+			& \int_X\left(\int_Y F(x, y) d \nu(y)\right)|g(x)| d \mu(x)=\int_Y\left(\int_X F(x, y)|g(x)| d \mu(x)\right) d \nu(y) \\
+			& \leq \int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}}\left(\int_X|g(x)|^{p^{\prime}} d \mu(x)\right)^{\frac{1}{p^{\prime}}} d \nu(y) \\
+			& =\int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}} d \nu(y)\|g\|_{L^{p^{\prime}(X)}}<\infty
+		\end{aligned}
+	\end{equation*}
+	Therefore, the integral in the LHS is well-defined and by Theorem \ref{thm:mqf},
+	\begin{equation*}
+		\int_Y F(\cdot, y) d \nu(y) \in L^p(X)
+	\end{equation*}
+	Moreover, by
+	\begin{equation*}
+		\left|\int_X\left(\int_Y F(x, y) d \nu(y)\right) g(x) d \mu(x)\right| \leq \int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}} d \nu(y)\|g\|_{L^{p^{\prime}}(X)}
+	\end{equation*}
+	we have
+	\begin{equation*}
+		\left[\int_X\left(\int_Y F(x, y) d \nu(y)\right)^p d \mu(x)\right]^{\frac{1}{p}} \leq \int_Y\left(\int_X F(x, y)^p d \mu(x)\right)^{\frac{1}{p}} d \nu(y)
+	\end{equation*}
+\end{proof}
+
+\begin{thm}\label{thm:strongkernel}
+	Let $\Omega \subset \R^N$ be a Lebesgue measurable set and $1 \leq r \leq \infty$. Let $K = K(x,y) \colon \Omega \times \Omega \sto \C$ be a Lebesgue measurable function with $K(x,\cdot) \in L^r(\Omega)$ \emph{a.e.} $x \in \Omega$ and $K(\cdot, y) \in L^r(\Omega)$ \emph{a.e.} $y \in \Omega$. And there is $M > 0$ such that
+	\begin{equation*}
+		\begin{aligned}
+			\|K(x, \cdot)\|_{L^r(\Omega)} \leq M, &~ a.e.~x \in \Omega\\
+			\|K(\cdot, y)\|_{L^r(\Omega)} \leq M, &~ a.e.~y \in \Omega
+		\end{aligned}
+	\end{equation*}
+	where $r$ satisfies
+	\begin{equation*}
+		\frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1
+	\end{equation*}
+	for $1 \leq p\leq q \leq \infty$ ($1 \leq r \leq q \leq \infty$). Then the following statements are true.
+	\begin{enumerate}[label = (\arabic{*})]
+		\item For any $u \in L^p(\Omega)$,
+		\begin{equation*}
+			\int_{\Omega}|K(x, y) u(y)| d y<\infty
+		\end{equation*}
+		\item Let linear map $T \colon L^p(\Omega) \sto \mathbb{M}(\Omega)$ defined as
+		\begin{equation*}
+			(T u)(x):=\int_{\Omega} K(x, y) u(y) d y
+		\end{equation*}
+		Then $Tu \in L^q(\Omega)$ and $T \in \mathcal{B}\left(L^p(\Omega), L^q(\Omega)\right)$ with
+		\begin{equation*}
+			\|T u\|_{q} \leq M\|u\|_{p}
+		\end{equation*}
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	First,
+	\begin{equation*}
+		0 \leq \frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1=\frac{1}{p}-\frac{1}{r^{\prime}} \leq \frac{1}{r}
+	\end{equation*}
+	where $r^\prime$ is the conjugate of $r$. Note that
+	\begin{equation*}
+		1 \leq p \leq r^{\prime}(\leq \infty), \quad(1 \leq) r \leq q \leq \infty
+	\end{equation*}
+	When $p = r^\prime$, $q = \infty$. When $p = 1$, $q = r$.
+	\begin{enumerate}[label=(\roman*)]
+		\item $p = r^\prime, q = \infty$: Let $u \in L^{r^\prime}(\Omega)$. Then because $K(x,\cdot) \in L^{r}(\Omega)$, by H\"older's Inequality,
+		\begin{equation*}
+			\int_{\Omega}|K(x, y) u(y)| d y \leq\|K(x, \cdot)\|_{r}\|u\|_{r^{\prime}} \leq M\|u\|_{r^{\prime}}<\infty
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\left|\int_{\Omega} K(x, y) u(y) d y\right| \leq \int_{\Omega}|K(x, y) u(y)| d y \leq M\|u\|_{L^{r^{\prime}}(\Omega)}
+		\end{equation*}
+		which means $\int_{\Omega} K(\cdot, y) u(y) d y \in L^{\infty}(\Omega)$ with
+		\begin{equation*}
+			\left\|\int_{\Omega} K(\cdot, y) u(y) d y\right\|_{\infty} \leq M\|u\|_{r^{\prime}}
+		\end{equation*}
+		Note that when $r = \infty$, $r^\prime = 1$. So $p = 1 = r^\prime$, $q = \infty$, which is also the above case.
+		\item $p=1,q=r < \infty$: Let $u \in L^1(\Omega)$. By Minkowski's Inequality,
+		\begin{equation*}
+			\begin{aligned}
+				& \left\{\int_{\Omega}\left(\int_{\Omega}|K(x, y) u(y)| d y\right)^r d x\right\}^{\frac{1}{r}} \leq \int_{\Omega}\left(\int_{\Omega}|K(x, y) u(y)|^r d x\right)^{\frac{1}{r}} d y \\
+				& =\int_{\Omega}\left(\int_{\Omega}|K(x, y)|^r d x\right)^{\frac{1}{r}}|u(y)| d y \leq M\|u\|_{L^1(\Omega)}<\infty
+			\end{aligned}
+		\end{equation*}
+		So clearly,
+		\begin{equation*}
+			\int_{\Omega}|K(x, y) u(y)| d y<\infty,\quad a.e.~x \in \Omega
+		\end{equation*}
+		Moreover, $\int_{\Omega} K(\cdot, y) u(y) d y \in L^r(\Omega)$ and
+		\begin{equation*}
+			\left\|\int_{\Omega} K(\cdot, y) u(y) d y\right\|_{L^r(\Omega)} \leq\left\{\int_{\Omega}\left(\int_{\Omega}|K(x, y) u(y)| d y\right)^r d x\right\}^{\frac{1}{r}} \leq M\|u\|_{L^1(\Omega)}
+		\end{equation*}
+		Note that (i) and (ii) have already proved the theorem for $p \in \bb{1,r^\prime}$ and $q \in \bb{r,\infty}$, so we only need to prove for $1<p<r^{\prime}, r<q<\infty$.
+		\item $p,q \in [1,\infty]$: By $1 \leq p \leq r^{\prime}(\leq \infty),~(1 \leq) r \leq q \leq \infty$,
+		\begin{equation*}
+			L^p(\Omega) \subset L^1(\Omega)+L^{r^{\prime}}(\Omega), \quad L^q(\Omega) \subset L^r(\Omega)+L^{\infty}(\Omega)
+		\end{equation*}
+		Let $u = u_1 + u_2 \in L^1(\Omega)+L^{r^{\prime}}(\Omega)$ with $u_1 \in L^1(\Omega)$ and $u_2 \in L^{r^{\prime}}(\Omega)$. Then by (i) and (ii), we have
+		\begin{equation*}
+			\int_{\Omega}|K(x, y) u(y)| d y \leq \int_{\Omega}\left|K(x, y) u_1(y)\right| d y+\int_{\Omega}\left|K(x, y) u_2(y)\right| d y<\infty
+		\end{equation*}
+		So $\int_{\Omega} K(x, y) u(y) d y$ is well-fined for any $u \in L^1(\Omega)+L^{r^{\prime}}(\Omega)$, in particular, for $u \in L^p(\Omega)$. So $(1)$ is obtained. Next, for $(2)$, consider the linear map $T \colon L^1(\Omega)+L^{r^{\prime}}(\Omega) \rightarrow \mathbb{M}(\Omega)$ defined as
+		\begin{equation*}
+			(T u)(x):=\int_{\Omega} K(x, y) u(y) d y,\quad a.e.~x \in \Omega
+		\end{equation*}
+		Then by (i) and (ii),
+		\begin{equation*}
+			T \colon L^1(\Omega)+L^{r^{\prime}}(\Omega) \rightarrow L^r(\Omega)+L^{\infty}(\Omega)
+		\end{equation*}
+		with the facts for any $u \in L^{r^{\prime}}(\Omega)$, $T u \in L^{\infty}(\Omega)$ and
+		\begin{equation*}
+			\|T u\|_{\infty} \leq M\|u\|_{r^{\prime}}
+		\end{equation*}
+		and for any $u \in L^1(\Omega)$, $Tu \in L^r(\Omega)$ and
+		\begin{equation*}
+			\|T u\|_{r} \leq M\|u\|_{1}
+		\end{equation*}
+		For $1<p<r^{\prime}, r<q<\infty$, let $t \defeq 1- \frac{r}{q} \in (0,1)$. Then
+		\begin{equation*}
+			\frac{1}{p}=\frac{1-t}{1}+\frac{t}{r^{\prime}}, \quad \frac{1}{q}=\frac{1-t}{r}+\frac{t}{\infty}
+		\end{equation*}
+		Then by Riesz-Thorin Interpolation Theorem, for any $u \in L^p(\Omega)$, $Tu \in L^q(\Omega)$,
+		\begin{equation*}
+			\|T u\|_{L^q(\Omega)} \leq M^{1-t} M^t\|u\|_{L^p(\Omega)}=M\|u\|_{L^p(\Omega)}
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\begin{cor}[Young's Inequality]\label{cor:young}
+	Let $p,q,r \in [1,\infty]$ satisfy
+	\begin{equation*}
+		\frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1
+	\end{equation*}
+	Then for any $f \in L^r(\R^N)$ and $g \in L^p(\R^N)$,
+	\begin{equation*}
+		\norm{f * g}_q \leq \norm{f}_r\norm{g}_p
+	\end{equation*}
+\end{cor}
+\begin{proof}
+	Because
+	\begin{equation*}
+		f * g (x) = \int_{\R^N} f(x-y)g(y)dy = \int_{\R^N}K(x,y)g(y)dy
+	\end{equation*}
+	where $K(x,y) = f(x-y)$, it can directly obtained by above theorem.
+\end{proof}
+
+\noindent Recall we have already define $\mathcal{F}$ on $L^1$ and $L^2$. Moreover, for convenience, the $\mathcal{F}$ on $L^1$ defined as
+\begin{equation*}
+	\mathcal{F}[u](\xi)=\frac{1}{(2 \pi)^{N / 2}} \int_{\mathbb{R}^N} u(x) e^{-i x \cdot \xi} d x
+\end{equation*}
+and then the inverse formula becomes
+\begin{equation*}
+	\mathcal{F}^{-1}[u](x)=\frac{1}{(2 \pi)^{N / 2}} \int_{\mathbb{R}^N} u(\xi) e^{i x-\xi} d \xi
+\end{equation*}
+Because under this definition, the Plancherel Theorem tells us $\mathcal{F} \colon L^{2}(\R^N) \sto  L^{2}(\R^N)$ is an isometry
+\begin{equation*}
+ 	\norm{u}_{L^{2}(\R^N)} = \norm{\widehat{u}}_{L^{2}(\R^N)}
+\end{equation*} 
+But for $L^p$, we define $\mathcal{F}$ on it by the view of distribution because $L^p \subset \mathcal{S}^\prime$. Now by Riesz-Thorin Interpolation Theorem, we can see $\mathcal{F}(L^p)$ more clearly when $1 \leq p \leq 2$.
+\begin{thm}[Hausdorff-Young's Inequality]
+	Let $1 \leqslant p \leqslant 2$ and $p^{\prime}$ be the conjugate of $p$. Then
+	$$
+	\mathcal{F}\left(L^p\left(\mathbb{R}^N\right)\right) \subset L^{p^{\prime}}, \text { and } \mathcal{F}^{-1}\left(L^p\left(\mathbb{R}^N\right)\right) \subset L^{p^{\prime}}
+	$$
+	and for any $u \in L^p\left(\mathbb{R}^N\right)$,
+	$$
+	\begin{aligned}
+	\|\mathcal{F}[u]\|_{L^{p^{\prime}}} & \leqslant(2 \pi)^{-N\left(\frac{1}{p}-\frac{1}{2}\right)}\|u\|_{L^p} \\
+	\left\|\mathcal{F}^{-1}[u]\right\|_{L^{p^{\prime}}} & \leqslant(2 \pi)^{-N\left(\frac{1}{p}-\frac{1}{2}\right)}\|u\|_{L^p}
+	\end{aligned}
+	$$
+	In particular, $\mathcal{F}$ and $\mathcal{F}^{-1}$ are in $\mathcal{B}\left(L^p\left(\mathbb{R}^N\right), L^{p^{\prime}}\left(\mathbb{R}^N\right)\right)$.
+\end{thm}
+\begin{proof}
+	Firstly,
+	$$
+	\begin{aligned}
+	& \mathcal{F}\left(L^1\left(\mathbb{R}^N\right)\right) \subset L^{\infty}\left(\mathbb{R}^N\right) \text { and }\|\mathcal{F}[u]\|_{L^{\infty}} \leqslant(2 \pi)^{-\frac{N}{2}}\|u\|_{L^1}, \forall u \in L^1\left(\mathbb{R}^N\right) \\
+	& \mathcal{F}\left(L^2\left(\mathbb{R}^N\right)\right) \subset L^2\left(\mathbb{R}^N\right) \text { and }\|\mathcal{F}[v]\|_{L^2}=\|v\|_{L^2}, \forall v \in L^2\left(\mathbb{R}^N\right)
+	\end{aligned}
+	$$
+	Taking $p_0=1, q_0=\infty, p_1=2, q_1=2$ and $\frac{t}{2}=1-\frac{1}{p}$ in the Riesz-Thorin Interpolation Theorem and by
+	$$
+	\frac{1}{p}=\frac{1-t}{1}+\frac{t}{2}, \frac{1}{p^{\prime}}=\frac{1-t}{\infty}+\frac{t}{2}
+	$$
+	it can get
+	$$
+	\mathcal{F}\left(L^p\left(\mathbb{R}^N\right)\right) \subset L^{p^{\prime}}\left(\mathbb{R}^N\right)
+	$$
+	and
+	$$
+	\|\mathcal{F}[u]\|_{L^{p^{\prime}}}=\left((2 \pi)^{-\frac{N}{2}}\right)^{1-t}\|u\|_{L^p}=(2 \pi)^{-N\left(\frac{1}{p}-\frac{1}{2}\right)}\|u\|_{L^p}, \forall u \in L^p\left(\mathbb{R}^N\right)
+	$$
+	Similarly, it holds for $\mathcal{F}^{-1}$.
+\end{proof}
+
+
+\section{Weak \texorpdfstring{$L^p$}{Lp} Space}
+
+\begin{defn}
+	Let $(X,\fml{A},\mu)$ be a measure space and $f \in \mathbb{X}$. For $\alpha \in (0,\infty)$,
+	\begin{equation*}
+		\lambda_f(\alpha) \defeq \mu\bc{\bb{x \in X \mid \abs{f(x)} > \alpha}}
+	\end{equation*}
+	Then $\lambda_f$ is called the distribution function of $f$.
+\end{defn}
+
+\begin{prop}
+	Let $(X,\fml{A},\mu)$ be a measure space and $f,g \in \mathbb{X}$. Let $\lambda_f,\lambda_g$ be the corresponding distribution functions. Then
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $\lambda_f$ is decreasing and right-continuous.
+		\item If $\abs{f(x)} \leq \abs{g(x)}$ $\mu-a.e.$, then $\lambda_f(\alpha) \leq \lambda_g(\alpha)$ for any $\alpha \in (0,\infty)$.
+		\item If $f \in L^\infty(X)$, then for any $\alpha \geq \norm{f}_{\infty}$, $\lambda_f(\alpha) = 0$.
+		\item For any $\alpha \in (0,\infty)$,
+		\begin{equation*}
+			\lambda_{f+g}(\alpha) \leq \lambda_f\left(\frac{\alpha}{2}\right)+\lambda_g\left(\frac{\alpha}{2}\right)
+		\end{equation*}
+	\end{enumerate}
+\end{prop}
+\begin{proof}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For $0 < \alpha < \beta$,
+		\begin{equation*}
+			\lambda_f(\beta)=\mu(\{x \in X| | f(x) \mid>\beta\}) \leq \mu(\{x \in X| | f(x) \mid>\alpha\})=\lambda_f(\alpha)
+		\end{equation*}
+		so it is decreasing. For any $c \in (0, \infty)$, let $\alpha_n \downarrow c$ and
+		\begin{equation*}
+			E_n:=\left\{x \in X| | f(x) \mid>\alpha_n\right\}, \quad E:=\{x \in X| | f(x) \mid>c\}
+		\end{equation*}
+		Then $E_n \subset E_{n+1}$ and $\bigcup_{n=1}^{\infty} E_n=E$. By the monotone convergence of measure,
+		\begin{equation*}
+			\lambda_f\left(\alpha_n\right)=\mu\left(E_n\right) \longrightarrow \mu(E)=\lambda_f(c),
+		\end{equation*}
+		so it is right-continuous.
+
+		\item Because $\abs{f(x)} \leq \abs{g(x)}$, for any $\alpha \in (0,\infty)$, $\abs{f(x)} > \alpha$ implies $\abs{g(x)} > \alpha$. So
+		\begin{equation*}
+			\lambda_f(\alpha)=\mu(\{x \in X| | f(x) \mid>\alpha\}) \leq \mu(\{x \in X| | g(x) \mid>\alpha\})=\lambda_g(\alpha)
+		\end{equation*}
+
+		\item If $\alpha \geq \norm{f}_\infty$, then $\abs{f(x)} \leq \alpha$ $\mu-a.e.$, which means
+		\begin{equation*}
+			\lambda_f(\alpha)=\mu(\{x \in X| | f(x) \mid>\alpha\})=0 .
+		\end{equation*}
+
+		\item For $\alpha \in (0,\infty)$, if $\abs{f(x) + g(x)} > \alpha$, then we have $\abs{f(x)} > \frac{\alpha}{2}$ or $\abs{g(x)} > \frac{\alpha}{2}$. So
+		\begin{equation*}
+			\begin{aligned}
+				\lambda_{f+g}(\alpha) & =\mu(\{x \in X| | f(x)+g(x) \mid>\alpha\}) \\
+				& \leq \mu\left(\left\{x \in X| | f(x) \left\lvert\,>\frac{\alpha}{2}\right.\right\} \cup\left\{x \in X| | g(x) \left\lvert\,>\frac{\alpha}{2}\right.\right\}\right) \\
+				& \leq \mu\left(\left\{x \in X| | f(x) \left\lvert\,>\frac{\alpha}{2}\right.\right\}\right)+\mu\left(\left\{x \in X| | g(x) \left\lvert\,>\frac{\alpha}{2}\right.\right\}\right) \\
+				& =\lambda_f\left(\frac{\alpha}{2}\right)+\lambda_g\left(\frac{\alpha}{2}\right)
+			\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}
+	Let $(X,\fml{A},\mu)$ be $\sigma$-finite and $f \in \mathbb{M}(X)$ with distribution function $\lambda_f$. If $\varphi \colon [0,\infty) \sto [0,\infty)$ is increasing and $C^1$ with $\varphi(0) = 0$, then
+	\begin{equation*}
+		\int_X \varphi(|f(x)|) d \mu(x)=\int_{(0, \infty)} \lambda_f(\alpha) \varphi^{\prime}(\alpha) d \alpha
+	\end{equation*}
+	In particular, for $1 \leq p < \infty$, let $\varphi(\alpha) = \alpha^p$ we have
+	\begin{equation*}
+		\int_X \abs{f(x)}^pd\mu(x) = p \int_{(0,\infty)} \lambda_f(\alpha)\alpha^{p-1}d\alpha
+	\end{equation*}	
+\end{thm}
+\begin{proof}
+	Note that $\varphi^\prime(\alpha) \geq 0$. Then
+	\begin{equation*}
+		\begin{aligned}
+			& \int_X \varphi(|f(x)|) d \mu(x)=\int_X\left(\int_{(0,|f(x)|)} \varphi^{\prime}(\alpha) d \alpha\right) d \mu(x) \\
+			& =\int_X\left(\int_{(0, \infty)} \chi_{(0,|f(x)|)}(\alpha) \varphi^{\prime}(\alpha) d \alpha\right) d \mu(x) \\
+			& =\int_{(0, \infty)}\left(\int_X \chi_{\{y \in X| | f(y) \mid>\alpha\}}(x) d \mu(x)\right) \varphi^{\prime}(\alpha) d \alpha \\
+			& =\int_{(0, \infty)} \mu(\{y \in X| | f(y) \mid>\alpha\}) \varphi^{\prime}(\alpha) d \alpha=\int_{(0, \infty)} \lambda_f(\alpha) \varphi^{\prime}(\alpha) d \alpha
+		\end{aligned}
+	\end{equation*}
+	where we use Fubini's Theorem of nonnegative measurable function and the fact that for any $\alpha \in (0, \infty)$ and any $x \in X$,
+	\begin{equation*}
+		\chi_{(0,|f(x)|)}(\alpha)=\chi_{\{y \in X| | f(y) \mid>\alpha\}}(x)
+	\end{equation*}
+\end{proof}
+
+\begin{defn}
+	Let $(X,\fml{A},\mu)$ be a measure space. For $1 \leq p < \infty$,
+	\begin{equation*}
+		L^{p,\infty}(X,\fml{A},\mu) = \bb{f \in \mathbb{M}(X) \mid \sup _{\alpha>0}\left\{\alpha^p \lambda_f(\alpha)\right\}<\infty}
+	\end{equation*}
+	with the equivalence $f(x) = g(x)$ $\mu-a.e.$. Also, let $L^{\infty,\infty}(X,\fml{A},\mu) \defeq L^{\infty}(X,\fml{A},\mu)$. Then for $1 \leq p \leq \infty$, $L^{p,\infty}(X) = L^{p,\infty}(X,\fml{A},\mu)$ is called weak $L^p$ space.
+\end{defn}
+
+\begin{prop}
+	$L^{p,\infty}(X)$ is a $\C$-linear space for all $1 \leq p \leq \infty$.
+\end{prop}
+\begin{proof}
+	It only needs to prove for $1 \leq p < \infty$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item First, $0 \in L^{p,\infty}(X)$ because $\lambda_0(\alpha) = 0$ for all $\alpha > 0$.
+		\item Let $f,g \in L^{p,\infty}(X)$. For $\alpha \in (0,\infty)$, by $\lambda_{f+g}(\alpha) \leq \lambda_f\left(\frac{\alpha}{2}\right)+\lambda_g\left(\frac{\alpha}{2}\right)$,
+		\begin{equation*}
+			\begin{aligned}
+				\alpha^p \lambda_{f+g}(\alpha) & \leq \alpha^p \lambda_f\left(\frac{\alpha}{2}\right)+\alpha^p \lambda_g\left(\frac{\alpha}{2}\right)=2^p\left[\left(\frac{\alpha}{2}\right)^p \lambda_f\left(\frac{\alpha}{2}\right)+\left(\frac{\alpha}{2}\right)^p \lambda_g\left(\frac{\alpha}{2}\right)\right] \\
+				& \leq 2^p\left[\sup _{\beta>0}\left\{\beta^p \lambda_f(\beta)\right\}+\sup _{\beta>0}\left\{\beta^p \lambda_g(\beta)\right\}\right]
+			\end{aligned}
+		\end{equation*}
+		So
+		\begin{equation*}
+			\sup _{\alpha>0}\left\{\alpha^p \lambda_{f+g}(\alpha)\right\} \leq 2^p\left[\sup _{\beta>0}\left\{\beta^p \lambda_f(\beta)\right\}+\sup _{\beta>0}\left\{\beta^p \lambda_g(\beta)\right\}\right]<\infty
+		\end{equation*}
+		which means $f+g \in L^{p, \infty}(X)$.
+
+		\item Let $f\in L^{p,\infty}(X)$ and $0 \neq c \in \C$ (It's clearly true for $c=0$). For $\alpha \in (0,\infty)$,
+		\begin{equation*}
+			\lambda_{c f}(\alpha)=\mu(\{x \in X \mid | c f(x) |>\alpha\})=\mu\left(\left\{x \in X \mid | f(x) |>\frac{\alpha}{|c|}\right\}\right)=\lambda_f\left(\frac{\alpha}{|c|}\right)
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\alpha^p \lambda_{c f}(\alpha)=\alpha^p \lambda_f\left(\frac{\alpha}{|c|}\right)=|c|^p\left(\frac{\alpha}{|c|}\right)^p \lambda_f\left(\frac{\alpha}{|c|}\right) \leq|c|^p \sup _{\beta>0}\left\{\beta^p \lambda_f(\beta)\right\}
+		\end{equation*}
+		and thus
+		\begin{equation*}
+			\sup _{\alpha>0}\left\{\alpha^p \lambda_{c f}(\alpha)\right\} \leq|c|^p \sup _{\beta>0}\left\{\beta^p \lambda_f(\beta)\right\}<\infty
+		\end{equation*}
+		which means $cf \in L^{p,\infty}(X)$.
+	\end{enumerate}
+\end{proof}
+
+\begin{prop}[Chebyshev's Inequality]
+	Let $(X,\fml{A},\mu)$ be a measure space and $g \in \mathbb{M}(X)$. Then for any $\alpha \in (0,\infty)$,
+	\begin{equation*}
+		\mu\left(\{x \in X||g(x)|>\alpha\}\right) \leq \frac{1}{\alpha} \int_X|g(x)| d \mu(x)
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	For any $\alpha \in (0,\infty)$,
+	\begin{equation*}
+		\begin{aligned}
+			\int_X|g(x)| d \mu(x) & \geq \int_{\{y \in X \mid | g(y) |>\alpha\}}|g(x)| d \mu(x) \geq \int_{\{y \in X \mid | g(y) \mid>\alpha\}} \alpha d \mu(x) \\
+			& =\alpha \mu(\{y \in X \mid | g(y) \mid>\alpha\})
+		\end{aligned}
+	\end{equation*}
+\end{proof}
+
+\begin{prop}
+	Let $(X,\fml{A},\mu)$ be a measure space and $1 \leq p \leq \infty$. Then
+	\begin{equation*}
+		L^p(X) \subset L^{p, \infty}(X)
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	For $1 \leq p < \infty$, let $f \in L^p(X)$. For $\alpha \in (0,\infty)$, by Chebyshev's Inequality,
+	\begin{equation*}
+		\begin{aligned}
+			\lambda_f(\alpha) & =\mu(\{x \in X| | f(x) \mid>\alpha\})=\mu\left(\left\{\left.x \in X| | f(x)\right|^p>\alpha^p\right\}\right) \\
+			& \leq \frac{1}{\alpha^p} \int_X|f(x)|^p d \mu(x)=\frac{1}{\alpha^p}\|f\|_{L^p(X)}^p
+		\end{aligned}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\sup _{\alpha>0}\left\{\alpha^p \lambda_f(\alpha)\right\} \leq\|f\|_{L^p(X)}^p<\infty
+	\end{equation*}
+\end{proof}
+\begin{rmk}
+	Note that $L^p(\R^N) \neq L^{p,\infty}(\R^N)$. For example, $f(x) = \abs{x}^{-\frac{N}{p}} \neq L^p$ but it is in $L^{p,\infty}$.
+\end{rmk}
+
+\noindent For $1 \leq p < \infty$, $f \in L^{p,\infty}(X)$, define
+\begin{equation*}
+	[f]_{L^{p, \infty}(X)}:=\left[\sup _{\alpha>0}\left\{\alpha^p \lambda_f(\alpha)\right\}\right]^{1 / p}
+\end{equation*}
+and for $L^{\infty,\infty}(X)$, $[f]_{L^{\infty, \infty}(X)}:=\|f\|_{L^{\infty}(X)}$. And by above proposition, for any $1 \leq p \leq \infty$,
+\begin{equation*}
+	[f]_{L^{p, \infty}(X)} \leq\|f\|_{L^p(X)}
+\end{equation*}
+
+\begin{prop}
+	Let $(X,\fml{A},\mu)$ be a measure space and $1 \leq p < \infty$. Let $f,g \in L^{p,\infty}(X)$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $[f]_{L^{p, \infty}(X)} \geq 0$.
+		\item $[f]_{L^{p, \infty}(X)}=0 \Leftrightarrow f=0$ in $L^{p,\infty}(X)$.
+		\item For any $c \in \C$, $[c f]_{L^{p, \infty}(X)}=|c|[f]_{L^{p, \infty}(X)}$.
+		\item $[f+g]_{L^{p, \infty}(X)} \leq 2\left([f]_{L^{p, \infty}(X)}+[g]_{L^{p, \infty}(X)}\right)$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prop}\label{prop:distrdecomp}
+	Let $(X,\fml{A},\mu)$ be a measure space and $f \in \mathbb{M}(X)$. For $R > 0$, let
+	\begin{equation*}
+		E(R):=\{x \in X| | f(x) \mid>R\} \in \fml{A}
+	\end{equation*}
+	Define
+	\begin{equation*}
+		\begin{aligned}
+			h_R(x)&:=f(x) \chi_{E(R)^c}(x)+R(\overline{\operatorname{sgn} f(x)}) \chi_{E(R)}(x), \\
+			g_R(x)&:=f(x)-h_R(x)=(\overline{\operatorname{sgn} f(x)})(|f(x)|-R) \chi_{E(R)}(x)
+		\end{aligned}
+	\end{equation*}
+	Then for any $\alpha \in (0,\infty)$,
+	\begin{equation*}
+		\lambda_{h_R}(\alpha)= \begin{cases}\lambda_f(\alpha), & 0<\alpha<R,  \\ 0, & \alpha \geq R,\end{cases} \quad \lambda_{g_R}(\alpha)=\lambda_f(\alpha+R)
+	\end{equation*}
+\end{prop}
+\begin{rmk}
+	By calculation,
+	\begin{equation*}
+		\begin{gathered}
+			h_R(x)= \begin{cases}R(\overline{\operatorname{sgn} f(x)}), & |f(x)|>R, \\
+			f(x), & 0 \leq|f(x)| \leq R,\end{cases} \\
+			\left|h_R(x)\right|= \begin{cases}R, & |f(x)|>R, \\
+			|f(x)|, & 0 \leq|f(x)| \leq R,\end{cases} \\
+			g_R(x)= \begin{cases}(|f(x)|-R) \overline{(\operatorname{sgn} f(x)}), & |f(x)|>R, \\
+			0, & 0 \leq|f(x)| \leq R,\end{cases} \\
+			\left|g_R(x)\right|= \begin{cases}|f(x)|-R, & |f(x)|>R, \\
+			0, & 0 \leq|f(x)| \leq R .\end{cases}
+		\end{gathered}
+	\end{equation*}
+\end{rmk}
+\begin{proof}
+	Let $R > 0$.
+	\begin{enumerate}[label=(\roman*)]
+		\item Consider $\lambda_{h_R}$. First, let $\alpha \geq R$. Because $\abs{h_R(x)} \leq R \leq \alpha$ for all $x$,
+		\begin{equation*}
+			\lambda_{h_R}(\alpha)=\mu\left(\left\{x \in X| | h_R(x) \mid>\alpha\right\}\right)=\mu(\emptyset)=0
+		\end{equation*}
+		When $0 < \alpha < R$, for $x \in X$,
+		\begin{equation*}
+			\left|h_R(x)\right|>\alpha \Longleftrightarrow |f(x)|>R \text { or } \alpha<|f(x)| \leq R \Longleftrightarrow|f(x)|>\alpha
+		\end{equation*}
+		and so
+		\begin{equation*}
+			\lambda_{h_R}(\alpha)=\mu\left(\left\{x \in X| | h_R(x) \mid>\alpha\right\}\right)=\mu(\{x \in X| | f(x) \mid>\alpha\})=\lambda_f(\alpha)
+		\end{equation*}
+
+		\item Consider $\lambda_{g_R}$. For $\alpha > 0$ and $x \in X$,
+		\begin{equation*}
+			\left|g_R(x)\right|>\alpha \Longleftrightarrow |f(x)|>R \text { and }|f(x)|-R>\alpha \Longleftrightarrow|f(x)|>\alpha+R
+		\end{equation*}
+		and so
+		\begin{equation*}
+			\lambda_{g_R}(\alpha)=\mu\left(\left\{x \in X| | g_R(x) \mid>\alpha\right\}\right)=\mu(\{x \in X| | f(x) \mid>\alpha+R\})=\lambda_f(\alpha+R)
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\section{Marcinkiewicz Interpolation Theorem}
+
+\begin{defn}
+	Let $(X, \mathscr{A}, \mu)$ and $(Y, \mathscr{B}, \nu)$ be two measurable spaces and subspace $\mathbb{D} \subset \mathbb{M}(X)$. Let $T \colon \mathbb{D} \sto \mathbb{M}(Y)$ be a sublinear map, \emph{i.e.}
+	\begin{equation*}
+		|(T(f+g))(y)| \leq|(T f)(y)|+|(T g)(y)|,\quad |(T(c f))(y)|=|c||(T f)(y)|.
+	\end{equation*}
+	Let $1 \leq p,q \leq \infty$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item If $L^p(X) \subset \mathbb{D}$ and $T(L^p(X)) \subset L^q(Y)$ and there is a $C > 0$ such that for any $f \in L^p(X)$
+		\begin{equation*}
+			\|T f\|_{L^q(Y)} \leq C\|f\|_{L^p(X)}
+		\end{equation*}
+		then $T$ is called strong $(p,q)$-type.
+		\item If $L^p(X) \subset \mathbb{D}$ and $T(L^p(X)) \subset L^{q,\infty}(Y)$ and there is a $C > 0$ such that for any $f \in L^p(X)$
+		\begin{equation*}
+			[T f]_{L^{q, \infty}(Y)} \leq C\|f\|_{L^p(X)}
+		\end{equation*}
+		then $T$ is called weak $(p,q)$-type.
+	\end{enumerate}
+\end{defn}
+Note that the strong $(p,q)$-type implies the weak $(p,q)$-type.
+
+\begin{thm}[Marcinkiewicz Interpolation Theorem]
+	Let $(X, \mathscr{A}, \mu)$ and $(Y, \mathscr{B}, \nu)$ be $\sigma$-finite. Let $1 \leq p_0,p_1,q_0,q_1 \leq \infty$ with $p_0 \leq q_0$, $p_1 \leq q_1$, and $q_0 \neq q_1$. For $0 < t < 1$, let $p,q$ be
+	\begin{equation*}
+		\frac{1}{p}=\frac{1-t}{p_0}+\frac{t}{p_1}, \quad \frac{1}{q}=\frac{1-t}{q_0}+\frac{t}{q_1}
+	\end{equation*}
+	If $T \colon L^{p_0}(X)+L^{p_1}(X) \sto \mathbb{M}(Y)$ be sublinear satisfying
+	\begin{itemize}
+		\item $T$ is weak $(p_0,q_0)$-type, \emph{i.e.} $T(L^{p_0}(X)) \subset L^{q_0,\infty}(Y)$ and there is an $M_0$ such that
+		\begin{equation*}
+			[T f]_{L^{q_0, \infty}(Y)} \leq M_0\|f\|_{L^{p_0}(X)},\quad f \in L^{p_0}(X)
+		\end{equation*}
+		\item $T$ is weak $(p_1,q_1)$-type, \emph{i.e.} $T(L^{p_1}(X)) \subset L^{q_1,\infty}(Y)$ and there is an $M_1$ such that
+		\begin{equation*}
+			[T f]_{L^{q_1, \infty}(Y)} \leq M_1\|f\|_{L^{p_1}(X)},\quad f \in L^{p_1}(X)
+		\end{equation*}
+	\end{itemize}
+	The $T$ is strong $(p,q)$-type, that is, $T(L^p(X)) \subset L^{q,\infty}(Y)$ and there is a $B = B(p_0,p_1,q_0,q_1,t,M_0,M_1)$ such that
+	\begin{equation*}
+		\norm{Tf}_{L^q(X)} \leq B\|f\|_{L^p(X)},\quad f \in L^p(X)
+	\end{equation*}
+\end{thm}
+\begin{rmk}
+	By the assumptions, $1 < q < \infty$ with $q_0 < q < q_1$. And $1 \leq p < \infty$, otherwise $p = \infty$ implies $p_0 = p_1 = \infty$ and thus $q_0 = q_1 = \infty$ contradicted to $q_0 \neq q_1$. Moreover, if $p =1$, then $p = p_0 = p_1 = 1$ by $t \in (0,1)$. If $1 < p < \infty$, then $p_0 \neq p_1$ will imply $p_0 < p < p_1$ and $p_0 = p_1$ will imply $p = p_0 = p_1$ by $t \in (0,1)$.
+\end{rmk}
+\begin{proof}
+	It is sufficient to prove for any $f \in L^p(X)$ with $\|f\|_{L^p(X)}=1$ we have $T f \in L^q(Y)$ with $\|T f\|_{L^q(Y)} \leq B$ by the sublinearity of $T$. 
+	\begin{enumerate}[label=(\Roman*)]
+		\item $p_0 = p_1$: Then $p = p_0 = p_1 \in [1,\infty)$.
+		\begin{enumerate}[label=\theenumi-\arabic{*}]
+			\item $p_0 = p_1$ and $q_0,q_1 < \infty$: Let $f \in L^p(X)$ with $\|f\|_{L^p(X)}=1$. Then by above proposition
+			\begin{equation*}
+				\int_Y|T f(y)|^q d \nu(y)=q \int_{(0, \infty)} \beta^{q-1} \lambda_{T f}(\beta) d \beta
+			\end{equation*}
+			First, by assumption,
+			\begin{equation*}
+				\begin{aligned}
+					& {\left[\sup _{\beta>0}\left\{\beta^{q_0} \lambda_{T f}(\beta)\right\}\right]^{\frac{1}{q_0}}=[T f]_{L^{q_0, \infty}(Y)} \leq M_0\|f\|_{L^{p_0}(X)}=M_0\|f\|_{L^p(X)}=M_0,} \\
+					& {\left[\sup _{\beta>0}\left\{\beta^{q_1} \lambda_{T f}(\beta)\right\}\right]^{\frac{1}{q_1}}=[T f]_{L^{q_1, \infty}(Y)} \leq M_1\|f\|_{L^{p_1}(X)}=M_1\|f\|_{L^p(X)}=M_1}
+				\end{aligned}
+			\end{equation*}
+			for any $\beta \in (0,\infty)$,
+			\begin{equation*}
+				\lambda_{T f}(\beta) \leq\left(\frac{M_0}{\beta}\right)^{q_0}, \quad \lambda_{T f}(\beta) \leq\left(\frac{M_1}{\beta}\right)^{q_1}
+			\end{equation*}
+			Assume $q_0 < q_1$, by $q_0 < q < q_1$, we have $q-q_0-1>-1, q-q_1-1<-1$. So
+			\begin{equation}\label{eq:m0m1}
+				\begin{aligned}
+					& \int_Y|T f(y)|^q d \nu(y)=q \int_0^{\infty} \beta^{q-1} \lambda_{T f}(\beta) d \beta \\
+					& =q \int_0^1 \beta^{q-1} \lambda_{T f}(\beta) d \beta+q \int_1^{\infty} \beta^{q-1} \lambda_{T f}(\beta) d \beta \\
+					& \leq q \int_0^1 \beta^{q-1}\left(\frac{M_0}{\beta}\right)^{q_0} d \beta+q \int_1^{\infty} \beta^{q-1}\left(\frac{M_1}{\beta}\right)^{q_1} d \beta \\
+					& =q M_0^{q_0} \int_0^1 \beta^{q-q_0-1} d \beta+q M_1^{q_1} \int_1^{\infty} \beta^{q-q_1-1} d \beta \\
+					& =q\left(\frac{M_0^{q_0}}{q-q_0}+\frac{M_1^{q_1}}{q_1-q}\right)<\infty
+				\end{aligned}
+			\end{equation}
+			Therefore, $Tf \in L^q(Y)$ and 
+			\begin{equation*}
+				B:=\left\{q\left(\frac{M_0^{q_0}}{q-q_0}+\frac{M_1^{q_1}}{q_1-q}\right)\right\}^{\frac{1}{q}}\quad \Rightarrow \quad \|T f\|_{L^q(Y)} \leq B
+			\end{equation*}
+			When $q_0 > q_1$, we only need to swap $M_0$ with $M_1$ in equation (\ref{eq:m0m1}).
+
+			\item $p_0 = p_1$ and ($q_0 = \infty$ or $q_1 = \infty$): First, assume $q_1 = \infty$. Then $q_0 < \infty$ and $q_0 < q < \infty$. Similarly, consider the equation
+			\begin{equation*}
+				\int_Y|T f(y)|^q d \nu(y)=q \int_{(0, \infty)} \beta^{q-1} \lambda_{T f}(\beta) d \beta
+			\end{equation*}
+			By $q_0 < \infty$, we also have for any $\beta \in (0,\infty)$,
+			\begin{equation*}
+				\lambda_{T f}(\beta) \leq\left(\frac{M_0}{\beta}\right)^{q_0}
+			\end{equation*}
+			On the other hand, by $q_1 = \infty$,
+			\begin{equation*}
+				\|T f\|_{L^{\infty}(Y)}=[T f]_{L^{\infty}, \infty}(Y) \leq M_1\|f\|_{L^{p_1}(X)}=M_1\|f\|_{L^p(X)}=M_1
+			\end{equation*}
+			So we have for any $\beta \geq M_1$, $\lambda_{Tf}(\beta) = 0$. Then combining these results with $q-q_0-1>-1$,
+			\begin{equation*}
+				\begin{aligned}
+					& \int_Y|T f(y)|^q d \nu(y)=q \int_0^{\infty} \beta^{q-1} \lambda_{T f}(\beta) d \beta \\
+					& =q \int_0^{M_1} \beta^{q-1} \lambda_{T f}(\beta) d \beta \leq q \int_0^{M_1} \beta^{q-1}\left(\frac{M_0}{\beta}\right)^{q_0} d \beta \\
+					& =q M_0^{q_0} \int_0^{M_1} \beta^{q-q_0-1} d \beta=\frac{q}{q-q_0} M_0^{q_0} M_1^{q-q_0}<\infty
+				\end{aligned}
+			\end{equation*}
+			So $Tf \in L^q(Y)$ and 
+			\begin{equation*}
+				B:=\left(\frac{q}{q-q_0} M_0^{q_0} M_1^{q-q_0}\right)^{\frac{1}{q}}\quad \Rightarrow \quad \|T f\|_{L^q(Y)} \leq B
+			\end{equation*}
+			On the other hand, if $q_0 = \infty$ and $q_1 < \infty$, then $q_1 < q < \infty$ and $q-q_1-1>-1$. So we just swap $q_0$ with $q_1$ and $M_0$ with $M_1$.
+		\end{enumerate}
+
+		\item $p_0 < p_1$ and $q_0,q_1 < \infty$: Then $p_0 < p < p_1 \leq q_1 < \infty$. Consider the equation
+		\begin{equation*}
+			\begin{aligned}
+				\int_Y|T f(y)|^q d \nu(y) & =q \int_0^{\infty} \beta^{q-1} \lambda_{T f}(\beta) d \beta \\
+				& =2^q q \int_0^{\infty} \beta^{q-1} \lambda_{T f}(2 \beta) d \beta
+			\end{aligned}
+		\end{equation*}
+		For $R > 0$, let $E(R)$, $h_R$, and $g_R$ for $f$ defined as in Proposition \ref{prop:distrdecomp}. By definition, we know $h_R$ is bounded and $h_R \in L^p(X)$ by $f \in L^p(X)$. Since $p < p_1 < \infty$,
+		\begin{equation*}
+			h_R \in L^\infty(X) \cap L^p(X) \subset L^{p_1}(X)
+		\end{equation*}
+		Moreover, by Proposition \ref{prop:distrdecomp}
+		\begin{equation*}
+			\lambda_{h_R}(\alpha)= \begin{cases}\lambda_f(\alpha), & 0<\alpha<R, \\ 0, & \alpha \geq R.\end{cases}
+		\end{equation*}
+		we have
+		\begin{equation*}
+			\begin{aligned}
+				\norm{h_R}_{L^{p_1}(X)}^{p_1} = \int_X\left|h_R(x)\right|^{p_1} d \mu(x) & =p_1 \int_0^{\infty} \alpha^{p_1-1} \lambda_{h_R}(\alpha) d \alpha \\
+				& =p_1 \int_0^R \alpha^{p_1-1} \lambda_f(\alpha) d \alpha .
+			\end{aligned}
+		\end{equation*}
+		Next, for $g_R$, by Proposition \ref{prop:distrdecomp}
+		\begin{equation*}
+			\lambda_{g_R}(\alpha)=\lambda_f(\alpha+R)
+		\end{equation*}
+		and by $p_0 - p < 0$, we have
+		\begin{equation*}
+			\begin{aligned}
+				& \int_X\left|g_R(x)\right|^{p_0} d \mu(x)=p_0 \int_0^{\infty} \alpha^{p_0-1} \lambda_{g_R}(\alpha) d \alpha \\
+				& =p_0 \int_0^{\infty} \alpha^{p_0-1} \lambda_f(\alpha+R) d \alpha \\
+				& =p_0 \int_R^{\infty}(\alpha-R)^{p_0-1} \lambda_f(\alpha) d \alpha \\
+				&\leq p_0 \int_R^{\infty} \alpha^{p_0-1} \lambda_f(\alpha) d \alpha = p_0 \int_R^{\infty} \alpha^{p_0-p} \cdot \alpha^{p-1} \lambda_f(\alpha) d \alpha\\
+				&\leq  p_0 R^{p_0-p} \int_R^{\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha \\
+				&\leq \frac{p_0}{p} R^{p_0-p} \cdot p \int_0^{\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha = \frac{p_0}{p} R^{p_0-p}\|f\|_{L^p(X)}^p=\frac{p_0}{p} R^{p_0-p}<\infty
+			\end{aligned}
+		\end{equation*}
+		So $g_R \in L^{p_0}(X)$ and
+		\begin{equation*}
+		 	\norm{g_R}_{L^{p_0}(X)}^{p_0} = \int_X\left|g_R(x)\right|^{p_0} d \mu(x) \leq p_0 \int_R^{\infty} \alpha^{p_0-1} \lambda_f(\alpha) d \alpha
+		\end{equation*}
+		Then by assumption of $T$, for any $R > 0$,
+		\begin{equation*}
+			\begin{aligned}
+				& {\left[\sup _{\beta>0}\left\{\beta^{q_0} \lambda_{T g_R}(\beta)\right\}\right]^{\frac{1}{q_0}}=\left[T g_R\right]_{L^{q_0, \infty}(Y)} \leq M_0\left\|g_R\right\|_{L^{p_0}(X)},} \\
+				& {\left[\sup _{\beta>0}\left\{\beta^{q_1} \lambda_{T h_R}(\beta)\right\}\right]^{\frac{1}{q_1}}=\left[T h_R\right]_{L^{q_1, \infty}(Y)} \leq M_1\left\|h_R\right\|_{L^{p_1}(X)}}
+			\end{aligned}
+		\end{equation*}
+		So for any $\beta \in (0,\infty)$,
+		\begin{equation*}
+			\begin{aligned}
+				& \lambda_{T g_R}(\beta) \leq\left(\frac{M_0}{\beta}\left\|g_R\right\|_{L^{p_0}(X)}\right)^{q_0} \\
+				& \lambda_{T h_R}(\beta) \leq\left(\frac{M_1}{\beta}\left\|h_R\right\|_{L^{p_1}(X)}\right)^{q_1}
+			\end{aligned}
+		\end{equation*}
+		Moreover, because $f=g_R+h_R$, by the sublinearity of $T$,
+		\begin{equation*}
+			|T f(y)|=\left|T\left(g_R+h_R\right)(y)\right| \leq\left|\left(T g_R\right)(y)\right|+\left|\left(T h_R\right)(y)\right|, \quad \nu-a.e.~ y \in Y
+		\end{equation*}
+		Then by the properties of distribution function, for any $\beta \in (0,\infty)$,
+		\begin{equation*}
+			\lambda_{T f}(2 \beta) \leq \lambda_{T g_R}(\beta)+\lambda_{T h_R}(\beta)
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				& \int_Y|T f(y)|^q d \nu(y)=2^q q \int_0^{\infty} \beta^{q-1} \lambda_{T f}(2 \beta) d \beta \\
+				& \leq 2^q q\left[\int_0^{\infty} \beta^{q-1} \lambda_{T g_R}(\beta) d \beta+\int_0^{\infty} \beta^{q-1} \lambda_{T h_R}(\beta) d \beta\right] \\
+				& \leq 2^q q\left[\int_0^{\infty} \beta^{q-1}\left(\frac{M_0}{\beta}\left\|g_R\right\|_{L^{p_0}(X)}\right)^{q_0} d \beta+\int_0^{\infty} \beta^{q-1}\left(\frac{M_1}{\beta}\left\|h_R\right\|_{L^{p_1}(X)}\right)^{q_1} d \beta\right] \\
+				& =2^q q\left[M_0^{q_0} \int_0^{\infty} \beta^{q-q_0-1}\left\|g_R\right\|_{L^{p_0}(X)}^{q_0} d \beta+M_1^{q_1} \int_0^{\infty} \beta^{q-q_1-1}\left\|h_R\right\|_{L^{p_1}(X)}^{q_1} d \beta\right] \\
+				&\leq  2^q q M_0^{q_0} \int_0^{\infty} \beta^{q-q_0-1}\left\{p_0 \int_R^{\infty} \alpha^{p_0-1} \lambda_f(\alpha) d \alpha\right\}^{\frac{q_0}{p_0}} d \beta \\
+				& \quad+2^q q M_1^{q_1} \int_0^{\infty} \beta^{q-q_1-1}\left\{p_1 \int_0^R \alpha^{p_1-1} \lambda_f(\alpha) d \alpha\right\}^{\frac{q_1}{p_1}} d \beta \\
+				&= \text{\RNum{1}}
+			\end{aligned}
+		\end{equation*}
+		Let
+		\begin{equation*}
+			\begin{aligned}
+				\sigma&:=\frac{p_0\left(q_0-q\right)}{q_0\left(p_0-p\right)}\\
+				&=\frac{p^{-1}\left(q^{-1}-q_0^{-1}\right)}{q^{-1}\left(p^{-1}-p_0^{-1}\right)} \\
+				&= \frac{p^{-1}\left(q^{-1}-q_1^{-1}\right)}{q^{-1}\left(p^{-1}-p_1^{-1}\right)}\\
+				&=\frac{p_1\left(q_1-q\right)}{q_1\left(p_1-p\right)}
+			\end{aligned}
+		\end{equation*}
+		and $R = \beta^\Sigma$. Define $\Gamma = (0, \infty) \times (0,\infty)$ and
+		\begin{equation*}
+			D_0:=\left\{(\alpha, \beta) \in \Gamma \mid \alpha>\beta^\sigma\right\}, \quad D_1:=\left\{(\alpha, \beta) \in \Gamma \mid \alpha<\beta^\sigma\right\}
+		\end{equation*}
+		Then for $j = 0,1$, let
+		\begin{equation*}
+			\varphi_j(\alpha, \beta):=\chi_{D_j}(\alpha, \beta) \beta^{\left(q-q_j-1\right) \frac{p_j}{q_j}} \alpha^{p_j-1} \lambda_f(\alpha), \quad(\alpha, \beta) \in \Gamma
+		\end{equation*}
+		Then 
+		\begin{equation*}
+			\text{\RNum{1}} = 2^q q \sum_{j=0}^1 M_j^{q_j} p_j^{\frac{q_j}{p_j}} \int_0^{\infty}\left(\int_0^{\infty} \varphi_j(\alpha, \beta) d \alpha\right)^{\frac{q_j}{p_j}} d \beta
+		\end{equation*}
+		For $j = 0,1$, because $1 \leq \frac{q_j}{p_j} < \infty$, by the Minkowski's Inequality,
+		\begin{equation*}
+			\int_0^{\infty}\left(\int_0^{\infty} \varphi_j(\alpha, \beta) d \alpha\right)^{\frac{q_j}{p_j}} d \beta \leq\left[\int_0^{\infty}\left(\int_0^{\infty} \varphi_j(\alpha, \beta)^{\frac{q_j}{p_j}} d \beta\right)^{\frac{p_j}{q_j}} d \alpha\right]^{\frac{q_j}{p_j}}
+		\end{equation*}
+		Therefore, 
+		\begin{equation*}
+			\int_Y|T f(y)|^q d \nu(y) \leq 2^q q \sum_{j=0}^1 M_j^{q_j} p_j^{\frac{q_j}{p_j}}\left[\int_0^{\infty}\left(\int_0^{\infty} \varphi_j(\alpha, \beta)^{\frac{q_j}{p_j}} d \beta\right)^{\frac{p_j}{q_j}} d \alpha\right]^{\frac{q_j}{p_j}}
+		\end{equation*}
+		First, consider $\varphi_0$. If $q_0 < q_1$, then $q - q_0 > 0$ and so $\sigma > 0$. Therefore,
+		\begin{equation*}
+			(\alpha, \beta) \in D_0 \Longleftrightarrow \alpha>\beta^\sigma \Longleftrightarrow \alpha^{\frac{1}{\sigma}}>\beta
+		\end{equation*}
+		Note that $q-q_0-1>-1$, so
+		\begin{equation*}
+			\begin{aligned}
+				& \int_0^{\infty}\left(\int_0^{\infty} \varphi_0(\alpha, \beta)^{\frac{q_0}{p_0}} d \beta\right)^{\frac{p_0}{q_0}} d \alpha=\int_0^{\infty}\left(\int_0^{\alpha^{\frac{1}{\sigma}}} \varphi_0(\alpha, \beta)^{\frac{q_0}{p_0}} d \beta\right)^{\frac{p_0}{q_0}} d \alpha \\
+				& =\int_0^{\infty}\left[\int_0^{\alpha^{\frac{1}{\sigma}}}\left\{\beta^{\left(q-q_0-1\right) \frac{p_0}{q_0}} \alpha^{p_0-1} \lambda_f(\alpha)\right\}^{\frac{q_0}{p_0}} d \beta\right]^{\frac{p_0}{q_0}} d \alpha \\
+				& =\int_0^{\infty}\left(\int_0^{\alpha^{\frac{1}{\sigma}}} \beta^{q-q_0-1} d \beta\right)^{\frac{p_0}{q_0}} \alpha^{p_0-1} \lambda_f(\alpha) d \alpha \\
+				& =\frac{1}{\left(q-q_0\right)^{\frac{p_0}{q_0}}} \int_0^{\infty} \alpha^{\frac{p_0\left(q-q_0\right)}{q_0 \sigma}} \cdot \alpha^{p_0-1} \lambda_f(\alpha) d \alpha \\
+				& =\frac{1}{\left|q-q_0\right|^{\frac{p_0}{q_0}}} \int_0^{\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha=\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}} p \int_0^{\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha \\
+				& =\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}}\|f\|_{L^p(X)}^p=\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}}
+			\end{aligned}
+		\end{equation*}
+		If $q_0 > q_1$, the $q - q_0 < 0$ and $\sigma < 0$. So
+		\begin{equation*}
+			(\alpha, \beta) \in D_0 \Longleftrightarrow \alpha>\beta^\sigma \Longleftrightarrow \alpha^{\frac{1}{\sigma}}<\beta
+		\end{equation*}
+		Note that $q -q_0 -1 < -1$ and so
+		\begin{equation*}
+			\begin{aligned}
+				& \int_0^{\infty}\left(\int_0^{\infty} \varphi_0(\alpha, \beta)^{\frac{q_0}{p_0}} d \beta\right)^{\frac{p_0}{q_0}} d \alpha=\int_0^{\infty}\left(\int_{\alpha^{\frac{1}{\sigma}}}^{\infty} \varphi_0(\alpha, \beta)^{\frac{q_0}{p_0}} d \beta\right)^{\frac{p_0}{q_0}} d \alpha \\
+				& =\int_0^{\infty}\left[\int_{\alpha^{\frac{1}{\sigma}}}^{\infty}\left\{\beta^{\left(q-q_0-1\right) \frac{p_0}{q_0}} \alpha^{p_0-1} \lambda_f(\alpha)\right\}^{\frac{q_0}{p_0}} d \beta\right]^{\frac{p_0}{q_0}} d \alpha \\
+				& =\int_0^{\infty}\left(\int_{\alpha^{\frac{1}{\sigma}}}^{\infty} \beta^{q-q_0-1} d \beta\right)^{\frac{p_0}{q_0}} \alpha^{p_0-1} \lambda_f(\alpha) d \alpha \\
+				& =\frac{1}{\left(q_0-q\right)^{\frac{p_0}{q_0}}} \int_0^{\infty} \alpha^{\frac{p_0\left(q-q_0\right)}{q_0 \sigma}} \cdot \alpha^{p_0-1} \lambda_f(\alpha) d \alpha \\
+				& =\frac{1}{\left|q-q_0\right|^{\frac{p_0}{q_0}}} \int_0^{\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha=\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}} p \int_0^{\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha \\
+				& =\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}}\|f\|_{L^p(X)}^p=\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}}
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\int_0^{\infty}\left(\int_0^{\infty} \varphi_0(\alpha, \beta)^{\frac{q_0}{p_0}} d \beta\right)^{\frac{p_0}{q_0}} d \alpha=\frac{1}{p\left|q-q_0\right|^{\frac{p_0}{q_0}}}
+		\end{equation*}
+		For $\varphi_1$, it can also get
+		\begin{equation*}
+			\int_0^{\infty}\left(\int_0^{\infty} \varphi_1(\alpha, \beta)^{\frac{q_1}{p_1}} d \beta\right)^{\frac{p_1}{q_1}} d \alpha=\frac{1}{p\left|q-q_1\right|^{\frac{p_1}{q_1}}}
+		\end{equation*}
+		And therefore,
+		\begin{equation*}
+			\int_Y|T f(y)|^q d \nu(y) \leq 2^q q \sum_{j=0}^1 M_j^{q_j}\left(\frac{p_j}{p}\right)^{\frac{q_j}{p_j}} \frac{1}{\left|q-q_j\right|}<\infty
+		\end{equation*}
+		Let
+		\begin{equation*}
+			B:=\left\{2^q q \sum_{j=0}^1 M_j^{q_j}\left(\frac{p_j}{p}\right)^{\frac{q_j}{p_j}} \frac{1}{\left|q-q_j\right|}\right\}^{\frac{1}{q}}
+		\end{equation*}
+		we have
+		\begin{equation*}
+			\|T f\|_{L^q(Y)} \leq B
+		\end{equation*}
+
+		\item $p_0 \neq p_1$ and ($q_0 = \infty$ or $q_1 = \infty$): Omits.
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}\label{thm:weakkernel}
+	Let $\Omega \subset \R^N$ be Lebesgue measurable. Let $1 < r < \infty$. $K = K(x,y) \colon \Omega \times \Omega \sto \C$ is Lebesgue measurable such that $K(x,\cdot) \in L^r(\Omega)$ for \emph{a.e.} $x \in \Omega$ and $K(\cdot,y) \in L^r(\Omega)$ for \emph{a.e.} $y \in \Omega$ with $M > 0$ such that
+	\begin{itemize}
+		\item $[K(x, \cdot)]_{L^{r, \infty}(\Omega)} \leq M$, \emph{a.e.} $x\in \Omega$,
+		\item $[K(\cdot,y)]_{L^{r, \infty}(\Omega)} \leq M$, \emph{a.e.} $y\in \Omega$.
+	\end{itemize}
+	Let $p,q$ satisfy
+	\begin{equation*}
+		1 \leq p<q<\infty, \quad \frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1
+	\end{equation*}
+	Note that $1<r \leq q<\infty$. Then
+	\begin{enumerate}[label=(\arabic{*})]
+		\item Let $f \in L^p(\Omega)$. For any $x \in X$,
+		\begin{equation*}
+			\int_{\Omega}|K(x, y) f(y)| d y<\infty
+		\end{equation*}
+		\item Let linear $T \colon L^p(\Omega) \sto \mathbb{M}(\Omega)$ defined as
+		\begin{equation*}
+			(T f)(x):=\int_{\Omega} K(x, y) f(y) d y, \quad  { a.e. }~ x \in \Omega
+		\end{equation*}
+		\begin{enumerate}[label=(\roman*)]
+			\item For $p = 1$ ($q = r$), $T(L^1(\Omega)) \subset L^{r,\infty}(\Omega)$. There is a $B > 0$ such that for any $f \in L^1(\Omega)$,
+			\begin{equation*}
+				[T f]_{L^{r, \infty}(\Omega)} \leq B M\|f\|_{L^1(\Omega)}
+			\end{equation*}
+			In particular, $T$ is weak $(1,r)$-type.
+
+			\item For $p \neq 1$ ($1<p<q<\infty, 1<r<q<\infty$), $T(L^p(\Omega))\subset L^q(\Omega)$. There is a $C > 0$ such that for any $f \in L^p(X)$,
+			\begin{equation*}
+				\|T f\|_{L^q(\Omega)} \leq C M\|f\|_{L^p(\Omega)}
+			\end{equation*}
+			In particular, $T$ is strong $(p,q)$-type.
+		\end{enumerate}
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	WLTG, assume $M=1$. Let $r^\prime,p^\prime$ be the conjugate of $r,p$. By
+	\begin{equation*}
+		0<\frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1=\frac{1}{p}-\frac{1}{r^{\prime}}=\frac{1}{r}-\frac{1}{p^{\prime}}
+	\end{equation*}
+	we have
+	\begin{equation*}
+		1 \leq p<r^{\prime}, \quad 1<r<p^{\prime}, \quad 1<r \leq q<\infty
+	\end{equation*}
+	By the assumptions of $K$, we know
+	\begin{itemize}
+		\item for any $\beta > 0$,
+		\begin{equation*}
+			\lambda_{K(x, \cdot)}(\beta) \leq \beta^{-r},\quad a.e.~x \in \Omega
+		\end{equation*}
+		\item for any $\alpha> 0$,
+		\begin{equation*}
+			\lambda_{K(\cdot,y)}(\alpha) \leq \alpha^{-r},\quad a.e.~y \in \Omega
+		\end{equation*}
+	\end{itemize}
+
+	\begin{enumerate}[label=(\Roman*)]
+		\item $R > 0$ (which will be determined in the following): Let $E(R) \subset \Omega \times \Omega$ be
+		\begin{equation*}
+			E(R):=\{(x, y) \in \Omega \times \Omega| | K(x, y) \mid>R\}
+		\end{equation*}
+		and also define the $H_R$ as
+		\begin{equation*}
+			\begin{aligned}
+				H_R(x, y) & :=K(x, y) \chi_{E(R)^c}(x, y)+R(\overline{\operatorname{sgn} K(x, y)}) \chi_{E(R)}(x, y) \\
+				& = \begin{cases}R(\overline{\operatorname{sgn} K(x, y)}), & |K(x, y)|>R, \\
+				K(x, y), & 0 \leq|K(x, y)| \leq R,\end{cases}
+			\end{aligned}
+		\end{equation*}
+		and $G_R$ as
+		\begin{equation*}
+			\begin{aligned}
+				& G_R(x, y):=K(x, y)-H_R(x, y)=(\overline{\operatorname{sgn} K(x, y)})(|K(x, y)|-R) \chi_{E(R)}(x, y) \\
+				& =\left\{\begin{array}{ll}
+				(|K(x, y)|-R)(\overline{\operatorname{sgn} K(x, y)}), & |K(x, y)|>R, \\
+				0, & 0 \leq|K(x, y)| \leq R,
+				\end{array}\right.
+			\end{aligned}
+		\end{equation*}
+		Note they are as same as the definitions in Proposition \ref{prop:distrdecomp} for $K$. Moreover, when fix $x \in \Omega$ and let $E_x(R):=\{y \in \Omega| | K(x, y) \mid>R\}$, $\chi_{E_x(R)}(y)=\chi_{E(R)}(x, y)$. So we have
+		\begin{equation*}
+			\lambda_{G_R(x, \cdot)}(\beta)=\lambda_{K(x, \cdot)}(\beta+R),\quad \lambda_{G_R(\cdot, y)}(\alpha)=\lambda_{K(\cdot, y)}(\alpha+R)
+		\end{equation*}
+		Then because $r > 1$, it can get
+		\begin{equation*}
+			\begin{aligned}
+				\int_{\Omega}\left|G_R(x, y)\right| d y & =\int_0^{\infty} \lambda_{G_R(x, \cdot)}(\beta) d \beta \\
+				& =\int_0^{\infty} \lambda_{K(x, \cdot)}(\beta+R) d \beta=\int_R^{\infty} \lambda_{K(x, \cdot)}(\beta) d \beta \\
+				& \leq \int_R^{\infty} \beta^{-r} d \beta=\frac{1}{r-1} R^{1-r}<\infty
+			\end{aligned}
+		\end{equation*}
+		for \emph{a.e.} $x \in \Omega$ by the weak boundedness of $K(x,\cdot)$and similarly by the weak boundedness of $K(\cdot,y)$, 
+		\begin{equation*}
+			\int_{\Omega}\left|G_R(x, y)\right| d x \leq \frac{1}{r-1} R^{1-r}<\infty
+		\end{equation*}
+		\emph{a.e.} $y \in \Omega$. Then by setting $r = 1, p = q$ in Theorem \ref{thm:strongkernel}, we have for any any $f \in L^p(\Omega)$,
+		\begin{equation*}
+			\int_{\Omega}\left|G_R(x, y) f(y)\right| d y<\infty, \quad a.e. ~ x \in \Omega
+		\end{equation*}
+		Moreover, if define $T_{1,R} \colon L^p(\Omega) \sto \mathbb{M}(\Omega)$ by
+		\begin{equation*}
+			\left(T_{1, R} f\right)(x):=\int_{\Omega} G_R(x, y) f(y) d y,\quad a.e.~ x \in \Omega
+		\end{equation*}
+		then
+		\begin{equation*}
+			\left\|T_{1, R} f\right\|_{L^p(\Omega)} \leq \frac{1}{r-1} R^{1-r}\|f\|_{L^p(\Omega)},\quad \forall~f \in L^p(\Omega)
+		\end{equation*}
+		Next, for $H_R$,
+		\begin{equation*}
+			\lambda_{H_R(x, \cdot)}(\beta)= \begin{cases}\lambda_{K(x, \cdot)}(\beta), & 0<\beta<R , \\ 0, & \beta \geq R ,\end{cases}
+		\end{equation*}
+		When $p \neq 1$ ($p^\prime \neq \infty$ and $r < p^\prime$), for \emph{a.e.} $x \in \Omega$,
+		\begin{equation*}
+			\begin{aligned}
+				& \int_{\Omega}\left|H_R(x, y)\right|^{p^{\prime}} d y=p^{\prime} \int_0^{\infty} \beta^{p^{\prime}-1} \lambda_{H_R(x,)}(\beta) d \beta=p^{\prime} \int_0^R \beta^{p^{\prime}-1} \lambda_{K(x,)}(\beta) d \beta \\
+				& \leq p^{\prime} \int_0^R \beta^{p^{\prime}-1} \cdot \beta^{-r} d \beta=p^{\prime} \int_0^R \beta^{p^{\prime}-r-1} d \beta=\frac{p^{\prime}}{p^{\prime}-r} R^{p^{\prime}-r}=\frac{q}{r} R^{\frac{r}{q} p^{\prime}}<\infty
+			\end{aligned}
+		\end{equation*}
+		Therefore, for \emph{a.e.} $x \in \Omega$, $H_R(x, \cdot) \in L^{p^{\prime}}(\Omega)$ with
+		\begin{equation*}
+			H_R(x, \cdot) \in L^{p^{\prime}}(\Omega)
+		\end{equation*}
+		When $p = 1$ ($p^\prime = \infty$ and $q = r$), because $(x,y) \in \Omega \times \Omega$ with
+		\begin{equation*}
+			\abs{H_R(x,y)} \leq R
+		\end{equation*}
+		So $H_R(x, \cdot) \in L^{\infty}(\Omega)$ with
+		\begin{equation*}
+			\left\|H_R(x, \cdot)\right\|_{L^{\infty}(\Omega)} \leq R
+		\end{equation*}
+		Therefore, 
+		\begin{equation*}
+			\left\|H_R(x, \cdot)\right\|_{L^{p^{\prime}}(\Omega)} \leq\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}} R^{\frac{r}{q}}
+		\end{equation*}
+		And by H\"older's Inequality, for $f \in L^p(\Omega)$,
+		\begin{equation*}
+			\begin{aligned}
+				\int_{\Omega}\left|H_R(x, y) f(y)\right| d y & \leq\left\|H_R(x, \cdot)\right\|_{L^{p^{\prime}}(\Omega)}\|f\|_{L^p(\Omega)} \\
+				& \leq\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}} R^{\frac{r}{q}}\|f\|_{L^p(\Omega)}<\infty
+			\end{aligned}
+		\end{equation*}
+		So define $T_{2,R} \colon L^p(\Omega) \sto \mathbb{M}(\Omega)$ as
+		\begin{equation*}
+			\left(T_{2, R} f\right)(x):=\int_{\Omega} H_R(x, y) f(y) d y
+		\end{equation*}
+		and thus
+		\begin{equation*}
+			\left|\left(T_{2, R} f\right)(x)\right| \leq\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}} R^{\frac{r}{q}}\|f\|_{L^p(\Omega)},\quad a.e.~ x \in \Omega
+		\end{equation*}
+		and $T_{2,R}f \in L^\infty(\Omega)$ with
+		\begin{equation*}
+			\left\|T_{2, R} f\right\|_{L^{\infty}(\Omega)} \leq\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}} R^{\frac{r}{q}}\|f\|_{L^p(\Omega)}
+		\end{equation*}
+		Then we have for any $f \in L^p(\Omega)$
+		\begin{equation*}
+			\int_{\Omega}|K(x, y) f(y)| d y \leq \int_{\Omega}\left|G_R(x, y) f(y)\right| d y+\int_{\Omega}\left|H_R(x, y) f(y)\right| d y<\infty
+		\end{equation*}
+		which proves $(1)$. And so we have define $T \colon L^p(\Omega) \sto \mathbb{M}(\Omega)$ as
+		\begin{equation*}
+			(T f)(x):=\int_{\Omega} K(x, y) f(y) d y,\quad a.e.~ x \in \Omega
+		\end{equation*}
+		Moreover,
+		\begin{equation*}
+			T f=T_{1, R} f+T_{2, R} f \quad\left(\in L^p(\Omega)+L^{\infty}(\Omega)\right)
+		\end{equation*}
+
+		\item For $1<r<\infty, 1 \leq p<q<\infty, \frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1$, check $T$ is weak $(p,q)$-type.
+
+		\noindent Let $f \in L^p(\Omega)$ with $\|f\|_{L^p(\Omega)}=1$. For any $\alpha > 0$,
+		\begin{equation*}
+			\lambda_{T f}(\alpha) \leq \lambda_{T_{1, R} f}\left(\frac{\alpha}{2}\right)+\lambda_{T_{2, R} f}\left(\frac{\alpha}{2}\right)
+		\end{equation*}
+		with
+		\begin{equation*}
+			R:=\left(\frac{\alpha}{2}\right)^{\frac{q}{r}}\left(\frac{q}{r}\right)^{-\frac{q}{r p^{\prime}}}
+		\end{equation*}
+		Then by above
+		\begin{equation*}
+			\begin{aligned}
+				\left\|T_{2, R} f\right\|_{L^{\infty}(\Omega)} & \leq\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}} R^{\frac{r}{q}}\|f\|_{L^p(\Omega)}=\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}} R^{\frac{r}{q}} \\
+				& =\left(\frac{q}{r}\right)^{\frac{1}{p^{\prime}}}\left[\left(\frac{\alpha}{2}\right)^{\frac{q}{r}}\left(\frac{q}{r}\right)^{-\frac{q}{r p^{\prime}}}\right]^{\frac{r}{q}}=\frac{\alpha}{2}
+			\end{aligned}
+		\end{equation*}
+		Therefore, $\lambda_{T_{2, R} f}\left(\frac{\alpha}{2}\right)=0$.
+
+		\noindent Let $m_N$ be the Lebesgue measure. By Chebyshev’s Inequality,
+		\begin{equation*}
+			\begin{aligned}
+				\lambda_{T f}(\alpha) & \leq \lambda_{T_{1, R} f}\left(\frac{\alpha}{2}\right)+\lambda_{T_{2, R} f}\left(\frac{\alpha}{2}\right)=\lambda_{T_{1, R} f}\left(\frac{\alpha}{2}\right) \\
+				& =m_N\left(\left\{x \in \Omega| |\left(T_{1, R} f\right)(x) \left\lvert\,>\frac{\alpha}{2}\right.\right\}\right) \\
+				& =m_N\left(\left\{\left.x \in \Omega| |\left(T_{1, R} f\right)(x)\right|^p>\left(\frac{\alpha}{2}\right)^p\right\}\right) \\
+				& \leq\left(\frac{2}{\alpha}\right)^p\left\|T_{1, R} f\right\|_{L^p(\Omega)}^p \leq\left(\frac{2}{\alpha}\right)^p\left(\frac{1}{r-1} R^{1-r}\right)^p\|f\|_{L^p(\Omega)}^p \\
+				& =\left(\frac{2}{\alpha}\right)^p\left(\frac{1}{r-1} R^{1-r}\right)^p \\
+				& =\left(\frac{2}{\alpha}\right)^p \frac{1}{(r-1)^p}\left[\left(\frac{\alpha}{2}\right)^{\frac{q}{r}}\left(\frac{q}{r}\right)^{-\frac{q}{r p^{\prime}}}\right]^{p(1-r)} \\
+				& =C_p^q \alpha^{-p+\frac{q p(1-r)}{r}}=C_p^q \alpha^{-q}
+			\end{aligned}
+		\end{equation*}
+		where
+		\begin{equation*}
+			C_p:=\left[\frac{1}{(r-1)^p} 2^{p-\frac{q p(1-r)}{r}}\left(\frac{q}{r}\right)^{-\frac{q p(1-r)}{r p^{\prime}}}\right]^{\frac{1}{q}} > 0
+		\end{equation*}
+		and the final equality is because
+		\begin{equation*}
+			-p+\frac{q p(1-r)}{r}=-p q\left(\frac{1}{q}+1-\frac{1}{r}\right)=-p q \cdot \frac{1}{p}=-q
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\sup _{\alpha>0}\left\{\alpha^q \lambda_{T f}(\alpha)\right\} \leq C_p^q<\infty
+		\end{equation*}
+		and $T_f \in L^{q,\infty}(\Omega)$ with
+		\begin{equation*}
+			[T f]_{L^{q, \infty}(\Omega)}=\left[\sup _{\alpha>0}\left\{\alpha^q \lambda_{T f}(\alpha)\right\}\right]^{\frac{1}{q}} \leq C_p
+		\end{equation*}
+		So it proves (i)
+
+		\item To show the strong type, we need Marcinkierwicz Interpolation Theorem. When $p \neq 1$,
+		\begin{equation*}
+			1<p<q<\infty, \quad \frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1, \quad 1<p<r^{\prime}<\infty
+		\end{equation*}
+		Choose $p_0,p_1$ such that
+		\begin{equation*}
+			1<p_0<p<p_1<r^{\prime}<\infty
+		\end{equation*}
+		and define $t \in (0,1)$ such that
+		\begin{equation*}
+			\frac{1}{p}=\frac{1-t}{p_0}+\frac{t}{p_1}
+		\end{equation*}
+		then
+		\begin{equation*}
+			\frac{1}{q}=\frac{1}{p}+\frac{1}{r}-1=\frac{1-t}{p_0}+\frac{t}{p_1}+\frac{1}{r}-1
+		\end{equation*}
+		Therefore, define
+		\begin{equation*}
+			\frac{1}{q_0}=\frac{1}{p_0}+\frac{1}{r}-1, \quad \frac{1}{q_1}=\frac{1}{p_1}+\frac{1}{r}-1
+		\end{equation*}
+		and thus
+		\begin{equation*}
+			1<p_0<q_0<\infty, \quad 1<p_1<q_1<\infty, \quad q_0<q_1
+		\end{equation*}
+		Moreover,
+		\begin{equation*}
+			\frac{1}{q}=\frac{1-t}{q_0}+\frac{t}{q_1}
+		\end{equation*}
+		By (\RNum{2}), $T$ is both weak $(p_0,q_0)$-type and weak $(p_1,q_1)$-type. So by Marcinkierwicz Interpolation Theorem, $T\left(L^p(\Omega)\right) \subset L^q(\Omega)$ with
+		\begin{equation*}
+			\|T f\|_{L^q(\Omega)} \leq C\|f\|_{L^p(\Omega)}
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}[Hardy-Littlewood-Sobolev's Inequality]\label{thm:hlsineq}
+	Let $0 < a < N$ and $p,q$ satisfy
+	\begin{equation*}
+		1 \leq p<q<\infty, \quad \frac{1}{q}=\frac{1}{p}+\frac{a}{N}-1
+	\end{equation*}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For $f \in L^p(\R^N)$,
+		\begin{equation*}
+			\int_{\mathbb{R}^N} \frac{|f(y)|}{|x-y|^a} d y<\infty,\quad a.e.~x \in \R^N
+		\end{equation*}
+
+		\item Assume $p \neq 1$ ($1 < p < q <\infty$). Define $T_a \colon L^p(\R^N) \sto \mathbb{M}(\R^N)$ as
+		\begin{equation*}
+			\left(T_a f\right)(x):=\left(|\cdot|^{-a} * f\right)(x)=\int_{\mathbb{R}^N} \frac{f(y)}{|x-y|^a} d y
+		\end{equation*}
+		Then we have $T_a\left(L^p\left(\mathbb{R}^N\right)\right) \subset L^q\left(\mathbb{R}^N\right)$ with a constant $C>0$ such that
+		\begin{equation*}
+			\left\|T_a f\right\|_{L^q\left(\mathbb{R}^N\right)}=\left\||\cdot|^{-a} * f\right\|_{L^q\left(\mathbb{R}^N\right)} \leq C\|f\|_{L^p\left(\mathbb{R}^N\right)}
+		\end{equation*}
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	For $0 < a < N$ and $1 \leq q < \infty$,
+	\begin{equation*}
+		\frac{1}{q}=\frac{1}{p}+\frac{a}{N}-1=\frac{1}{p}+\frac{1}{N / a}-1
+	\end{equation*}
+	Let $K(x,y) \defeq \abs{x - y}^{-a}$. So the idea is to apply Theorem \ref{thm:weakkernel} by setting $\Omega = \R^N$ and $r = \frac{N}{a} > 1$.
+
+	\noindent \textbf{Check:} There is an $M > 0$ such that
+	\begin{itemize}
+		\item for any $x \in \R^N$, $[K(x, \cdot)]_{L^{\frac{N}{a}, \infty}\left(\mathbb{R}^N\right)} \leq M$, \emph{i.e.} $K(x, \cdot) \in L^{\frac{N}{a}, \infty}\left(\mathbb{R}^N\right)$,
+		\item for any $y \in \R^N$, $[K(\cdot,y)]_{L^{\frac{N}{a}, \infty}\left(\mathbb{R}^N\right)} \leq M$, \emph{i.e.} $K(\cdot,y) \in L^{\frac{N}{a}, \infty}\left(\mathbb{R}^N\right)$.
+	\end{itemize}
+	For any $a > 0$ and $x \in \R^N$, 
+	\begin{equation*}
+		\begin{aligned}
+			\alpha^{\frac{N}{a}} \lambda_{K(x, \cdot)}(\alpha) & =\alpha^{\frac{N}{a}} m_N\left(\left\{y \in \mathbb{R}^N| | K(x, y) \mid>\alpha\right\}\right) \\
+			& =\alpha^{\frac{N}{a}} m_N\left(\left\{y \in \mathbb{R}^N| | x-\left.y\right|^{-a}>\alpha\right\}\right) \\
+			& =\alpha^{\frac{N}{a}} m_N\left(\left\{y \in \mathbb{R}^N| | x-y \left\lvert\,<\alpha^{-\frac{1}{a}}\right.\right\}\right) \\
+			& =\alpha^{\frac{N}{a}} v_N \cdot\left(\alpha^{-\frac{1}{a}}\right)^N=v_N
+		\end{aligned}
+	\end{equation*}
+	where $v_N$ is the volume of unit ball in $\R^N$. Therefore, $K(x, \cdot) \in L^{\frac{N}{a}, \infty}\left(\mathbb{R}^N\right)$ with
+	\begin{equation*}
+		[K(x, \cdot)]_{L^{\frac{N}{a}, \infty}\left(\mathbb{R}^N\right)}=\left[\sup _{\alpha>0}\left\{\alpha^{\frac{N}{a}} \lambda_{K(x, \cdot)}(\alpha)\right\}\right]^{\frac{a}{N}}=v_N^{\frac{a}{N}}
+	\end{equation*}
+	And it is similar for $K(\cdot,y)$. 
+	\noindent Therefore, by Theorem \ref{thm:weakkernel}, we have the result.
+\end{proof}

@@ -1,0 +1,2274 @@
+\chapter{Curvature and Jacobian Field}
+
+\section{Riemannian Curvatures}
+In this section, let $(M,g)$ be a Riemannian manifold.
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Bianchi identities:}} Let $R$ be the curvature tensor, \emph{i.e.} a $(1,3)$-tensor.
+	\begin{prop}
+		For any $X,Y,Z,W \in \Gamma(TM)$ and torsion-free connection $\nabla$,
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $R(X,Y)Z = -R(Y,X)Z$.
+			\item (first Bianchi identity)
+			\begin{equation*}
+				R(X,Y)Z + R(Y,Z)X + R(Z,X)Y = 0
+			\end{equation*}
+			\item (second Bianchi identity)
+			\begin{equation*}
+				(\nabla_XR)(Y,Z)W+(\nabla_YR)(Z,X)W+(\nabla_ZR)(X,Y)W = 0
+			\end{equation*}
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		Denote
+		\begin{equation*}
+			\mathfrak{S}T(X,Y,Z) = T(X,Y,Z) + T(Y,Z,X) + T(Z,X,Y)
+		\end{equation*}
+		So we need to prove
+		\begin{equation*}
+			\mathfrak{S}R(X,Y)Z = 0,\quad \mathfrak{S}\nabla_XR(Y,Z)W = 0
+		\end{equation*}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item has been obtained by definition.
+
+			\item By the definition of $R$,
+			\begin{equation*}
+				\begin{aligned}
+					\mathfrak{S}R(X,Y)Z &= \mathfrak{S}\bc{\nabla_X\nabla_YZ - \nabla_Y\nabla_XZ -\nabla_{[X,Y]}Z} \\
+					&= \mathfrak{S}\bc{\nabla_X\nabla_YZ} - \mathfrak{S}\bc{\nabla_Y\nabla_XZ} -\mathfrak{S}\bc{\nabla_{[X,Y]}Z} \\
+					&= \mathfrak{S}\bc{\nabla_Z\nabla_XY} - \mathfrak{S}\bc{\nabla_Z\nabla_YX} -\mathfrak{S}\bc{\nabla_{[X,Y]}Z} \\
+					&= \mathfrak{S}\bc{\nabla_Z[X,Y]}-\mathfrak{S}\bc{\nabla_{[X,Y]}Z} \\
+					&= \mathfrak{S}\bc{[Z,[X,Y]]} = 0
+				\end{aligned}
+			\end{equation*}
+			because of Jacobi's identity.
+
+			\item First, formally
+			\begin{equation*}
+				\begin{aligned}
+					[\nabla_X,[\nabla_Y,\nabla_Z]] &= [\nabla_X,\nabla_Y\nabla_Z-\nabla_Z\nabla_Y] \\
+					&= \nabla_X(\nabla_Y\nabla_Z-\nabla_Z\nabla_Y)-(\nabla_Y\nabla_Z-\nabla_Z\nabla_Y)\nabla_X\\
+					&= \nabla_X\nabla_Y\nabla_Z - \nabla_X\nabla_Z\nabla_Y - \nabla_Y\nabla_Z\nabla_X + \nabla_Z\nabla_Y\nabla_X
+				\end{aligned}
+			\end{equation*}
+			Therefore, we have
+			\begin{equation*}
+				\begin{aligned}
+					\mathfrak{S}[\nabla_X,[\nabla_Y,\nabla_Z]] &= \mathfrak{S}(\nabla_X\nabla_Y\nabla_Z) - \mathfrak{S}(\nabla_X\nabla_Z\nabla_Y) - \mathfrak{S}(\nabla_Y\nabla_Z\nabla_X) + \mathfrak{S}(\nabla_Z\nabla_Y\nabla_X)\\
+					&= \mathfrak{S}(\nabla_X\nabla_Y\nabla_Z) - \mathfrak{S}(\nabla_X\nabla_Z\nabla_Y) - \mathfrak{S}(\nabla_X\nabla_Y\nabla_Z) + \mathfrak{S}(\nabla_X\nabla_Z\nabla_Y)\\
+					&=0
+				\end{aligned}
+			\end{equation*}
+			Next, by the following remark,
+			\begin{equation*}
+				\begin{aligned}
+					(\nabla_XR)(Y,Z)W &= \nabla_X(R(Y,Z)W) -R(\nabla_XY,Z)W -R(Y,\nabla_XZ)W-R(Y,Z)\nabla_XW\\
+					&= [\nabla_X,R(Y,Z)]W-R(\nabla_XY,Z)W -R(Y,\nabla_XZ)W
+				\end{aligned}
+			\end{equation*}
+			Besides, formally
+			\begin{equation*}
+				\begin{aligned}
+					R(X,Y)Z &= \nabla_X\nabla_YZ - \nabla_Y\nabla_XZ -\nabla_{[X,Y]}Z \\
+					&= [\nabla_X,\nabla_Y]Z - \nabla_{[X,Y]}Z
+				\end{aligned}
+			\end{equation*}
+			So
+			\begin{equation*}
+				\begin{aligned}
+					\mathfrak{S}(\nabla_XR)(Y,Z)W &= \mathfrak{S}[\nabla_X,R(Y,Z)]W-\mathfrak{S}R(\nabla_XY,Z)W -\mathfrak{S}R(Y,\nabla_XZ)W \\
+					&= \mathfrak{S}[\nabla_X,[\nabla_Y,\nabla_Z]]W - \mathfrak{S}[\nabla_X,\nabla_{[Y,Z]}]W \\
+					&\quad - \mathfrak{S}R(\nabla_XY,Z)W -\mathfrak{S}R(Y,\nabla_XZ)W \\
+					&=- \mathfrak{S}[\nabla_X,\nabla_{[Y,Z]}]W- \mathfrak{S}R(\nabla_XY,Z)W +\mathfrak{S}R(\nabla_XZ,Y)W \\
+					&= - \mathfrak{S}[\nabla_X,\nabla_{[Y,Z]}]W- \mathfrak{S}R(\nabla_XY,Z)W +\mathfrak{S}R(\nabla_YX,Z)W \\
+					&= - \mathfrak{S}[\nabla_X,\nabla_{[Y,Z]}]W - \mathfrak{S}R([X,Y],Z)W \\
+					&= - \mathfrak{S}[\nabla_X,\nabla_{[Y,Z]}]W - \mathfrak{S}[\nabla_{[X,Y]},\nabla_Z]W+ \mathfrak{S}\nabla_{[[X,Y],Z]}W \\
+					&= \mathfrak{S}[\nabla_{[Y,Z]},\nabla_X]W - \mathfrak{S}[\nabla_{[Y,Z]},\nabla_X]W \\
+					&= 0
+				\end{aligned}
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+	\begin{rmk}
+		Locally, $R(\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j})\frac{\partial}{\partial x^l} = R^k_{lij}\frac{\partial}{\partial x^k}$ and
+		\begin{equation*}
+			R^k_{lij} = \frac{\partial \Gamma^k_{lj}}{\partial x^i} - \frac{\partial \Gamma^k_{li}}{\partial x^j} + \Gamma^h_{jl}\Gamma^k_{ih}-\Gamma^h_{il}\Gamma^k_{jh}
+		\end{equation*}
+		And above three properties become
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $R^k_{lij} = -R^k_{lji}$.
+			\item $R^k_{lij}+R^k_{ijl}+R^k_{jli}=0$.
+			\item $R^k_{lij;h}+R^k_{ljh;i}+R^k_{lhi;j}=0$.
+		\end{enumerate}
+	\end{rmk}
+	\begin{rmk}
+		Because $R$ is a $(1,3)$-tensor, for any $\omega \in \Gamma(T^*M)$ and $X,Y,Z \in \Gamma(TM)$,
+		\begin{equation*}
+			\begin{aligned}
+				(\nabla_XR)(\omega,X,Y,Z) &= X(R(\omega,X,Y,Z)) - R(\nabla_X\omega,X,Y,Z)- R(\omega,\nabla_XX,Y,Z) \\
+				&\quad- R(\omega,X,\nabla_XY,Z)- R(\omega,X,Y,\nabla_XZ)
+			\end{aligned}
+		\end{equation*}
+		Besides,
+		\begin{equation*}
+			\begin{aligned}
+				R(\nabla_X\omega,X,Y,Z) &=\nabla_X\omega(R(X,Y)Z) \\
+				&=X(R(\omega,X,Y,Z)) - \omega(\nabla_X(R(X,Y)Z))
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\begin{aligned}
+			  	(\nabla_XR)(\omega,X,Y,Z) &= \omega((\nabla_XR)(X,Y)Z) \\
+			  	&= \omega(\nabla_X(R(X,Y)Z)) - \omega(R(\nabla_XX,Y)Z) \\
+				&\quad- \omega(R(X,\nabla_XY)Z)- \omega(R(X,Y)\nabla_XZ)
+			\end{aligned}  
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			(\nabla_XR)(X,Y)Z = \nabla_X(R(X,Y)Z)-R(\nabla_XX,Y)Z-R(X,\nabla_XY)Z-R(X,Y)\nabla_XZ
+		\end{equation*}
+	\end{rmk}
+
+	\item \emph{\textbf{Riemannian curvature:}} For any $X,Y,Z,W \in \Gamma(TM)$, let
+	\begin{equation*}
+		R(W,Z,X,Y) \defeq \inn{R(X,Y)Z,W} \in C^\infty(M)
+	\end{equation*}
+	So $R$ is a $(0,4)$-tensor, called the Riemannian curvature tensor.
+	\begin{prop}\label{prop:symofriemcur}
+		Let $\nabla$ be the Levi-Civita connection.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $R(X,Y,W,Z) = -R(X,Y,Z,W)$.
+			\item $R(X,Y,W,Z) = -R(Y,X,W,Z)$.
+			\item $\mathfrak{S}_{YZW}R(X,Y,Z,W) = 0$.
+			\item $R(X,Y,Z,W) = R(Z,W,X,Y)$.
+			\item $\mathfrak{S}_{ZWV}(\nabla R)(X,Y,Z,W,V) = 0$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item is clear by the anti-symmetry of curvature tensor.
+
+			\item First, by the compatibility of $g$,
+			\begin{equation*}
+				\begin{aligned}
+					\inn{\nabla_W\nabla_ZY,X} &= W \inn{\nabla_ZY,X} - \inn{\nabla_ZY,\nabla_W X}\\
+					&= W \bc{Z\inn{Y,X} - \inn{Y,\nabla_ZX}}- \inn{\nabla_ZY,\nabla_W X}\\
+					&=W(Z(\inn{Y,X})) - \inn{\nabla_WY,\nabla_ZX}- \inn{Y,\nabla_W\nabla_ZX}- \inn{\nabla_ZY,\nabla_W X}
+				\end{aligned}
+			\end{equation*}
+			and similarly,
+			\begin{equation*}
+				\inn{\nabla_Z\nabla_WY,X} = Z(W(\inn{Y,X})) - \inn{\nabla_ZY,\nabla_WX}- \inn{Y,\nabla_Z\nabla_WX}- \inn{\nabla_WY,\nabla_Z X}
+			\end{equation*}
+			Also, we have
+			\begin{equation*}
+				\begin{aligned}
+					\inn{\nabla_{[W,Z]}Y,X}&= [W,Z]\inn{Y,X} - \inn{Y,\nabla_{[W,Z]}X} \\
+					&=W(Z(\inn{Y,X})) - Z(W(\inn{Y,X}))- \inn{Y,\nabla_{[W,Z]}X}
+				\end{aligned}
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				\begin{aligned}
+					R(X,Y,W,Z) &= \inn{R(W,Z)Y,X} \\
+					&= \inn{\nabla_W\nabla_ZY,X} - \inn{\nabla_Z\nabla_WY,X} - \inn{\nabla_{[W,Z]}Y,X} \\
+					&= -\inn{Y,R(W,Z)X} = -\inn{R(W,Z)X,Y}\\
+					&=-R(Y,X,W,Z)
+				\end{aligned}
+			\end{equation*}
+
+			\item is clearly by the first Bianchi identity of curvature tensor.
+
+			\item In fact, any $(0,4)$-tensor satisfying $(1)-(3)$ has the property $(4)$. Therefore, it is sufficient to prove this general version. First, by $(3)$,
+			\begin{equation*}
+				R(W,Z,X,Y) = -R(W,X,Y,Z)-R(W,Y,Z,X)
+			\end{equation*}
+			and by $(1),(2),(3)$,
+			\begin{equation*}
+				\begin{aligned}
+					R(W,Z,X,Y) &= -R(Z,W,X,Y) \\
+					&=R(Z,X,Y,W) + R(Z,Y,W,X) \\
+					&= -R(X,Z,Y,W) - R(Y,Z,W,X)
+				\end{aligned}
+			\end{equation*}
+			Besides, 
+			\begin{equation*}
+				\begin{aligned}
+					-R(W,X,Y,Z)-R(X,Z,Y,W) & =  R(X,W,Y,Z) + R(X,Z,W,Y) \\
+					&= - R(X,Y,Z,W) = R(Y,X,Z,W)
+				\end{aligned}
+			\end{equation*}
+			and
+			\begin{equation*}
+				\begin{aligned}
+					-R(W,Y,Z,X)-R(Y,Z,W,X) &= R(Y,W,Z,X)+R(Y,Z,X,W) \\
+					&= -R(Y,X,W,Z) = R(Y,X,Z,W)
+				\end{aligned}
+			\end{equation*}
+			Combining these, we have
+			\begin{equation*}
+				R(W,Z,X,Y) = R(Y,X,Z,W)~\Rightarrow~R(Z,W,X,Y) = R(X,Y,Z,W)
+			\end{equation*}
+
+			\item First,
+			\begin{equation*}
+				\begin{aligned}
+					(\nabla R)(W,Z,X,Y,V) &= (\nabla_VR)(W,Z,X,Y) \\
+					&= V(R(W,Z,X,Y)) - R(\nabla_VW,Z,X,Y) - R(W,\nabla_VZ,X,Y) \\
+					&\quad - R(W,Z,\nabla_VX,Y) - R(W,Z,X,\nabla_VY) \\
+					&= V\inn{R(X,Y)Z,W} - \inn{R(X,Y)Z,\nabla_VW}-\inn{R(X,Y)\nabla_VZ,W}\\
+					&\quad -\inn{R(\nabla_VX,Y)Z,W}-\inn{R(X,\nabla_VY)Z,W}
+				\end{aligned}
+			\end{equation*}
+			Because
+			\begin{equation*}
+				(\nabla_VR)(X,Y)Z = \nabla_X(R(X,Y)Z)-R(\nabla_XX,Y)Z-R(X,\nabla_XY)Z-R(X,Y)\nabla_XZ
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				\begin{aligned}
+					(\nabla R)(W,Z,X,Y,V) &= V\inn{R(X,Y)Z,W} - \inn{R(X,Y)Z,\nabla_VW} \\
+					&\quad+ \inn{(\nabla_VR)(X,Y)Z,W} - \inn{\nabla_X(R(X,Y)Z),W}\\
+					&=\inn{(\nabla_VR)(X,Y)Z,W}
+				\end{aligned}
+			\end{equation*}
+			Therefore, by the second Bianchi identity,
+			\begin{equation*}
+				\mathfrak{S}_{XYV}(\nabla R)(W,Z,X,Y,V) = 0 \qedhere
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+	\begin{rmk}
+		In a local chart $(U,x)$, let $R =R_{klij}dx^k\otimes dx^l \otimes dx^i \otimes dx^j$. Then
+		\begin{equation*}
+			\begin{aligned}
+				R_{klij} &= R\bc{\frac{\partial}{\partial x^k},\frac{\partial}{\partial x^l},\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}} \\
+				&= \inn{R\bc{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^l},\frac{\partial}{\partial x^k}}\\
+				&=\inn{R^m_{lij}\frac{\partial}{\partial x^m},\frac{\partial}{\partial x^k}} \\
+				&= g_{km}R^m_{lij}
+			\end{aligned}
+		\end{equation*}
+		So $(1),(2),(4)$ become
+		\begin{equation*}
+			R_{klij} = -R_{lkij} = -R_{klji} = R_{ijkl}
+		\end{equation*}
+		and $(3),(5)$ become
+		\begin{equation*}
+			\mathfrak{S}_{lij}R_{klij} = 0,\quad \mathfrak{S}_{ijh}R_{klij;h} = 0
+		\end{equation*}
+	\end{rmk}
+
+	\item \emph{\textbf{Sectional curvature:}} The next problem is how many parameters $R_{klij}$ can determine the Riemannian curvature $R$.
+	\begin{prop}
+		Suppose $R_1$ and $R_2$ are two $(0,4)$-tensors satisfying $(1)-(3)$ in \textbf{Proposition} \ref{prop:symofriemcur}. If for any $X,Y \in \Gamma(TM)$, then
+		\begin{equation*}
+			R_1 = R_2
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		Let $R = R_1-R_2$. Then $R$ satisfies $(1)-(3)$ and $(4)$ by \textbf{Proposition} \ref{prop:symofriemcur}. It is sufficient to show $R = 0$ when $R(X,Y,X,Y)=0$ for any $X,Y \in \Gamma(TM)$. First, by$(4)$,
+		\begin{equation*}
+			\begin{aligned}
+				0 = R(X,Y+W,X,Y+W) &= R(X,Y,X,W) + R(X,W,X,Y) \\
+				&= 2R(X,Y,X,W)
+			\end{aligned}
+		\end{equation*}
+		So $R(X,Y,X,W) = 0$. Next,
+		\begin{equation*}
+			\begin{aligned}
+				0=R(X+Z,Y,X+Z,W) &= R(X,Y,Z,W)+R(Z,Y,X,W) \\
+				&= -R(X,Z,W,Y)-R(X,W,Y,Z)+R(Z,Y,X,W) \\
+				&= -R(X,Z,W,Y)+2R(Z,Y,X,W)
+			\end{aligned}
+		\end{equation*}
+		So $2R(Z,Y,X,W) = R(X,Z,W,Y)$. And similarly by interchanging $Z$ and $W$,
+		\begin{equation*}
+			2R(W,Y,X,Z) = R(X,W,Z,Y)
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			\begin{aligned}
+				2R(Z,Y,X,W) &= 2R(X,W,Z,Y) = 4R(W,Y,X,Z) \\
+				&= 4R(X,Z,W,Y) = 8R(Z,Y,X,W)
+			\end{aligned}
+		\end{equation*}
+		So $R(Z,Y,X,W) =0$.
+	\end{proof}
+	\begin{rmk}
+		In particular, if let $R$ be the Riemannian curvature, then $R$ is determined by
+		\begin{equation*}
+			\bb{R(X,Y,X,Y)\colon X,Y \in \Gamma(TM)}
+		\end{equation*}
+		Note that if $X,Y$ are linearly dependent, then $R(X,Y,X,Y) = 0$ by the anti-symmetry. Besides, if
+		\begin{equation*}
+			\left\{
+				\begin{aligned}
+					X^\prime & = aX+bY,\\
+					Y^\prime & = cX+dY
+				\end{aligned}
+			\right.
+		\end{equation*}
+		then
+		\begin{equation*}
+			R(X^\prime,Y^\prime,X^\prime,Y^\prime) = \det\bc{
+				\begin{array}{cc}
+					a&b\\
+					c&d
+				\end{array}
+			}^2R(X,Y,X,Y)
+		\end{equation*}
+	\end{rmk}
+	Consider a $(0,4)$-tensor $G$ given by
+	\begin{equation*}
+		G(X,Y,Z,W) \defeq g(X,Z)g(Y,W) - g(X,W)g(Y,Z)
+	\end{equation*}
+	it follows that
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $G(X,Y,Z,W) = -G(X,Y,W,Z)$.
+		\item $G(X,Y,Z,W) = -G(Y,X,W,Z)$.
+		\item $\mathfrak{S}_{YZW}G(X,Y,Z,W) = 0$.
+		\item $G(X,Y,Z,W) = G(Z,W,X,Y)$.
+	\end{enumerate}
+	By above proposition, $G(X,Y,Z,W)$ only dependents on
+	\begin{equation*}
+		G(X,Y,X,Y) = \norm{X}^2\norm{Y}^2 - \inn{X,Y}^2
+	\end{equation*}
+	\begin{defn}
+		At $p \in M$, let $X_p,Y_p \in T_pM$ linearly independent.
+		\begin{equation*}
+			K(X_p,Y_p) = \frac{R_p(X_p,Y_p,X_p,Y_p)}{G_p(X_p,Y_p,X_p,Y_p)}
+		\end{equation*}
+		Then $K_p$ only dependents on a two dimensional subspace $\Pi_p = \op{span}(X_p,Y_p) \subset T_pM$, called the sectional curvature of $M$ at $p$ with respect to $\Pi_p$, denoted by $K(\Pi_p)$.
+	\end{defn}
+	\begin{prop}
+		For $\Pi_p = \op{span}(X_p,Y_p) \subset T_pM$, let $\Theta \subset \Pi_p$ such that $\exp_p \colon \Theta \sto \exp_p(\Theta) \subset M$ is a diffeomorphism. Let $i \colon \exp_p(\Theta) \hookrightarrow M$ be an inclusion and $\bar{R}$ be the curvature tensor of $\exp_p(\Theta)$ with respect to $i^*g$. Then
+		\begin{equation*}
+			\bar{R}(X_p,Y_p,X_p,Y_p) = R(X_p,Y_p,X_p,Y_p)
+		\end{equation*}
+		In particular, $K(\Pi_p)$ is the Gaussian curvature.
+	\end{prop}
+
+	\begin{defn}
+		A Riemannian manifold $(M,g)$ is said to have constant (sectional) curvature if $K(\Pi_p)$ is constant for all $p$ and $\Pi_p$.
+	\end{defn}
+
+	\begin{prop}
+		$(M,g)$ has constant curvature $k$ if and only if $R=kG$.
+	\end{prop}
+	\begin{proof}
+		Assume for any $p$ and $X_p,Y_p$
+		\begin{equation*}
+			R_p(X_p,Y_p,X_p,Y_p) = kG_p(X_p,Y_p,X_p,Y_p)
+		\end{equation*}
+		If defines a $(0,4)$-tensor $S = R - kG$, then $S$ satisfied the conditions $(1)-(3)$ in \textbf{Proposition} \ref{prop:symofriemcur} and
+		\begin{equation*}
+			S(X,Y,X,Y) = 0,\quad X,Y \in \Gamma(TM)
+		\end{equation*}
+		So $S=0$.
+	\end{proof}
+
+	\begin{exam}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Euclidean space: For $\R^n$, because the curvature tensor is $0$, the Riemannian curvature tensor $R \equiv 0$. So it has constant sectional curvature $0$.
+
+			\item Sphere: For $\Sp^n$ with the induced metric, we have already obtained
+			\begin{equation*}
+				R(X,Y)Z = \langle Y, Z\rangle X-\langle X, Z\rangle Y
+			\end{equation*}
+			It follows that the sectional curvature satisfies
+			\begin{equation*}
+				\begin{aligned}
+					K(X,Y) &= \frac{\inn{R(X,Y)Y,X}}{G(X,Y,X,Y)} \\
+					&= \frac{\inn{\langle Y, Y\rangle X-\langle X, Y\rangle Y,X}}{\norm{X}^2\norm{Y}^2 - \inn{X,Y}^2} \\
+					&= 1
+				\end{aligned}
+			\end{equation*}
+			for any $X,Y$. So $\Sp^n$ has the constant sectional curvature $1$.
+
+			\item Hyperbolic space: We have already obtained
+			\begin{equation*}
+				R_{l i j}^k = \frac{1}{\bc{x^n}^2}\bc{\delta^k_j\delta_{il}-\delta^k_i\delta_{lj}},\quad g_{ij} = \frac{1}{\bc{x^n}^2}\delta_{ij}
+			\end{equation*}
+			Therefore,
+			\begin{equation*}
+				\begin{aligned}
+					R_{klij} &= g_{km}R^m_{lij} \\
+					&= \frac{1}{\bc{x^n}^4}\delta_{km}\bc{\delta^m_j\delta_{il}-\delta^m_i\delta_{lj}} \\
+					&= \frac{1}{\bc{x^n}^4}\bc{\delta_{kj}\delta_{il}-\delta_{ki}\delta_{jl}}
+				\end{aligned}
+			\end{equation*}
+			and
+			\begin{equation*}
+				\begin{aligned}
+					G_{klij} &= G\bc{\frac{\partial}{\partial x^k},\frac{\partial}{\partial x^l},\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}} \\
+					&= g_{ki}g_{lj} -g_{kj}g_{li} \\
+					&= \frac{1}{\bc{x^n}^4}\bc{\delta_{ki}\delta_{lj} - \delta_{kj}\delta_{li}}
+				\end{aligned}
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				R = -G
+			\end{equation*}
+			So the hyperbolic space $\mathbb{H}^n$ has the constant sectional curvature $-1$.
+		\end{enumerate}
+	\end{exam}
+
+	\item \emph{\textbf{Ricci curvature:}} For $Y,Z \in \Gamma(TM)$, $R(-,Y,-,Z) = R(Y,-,Z,-)$ is a $(0,2)$-tensor and let
+	\begin{equation*}
+		\op{Ric}(Y,Z)\defeq \op{tr}R(-,Y,-,Z) = \op{tr}R(Y,-,Z,-)
+	\end{equation*}
+	Locally, in a chart $(U,x)$,
+	\begin{equation*}
+		\op{Ric}_{pq} = \op{Ric}\bc{\frac{\partial}{\partial x^p},\frac{\partial}{\partial x^q}} = g^{ij}R_{ipjq}
+	\end{equation*}
+	Besides, note that $\op{tr}(R(-,Y,-,Z)) = \op{tr}(X \mapsto \sharp R(X,Y,-,Z))$ and
+	\begin{equation*}
+		\begin{aligned}
+			g(\sharp R(X,Y,-,Z),W) &= R(X,Y,W,Z) \\
+			&= R(W,Z,X,Y)\\
+			&= \inn{R(X,Y)Z,W}
+		\end{aligned}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\sharp R(X,Y,-,Z) = R(X,Y)Z ~\Rightarrow~ \op{Ric}(Y,Z) = \op{tr}(X \mapsto R(X,Y)Z)
+	\end{equation*}
+	Locally,
+	\begin{equation*}
+		\op{Ric}_{pq} = \sum_jR^j_{pjq}
+	\end{equation*}
+	Moreover, by above $\bb{\op{Ric}(X,Y)\colon X,Y \in \Gamma(TM)}$ is determined by $\bb{\op{Ric}(X,X)\colon X \in \Gamma(TM)}$.
+	\begin{defn}
+	 	For any $p$ and $X_p \in T_pM$,
+	 	\begin{equation*}
+	 		\op{Ric}(X_p) \defeq \op{Ric}_p(X_p,X_p)
+	 	\end{equation*}
+	 	is called the Ricci curvature, also we call $\op{Ric}(X,Y)$ the Ricci curvature tensor.
+	\end{defn}
+	\begin{rmk}
+		Choose an $X_p \in T_pM$ with $\norm{X_p} =1$ and an orthonormal basis $\bb{e_i}$ with $e_1 = X_p$, then
+		\begin{equation*}
+			\begin{aligned}
+				\op{Ric}(X_p,X_P) &= \sum_{i=2}^n R(e_i,X_p,e_i,X_p)\\
+				&= \sum_{i=2}^n K(e_i,X_p)
+			\end{aligned}
+		\end{equation*}
+	\end{rmk}
+	\begin{rmk}
+		A Riemannian manifold $(M,g)$ is called an Einstein manifold with Einstein constant $k$ if
+		\begin{equation*}
+			\op{Ric}(X,X) = kg(X,X),\quad \forall~X \in \Gamma(TM)
+		\end{equation*}
+	\end{rmk}
+	\begin{thm}[Schur]
+		Let $(M,g)$ be a Riemannian manifold with $m = \op{dim}M \geq 3$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $K(\Pi_p) = f(p)$ for all $\Pi_p \subset T_pM$, where $f(p)$ only dependents on $p$, then $f(p) \equiv const.$ for all $p \in M$.
+			\item If $\op{Ric}(X_p,X_p) = f(p)g(X_p,X_p)$ for all $X_p \in T_pM$, then $f(p) \equiv const.$.
+		\end{enumerate}
+	\end{thm}
+	\begin{proof}
+		By above remark, $(2)$ implies $(1)$. So it is sufficient to prove $(2)$. Let $(U,x)$ be a normal chart ($g_{ij}(p)=\delta_{ij}$) and suppose
+		\begin{equation*}
+			\op{Ric} = fg ~\Rightarrow~ \op{Ric}_{kl} = fg_{kl}
+		\end{equation*}
+		Then for any $h \in \bb{1,2,\cdots,m}$,
+		\begin{equation*}
+			\begin{aligned}
+				\op{Ric}_{kl;h} = (fg_{kl})_{;h} = f_{,h}g_{kl}+fg_{kl;h} = f_{,h}g_{kl}
+			\end{aligned}
+		\end{equation*}
+		On the other hand, by the contraction property and $g^{ij}_{;h}=0$
+		\begin{equation*}
+			\op{Ric}_{kl;h} =\bc{g^{ij}R_{ikjl}}_{;h} = g^{ij}R_{ikjl;h}
+		\end{equation*}
+		So $g^{ij}R_{ikjl;h} = f_{,h}g_{kl}$. By the second Bianchi identity,
+		\begin{equation*}
+			\begin{aligned}
+				0&=g^{ij}\bc{R_{ikjl;h}+R_{iklh;j}+R_{ikhj;l}} \\
+				&= g^{ij}R_{ikjl;h} + g^{ij}R_{iklh;j} - g^{ij}R_{ikjh;l} \\
+				&= f_{,h}g_{kl} - f_{,l}g_{kh} + g^{ij}R_{iklh;j}
+			\end{aligned}
+		\end{equation*}
+		By setting $l=k$ and then summing $k$, it follows that
+		\begin{equation*}
+			\begin{aligned}
+				0 &= \bc{f_{,h}\sum_kg_{kk} - \sum_kf_{,k}g_{kh} + \sum_k g^{ij} R_{ikkh;j}}(p) \\
+				&= mf_{,h}(p)-f_{,h}(p) +  \sum_k \sum_iR_{ikkh;i}(p) \\
+				&= (m-1)f_{,h}(p)-\sum_{k,i}R_{kikh;i}(p)\\
+				&= (m-1)f_{,h}(p)- \sum_i\op{Ric}_{ih;i} \\
+				&= (m-1)f_{,h}(p)- \sum_if_{,i}g_{ih}\\
+				&= (m-2)f_{,h}(p)
+			\end{aligned}
+		\end{equation*}
+		So when $m \geq 3$, $f_{,h} = 0$.
+	\end{proof}
+	\begin{defn}
+		Let $S = \op{tr}\op{Ric}(-,-)$. $S$ is called the scalar curvature. Locally,
+		\begin{equation*}
+			S = g^{pq}\op{Ric}_{pq}
+		\end{equation*}
+	\end{defn}
+	\begin{rmk}
+		Let $\bb{e_i}$ be an orthonormal basis of $T_pM$. Then
+		\begin{equation*}
+			\begin{aligned}
+				S_p &= \op{tr}\op{Ric}(-,-) = \sum_i \op{Ric}(e_i,e_i)\\
+				&= \sum_{i,j}R(e_j,e_i,e_j,e_i) \\
+				&= \sum_{i,j}K(e_i,e_j) = 2\sum_{i < j} K(e_i,e_j)
+			\end{aligned}
+		\end{equation*}
+		where the final inequality is by the symmetry of $K$ and $K(e_i,e_i) \defeq = 0$.
+	\end{rmk}
+	\begin{cor}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $(M,g)$ has the constant curvature $k$, then
+			\begin{equation*}
+				\op{Ric} = (m-1)kg,\quad S = m(m-1)kg
+			\end{equation*}
+			\item If $(M,g)$ is an Einstein manifold with $k$, then
+			\begin{equation*}
+				S = mk
+			\end{equation*}
+			\item If $\dim M \geq 3$, then $M$ is Einstein if and only if
+			\begin{equation*}
+				\op{Ric} = \frac{S}{m}g
+			\end{equation*}
+		\end{enumerate}
+	\end{cor}
+	\begin{rmk}
+		\begin{enumerate}[label=(\roman{*})]
+			\item For $m=2$, $K$ only dependents on $p$ and 
+			\begin{equation*}
+				K(p) = \frac{\op{Ric}(X,X)}{g(X,X)} = \frac{1}{2}S(p)
+			\end{equation*}
+			\item For $m=3$, let $\bb{e_1,e_2,e_3}$ be an orthonormal basis of $T_pM$. Then we get
+			\begin{equation*}
+				\bc{
+					\begin{array}{c}
+						\op{Ric}(e_1)\\
+						\op{Ric}(e_2)\\
+						\op{Ric}(e_3)
+					\end{array}
+				} = \bc{
+					\begin{array}{ccc}
+						1 & 0 & 1\\
+						1 & 1 & 0 \\
+						0 & 1 & 1
+					\end{array}
+				}\bc{
+					\begin{array}{c}
+						K(e_1,e_2)\\
+						K(e_2,e_3)\\
+						K(e_1,e_3)
+					\end{array}
+				}
+			\end{equation*}
+			It follows that $(M^3,g)$ is Einstein if and only if it has constant curvature.
+		\end{enumerate}
+	\end{rmk}
+
+	\item \emph{\textbf{In analysis:}} For a constant $k$, we call $\op{Ric} \geq k$ when
+	\begin{equation*}
+		\op{Ric}(X,X) \geq kg(X,X),\quad \forall~ X \in \Gamma(TM)
+	\end{equation*}
+	When considering $\op{Ric} = A$ as a symmetric matrix, it means $\min \lambda(A) \geq k$, where $\lambda(A)$ is the set of all eigenvalues of $A$. In geometric analysis, Ricci curvature is related to the measure defined on manifold.
+
+	\begin{thm}
+		For any $C^\infty$ manifold $M$ with $\dim M \geq 3$, there is a complete Riemannian metric $g$ such that the Ricci curvature is negative and bounded below.
+	\end{thm}
+
+	\begin{thm}[Bochner's formula]\label{thm:bochner}
+		For any $f \in C^\infty(M)$,
+		\begin{equation*}
+			\frac{1}{2}\Delta\bc{\norm{\op{grad}f}^2} = \norm{\op{Hess}f}^2 + \inn{\op{grad}(\Delta f),\op{grad} f} + \op{Ric}(\op{grad}f)
+		\end{equation*}
+		where $\norm{\op{Hess}f}^2 = g^{ki}g^{jl}f_{;kl}f_{;ij}$.
+	\end{thm}
+	\begin{proof}
+		For any $p \in M$, let $(U,x)$ be a normal chart. At $p$,
+		\begin{equation*}
+			\begin{aligned}
+				\text{RHS} &=  g^{ki}g^{jl}f_{;kl}f_{;ij} + \inn{g^{kl}\frac{\partial \Delta f}{\partial x^l}\frac{\partial}{\partial x^k}, g^{ij}\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^j}}\\
+				&\quad + \op{Ric}\bc{g^{kl}\frac{\partial f}{\partial x^l}\frac{\partial}{\partial x^k}, g^{ij}\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^j}} \\
+				&= \sum_{k,l}(f_{:kl})^2 + \sum_j \frac{\partial \Delta f}{\partial x^j}\frac{\partial f}{\partial x^j} + \sum_{k,i}\op{Ric}\bc{\frac{\partial f}{\partial x^k}\frac{\partial}{\partial x^k},\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^i}}
+			\end{aligned}
+		\end{equation*}
+		Moreover, by $\Delta f = g^{kl}f_{;kl}$,
+		\begin{equation*}
+			\begin{aligned}
+				\frac{\partial \Delta f}{\partial x^j}(p) &= \frac{\partial}{\partial x^j} \bc{g^{kl}f_{;kl}} \\
+				&= g^{kl}(p)\frac{\partial}{\partial x^j}f_{;kl}(p) \\
+				&= \sum_kf_{;kk,j} = \sum_kf_{;kkj}(p)
+			\end{aligned}
+		\end{equation*}
+		where the final equality is because $\Gamma^k_{ij}(p) = 0$. So
+		\begin{equation*}
+			\text{RHS} = \sum_{k,j}\bc{(f_{:kj})^2+f_{;kkj}f_{,j}+f_{,k}f_{,j}\op{Ric}_{kj}}
+		\end{equation*}
+		Next, for the other side,
+		\begin{equation*}
+			\begin{aligned}
+				\text{LHS} &= \frac{1}{2}g^{kl}\bc{g^{ij}\frac{\partial f}{\partial x^i}\frac{\partial f}{\partial x^j}}_{;kl}(p) = \frac{1}{2}\sum_k\bc{g^{ij}\bc{\frac{\partial f}{\partial x^i}\frac{\partial f}{\partial x^j}}_{;k}}_{;k}(p) \\
+				&=\frac{1}{2}\sum_kg^{ij}(p)\bc{\frac{\partial f}{\partial x^i}\frac{\partial f}{\partial x^j}}_{;kk}(p) \\
+				&=\frac{1}{2}\sum_kg^{ij}(p)\bc{\bc{\frac{\partial f}{\partial x^i}}_{;k}\frac{\partial f}{\partial x^j} + \frac{\partial f}{\partial x^i}\bc{\frac{\partial f}{\partial x^j}}_{;k}}_{;k}(p) \\
+				&=  \sum_{k,j} \bc{\frac{\partial f}{\partial x^j}\bc{\frac{\partial f}{\partial x^j}}_{;k}}_{;k}(p) = \sum_{k,j} \bc{\frac{\partial f}{\partial x^j}}_{;k}^2 + \frac{\partial f}{\partial x^j}\bc{\frac{\partial f}{\partial x^j}}_{;kk} \\
+				&= \sum_{k,j} \bc{f_{;jk}^2 + f_{;j}f_{;jkk}} = \sum_{k,j} \bc{f_{;kj}^2 + f_{;kjk}f_{;j}}
+			\end{aligned}
+		\end{equation*}
+		where the forth equality is because we have
+		\begin{equation*}
+			(A_iB_j)_{;k} = A_{i;k}B_j + A_iB_{j;k}
+		\end{equation*}
+		by considering the covariant differential of tensor $A_iB_jdx^i\otimes dx^j$, and the final equality is by the symmetry of $f_{;kj}$.
+		\begin{equation*}
+			\nabla_{\frac{\partial}{\partial x^k}}\nabla_{\frac{\partial}{\partial x^i}}\op{grad}f - \nabla_{\frac{\partial}{\partial x^i}}\nabla_{\frac{\partial}{\partial x^k}}\op{grad}f = R\bc{\frac{\partial}{\partial x^k},\frac{\partial}{\partial x^i}}\op{grad}f
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			f_{;\alpha jk} - f_{;\alpha kj} = \sum_l f_{;l}R^\alpha_{lkj}
+		\end{equation*}
+		and by setting $\alpha = k$, we have
+		\begin{equation*}
+			\begin{aligned}
+				\text{LHS} &= \sum_{k,j}f_{;kj}^2 + \sum_{k,j}f_{;kkj}f_{;j} + \sum_{k,j,l}f_{;j}f_{;l}R^k_{lkj} \\
+				&= \sum_{k,j}f_{;kj}^2 + \sum_{k,j}f_{;kkj}f_{;j} + \sum_{j,l}f_{;j}f_{;l}\op{Ric}_{lj} \\
+			\end{aligned}
+		\end{equation*}
+		Therefore, $\text{RHS} = \text{LHS}$.
+	\end{proof}
+
+	\begin{cor}
+		For any $p \in M$, $\op{Ric}_p \geq k$ if and only if
+		\begin{equation*}
+			\frac{1}{2}\Delta\bc{\norm{\op{grad}f}^2}(p) \geq \frac{1}{m}(\Delta f)^2(p) + \inn{\op{grad}(\Delta f),\op{grad} f}(p) + k\norm{\op{grad}f}^2(p)
+		\end{equation*}
+	\end{cor}
+	\begin{proof}
+		Note that for a symmetric matrix $A \in \R^{m\times m}$,
+		\begin{equation*}
+			m\norm{A}^2 \geq \tr(A)^2
+		\end{equation*}
+		and if $A = \lambda I$, then it can take the equality. So at $p$, for any $f \in C^{\infty}(M)$
+		\begin{equation*}
+			\norm{\op{Hess}f}^2(p)\geq\frac{1}{m}(\Delta f)^2(p)
+		\end{equation*}
+		and we can find $f$ such that it can take the equality.
+		\begin{itemize}
+			\item $\Rightarrow$: It is clearly by above theorem.
+
+			\item $\Leftarrow$: By above theorem,
+			\begin{equation*}
+				\begin{aligned}
+					\frac{1}{2}\Delta\bc{\norm{\op{grad}f}^2}(p) -\inn{\op{grad}(\Delta f),\op{grad} f}(p) &=  \inn{\op{grad}(\Delta f),\op{grad} f}(p) + \op{Ric}(\op{grad}f)(p) \\
+					&\geq \frac{1}{m}(\Delta f)^2(p) +k\norm{\op{grad}f}^2(p)
+				\end{aligned}
+			\end{equation*}
+			Then for some $f$ with $\norm{\op{Hess}f}^2(p)=\frac{1}{m}(\Delta f)^2(p)$, we have
+			\begin{equation*}
+				\op{Ric}(\op{grad}f)(p) \geq k\norm{\op{grad}f}^2(p)
+			\end{equation*}
+			For any $X \in T_pM$, we can find a $f$ such that $X = \op{grad}(f)$ and $\norm{\op{Hess}f}^2(p)=\frac{1}{m}(\Delta f)^2(p)$ by existence of solution of ODE, so
+			\begin{equation*}
+				\op{Ric}(X) \geq k\norm{X}^2,\quad \forall~X \in T_pM \qedhere
+			\end{equation*}
+		\end{itemize}
+	\end{proof}
+\end{enumerate}
+
+\section{Applications with Variation Formulas}
+Let $\gamma \colon [a,b] \sto M$ be a $C^\infty$-curve. Consider a variation of $\gamma$, $F \colon [a,b] \times (-\varepsilon,\varepsilon) \sto M$ with $F(t,0) = \gamma(t)$ and let
+\begin{equation*}
+	V(t) = \frac{\partial F}{\partial v}(t,0),\quad T(t) =\frac{\partial F}{\partial t}(t,0) = \dot{\gamma}(t)
+\end{equation*}
+and energy function $E \colon (-\varepsilon,\varepsilon) \sto M$
+\begin{equation*}
+	E(v) =\frac{1}{2}\int_a^b\inn{\frac{\partial F}{\partial t}(t,v),\frac{\partial F}{\partial t}(t,v)}dt
+\end{equation*}
+Then we have
+\begin{itemize}
+	\item first variational formula (FVF)
+	\begin{equation*}
+		\lv{\frac{d}{dv}}_{v=0}E(v) = \lv{\inn{V(t),T(t)}}_a^b - \int_a^b \inn{V(t),\nabla_TT(t)}dt
+	\end{equation*}
+	\item second variational formula (SVF)
+	\begin{equation*}
+		\begin{aligned}
+			\lv{\frac{d^2}{dv^2}}_{v=0}E(v) &= \lv{\inn{\nabla_VV(t),T(t)}}_a^b \\
+			&\quad + \int_a^b \inn{\nabla_TV(t),\nabla_TV(t)} -R(V,T,V,T)dt\\
+			&\quad - \int_a^b \inn{\nabla_VV(t),\nabla_TT(t)}dt
+		\end{aligned}
+	\end{equation*}
+\end{itemize}
+
+How to determine a curve is with the minimal length. We have known that
+\begin{center}
+	$E^\prime(0) = 0$ and $E^{\prime\prime}(0) \geq 0$ $\Rightarrow$ local minimum
+\end{center}
+For $E^\prime(0) = 0$, it means $\gamma$ is a geodesic. For $E^{\prime\prime}(0) \geq 0$,
+\begin{enumerate}[label=(\roman{*})]
+ 	\item if we further assume the endpoints are fixed, then
+ 	\begin{equation*}
+ 		F(a,v) \equiv \gamma(a),~ F(b,v)\equiv \gamma(b) \quad \Rightarrow\quad V(a) =V(b) =0
+ 	\end{equation*}
+ 	So
+ 	\begin{equation*}
+ 		E^{\prime\prime}(0) = \int_a^b \inn{\nabla_TV(t),\nabla_TV(t)} -R(V,T,V,T)dt
+ 	\end{equation*}
+ 	It follows that if the sectional curvature is negative, then $E^{\prime\prime}(0) \geq 0$. Therefore, any geodesic is with local minimal length.
+
+ 	\item if we further assume $\gamma$ is closed, \emph{i.e.}
+ 	\begin{equation*}
+ 		\gamma(a) = \gamma(b),\quad T(a) = T(b)
+ 	\end{equation*}
+ 	and 
+ 	\begin{equation*}
+ 		\frac{\partial F}{\partial v}(a,0) = \frac{\partial F}{\partial v}(b,0)~\Rightarrow~\nabla_VV(a) = \nabla_VV(b)
+ 	\end{equation*}
+ 	by definition, then similarly
+ 	\begin{center}
+ 		the sectional curvature is negative $\Rightarrow$ closed geodesic is locally minimal.
+ 	\end{center}
+\end{enumerate} 
+What if $E^{\prime\prime}(0) < 0$: 
+\begin{enumerate}[label=\Roman{*}.]
+	\item Closed curve and homotopic classes:
+	\begin{thm}[Synge]
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Any compact, orientable and even-dimensional Riemannian manifold with positive sectional curvature is simply connected.
+			\item Any compact, non-orientable, even-dimensional Riemannian manifold with positive sectional curvature has $\pi_1(M) = \Z_2$.
+			\item Any compact, odd-dimensional Riemannian manifold with positive sectional curvature is orientable.
+		\end{enumerate}
+	\end{thm}
+	\begin{rmk}
+		The compactness guarantees that in every homotopic class of closed curves, there is a geodesic with shortest length. So, for $(1)$, the goal is to prove that any (nontrivial) closed geodesic is not with shortest length. By above, we need to construct a variation such that $\nabla_TV=0$.
+	\end{rmk}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Let $\gamma \colon [a,b] \sto M$ be a closed geodesic with $p = \gamma(a) = \gamma(b)$. Consider the parallel map
+			\begin{equation*}
+				\mathcal{P}_{\gamma,a,b} \colon T_pM \longrightarrow T_pM
+			\end{equation*}
+			we want to construct a variation such that
+			\begin{equation*}
+				\mathcal{P}_{\gamma,a,b}(V(a)) = V(b),\quad \inn{V(a),T(a)} = 0
+			\end{equation*}
+			Note that $\mathcal{P}_{\gamma,a,b}$ is orthogonal and $\mathcal{P}_{\gamma,a,b}(T(a)) =T(a)$, \emph{i.e.} it has eigenvalue $1$. Then by the following \textbf{Lemma} \ref{lem:lindet} and \textbf{Lemma} \ref{lem:riemorein}, we have $V_0$ such that $V(t) = \mathcal{P}_{\gamma,a,t}(V_0)$ satisfies above conditions. If let
+			\begin{equation*}
+				F(s,t) \defeq \exp_{\gamma(t)}sV(t)
+			\end{equation*}
+			then we have such variation with
+			\begin{equation*}
+				E^{\prime\prime}(0) = \int_a^b -R(V,T,V,T)dt < 0
+			\end{equation*}
+			which induces a contradiction.
+
+			\item It can be obtained by above lemma and the following \textbf{Lemma} \ref{lem:riem2cover}.
+
+			\item Suppose $M$ is non-orientable. Then there is a closed curve $c$ of $M$ such that its homotopic class is nontrivial and $\det \mathcal{P}_{\gamma,a,b} = -1$, and it can induce a contradiction by the following \textbf{Lemma} \ref{lem:lindet}.
+		\end{enumerate}
+	\end{proof}
+
+	\begin{lem}\label{lem:lindet}
+		Let $A \in \R^{n}$ be an orthogonal matrix.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If $\det A = 1$ and $1$ is its eigenvalue and $n$ is even, then $\dim \ker (A -I) \geq 2$. 
+			\item If $\det A = -1$ and $1$ is its eigenvalue and $n$ is odd, then $\dim \ker (A - I) \geq 2$.
+		\end{enumerate}
+	\end{lem}
+	\begin{rmk}
+		It is because all eigenvalues $\abs{\lambda}= 1$ and $A$ is diagonalizable in complex sense (self-adjoint).
+	\end{rmk}
+
+	\begin{lem}\label{lem:riemorein}
+		Let $(M,g)$ be a Riemannian manifold that is orientable. Then $\det \mathcal{P}_{\gamma,a,b} = 1$.
+	\end{lem}
+	\begin{proof}
+		Since $M$ is orientable, there is a $n$-form $\omega$ that is nonzero at each point. Let $\bb{e_i}$ be a basis of $T_pM$ and $\bb{e_i(t)}$ be the parallel moving of $\bb{e_i}$. Then
+		\begin{equation*}
+			t \mapsto \omega\bc{e_1(t),\cdots,e_m(t)}
+		\end{equation*}
+		is a $C^\infty$ function that does not change the sign on $[a,b]$. And
+		\begin{equation*}
+			\omega\bc{e_1(a),\cdots,e_m(a)} = \det \mathcal{P}_{\gamma,a,b}\omega\bc{e_1(b),\cdots,e_m(b)}
+		\end{equation*}
+		So $\det \mathcal{P}_{\gamma,a,b} > 0$.
+	\end{proof}
+
+	\begin{lem}\label{lem:riem2cover}
+		Any non-orientable Riemannian manifold has an orientable $2$-cover.
+	\end{lem}
+
+	\item Fixing two end-points: Then it also has
+	\begin{equation*}
+		E^{\prime\prime}(0) = \int_a^b \inn{\nabla_TV(t),\nabla_TV(t)} -R(V,T,V,T)dt
+	\end{equation*}
+	So we need $R(V,T,V,T)$ bounded below for some appropriate constant.
+	\begin{lem}[Bonnet-Synge]
+		Let $(M,g)$ be a Riemannian manifold with the sectional curvature $\geq \kappa > 0$. Then any geodesic with length $> \frac{\pi}{\sqrt{\kappa}}$ cannot be local minimum.
+	\end{lem}
+	\begin{proof}
+		WTLG assume a arc-length parameterized geodesic $\gamma \colon [0,\ell] \sto M$ with $\gamma(0) = p, \gamma(\ell) = q$. Choose $Y(0)$ be orthogonal to $\dot{\gamma}(0)$ with $\inn{Y(0),Y(0)} = 1$. Let $Y(t) = \mathcal{P}_{\gamma,0,t}(Y(0))$ and then $\inn{Y(t),\dot{\gamma}(t)} = 0$ and $\inn{Y(t),Y(t)} = 1$ and $\nabla_TY(t) = 0$. So
+		\begin{equation*}
+			R(Y,T,Y,T)(t) = K(\Pi_{\gamma(t)}(Y,T))
+		\end{equation*}
+		By assumption,
+		\begin{enumerate}[label=(\roman{*})]
+			\item sectional curvature $K \geq \kappa > 0$.
+			\item $\ell > \frac{\pi}{\sqrt{\kappa}}$ $\Leftrightarrow$ $\bc{\frac{\pi}{\ell}}^2 < \kappa$.
+		\end{enumerate}
+
+		Consider the variational field
+		\begin{equation*}
+			V(t) = \sin\bc{\frac{\pi}{\ell}t}Y(t),\quad t \in [0,\ell]
+		\end{equation*}
+		So we have 
+		\begin{equation*}
+			\nabla_TV(t) = \nabla_T\bc{\sin\bc{\frac{\pi}{\ell}t}Y(t)} = \frac{\pi}{\ell}\cos\bc{\frac{\pi}{\ell}tY(t)}Y(t)
+		\end{equation*}
+		Then $E^\prime(0) = 0$ and
+		\begin{equation*}
+			\begin{aligned}
+				E^{\prime\prime}(0) &= \int_0^\ell \inn{\nabla_TV(t),\nabla_TV(t)} dt - \int_0^\ell R(V,T,V,T)dt \\
+				&= \int_0^\ell \bc{\frac{\pi}{\ell}}^2\cos\bc{\frac{\pi}{\ell}t}^2 dt - \int_0^\ell\sin\bc{\frac{\pi}{\ell}t}^2 R(Y,T,Y,T)dt \\
+				&\leq  \bc{\frac{\pi}{\ell}}^2\int_0^\ell \cos\bc{\frac{\pi}{\ell}t}^2 dt - \kappa\int_0^\ell\sin\bc{\frac{\pi}{\ell}t}^2 dt \\
+				& < 0
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	\begin{cor}[Hopf-Rinow]
+		Let $(M,g)$ be a complete Riemannian manifold with sectional curvature $\geq \kappa > 0$. Then
+		\begin{equation*}
+			\op{diam}(M,g) \leq \frac{\pi}{\sqrt{\kappa}}
+		\end{equation*}
+		In particular, $M$ is compact.
+	\end{cor}
+
+	\begin{lem}[Myers]
+		Let $(M,g)$ be a Riemannian manifold with the Ricci curvature $\geq (m-1)\kappa > 0$. Then any geodesic with length $> \frac{\pi}{\sqrt{\kappa}}$ cannot be local minimum.
+	\end{lem}
+	\begin{proof}
+		By above, such $Y(0)$ has $m-1$ choice. So we can have $(m-1)$-vector fields $Y_i(t)$($i = 2,\cdots,m$) and variational fields
+		\begin{equation*}
+			V_i(t) = \sin\bc{\frac{\pi}{\ell}t}Y_i(t),\quad i = 2,\cdots,m
+		\end{equation*}
+		Then
+		\begin{equation*}
+			\begin{aligned}
+				\sum_i E_{V_i}^{\prime\prime}(0) &= \sum_i \int_0^\ell \bc{\frac{\pi}{\ell}}^2\cos\bc{\frac{\pi}{\ell}t}^2 dt - \int_0^\ell\sin\bc{\frac{\pi}{\ell}t}^2 R(Y_i,T,Y_i,T)dt \\
+				&\leq (m-1)\kappa \int_0^\ell \cos\bc{\frac{\pi}{\ell}t}^2 dt - \int_0^\ell\sin\bc{\frac{\pi}{\ell}t}^2 \sum_iK(\Pi_{\gamma(t)}(Y_i,T))dt \\
+				&= (m-1)\kappa \int_0^\ell \cos\bc{\frac{\pi}{\ell}t}^2 dt - \int_0^\ell\sin\bc{\frac{\pi}{\ell}t}^2 \op{Ric}(T)dt \\
+				&< 0
+			\end{aligned}
+		\end{equation*}
+		Therefore, there is a variational $V = V_{i_0}$ such that $E^{\prime\prime}(0) = E_{V_i}^{\prime\prime}(0) < 0$.
+	\end{proof}
+
+	\begin{thm}[Bonnet-Myers]
+		Suppose $(M,g)$ is a complete Riemannian manifold with the Ricci curvature $\geq (m-1)\kappa > 0$. Then
+		\begin{equation*}
+			\op{diam}(M,g) \leq \frac{\pi}{\sqrt{\kappa}}
+		\end{equation*}
+		Moreover, $M$ is compact and $(M,g)$ has finite fundamental group.
+	\end{thm}
+	\begin{proof}
+		Consider the universal covering $\pi \colon (\widetilde{M},\widetilde{g}) \sto (M,g)$, which is complete and has the Ricci curvature $\geq (m-1)\kappa > 0$ because $\pi$ is locally isometric. Thus $(\widetilde{M},\widetilde{g})$ is also compact, which means
+		\begin{equation*}
+		 	\pi^{-1}(p) = \bc{q_1,\cdots,q_n},\quad \forall p \in M
+		\end{equation*}
+		Because $\widetilde{M}$ is simply connected,
+		\begin{equation*}
+			\pi^{-1}(p) \simeq \pi(M,p) / \pi_*\pi(\widetilde{M},\tilde{p}) \simeq \pi(M,p) \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\begin{thm}[Gromoll-Mayer]
+		If $(M,g)$is a connected, complete, non-compact and with sectional curvature $> 0$, then $M$ is diffeomorphic to $\R^m$.
+	\end{thm}
+	\begin{rmk}
+		Any complete non-compact Riemannian manifold $M$ with $\dim M = 2$ and sectional curvature $\geq 0$, is either diffeomorphic to $\R^2$ or flat.
+	\end{rmk}
+
+	\item Fixing one end-points: Consider a variation of radical geodesics of $\gamma$, that is, consider $v \colon (-\varepsilon,\varepsilon) \sto T_pM$ with $v(0) = \dot{\gamma}(0)$ and $\abs{v(0)} = r$, let
+	\begin{equation*}
+		F(t,s) = \exp_p\bc{\frac{t}{r}v(s)},\quad t\in [0,r]
+	\end{equation*}
+	Then $F(0,s) = p$ for all $s \in (-\varepsilon,\varepsilon)$ and 
+	\begin{equation*}
+		\begin{aligned}
+		 	V(t) &= \frac{\partial F}{\partial s}(t,0) \\
+		 	&= \lv{\frac{\partial }{\partial s}}_{(t,0)}\exp_p\bc{\frac{t}{r}v(s)} \\
+		 	&= \bc{d\exp}_{\gamma(t)}\bc{\frac{t}{r}v^\prime(0)}
+		\end{aligned} 
+	\end{equation*}
+	For any fixed $s$, $F(t,s) = c_s(t)$ is a geodesic, which means $\widetilde{\nabla}_{\frac{\partial}{\partial t}} \frac{\partial F}{\partial t}(t,s) = 0$. Besides,
+	\begin{equation*}
+		\begin{aligned}
+			\widetilde{\nabla}_{\frac{\partial}{\partial t}}\widetilde{\nabla}_{\frac{\partial}{\partial t}} V(t) &= \widetilde{\nabla}_{\frac{\partial}{\partial t}}\widetilde{\nabla}_{\frac{\partial}{\partial t}} \frac{\partial F}{\partial s}(t,0) \\
+			&= \widetilde{\nabla}_{\frac{\partial}{\partial t}}\widetilde{\nabla}_{\frac{\partial}{\partial s}} \frac{\partial F}{\partial t}(t,0) \\
+			&= \lv{\widetilde{\nabla}_{\frac{\partial}{\partial s}}\widetilde{\nabla}_{\frac{\partial}{\partial t}} \frac{\partial F}{\partial t}(t,s)}_{s=0} +  R\bc{\frac{\partial F}{\partial t},\frac{\partial F}{\partial s}}\frac{\partial F}{\partial t}(t,0)\\
+		\end{aligned}
+	\end{equation*}
+	So
+	\begin{equation*}
+		\nabla_T\nabla_TV +R(V,T)T = 0
+	\end{equation*}
+	\begin{defn}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic with $T(t) =\dot{\gamma}(t)$. If a vector field $V$ along $\gamma$ satisfies
+		\begin{equation*}
+			\nabla_T\nabla_TV +R(V,T)T = 0
+		\end{equation*}
+		we call $V$ a Jacobian field and above equation is called the Jacobian equation.
+	\end{defn}
+	Choosing an orthonormal frame $\bb{E_i(t)}$ along $\gamma$ with $E_1(t) = T(t)$, and
+	\begin{equation*}
+		V(t) = \sum_{i=2}^mf^i(t)E_i(t)
+	\end{equation*}
+	and
+	\begin{equation*}
+		\begin{aligned}
+			0 &= \inn{\nabla_T\nabla_TV +R(V,T)T,E_j} \\
+			&= \inn{\frac{d^2f^i}{dt^2}E_i(t) + f^i(t)R(E_i,T)T,E_j(t)} \\
+			&= \frac{d^2f^j(t)}{dt^2} + f^i(t)R(E_i,T,E_j,T)
+		\end{aligned}
+	\end{equation*}
+	So it follows that
+	\begin{equation*}
+		\frac{d^2f^j(t)}{dt^2} + f^i(t)R(E_i,T,E_j,T) = 0,\quad j = 2,\cdots,m
+	\end{equation*}
+	If $(M,g)$ has constant sectional curvature $\kappa$, then
+	\begin{equation*}
+		\begin{aligned}
+			R(E_i,T,E_j,T) = \kappa G(E_i,T,E_j,T) &= \kappa \bc{\inn{E_i,E_j}\inn{T,T} - \inn{E_i,T}\inn{E_j,T}}\\
+			&= \left\{
+				\begin{aligned}
+					0,&\quad i\neq j \\
+					0,&\quad i=j = 1 \\ 
+					\kappa,&\quad i=j \neq 1
+				\end{aligned}
+			\right.
+		\end{aligned}
+	\end{equation*}
+	Therefore, the equation becomes
+	\begin{equation*}
+		\frac{d^2f^j(t)}{dt^2} + \kappa f^j(t) = 0,\quad j = 2,\cdots,m
+	\end{equation*}
+	with $f^j(0) = 0$ by $V(0) = 0$. Moreover, because
+	\begin{equation*}
+		\begin{aligned}
+			\lv{\nabla_TV(t)}_{t = 0} &= \lv{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial s}(t,0) }_{t = 0} \\
+			&= \lv{\widetilde{\nabla}_{\frac{\partial}{\partial s}}\frac{\partial F}{\partial t}(t,s) }_{s,t = 0} \\
+			&= \widetilde{\nabla}_{\frac{\partial}{\partial s}}\lv{\frac{\partial F}{\partial t}(t,s)}_{s,t = 0} \\
+			&= \widetilde{\nabla}_{\frac{\partial}{\partial s}}\lv{\frac{\partial}{\partial t}\exp_p \bc{\frac{t}{r}v(s)}}_{s,t = 0} \\
+			&= \lv{\widetilde{\nabla}_{\frac{\partial}{\partial s}}\frac{1}{r}v(s)}_{s = 0} \\
+			&= \lv{\frac{1}{r}v^\prime(s)}_{s=0}
+		\end{aligned}
+	\end{equation*}
+	where the final equality is because $v(s)$ can be a vector field along $c(s) \equiv p$,
+	\begin{equation*}
+		\frac{d}{dt}f^i(0) = \inn{\frac{v^\prime(0)}{r},E_i(t)}
+	\end{equation*}
+	In particular, if we let 
+	\begin{equation*}
+		V(t) = f(t)E_2(t)
+	\end{equation*}
+	and $v(s)$ be the point at the circle on the subspace of $T_pM$ spanned by $E_1,E_2$ ($\dot{v}(0) = r E_2$), then it follows
+	\begin{equation*}
+		f^{\prime\prime}(t) + \kappa f^\prime(t) = 0,\quad f(t) = 0,f^\prime(0) = 1
+	\end{equation*}
+	So
+	\begin{equation*}
+		f(t) = \left\{
+			\begin{array}{ll}
+				t,&\quad \kappa = 0 \\
+				\sin t,&\quad \kappa = 1 \\
+				\sinh t,&\quad \kappa = -1
+			\end{array}
+		\right.
+	\end{equation*}
+\end{enumerate}
+
+\section{Jacobian Field and Index Form}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Jacobian field:}}	Let $\gamma \colon [a,b] \sto M$ be a geodesic with $\gamma(a) = p, \gamma(b)=q$ and $T = \dot{\gamma}(a)$ and $\abs{T} = 1$ (\emph{i.e.} normal geodesic). Let $U(t)$ be a Jacobian field of $\gamma$. Let $\bb{E_i}$ be a orthonormal basis of $T_pM$ with $E_1 = T$ and $\bb{E_i(t)}$ be the induced orthonormal frame. If
+	\begin{equation*}
+		U(t) = f^i(t)E(t)
+	\end{equation*}
+	then as above the Jacobian equation becomes
+	\begin{equation*}
+		\frac{d^2}{dt^2}f^j(t) + f^i(t)R(E_j,T,E_i,T) = 0,\quad j=1,2,\cdots,m
+	\end{equation*}
+	that is
+	\begin{equation*}
+		\frac{d^2}{dt^2}\bc{
+			\begin{array}{c}
+				f^1(t) \\
+				f^2(t) \\
+				\vdots \\
+				f^m(t)
+			\end{array}
+		} = \bc{
+			\begin{array}{cccc}
+				R(E_1,T,E_1,T)&R(E_1,T,E_2,T)&\dots&R(E_1,T,E_m,T) \\
+				R(E_2,T,E_1,T)&R(E_2,T,E_2,T)&\dots&R(E_2,T,E_m,T) \\
+				\vdots & \vdots & \ddots &\vdots \\
+				R(E_m,T,E_1,T)&R(E_m,T,E_2,T)&\dots&R(E_m,T,E_m,T)
+			\end{array}
+		}\bc{
+			\begin{array}{c}
+				f^1(t) \\
+				f^2(t) \\
+				\vdots \\
+				f^m(t)
+			\end{array}
+		}
+	\end{equation*}
+
+	Because Jacobian equation is a linear ODE, we have the following proposition.
+	\begin{prop}
+		Let $\gamma \colon [0,\ell] \sto M$ be a geodesic with $T = \dot{\gamma}(0)$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Given $V,W \in T_{\gamma(0)}M$, there exists a unique Jacobian field $U$ such that
+			\begin{equation*}
+				U(0) = V,\quad \nabla_TU(0) = W
+			\end{equation*}
+
+			\item The linear space of all Jacobian fields along $\gamma$ is of dimension $2m$.
+
+			\item The zero set of a Jacobian field $U$ along $\gamma$ is discrete if $U$ is not $0$.
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		$(1)$ and $(2)$ are clearly by linear ODE. For $(3)$, assume the zero set has an accumulative point $\gamma(t_0)$. Then
+		\begin{equation*}
+			U(t_0) = 0
+		\end{equation*}
+		Choosing an frame such that $U(t) = f^i(t)E(t)$. So
+		\begin{equation*}
+			\nabla_TU(t_0) = \frac{d}{dt}f^i(t_0) E(t_0) = 0
+		\end{equation*}
+		by $\frac{d}{dt}f^i(t_0) = 0$. Then by the uniqueness of solution, $U = 0$.
+	\end{proof}
+
+	\noindent In particular, if $(M,g)$ has the constant sectional curvature $\kappa$, by above we have
+	\begin{equation*}
+		\frac{d^2}{dt^2}\bc{
+			\begin{array}{c}
+				f^1(t) \\
+				f^2(t) \\
+				\vdots \\
+				f^m(t)
+			\end{array}
+		} = \bc{
+			\begin{array}{cccc}
+				0&0&\dots&0 \\
+				0&\kappa&\dots&0 \\
+				\vdots & \vdots & \ddots &\vdots \\
+				0&0&\dots&\kappa
+			\end{array}
+		}\bc{
+			\begin{array}{c}
+				f^1(t) \\
+				f^2(t) \\
+				\vdots \\
+				f^m(t)
+			\end{array}
+		}
+	\end{equation*}
+	which follows that $f^1(t) = at+b$ and
+	\begin{equation*}
+		\frac{d^2}{dt^2}f^j(t) + \kappa f^j(t) = 0,\quad j=2,3,\cdots,m
+	\end{equation*}
+	So such $U = (at+b)T + U^{\perp}$ with $U^\perp \perp T$ and $U^{\perp}$ is a Jacobian vector field.
+
+	\begin{prop}
+		Let $\gamma \colon [a,b] \sto M$ be a normal geodesic with $T = \dot{\gamma}(a)$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item The vector field $fT$ is Jacobian if and only if $f$ is linear.
+			\item Every Jacobian vector field $U$ along $\gamma$ can be uniquely decomposition
+			\begin{equation*}
+				U = fT + U^\perp
+			\end{equation*}
+			where $f$ is linear, $U^\perp$ is Jacobian and $U^\perp \perp T$, called the normal Jacobian field.
+			\item If a Jacobian vector field $U$ along $\gamma$ such that $\inn{U,T}|_{t_0,t_1} = 0$, then
+			\begin{equation*}
+				\inn{U,T} \equiv 0
+			\end{equation*}
+			In particular,$U(t_0)=U(t_1)=0$ implies $\inn{U,T} \equiv 0$. 
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item By taking $fT$ in the Jacobian equation, we have
+			\begin{equation*}
+				\begin{aligned}
+					0 &= \nabla_T\nabla_T(fT) + R(fT,T)T \\
+					&= \frac{d^2}{dt^2}f(t)T
+				\end{aligned}
+			\end{equation*}
+			So it is equivalent to $\frac{d^2}{dt^2}f(t) =0$.
+
+			\item Let
+			\begin{equation*}
+				U = fT + U^\perp
+			\end{equation*}
+			for some $f$ and $U^\perp \perp T$, by choosing an orthonormal frame $\bb{E_i(t)}$. It is also unique by the uniqueness of orthogonal decomposition. Next, we need to prove they are Jacobian.
+
+			\noindent Since $U$ is Jacobian,
+			\begin{equation*}
+				\begin{aligned}
+					0 &=  \nabla_T\nabla_T(fT+ U^\perp) + R(fT+ U^\perp,T)T \\
+					&= \frac{d^2}{dt^2}f(t)T + \nabla_T\nabla_TU^\perp + R(U^\perp,T)T
+				\end{aligned}
+			\end{equation*}
+			By $\inn{R(U^\perp,T)T,T} = 0$,
+			\begin{equation*}
+				\begin{aligned}
+					0 &= \inn{ \frac{d^2}{dt^2}f(t)T + \nabla_T\nabla_TU^\perp + R(U^\perp,T)T,T} \\
+					&= \frac{d^2}{dt^2}f(t) + \inn{\nabla_T\nabla_TU^\perp,T}
+				\end{aligned}
+			\end{equation*}
+			Moreover, by $\inn{U^\perp,T} = 0$,
+			\begin{equation*}
+				\begin{aligned}
+					0 &= \frac{d^2}{dt^2}\inn{U^\perp,T} = \frac{d}{dt}\bc{\inn{\frac{D}{dt}U^\perp,T}+\inn{U^\perp,\frac{D}{dt}T}} \\
+					&= \frac{d}{dt}\inn{\nabla_TU^\perp,T} = \inn{\nabla_T\nabla_TU^\perp,T}
+				\end{aligned}
+			\end{equation*}
+			Therefore, $\frac{d^2}{dt^2}f(t) = 0$ and thus $fT$ is Jacobian. Then by the linearity of Jacobian equation, $U^\perp$ is also a Jacobian field.
+
+			\item By $(2)$, 
+			\begin{equation*}
+				\inn{U,T}(t) = f(t)~\Rightarrow~f(t_0)=f(t_1) = 0 ~\Rightarrow~f(t)\equiv 0
+			\end{equation*}
+			So $U = U^\perp \perp T$. 
+		\end{enumerate}
+	\end{proof}
+
+	\begin{prop}
+		Let $\gamma \colon [0,1] \sto M$ be a geodesic and $U$ be a vector field along $\gamma$. Then $U$ is Jacobian if and only if there is a variation $F(t,s)$ such that $F(t,s)$ is a geodesic for any $s \in (-\varepsilon,\varepsilon)$ and 
+		\begin{equation*}
+			U(t) = \lv{\frac{\partial F}{\partial s}}_{t,0}
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		We only need to prove the $\Rightarrow$ direction. For $U(0)$, considering a geodesic $\beta(s)$ with
+		\begin{equation*}
+			\beta(0) =\gamma(0),\quad \dot{\beta}(0) = U(0)
+		\end{equation*}
+		Let $V(0) = \dot{\gamma}(0)$ and $V(s)$ be the vector field along $\beta(s)$ by moving $V(0)$ in parallel. Besides, let $W(0) = \nabla_TU(0)$ and $W(s)$ be the vector field along $\beta(s)$ by moving $W(0)$ in parallel. Then we construct $F \colon [0,1]\times(-\varepsilon,\varepsilon) \sto M$ by
+		\begin{equation*}
+			F(t,s) = \exp_{\beta(s)}t\bc{V(s)+sW(s)}
+		\end{equation*}
+		When $\varepsilon$ is small enough, $F$ is well-defined (It is because we can find a totally neighborhood of $\gamma(0)$). Because for any fixed $s$, $F(t,s)$ is a geodesic,
+		\begin{equation*}
+			\lv{\frac{\partial F}{\partial s}}_{t,0}
+		\end{equation*}
+		is a Jacobian field.\vspace{0.3em}\\
+		\noindent \textbf{Claim:} $\lv{\frac{\partial F}{\partial s}}_{t,0} = U(t)$.\vspace{0.3em}\\
+		\noindent Because they are all Jacobian fields, they satisfy the same ODE. So it is sufficient to check their initial values. 
+		\begin{equation*}
+			\lv{\frac{\partial F}{\partial s}}_{0,0} = \lv{\frac{\partial}{\partial s}}_{s=0}\beta(s) = \dot{\beta}(0) = U(0)
+		\end{equation*}
+		Next,
+		\begin{equation*}
+			\begin{aligned}
+				\lv{\bc{\widetilde{\nabla}_{\frac{\partial}{\partial t}} \frac{\partial F}{\partial s}}}_{s,t=0} &= \lv{\bc{\widetilde{\nabla}_{\frac{\partial}{\partial s}} \frac{\partial F}{\partial t}}}_{s,t=0} \\
+				&= \lv{\widetilde{\nabla}_{\frac{\partial}{\partial s}} \bc{\lv{\frac{\partial F}{\partial t}}_{t=0}}}_{s=0} \\
+				&= \lv{\widetilde{\nabla}_{\frac{\partial}{\partial s}} V(s) + sW(s)}_{s=0} \\
+				&= W(0) = \nabla_TU(0)
+			\end{aligned}
+		\end{equation*}
+		So the claim has be proved.
+	\end{proof}
+	\begin{rmk}
+		In particular, if $\beta(s) \equiv \gamma(0)$, then
+		\begin{equation*}
+			F(t,s) = \exp_{\gamma(0)}t(V+sW),\quad V = \dot{\gamma}(0),~W = \nabla_TU(0)
+		\end{equation*}
+		and $U(t) = \frac{\partial F}{\partial s}(t,0)$.
+	\end{rmk}
+
+	\item \emph{\textbf{Conjugate points:}} Let's consider the zero points of Jacobian fields.
+	\begin{defn}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic. For $t_0,t_1 \in [a,b]$, if there exists a Jacobian field $U$ along $\gamma$ with $U \neq 0$ (nontrivial) but $U(t_0) = U(t_1) = 0$, then $t_0$ and $t_1$ are called conjugate values along $\gamma$. Moreover, the multiplicity of $t_0$ and $t_1$ is defined as
+		\begin{equation*}
+			\dim \bc{\mathcal{J}^\prime \defeq \bb{U \text{ Jacobian } \colon U(t_0) = U(t_1) = 0}}
+		\end{equation*}
+		where the set is a vector space by linearity. We also call $\gamma(t_0)$ and $\gamma(t_1)$ conjugate points of $\gamma$.
+	\end{defn}
+	\begin{rmk}
+		Note that $\dim \mathcal{J}^\prime \leq n-1$ which is because $U(t_0) = 0$ is an initial value and the Jacobian field $fT$ is not in the set.
+	\end{rmk}
+	\begin{rmk}
+		Note that if there is  a Jacobian field $U$ with $U(a) = U(b) = 0$, then
+		\begin{equation*}
+			0 = I(U,U) = \frac{\partial^2 E}{\partial s^2}(0)
+		\end{equation*}
+	\end{rmk}
+
+	\begin{thm}
+		Let $\gamma \colon [0,1] \sto M$ be a geodesic with $\gamma(0) = p$ and $\dot{\gamma}(0) = V$ and $q = \gamma(1) = \exp_p(V)$. Then $0$ and $1$ are conjugate value of $\gamma$ if and only if $V$ is a critical point of $\exp_p$. Moreover, the multiplicity of $0$ and $1$ is $\dim\ker (d\exp_p)_V$.
+	\end{thm}
+	\begin{proof}
+		\begin{itemize}
+			\item For ``$\Leftarrow$'', suppose $V \in T_pM$ is a critical point of $\exp_p$, that is, there is a nonzero $X \in T_V(T_pM)$ such that 
+			\begin{equation*}
+				(d\exp_p)_V(X) = 0
+			\end{equation*}
+			Then consider a (radical) variation $F$ defined as
+			\begin{equation*}
+				F(t,s) \defeq \exp_pt(V+sX)
+			\end{equation*}
+			then $F(t,0) = \gamma(t)$ with Jacobian field $U(t) = \frac{\partial F}{\partial s}(t,0)$ and $U(0) = 0$ and
+			\begin{equation*}
+				\begin{aligned}
+					U(1) &= \lv{\frac{\partial F}{\partial s}}_{s=0,t=1}\\
+					&= \lv{\frac{\partial }{\partial s}\exp_p(V + sX)}_{s=0}\\
+					&= (d\exp_p)_V(X) = 0
+				\end{aligned}
+			\end{equation*}
+			Besides, $\nabla_TU(0) = X \neq 0$ implies that $U$ is nontrivial. So $0$ and $1$ are conjugate value of $\gamma$.
+			\item For ``$\Rightarrow$'', by contradiction, we assume $V$ is not a critical point. Then there exists linearly independent $X_1,X_2,\cdots,X_m \in T_V(T_pM)$ such that
+			\begin{equation*}
+				(d\exp_p)_V(X_1),(d\exp_p)_V(X_2),\cdots,(d\exp_p)_V(X_m) \in T_qM
+			\end{equation*}
+			are linearly independent. For any nontrivial Jacobian field $U$ along $\gamma$ with $U(0) = 0$, \emph{i.e.} $\nabla_TU(0) \neq 0$, consider a radical variation
+			\begin{equation*}
+				F(t,s) \defeq \exp_pt(V+s\nabla_TU(0))
+			\end{equation*}
+			whose variation field $\frac{\partial F}{\partial s}(t,0) = U(t)$. Let
+			\begin{equation*}
+				0 \neq \nabla_TU(0) = a^iX_i,\quad a^i \text{ not all }0
+			\end{equation*}
+			Then we have
+			\begin{equation*}
+				U(1) = (d\exp_p)_V(\nabla_TU(0)) = \sum_i a^i(d\exp_p)_V(X_i)
+			\end{equation*}
+			Because $a^i$ are not all $0$ and $(d\exp_p)_V(X_i)$ are independent, $U(1) \neq 0$. \qedhere
+		\end{itemize}
+	\end{proof}
+	\begin{rmk}
+		Consider a map $A_V \colon \mathcal{J}^\prime \rightarrow \ker (d \exp_p)_V$ defined by
+		\begin{equation*}
+			A_V(U) = \nabla_TU(0)
+		\end{equation*}
+		It is well-defined because $U(0) = 0$ implies that we can construct a radical variation $F$ with $U(t) = \frac{\partial F}{\partial s}(t,0)$ and $U(1) = (d\exp_p)_V(\nabla_TU(0)) = 0$. In $\Leftrightarrow$, we proved that $A_V$ is a surjection. And the injectivity is clear by the uniqueness of Jacobian field with same initial condition. So $A_V$ is an linear isomorphism. So the $\Rightarrow$ can be directly obtained by the map $A_V$. When $V$ is not a critical point, $\mathcal{J}^{\prime} = 0$ because $A_V$ is an isomorphism.
+	\end{rmk}
+
+	\item \emph{\textbf{Index form:}} Consider a two-parameter variation $F(t,v,w)$ with two fixed endpoints of a geodesic $\gamma \colon [a,b] \sto M$ with $T = \dot{\gamma}$(t), then
+	\begin{equation*}
+		\frac{\partial^2 E}{\partial w \partial v}(0,0) = \int_a^b \inn{\nabla_TV,\nabla_TW} - R(W,T,V,T)dt \eqdef I(V,W)
+	\end{equation*}
+	where $V(t) = \frac{\partial F}{\partial v}(t,0,0)$ and $W(t) = \frac{\partial F}{\partial w}(t,0,0)$. Then clearly, $I(V,W)$ is symmetric. In fact,for any vector fields $V,W$ along $\gamma$, we can also define $I(V,W)$ by above formula. Moreover, if we view $I(V,W)$ defined on the linear space of all vector fields along $\gamma$, it is a bilinear form.
+
+	\begin{prop}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic and $U$ be a vector field along $\gamma$. $U$ is a Jacobian field if and only if
+		\begin{equation*}
+			I(U,Y) = 0
+		\end{equation*}
+		for all vector field $Y$ along $\gamma$ with $Y(a) = Y(b) = 0$.
+	\end{prop}
+	\begin{proof}
+		By definition, for any vector field $Y$ along $\gamma$ with $Y(a) = Y(b) = 0$,
+		\begin{equation*}
+			\begin{aligned}
+				I(U,Y)&=\int_a^b \inn{\nabla_TU,\nabla_TY} - R(U,T,Y,T)dt \\
+				&= \int_a^b \frac{d}{dt}\inn{\nabla_TU,Y}-\inn{\nabla_T\nabla_TU,Y}-\inn{R(U,T)T,Y}dt\\
+				&= -\int_a^b \inn{\nabla_T\nabla_TU+R(U,T)T,Y} dt = 0
+			\end{aligned}
+		\end{equation*}
+		if and only if $\nabla_T\nabla_TU+R(U,T)T = 0$.
+	\end{proof}
+	\begin{cor}
+		$U$ is Jacobian if and only if $U$ is a critical point of variation $I(X,X)$ with respect of all vector fields $X$ along $\gamma$ when two end points are fixed.
+	\end{cor}
+	\begin{proof}
+		For any $Y$ with $Y(a) = Y(b) = 0$,
+		\begin{equation*}
+			\lv{\frac{d}{ds}}_{s=0}I(X+sY,X+sY) = 2I(X,Y) = 0 \qedhere
+		\end{equation*}
+	\end{proof}
+
+	For a geodesic $\gamma \colon [a,b] \sto M$,
+	\begin{equation*}
+		\begin{aligned}
+			\mathcal{V} &\defeq \text{ the set of all continuous piecewise smooth vector field along } \gamma\\
+			\mathcal{V}_0 &\defeq \bb{X \in \mathcal{V} \colon X(a) = X(b) = 0}
+		\end{aligned}
+	\end{equation*}
+	Define
+	\begin{equation*}
+		I(V,W) = \int_a^b\inn{\nabla_TV,\nabla_TW}-R(V,T,W,T)dt,\quad V,W \in \mathcal{V}
+	\end{equation*}
+	called the index form of $\gamma$, which is symmetric. Specifically, given $V,W \in \mathcal{V}$, let choose $a=t_0 < t_1 < \cdots < t_{n+1} = b$ such that $V,W$ are smooth on $[t_i,t_{i+1}]$ for all $i$.
+	\begin{equation*}
+		\begin{aligned}
+			I(V,W) &= \sum_i \int_{t_i}^{t_{i+1}} \inn{\nabla_TV,\nabla_TW}-R(V,T,W,T)dt \\
+			&= \sum_i \int_{t_i}^{t_{i+1}} \frac{d}{dt}\inn{V,\nabla_TW}-\inn{V,\nabla_T\nabla_TW}-\inn{R(W,T)T,V}dt\\
+			&= \lv{\inn{V,\nabla_TW}}_a^b-\sum_{i=1}^{n} \inn{V(t_i),\nabla_TW(t_{i}^+)-\nabla_TW(t_{i}^-)}\\
+			&\quad-\int_{a}^{b}\inn{V,\nabla_T\nabla_TW}-\inn{R(W,T)T,V}dt 
+		\end{aligned}
+	\end{equation*}
+	\begin{rmk}
+		\begin{enumerate}[label=(\roman{*})]
+			\item If $W$ is Jacobian (so it is smooth) and $V \in \mathcal{V}_0$, then $I(V,W) = 0$.
+
+			\item If $W$ is Jacobian (so it is smooth) and $V \in \mathcal{V}$, then
+			\begin{equation*}
+				I(V,W) = \lv{\inn{V,\nabla_TW}}_a^b
+			\end{equation*}
+
+			\item If $W$ is piecewise Jacobian and $V \in \mathcal{V}_0$, then
+			\begin{equation*}
+				I(V,W) = -\sum_{i=1}^{n} \inn{V(t_i),\nabla_TW(t_{i}^+)-\nabla_TW(t_{i}^-)}
+			\end{equation*}
+		\end{enumerate}
+	\end{rmk}
+	Consider $F \colon [a,b] \times (-\varepsilon,\varepsilon) \times (-\delta,\delta) \sto M$, where $F$ is smooth in $(-\varepsilon,\varepsilon) \times (-\delta,\delta)$ and piecewise smooth in $[a,b]$ (note that $F(t,0,0)$ is smooth), \emph{i.e.}
+	\begin{equation*}
+		F \colon [t_i,t_{i+1}]\times (-\varepsilon,\varepsilon) \times (-\delta,\delta) \sto M \text{ smooth},~a=t_0 < t_1 < \cdots < t_n = b,
+	\end{equation*}
+	such that 
+	\begin{equation*}
+		V(t) = \frac{\partial F}{\partial v}(t,0,0),\quad W(t) = \frac{\partial F}{\partial w}(t,0,0)
+	\end{equation*}
+	then
+	\begin{equation*}
+		\frac{\partial^2E}{\partial w\partial v}(0,0)  = I(V,W)
+	\end{equation*}
+	\begin{prop}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic and $U \in \mathcal{V}$. $U$ is a Jacobian field (then $U$ is smooth) if and only if
+		\begin{equation*}
+			I(U,Y) = 0,\quad Y \in \mathcal{V}_0
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For ``$\Rightarrow$'', it has been obtained by above remark. On the other side, assume $U$ is piecewise smooth on $a=t_0 < t_1 < \cdots < t_{n+1} = b$. Let $f \colon [a,b] \sto \R$ be smooth such that $f \geq 0$ and $f(t_i) = 0$ for all $i$. Constructing $Y$ as
+		\begin{equation*}
+			Y = f\cdot(\nabla_T\nabla_TU + R(U,T)T) \in \mathcal{V}_0
+		\end{equation*}
+		so we have
+		\begin{equation*}
+			\begin{aligned}
+			 	0 = I(Y,U) &= -\int_a^bf(t)\abs{\nabla_T\nabla_TU + R(U,T)T}^2dt
+			\end{aligned} 
+		\end{equation*}
+		which follows that
+		\begin{equation*}
+			\nabla_T\nabla_TU + R(U,T)T = 0,\quad \forall~t \in [t_i,t_{i+1}]
+		\end{equation*}
+		So $U$ is piecewise Jacobian. Then
+		\begin{equation*}
+			I(U,V) = -\sum_{i = 1}^n \inn{V(t_i),\nabla_TU(t_i^+) - \nabla_TU(t_i^-)},\quad \forall~ V \in \mathcal{V}_0
+		\end{equation*}
+		and also $I(U,V) = 0$. For $i_0$, constructing $V \in \mathcal{V}_0$ such that
+		\begin{equation*}
+			\begin{aligned}
+				V(t_j) &= 0,\quad j\neq i_0\\
+				V(t_{i_0}) &= \nabla_TU(t_{i_0}^+) - \nabla_TU(t_{i_0}^-)
+			\end{aligned}
+		\end{equation*}
+		Then $\nabla_TU(t_{i_0}^+) = \nabla_TU(t_{i_0}^-)$ for all $i_0$. So by the uniqueness of the solution for Jacobian equation, $U$ is smooth.
+	\end{proof}
+	\begin{thm}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic with $p = \gamma(a)$ and $q = \gamma(b)$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $p$ has no conjugate point along $\gamma$ if and only if $I$ is positive definite on $\mathcal{V}_0$.
+			\item $q$ is the first conjugate point along $\gamma$ if and only if $I$ is semi-positive but not positive on $\mathcal{V}_0$.
+			\item There is a $\bar{t} \in (a,b)$ such that $\bar{q} = \gamma(\bar{t})$ is conjugate  if and only if there is an $X \in \mathcal{V}_0$ such that $I(X,X) < 0$.
+		\end{enumerate}
+	\end{thm}
+	\begin{proof}
+		Note that we only need the ``$\Rightarrow$'' for $(1),(2)$, and $(3)$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Choosing an orthonormal basis $\bb{E_i}$ of $T_qM$ with $E_1 = \dot{\gamma}(q)$. By the following \textbf{Lemma} \ref{lem:jacofixpt}, we have $m$ Jacobian fields $\bb{J_i}$ such that $J_i(a) = 0$ and $U_i(b)=E_i$. Moreover, $\bb{J_i}$ is linearly independent at each point because there is no conjugate point (otherwise, $\lambda^iJ_i(t_0) = 0$ implies that $p$ is conjugate to $\gamma(t_0)$). For any $U \in \mathcal{V}_0$, 
+			\begin{equation*}
+				U = f^iJ_i,\quad f^i \text{ continuous piecewise }C^\infty,~f^i(a)=f^i(b)=0
+			\end{equation*}
+			Then it follows that
+			\begin{equation*}
+				\begin{aligned}
+					I(U,U) &= \int_a^b \inn{\nabla_Tf^iJ_i,\nabla_Tf^jJ_j} - R(f^iJ_i,T,f^jJ_j,T)dt\\
+					&= \int_a^b \dot{f^i}\dot{f^j}\inn{J_i,J_j}+\dot{f^i}f_j\inn{J_i,\nabla_TJ_j} + {f^i}\dot{f^j}\inn{\nabla_T J_i,J_j} +{f^i}{f^j}\inn{\nabla_TJ_i,\nabla_TJ_j} dt\\
+					&\quad - \int_a^b f^if^j R(J_i,T,J_j,T)dt
+				\end{aligned}
+			\end{equation*}
+			First,
+			\begin{equation*}
+				\begin{aligned}
+					\int_a^bf^if^j\inn{\nabla_TJ_i,\nabla_TJ_j} dt &= \int_a^b \frac{d}{dt}\bc{f^if^j\inn{\nabla_TJ_i,J_j}} - \dot{f^i}f^j\inn{\nabla_TJ_i,J_j} \\
+					&\quad  - f^i\dot{f^j}\inn{\nabla_TJ_i,J_j} - f^if^j\inn{\nabla_T\nabla_TJ_i,J_j}dt
+				\end{aligned}
+			\end{equation*}
+			and $\nabla_T\nabla_TJ_i + R(J_i,T)T = 0$. Moreover, $J_i,J_j$ Jacobian implies that $\inn{\nabla_T J_i,J_j} = \inn{J_i,\nabla_T J_j}$ because if let $f(t) = \inn{\nabla_T J_i,J_j} - \inn{J_i,\nabla_T J_j}$, then $f(0) = 0$ and
+			\begin{equation*}
+				\begin{aligned}
+					f^\prime(t) &= \inn{\nabla_T\nabla_T J_i,J_j} - \inn{J_i,\nabla_T\nabla_T J_j} \\ 
+					&=  \inn{R(J_i,T)T,J_j} - \inn{J_i,R(J_j,T)T} = 0
+				\end{aligned}
+			\end{equation*}
+			Besides,
+			\begin{equation*}
+				\int_a^b \frac{d}{dt}\bc{f^if^j\inn{\nabla_TJ_i,J_j}}dt = \sum_i\lv{f^if^j\inn{\nabla_TJ_i,J_j}}_{t_i}^{t_{i+1}} = 0
+			\end{equation*}
+			Combining these, we get
+			\begin{equation*}
+				I(U,U) = \int_a^b \inn{\dot{f^i}J_i,\dot{f^j}J_j}dt \geq 0
+			\end{equation*}
+			Moreover, $I(U,U) = 0$ if and only if $\dot{f^i}J_i = 0$ if and only if $\dot{f^i} = 0$, \emph{i.e.} $f^i \equiv 0$.
+
+			\item Clearly, $I$ is not positive. By moving in parallel, let's choose an orthonormal frame $\bb{E_i(t)}$ along $\gamma$. For any $X \in \mathcal{V}_0$, $X(t)=f^i(t)E_i(t)$ with $f^i(a) = f^i(b) = 0$. For $a < c < b$, constructing
+			\begin{equation*}
+				\widetilde{X}(t) = f^i\bc{a+\frac{b-a}{c-a}(t-a)}E_i(t),\quad t \in [a,c]
+			\end{equation*}
+			So by $(1)$, $I_c(\widetilde{X},\widetilde{X}) > 0$. Because
+			\begin{equation*}
+				\begin{aligned}
+					\lim_{c \sto b}I_c(\widetilde{X},\widetilde{X}) &= \lim_{c \sto b} \int_a^c \bc{\frac{b-a}{c-a}f^i\bc{a+\frac{b-a}{c-a}(t-a)}}^2 \\
+					&\quad\quad\quad- f^i\bc{a+\frac{b-a}{c-a}(t-a)}f^j\bc{a+\frac{b-a}{c-a}(t-a)}R(E_i,T,E_j,T)dt\\
+					&=I(X,X)
+				\end{aligned}
+			\end{equation*}
+			So $I(X,X) \geq 0$.
+
+			\item Let $J$ be Jacobian field on $\gamma|_{p\sto \bar{q}}$ such that $J(p) = J(\bar{q}) = 0$. Then let $\widetilde{J}$ be $\widetilde{J}_{p\sto \bar{q}}$ and $\widetilde{J}_{\bar{q}\sto q} = 0$. Then
+			\begin{equation*}
+				\nabla_T\widetilde{J}(\bar{t}^+) - \nabla_T\widetilde{J}(\bar{t}^-) = - \nabla_T\widetilde{J}(\bar{t}^-) \neq 0
+			\end{equation*}
+			Then let $U \in \mathcal{V}_0$ such that
+			\begin{equation*}
+			 	\inn{U(\bar{t}),\nabla_T\widetilde{J}(\bar{t}^-)} = -1
+			\end{equation*}
+			Constructing
+			\begin{equation*}
+				X = \frac{1}{c}\widetilde{J} - cU \in \mathcal{V}_0,\quad c \text{ small enough}
+			\end{equation*}
+			Then we have
+			\begin{equation*}
+				\begin{aligned}
+					I(X,X) &= \frac{1}{c^2}I(\widetilde{J},\widetilde{J}) -2I(\widetilde{J},U) + c^2I(U,U) \\
+					&= 0 - 2\bc{-\inn{U(\bar{t}),\nabla_T\widetilde{J}(\bar{t}^+) - \nabla_T\widetilde{J}(\bar{t}^-)}} + c^2I(U,U)\\
+					&= c^2I(U,U) - 2 < 0
+				\end{aligned}
+			\end{equation*}
+			for sufficiently small $c$.\qedhere
+		\end{enumerate}
+	\end{proof}
+	\begin{cor}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic with $p = \gamma(a)$ and $q = \gamma(b)$. If $p$ is not conjugate to $q$ along $\gamma$, then for any $\alpha,\beta \in \gamma$, $\alpha$ is not conjugate to $\beta$ along $\gamma$.
+	\end{cor}
+	\begin{proof}
+		Assume $\tilde{X}$ is a Jacobian field along $\gamma|_{\alpha \sto \beta}$ such that $\tilde{X}(\alpha) = \tilde{X}(\beta) = 0$. Then extending $X$ of $\tilde{X}$ by setting $X|_{\gamma|_{p \sto \alpha}} = X|_{\gamma|_{\beta \sto q}} = 0$. Then $X \in \mathcal{V}_0$ with $X \neq 0$ and by above calculation
+		\begin{equation*}
+			I(X,X) = - \sum_{t = \alpha,\beta}\inn{X(t),\nabla_TX(t^+)-\nabla_TX(t^-)} = 0
+		\end{equation*}
+		which contradicts to $(1)$ in above theorem.
+	\end{proof}
+	\begin{cor}
+		Let $(M,g)$ be a Riemannian manifold with sectional curvature $\leq 0$. No two points are conjugate along some geodesic.
+	\end{cor}
+	\begin{proof}
+		It is clearly by
+		\begin{equation*}
+			I(X,X) = \int_a^b \inn{\nabla_TX,\nabla_T X} - R(X,T,X,T)dt \geq 0
+		\end{equation*}
+	\end{proof}	
+	\begin{lem}\label{lem:jacofixpt}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic with $p = \gamma(a)$ and $q = \gamma(b)$. If $p$ has no conjugate point along $\gamma$, then for any $V_a \in T_pM$ and $V_b \in T_qM$, there is a unique Jacobian field $U$ along $\gamma$ such that $U(a) = V_a$ and $U(b) = V_b$.
+	\end{lem}
+	\begin{proof}
+		Let $\mathcal{J}$ be the set of all Jacobian field along $\gamma$. Define the map $A \colon \mathcal{J} \sto T_pM \times T_qM$ by $A(U) = \bc{U(a),U(b)}$. Clearly $A$ is linear and $\dim \mathcal{J} = \dim T_pM \times T_qM = 2m$. Because $p$ has no conjugate point along $\gamma$, $\ker A = 0$. $A$ is injective and so it is an isomorphism.
+	\end{proof}
+
+	\begin{defn}
+		Let $\gamma \colon [a,b] \sto M$ be a geodesic. The index of $\gamma$ is 
+		\begin{equation*}
+			\op{ind}(\gamma) \defeq \op{maxdim}\bb{\mathcal{A} \subset \mathcal{V}_0 \text{ subspace } \colon I(X,X) < 0,\quad \forall~X \in \mathcal{A},X\neq 0}
+		\end{equation*}
+		and the nullity of $\gamma$ is
+		\begin{equation*}
+			N(\gamma) \defeq \dim \bb{X \in \mathcal{V}_0 \colon I(X,Y) = 0,\quad \forall~Y \in \mathcal{V}_0}
+		\end{equation*}
+		where $I \colon \mathcal{V}_0 \times \mathcal{V}_0 \sto \R$ is considered.
+	\end{defn}
+	\begin{rmk}
+		By above result, we have
+		\begin{equation*}
+			N(\gamma) \defeq \dim \mathcal{J}^\prime = \text{ multiplicity of conjugate points }\gamma(a),\gamma(b)
+		\end{equation*}
+	\end{rmk}
+
+	\begin{thm}[Morse Index Theorem]\label{thm:morseindex}
+		The index of a geodesic $\gamma \colon [a,b] \sto M$ is the number of $\bar{t} \in (a,b)$ which are conjugate to $a$, with each conjugate value being counted by multiplicity, and it is always finite, that is
+		\begin{equation*}
+			\op{ind}(\gamma) = \sum_{t \in (a,b)} N(\gamma|_{[a,t]}) < \infty
+		\end{equation*}
+	\end{thm}
+	\begin{lem}\label{lem:indexlem}
+		$\gamma \colon [a,b] \sto M$ is a geodesic without conjugate points. Let $U$ be a Jacobian field along $\gamma$ and $X$ be a piecewise smooth vector field along $\gamma$ such that $X(a) = U(a)$ and $X(b) = U(b)$. Then
+		\begin{equation*}
+			I(U,U) \leq I(X,X)
+		\end{equation*}
+		where ``$=$'' if and only if $X = U$.
+	\end{lem}
+	\begin{proof}
+		First, $X-U$ is piecewise smooth and vanishes at ends. Then by above
+		\begin{equation*}
+			\begin{aligned}
+				0 &\leq I(X-U,X-U) \\
+				&=I(X,X) - 2I(X,U)+I(U,U)\\
+				&=I(X,X) - 2\lv{\inn{\nabla_TU,X}}_a^b + \lv{\inn{\nabla_TU,U}}_a^b \\
+				&= I(X,X) - \lv{\inn{\nabla_TU,U}}_a^b \\
+				&= I(X,X) - I(U,U)
+			\end{aligned}
+		\end{equation*}
+		where ``$=$'' if and only if $X = U$.
+	\end{proof}
+	The first problem is how to bound the dimensions of the negative definite space and the nullity space of $I$. Consider the space
+	\begin{equation*}
+		\bb{fT \colon f \text{ piecewise smooth on }[a,b],~f(a)=f(b)=0}
+	\end{equation*}
+	where $T = \dot{\gamma}(0)$. Then
+	\begin{equation*}
+		I(fT,fT) = \int_a^b \inn{\nabla_T(fT),\nabla_T(fT)}dt = \int_a^b \dot{f}^2(t)dt \geq 0
+	\end{equation*}
+	where ``$=$'' if and only if
+	\begin{equation*}
+		f \equiv 0 ~\Rightarrow~fT = 0
+	\end{equation*}
+	Besides, for all $U \in \mathcal{V}_0$ with $\inn{U,T} \equiv 0$,
+	\begin{equation*}
+		\begin{aligned}
+			I(fT,U) &= \int_a^b \inn{\nabla_T(fT),\nabla_TU}dt \\
+			&= \int_a^b \inn{\dot{f}T,\nabla_TU}dt \\
+			&= \int_a^b \frac{d}{dt}\inn{\dot{f}T,U} - \inn{\ddot{f}T,U}dt \\
+			&= \lv{\inn{\dot{f}T,U}}_a^b = 0
+		\end{aligned}
+	\end{equation*}
+	which means that for all $W = fT+U$ with $U \perp T$, $I(W,W) = I(U,U)$. 
+	\begin{equation*}
+		\mathcal{V}_0 = \bb{fT} \oplus \bb{U \in \mathcal{V}_0 \colon \inn{U,T} \equiv 0}
+	\end{equation*}
+	So we only need to consider the space orthogonal to $T$,
+	\begin{equation*}
+		\mathcal{V}_0^\perp = \bb{U \in \mathcal{V}_0 \colon \inn{U,T} \equiv 0}
+	\end{equation*}
+	that is considering $I \colon \mathcal{V}_0^\perp \times \mathcal{V}_0^\perp \sto \R$. But $\dim \mathcal{V}_0^\perp$ may also be infinite. So we need to reduce the dimension of $\mathcal{V}_0^\perp$ more. For each point at $\gamma$, we can find a totally normal neighborhood (which contains no conjugate points). So $\gamma$ can be covered by totally normally neighborhoods. By compactness of $\gamma$, it can be covered by finitely many totally neighborhoods. So there is
+	\begin{equation*}
+		a=t_0 < t_1 < \cdots < t_k < t_{k+1} = b
+	\end{equation*}
+	such that $\lv{\gamma}_{[t_i,t_{i+1}]}$ has no conjugate points. Let
+	\begin{equation*}
+		T_1 \defeq \bb{X \in \mathcal{V}_0^\perp \colon X \text{ is Jacobian along } \lv{\gamma}_{[t_i,t_{i+1}]} \text{ for all }i}
+	\end{equation*}
+	Consider a linear map,
+	\begin{equation*}
+		\varphi \colon T_1 \longrightarrow T_{\gamma(t_1)}M \times \cdots T_{\gamma(t_k)}M
+	\end{equation*}
+	is defined by $\varphi(J) = (J(t_1),\cdots,J(t_k))$. By \textbf{Lemma} \ref{lem:jacofixpt}, because $\lv{\gamma}_{[t_i,t_{i+1}]}$ has no conjugate points, the space of Jacobian fields along $\lv{\gamma}_{[t_i,t_{i+1}]}$ is determined by $T_{\gamma(t_i)}M \times T_{\gamma(t_{i+1})}M$, $\varphi$ is an isomorphism. Therefore, $\dim T_1 = km < \infty$ by the following. Then for any $X \in \mathcal{V}_0^\perp$, $\bb{X(t_i)}_{i=0}^{k+1}$ determine a $J_X \in T_1$ with $X - J_X$ vanishing at $t_i$. So by considering
+	\begin{equation*}
+		T_2 = \bb{X \in \mathcal{V}_0^\perp \colon X(t_i) = 0,~\forall~i}
+	\end{equation*}
+	we have
+	\begin{equation*}
+		\mathcal{V}_0^\perp = T_1 \oplus T_2
+	\end{equation*}
+	because $T_1 \cap T_2 = \bb{0}$ by the fact that $\lv{\gamma}_{[t_i,t_{i+1}]}$ has no conjugate points.
+	\begin{lem}
+		With above notations, we have
+		\begin{enumerate}[label=(\arabic{*})]
+			\item $I(X,Y) = 0$ for any $X \in T_1$, $Y \in T_2$.
+			\item $I|_{T_2}$ is positive definite.
+		\end{enumerate}
+	\end{lem}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item For any $X \in T_1$, $Y \in T_2$, by above calculation, we have
+			\begin{equation*}
+				I(X, Y)=-\sum_{i=1}^n\left\langle Y\left(t_i\right), \nabla_T X\left(t_i^{+}\right)-\nabla_T X\left(t_i^{-}\right)\right\rangle = 0
+			\end{equation*}
+
+			\item For any $X \in T_2$, by above calculation,
+			\begin{equation*}
+				\begin{aligned}
+					I(X,X) &= \sum_i \int_{t_i}^{t_{i+1}}\left\langle\nabla_T X, \nabla_T X\right\rangle-R(X, T, X, T) d t\\
+					&= \sum_i I|_{\lv{\gamma}_{[t_i,t_{i+1}]}}(X|_{\lv{\gamma}_{[t_i,t_{i+1}]}},X|_{\lv{\gamma}_{[t_i,t_{i+1}]}}) \geq 0
+				\end{aligned}
+			\end{equation*}
+			because $\lv{\gamma}_{[t_i,t_{i+1}]}$ has no conjugate points. \qedhere
+		\end{enumerate}
+	\end{proof}
+	Therefore, for negative definite and nullity space of $I$, we only need to consider
+	\begin{equation*}
+		I \colon T_1 \times T_1 \longrightarrow \R
+	\end{equation*}
+	which means $\op{ind}(\gamma) < \infty$ and $N(\gamma) < \infty$ because $\dim T_1 < \infty$.
+	\begin{lem}
+		Let $\op{ind}(\tau) = \op{ind}(\gamma_{[a,\tau]})$.
+		\begin{enumerate}[label=(\arabic*)]
+			\item For any $\tau \in (a,b]$, there is a $\delta > 0$ such that
+			\begin{equation*}
+				\forall~\varepsilon \in [0,\delta],\quad \op{ind}(\tau-\varepsilon) = \op{ind}(\tau)
+			\end{equation*}
+			which mean $\op{ind}(\tau)$ is right-continuous.
+			\item For any $\tau \in [a,b)$, there is a $\delta > 0$ such that
+			\begin{equation*}
+				\forall~\varepsilon \in [0,\delta],\quad \op{ind}(\tau+\varepsilon) = \op{ind}(\tau) + N(\tau)
+			\end{equation*}
+			where $N(\tau) = N(\lv{\gamma}_{[a,\tau]})$, the nullity of $I$ on $\lv{\gamma}_{[a,\tau]}$. So $\op{ind}(\tau)$ is not left-continuous.
+		\end{enumerate}
+	\end{lem}
+	\begin{rmk}
+		By the boundedness of index, this lemma directly implies the Morse Index Theorem.
+	\end{rmk}
+	\begin{proof}
+		Let $I^\tau = \lv{I}_{\lv{\gamma}_{[a,\tau]}}$. Let $\tau$ be fixed. WTLG, assume $\tau \in (t_j,t_{j+1})$ for some $j$ (otherwise choosing a different cover). Let
+		\begin{equation*}
+			T_1(\tau) = \bb{X \in \mathcal{V}_0^\perp(\tau) \colon X \text{ is Jacobian on } \lv{\gamma}_{[t_i,t_{i+1}]},~j=0,\cdots,j-1, \text{ and on }\lv{\gamma}_{[t_j,\tau]}}
+		\end{equation*}
+		where $\mathcal{V}_0^\perp(\tau)$ is vector fields along $\lv{\gamma}_{[a,\tau]}$ and vanishing at $a,\tau$ and perpendicular to $\lv{\dot{\gamma}}_{[a,\tau]}$. Consider the linear isomorphism
+		\begin{equation*}
+			\varphi^\tau \colon T_1(\tau) \longrightarrow T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M
+		\end{equation*}
+		Note the space of right-hand side does not change when $ \tau \sto \tau \pm \varepsilon$. Considering the symmetric bilinear form $\lv{I^\tau}_{T_1(\tau)}$, it can be viewed as bilinear form on $T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M$ by for any $x, y$ in that
+		\begin{equation*}
+			I^\tau(x,y) \defeq I^\tau((\varphi^{\tau})^{-1}(x),(\varphi^{\tau})^{-1}(y))
+		\end{equation*}
+		Then for $ \tau \sto \tau \pm \varepsilon$, the base space of $I^\tau$ is fixed. For a fixed $x \in T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M$, consider the function
+		\begin{equation*}
+			\tau \mapsto I^\tau(x,x)
+		\end{equation*}
+		\textbf{Claim:} This function is continuous \emph{w.s.t.} $\tau$.
+		\begin{proof}[Proof of Claim]
+			Let $X = (\varphi^{\tau})^{-1}(x), Y = (\varphi^{\tau})^{-1}(y)$. By definition,
+			\begin{equation*}
+				\begin{aligned}
+					I^\tau(x,y) &= I^\tau(X,Y) \\
+					&= \sum_{i=0}^{j-1}\inn{\nabla_TX,Y}_{t_i}^{t_{i+1}} + \inn{\nabla_TX,Y}_{t_j}^\tau 
+				\end{aligned}
+			\end{equation*}
+			Let $X_j = \lv{X}_{[t_j,\tau]}$, $Y_j = \lv{Y}_{[t_j,\tau]}$. So when $ \tau \sto \tau \pm \varepsilon$, the only thing is needed to be considered is
+			\begin{equation*}
+				\inn{\nabla_TX_j,Y_j}_{t_j}^\tau = - \inn{\nabla_TX_j(t_j^+),Y_j(t_j)}
+			\end{equation*}
+			note that $Y_j(t_j)$ is also independent with $\tau$. So this function only dependents on $\nabla_TX_j(t_j^+)$. Besides, note that $X_j(t_j)$ is also fixed. Note the $X_j$ is determined by $X_j(t_j)$ and $\nabla_TX_j(t_j^+)$ from a variation
+			\begin{equation*}
+				F(t,s) = \exp_{\gamma(t_j)}t\bc{V(s)+sW(s)}
+			\end{equation*}
+			where $V(s)$ is given by $X(t_j)$ and $W(s) = \mathcal{P}_s(\nabla_TX_j(t_j^+))$. Because $X(\tau) = 0$, the variation is fixed at $\tau$, that is $F(\tau,s) \equiv \gamma(\tau)$. So
+			\begin{equation*}
+				V(s) + sW(s) = \exp_{\gamma(t_j)}^{-1}(\gamma(\tau)) ~\Rightarrow~ W(s) = \frac{\exp_{\gamma(t_j)}^{-1}(\gamma(\tau)) - V(s)}{W(s)}
+			\end{equation*}
+			and thus
+			\begin{equation*}
+				\nabla_TX_j(t_j^+) = \mathcal{P}_{-s}\bc{\frac{\exp_{\gamma(t_j)}^{-1}(\gamma(\tau)) - V(s)}{W(s)}}
+			\end{equation*}
+			which is continuity \emph{w.s.t.} $\tau$.
+		\end{proof}
+		This claim directly implies
+		\begin{enumerate}[label=(\roman*)]
+			\item $\op{ind}(\tau \pm \varepsilon) \geq \op{ind}(\tau)$, because $I^\tau(x,x) < 0$ implies $I^{\tau\pm\varepsilon}(x,x) < 0$.
+			\item $\op{ind}_+(\tau \pm \varepsilon) \geq \op{ind}_+(\tau)$, where $\op{ind}_+$ is the dimension of positive definite space of $I^\tau$ in $T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M$ ,because $I^\tau(x,x) > 0$ implies $I^{\tau\pm\varepsilon}(x,x) > 0$.
+			\item Because $\op{ind}_+ = nj - \op{ind} - \op{null}$,
+			\begin{equation*}
+				\op{ind}(\tau \pm \varepsilon) \leq \op{ind}(\tau) + N(\tau) - N(\tau  \pm \varepsilon) \leq \op{ind}(\tau) + N(\tau)
+			\end{equation*}
+		\end{enumerate}
+		So we have
+		\begin{equation*}
+			\op{ind}(\tau) \leq \op{ind}(\tau \pm \varepsilon) \leq \op{ind}(\tau) + N(\tau)
+		\end{equation*}
+		Next, choosing a $\xi \in (t_j,\tau)$. Let $x = (x_1,\cdots,x_j) \in T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M$. By \textbf{Lemma} \ref{lem:indexlem},
+		\begin{equation*}
+			I^\xi(x,x) - I^\tau(x,x) = I^\xi(X|_{[t_j,\xi]},X|_{[t_j,\xi]}) - I^\tau(X|_{[t_j,\tau]},X|_{[t_j,\tau]}) \geq 0
+		\end{equation*}
+		because $X|_{[t_j,\tau]}$ is a Jacobian field, where ``$=$'' if and only if $X|_{[t_j,\xi]} =X|_{[t_j,\tau]} = 0$, that is $x_j = 0$.
+		\begin{enumerate}[label=(\arabic{*})]
+			\item So
+			\begin{equation*}
+				I^\xi(x,x) < 0 ~\Rightarrow~I^\tau(x,x) < 0
+			\end{equation*}
+			which means $\op{ind}(\xi) \leq \op{ind}(\tau)$. Combining this with above result, we have
+			\begin{equation*}
+				\op{ind}(\tau - \varepsilon) = \op{ind}(\tau)
+			\end{equation*}
+
+			\item Next, we need to show
+			\begin{equation*}
+				\op{ind}(\tau + \varepsilon) \geq \op{ind}(\tau) + N(\tau)
+			\end{equation*}
+			Because $\op{Neg}(\tau) \subset \op{Neg}(\tau+\varepsilon)$, where $\op{Neg}(\tau)$ is the negative definite space of $I^\tau$, it is sufficient to show $N(\tau) \subset \op{Neg}(\tau + \varepsilon)$. By using notation as $\xi<\tau$, we only need to show $N(\xi) \subset \op{Neg}(\tau)$. Let $x \neq 0$ in the null space of $I^\xi$ in $T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M$.
+			\begin{equation*}
+				I^\xi(x,y) = 0,\quad \forall~y\in T_{\gamma(t_1)}M \times \cdots \times T_{\gamma(t_j)}M
+			\end{equation*}
+			So $I^\xi(X,Y) = 0$ for all $\mathcal{V}_0(\xi)$ and thus $X$ is a smooth Jacobian field on $[a,\xi]$. It follows that $x_j = X(t_j) \neq 0$ (otherwise, $x = 0$). Therefore,
+			\begin{equation*}
+				0 = I^\xi(x,x) > I^\tau(x,x)
+			\end{equation*}
+			Thus, $x \in N(\tau)$. \qedhere
+		\end{enumerate}
+	\end{proof}
+	
+	\begin{thm}[Cartan-Hadamard]
+		A complete, simply connected, $m$-dimensional Riemannian manifold $(M,g)$ with the sectional $\leq 0$ is diffeomorphic to $\R^m$. More precisely, $\exp_p \colon T_pM \sto M$ is a diffeomorphism.
+	\end{thm}
+	\begin{proof}
+		The aim is to prove that when $(M,g)$ is complete,
+		\begin{equation*}
+			\exp_p \colon T_pM \longrightarrow M
+		\end{equation*}
+		is a Riemannian covering map, where $T_pM$ is equipped with metric $\exp_p^*g$, that is for any $X,Y \in T_v(T_pM)$,
+		\begin{equation*}
+			\exp_p^*g(X,Y) = g((d\exp_p)_v(X),(d\exp_p)_v(Y))
+		\end{equation*}
+		which is well-defined because
+		\begin{center}
+			\begin{tabular}{rcl}
+				the sectional $\leq 0$ &$\Rightarrow$& $I$ is always positive definite \\
+				&$\Rightarrow$& no conjugate points \\
+				&$\Rightarrow$& $(d\exp_p)_v$ is always injective
+			\end{tabular}
+		\end{center}
+		First, $\exp_p$ is clearly a local isometry by definition. To show that it is a Riemannian covering map, we only need to check the completeness, because of the \textbf{Theorem} \ref{thm:ambro}. Note that $\exp_p(tX)$ is a geodesic in $M$ for any radical line $tX$ in $T_pM$. Because $\exp_p$ is locally isometric, $tX$ is also a geodesic through $0$ in $T_pM$. By the completeness of $M$, $t \in \R$. So $tX$ is a geodesic that can approach infinite. It follows that $(T_pM,\exp_p^*g)$ is complete. Then when $M$ is simply complete, $\exp_p$ is diffeomorphic.
+	\end{proof}
+
+	\item \textbf{Structure of Complete Manifold:} Let $(M,g)$ be a complete Riemannian manifold and $p \in M$. Then
+	\begin{equation*}
+		M = \exp _p(E(p)) \sqcup C(p)
+	\end{equation*}
+	Let $\gamma:[0, \infty) \rightarrow M$ be a geodesic with $\gamma(0)=p, \dot{\gamma}(0)=v$. Let $q = \gamma(a)$ be a cut point. By \textbf{Theorem} \ref{thm:cutpoint}, the following statement would happen. $d\exp_p$ is singular at $av$, which is equivalent to $q$ is a conjugate point of $p$. Moreover, between $p$ and $q$, there is no conjugate point. Otherwise, there is a $X \in \mathcal{V}_0$ such that $I(X,X) < 0$, which means there is a variation given by $X$ such that
+	\begin{equation*}
+		E^{\prime\prime}(0) = I(X,X) < 0
+	\end{equation*}
+	It follows $\gamma$ cannot be with the shortest length, contradicting to the definition of cut point. So $q$ is the first conjugate point. So $d\exp_p$ is non-singular on $E(p)$. For the map,
+	\begin{equation*}
+		\exp_p \colon E(p) \longrightarrow \exp_p(E(p))
+	\end{equation*}
+	is one-one and non-singular at each point. Furthermore, we can prove $E(p)$ is open. To do that, let $S_p \subset T_pM$ be all unit vectors. Recalling
+	\begin{equation*}
+		\tau \colon S_p \longrightarrow \R\cup\bb{\infty}
+	\end{equation*}
+	defined as
+	\begin{equation*}
+		\tau(v):= \begin{cases}a, & \text { if } \exp _p(a v) \text { is a cut point } \\ \infty, & \text { if no cut point }\end{cases}
+	\end{equation*}
+	\begin{thm}
+		$\tau$ is continuous when $\R \cup \bb{\infty}$ has equipped the canonical topology.
+	\end{thm}
+	\begin{proof}
+		For any sequence $\bb{X_n} \subset S_p$ with $X = \lim_n X_n$, the goal is to prove
+		\begin{equation*}
+			\lim_n \tau(X_n) = \tau(X)
+		\end{equation*}
+		\begin{enumerate}[label=\Roman*.]
+			\item $\tau(X) \geq \limsup_n \tau(X_n)$: First, $\bb{\tau(X_n)} \subset \R \cup \bb{\infty}$ that is a compact space, so it has a subsequence $\tau(X_{n_k})$ such that $\tau(X_{n_k}) \sto \alpha$. Assume $\alpha < \infty$. Then by the continuity of $\gamma$
+			\begin{equation*}
+				\lim_k d(p,\exp_p(\tau(X_{n_k})X_{n_K})) = d(p,\exp_p(\alpha X))
+			\end{equation*}
+			Because $\exp_p(\tau(X_{n_k})X_{n_K})$ is a cut point, $d(p,\exp_p(\tau(X_{n_k})X_{n_K})) = \tau(X_{n_k})$. It follows that
+			\begin{equation*}
+				d(p,\exp_p(\alpha X)) = \lim_k \tau(X_{n_k}) = \alpha
+			\end{equation*}
+			So $\tau(X) \geq \alpha$. If $\alpha = \infty$, that is for any $t$, there is an $N$ such that $\tau(X_{n_k}) > t$ for all $k > N$. So
+			\begin{equation*}
+				(p,\exp_p(t X)) = \lim_k d(p,\exp_p(tX_{n_K})) = t
+			\end{equation*}
+			Therefore, $\tau(X) > t$ for all $t$, so $\tau(X) = \infty$, \emph{i.e.} $\tau(X) \geq \alpha$.
+
+			\item $\tau(X) \leq \liminf_n\tau(X_n)$: For any convergence subsequence $\tau(X_{n_k})$ with $\tau(X_{n_k}) \sto \alpha$, the aim is to prove
+			\begin{equation*}
+				\tau(X) \leq \alpha
+			\end{equation*}
+			Let's assume $\tau(X) > \alpha$, \emph{i.e.} $\exp_p(\alpha X)$ is not a cut point. By \textbf{Theorem} \ref{thm:cutpoint}, there is a unique shortest geodesic connecting $p$ and $\exp_p(\alpha X)$ and $d\exp_p$ is non-singular at $\alpha X$. It follows that the is a neighborhood $U$ of $\alpha X$ in $T_pM$ such that $\exp_p$ is diffeomorphic on $U$. Besides, because $\tau(X_{n_k}) \sto \alpha X$, WTLG, assume $\bb{\tau(X_{n_k})X_{n_k}} \subset U$. Because $d\exp_p$ is non-singular at each $\bb{\tau(X_{n_k})X_{n_k}}$. By \textbf{Theorem} \ref{thm:cutpoint}, for each $\tau(X_{n_k})X_{n_k}$, there are two shortest geodesics connecting $p$ with $\exp_p(\tau(X_{n_k})X_{n_k})$. So there is a $Y_{n_k} \in S_p$ such that
+			\begin{equation*}
+				\exp_p(\tau(X_{n_k})X_{n_k}) = \exp_p(\tau(X_{n_k})Y_{n_k})
+			\end{equation*}
+			which means $\tau(X_{n_k})Y_{n_k} \notin U$ because $\exp_p$ is one-one on $U$. Since $S_p$ is compact, there is a subsequence $Y_{n_{k_i}}$ with $Y_{n_{k_i}} \sto Y \in S_p$. So
+			\begin{equation*}
+				\lim_i\tau(X_{n_{k_i}}) Y_{n_{k_i}} = \alpha Y
+			\end{equation*}
+			Because $U$ is open, $\alpha Y \notin U$ and so $\alpha X \neq \alpha Y$. Furthermore,
+			\begin{equation*}
+				\exp_p(\alpha Y) = \lim_i\exp_p(\tau(X_{n_{k_i}}) Y_{n_{k_i}}) = \lim_i\exp_p(\tau(X_{n_{k_i}})X_{n_{k_i}}) = \exp_p(\alpha X) = q
+			\end{equation*}
+			which means there are two shortest geodesics connecting $p$ with $\exp_p(\alpha X)$, contracting to the assumption. \qedhere
+		\end{enumerate}
+	\end{proof}
+	Because $\tau$ is continuous,
+	\begin{equation*}
+		\tilde{C}(p) = \bb{\tau(X)X \colon X \in S_p}
+	\end{equation*}
+	is closed. So $E(p) = T_pM \backslash \tilde{C}(p)$ is open. Then
+	\begin{equation*}
+		\exp_p \colon E(p) \longrightarrow \exp_p(E(p))
+	\end{equation*}
+	is a diffeomorphism because it is an injective local diffeomorphism by the fact that $\dim E(p) = \dim M$.
+
+\end{enumerate}
+
+\section{Properties with Sectional Curvature}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Space form:}} A Riemannian manifold $(M,g)$ is called a space form if it is complete and has the constant sectional curvature.
+	\begin{thm}
+		For any $c \in \R$ and any $n \in \Z_+$, there exists a unique simply-connected $n$-dimensional complete Riemannian manifold with constant curvature $c$
+	\end{thm}
+	\begin{proof}
+		First,
+		\begin{equation*}
+			\Gamma_{i j}^m=\frac{1}{2} g^{m l}\left(g_{j l, i}+g_{l i, j}-g_{i j, l}\right)\quad \Rightarrow \quad \Gamma_{i j}^m(kg) = \Gamma_{i j}^m(g)
+		\end{equation*}
+		for any positive constant $k$. It follows that the curvature tensor $R$ is invariant with respect to the scaling of Riemannian metric $g$ by $R_{l i j}^m=\frac{\partial \Gamma_{j l}^m}{\partial x^i}-\frac{\partial \Gamma_{i l}^m}{\partial x^j}+\Gamma_{j l}^p \Gamma_{i p}^m-\Gamma_{i l}^p \Gamma_{j p}^m$. So the Riemannian curvature tensor $R(kg) = k R(g)$ and by definition the sectional curvature satisfies
+		\begin{equation*}
+			K(kg)=\frac{1}{k}K(g)
+		\end{equation*}
+		for any positive constant $k$. Therefore, by scaling the Riemannian metric, we only need to assume $c = 0,1,-1$. The existence is clear because we have already seen that the Euclidean space, sphere, and hyperbolic space have the constant curvature of $0$, $1$, and $-1$ respectively. So the important thing is the uniqueness, which can can be done by the following theorem.
+	\end{proof}
+
+	\begin{thm}\label{thm:spaceform}
+		Assume $(M,g)$ and $(\widetilde{M},\widetilde{g})$ are two simply-connected $n$-dimensional complete Riemannian manifold with the same constant curvature $c \in \R$. Let $p \in M$ and $\tilde{p} \in \widetilde{M}$. Let $\bb{e_i}$ be a orthonormal basis of $T_pM$ and $\bb{\tilde{e}_i}$ be a orthonormal basis of $T_{\tilde{p}}\widetilde{M}$. Then there exists a unique isometry $\varphi \colon M \sto \widetilde{M}$ such that $\varphi(p) = \tilde{p}$ and $d\varphi_p(e_i) = \tilde{e}_i$. 
+	\end{thm}
+	\begin{rmk}
+		Similarly, by scaling the Riemannian metric, we can assume $c = 0,1,-1$. Besides, for $c = 0, -1$, by the above Cartan-Hadamard theorem, they are diffeomorphic to the Euclidean space.
+	\end{rmk}
+	\begin{lem}\label{lem:existofspform}
+		$(M,g)$ and $(\widetilde{M},\widetilde{g})$ are as same as the statements of above theorem. Let $p \in M$ and $\tilde{p} \in \widetilde{M}$. Suppose $\exp_p \colon \mathcal{V} \subset T_pM \sto \exp_p(\mathcal{V}) = \mathcal{U} \subset M$ is a diffeomorphism. Let $\Phi \colon T_pM \sto T_{\tilde{p}}\widetilde{M}$ be a linear isometry such that ${\exp}_{\tilde{p}} \colon \Phi(\mathcal{V}) \subset T_{\tilde{p}}\widetilde{M} \sto \widetilde{M}$ is well-defined. Then there exists a local isometry
+		\begin{equation*}
+			\varphi \colon U \subset M \longrightarrow {\exp}_{\tilde{p}}\bc{\Phi(\mathcal{V})} \subset \widetilde{M}
+		\end{equation*}
+		defined by
+		\begin{equation*}
+			\varphi = {\exp}_{\tilde{p}} \circ \Phi \circ \exp_p^{-1}
+		\end{equation*}
+		Furthermore, $\varphi(p) = \tilde{p}$ and $d\varphi_p = \Phi$. 
+	\end{lem}
+	\begin{rmk}
+		When $c=0,-1$, by the Cartan-Hadamard theorem, the exponential map is always diffeomorphic, so $\varphi$ is a diffeomorphism and this lemma would imply the existence of $\varphi$ for the above theorem.
+	\end{rmk}
+	\begin{proof}
+		First, $\varphi(p) = \tilde{p}$ and by $(d\exp_p)_O = (d{\exp}_{\tilde{p}})_{\tilde{O}} =I$
+		\begin{equation*}
+			d\varphi_p = \Phi
+		\end{equation*}
+		It is sufficient to prove $\varphi$ is a local isometry, \emph{i.e.} for any $q \in \mathcal{U}$ and any $X \in T_qM$,
+		\begin{equation*}
+			\widetilde{g}(d\varphi_q(X),d\varphi_q(X)) = \widetilde{g}(\Phi(X),\Phi(X)) = g(X,X)
+		\end{equation*}
+		Note that if $q = p$, then it is clearly true. Assume $q \neq p$. Let $V_p = \exp_p^{-1}(q) \in T_pM$, \emph{i.e.} the geodesic
+		\begin{equation*}
+			\gamma(t) = \exp_p(tV_p),\quad t \in [0,1]
+		\end{equation*}
+		connects $p$ with $q$. Then
+		\begin{equation*}
+		 	\varphi(q) =  {\exp}_{\tilde{p}}(\Phi(V_p))
+		\end{equation*}
+		Then the geodesic
+		\begin{equation*}
+			 \widetilde{\gamma}(t) =  {\exp}_{\tilde{p}}(t\Phi(V_p)),\quad t \in [0,1]
+		\end{equation*}
+		connects $\tilde{p}$ with $\varphi(q)$. Choose a Jacobian field $U$ along $\gamma$ such that $U(0) = 0$ and $U(1) = X$, which uniquely exists because $\gamma$ has no conjugate point by \textbf{Lemma} \ref{lem:jacofixpt}. Then let
+		\begin{equation*}
+			F(t,s) = \exp_p t(V_p + sW)
+		\end{equation*}
+		be the corresponding variation, where
+		\begin{equation*}
+			U(1) = (d\exp_p)_{V_p}(W) = X,\quad \Rightarrow \quad W = \bc{(d\exp_p)_{V_p}}^{-1}(X)
+		\end{equation*}
+		Note that $W = \nabla_{V_b}U(0)$. Other hand, let
+		\begin{equation*}
+			\widetilde{F}(t,s) = \varphi\circ F(t,s) = {\exp}_{\tilde{p}}\bc{t\bc{\Phi(V_p)+s\Phi(W)}}
+		\end{equation*}
+		So $\widetilde{F}$ is a variation of $\widetilde{\gamma}$ with the Jacobian field
+		\begin{equation*}
+			\widetilde{U}(t) = \frac{\partial}{\partial s}\widetilde{F}(t,0),\quad \widetilde{U}(0) = 0
+		\end{equation*}
+		Furthermore,
+		\begin{equation*}
+			\begin{aligned}
+				\widetilde{U}(1) &= \lv{\frac{\partial}{\partial s}}_{t=1,s=0} \varphi \circ F(t,s) \\
+				&= d\varphi_q\bc{\lv{\frac{\partial}{\partial s}}_{t=1,s=0}F(t,s)} \\
+				&= d\varphi_q(U(1)) \\
+				&= d\varphi_q(X)
+			\end{aligned}
+		\end{equation*}
+		and 
+		\begin{equation*}
+			\widetilde{\nabla}_{\Phi(V_p)}\widetilde{U}(0) = \Phi(W)
+		\end{equation*}
+		Choose an orthonormal basis $\bb{e_i}$ of $T_pM$. Then because $\Phi$ is an isometry, $\tilde{e}_i=\Phi(e_i)$ is an orthonormal basis of $T_{\tilde{p}}\widetilde{M}$, where. Let $E_i(t)$ and $\widetilde{E}_i(t)$ be the orthonormal frames by moving $e_i$ and $\tilde{e}_i$ in parallel along $\gamma$ and $\widetilde{\gamma}$ respectively. Then
+		\begin{equation*}
+			U(t) = f^i(t)E_i(t),\quad \widetilde{U}(t) = \widetilde{f}^i(t)\widetilde{E}_i(t)
+		\end{equation*}
+		So it is sufficient to prove
+		\begin{equation*}
+			\sum_i \bc{f^i(1)}^2 = \sum_i \bc{\widetilde{f}^i(1)}^2
+		\end{equation*}
+		Note that because $U$ is Jacobian
+		\begin{equation*}
+			\frac{d^2}{dt^2}f^i(t) + f^i(t)R(E_j,V_b,E_i,V_b) = 0
+		\end{equation*}
+		Because $M$ has the constant curvature, 
+		\begin{equation*}
+			\begin{aligned}
+				R(E_j,V_b,E_i,V_b) &= c\bc{g(E_j,E_i)g(V_b,V_b)-g(E_j,V_b)g(E_i,V_b)} \\
+				&= c\bc{g(e_j,e_i)g(V_b,V_b)-g(e_j,V_b)g(e_i,V_b)}
+			\end{aligned}
+		\end{equation*}
+		Then
+		\begin{equation*}
+			\frac{d^2}{dt^2}f^i(t) + cf^i(t)\bc{g(e_j,e_i)g(V_b,V_b)-g(e_j,V_b)g(e_i,V_b)} = 0
+		\end{equation*}
+		Besides, its initial values satisfy
+		\begin{equation*}
+			f^i(0) = 0,\quad \lv{\frac{d}{dt}}_{t=0}f^i(t) = g(W,e_i)
+		\end{equation*}
+		Similarly, for $\widetilde{U}$,
+		\begin{equation*}
+			\frac{d^2}{dt^2}\widetilde{f}^i(t) + c\widetilde{f}^i(t)\bc{\widetilde{g}(\tilde{e}_j,\tilde{e}_i)\widetilde{g}(\Phi(V_b),\Phi(V_b))-\widetilde{g}(\tilde{e}_j,\Phi(V_b))\widetilde{g}(\tilde{e}_i,\Phi(V_b))} = 0
+		\end{equation*}
+		\emph{i.e.}
+		\begin{equation*}
+			\frac{d^2}{dt^2}\widetilde{f}^i(t) + c\widetilde{f}^i(t)\bc{g(e_j,e_i)g(V_b,V_b)-g(e_j,V_b)g(e_i,V_b)} = 0
+		\end{equation*}
+		with the initial values
+		\begin{equation*}
+			\widetilde{f}^i(0)=0,\quad \lv{\frac{d}{dt}}_{t=0}\widetilde{f}^i(t) = \widetilde{g}(\Phi(W),\tilde{e}_i) = g(W,e_i)
+		\end{equation*}
+		Therefore, $f^i(t)$ and $\widetilde{f}^i(t)$ satisfy the same ODE with same initial values. It follows that $f^i(t) = \widetilde{f}^i(t)$.
+	\end{proof}
+
+	\begin{lem}\label{lem:uniqofiso}
+		$(M,g_M)$ and $(N,g_N)$ are two Riemannian manifolds. Let $\varphi_1,\varphi_2 \colon M \sto N$ be two local isometry such that there is $x \in M$ with 
+		\begin{equation*}
+			\varphi_1(x) = \varphi_2(x),\quad (d\varphi_1)_x = (d\varphi_2)_x
+		\end{equation*}
+		Then $\varphi_1 = \varphi_2$.
+	\end{lem}
+	\begin{proof}
+		Let
+		\begin{equation*}
+			A = \bb{z \in M \colon \varphi_1(z) = \varphi_2(z),\quad (d\varphi_1)_z = (d\varphi_2)_z}
+		\end{equation*}
+		Clearly, $A \neq \varnothing$ and $A$ is closed. So the main goal is to prove $A$ is open for proving $A = M$. Suppose $z \in A$. Denote $z^\prime = \varphi_1(z) = \varphi_2(z) \in N$. Choose $\delta > 0$ such that
+		\begin{equation*}
+			\exp_z \colon B(O,\delta) \subset T_zM \longrightarrow B_z(\delta) \subset M
+		\end{equation*}
+		is a diffeomorphism and also $\exp_{z^\prime}$ is well-defined on $B^\prime(O,\delta) \subset T_{z^\prime}N$. Then
+		\begin{center}
+			\begin{tikzcd}
+				B(O,\delta) \subset T_zM \arrow[r, "(d\varphi_i)_z"] \arrow[d, "\exp_z"]
+					& B^\prime(O,\delta) \subset T_{z^\prime}N \arrow[d, "\exp_{z^\prime}"] \\
+				B_z(\delta) \subset M \arrow[r, "\varphi_i"]
+					& N
+			\end{tikzcd}
+		\end{center}
+		is commutative for $i = 1,2$, that is
+		\begin{equation*}
+			\varphi_i\circ\exp_z = \exp_{z^\prime}\circ(d\varphi_i)_z
+		\end{equation*}
+		by \textbf{Proposition} \ref{prop:isoprop}. So
+		\begin{equation*}
+			\varphi_i = \exp_{z^\prime}\circ(d\varphi_i)_z \circ \exp_z^{-1}
+		\end{equation*}
+		on $B_z(\delta)$. Because $(d\varphi_1)_z = (d\varphi_2)_z$ on $B(O,\delta) \subset T_zM$,
+		\begin{equation*}
+			\varphi_1 = \varphi_2
+		\end{equation*}
+		on $B_z(\delta)$, which also implies $(d\varphi_1)_{y} = (d\varphi_2)_{y}$ for all $y \in B_z(\delta)$.
+	\end{proof}
+	Therefore, we have proved the \textbf{Theorem} \ref{thm:spaceform} for $c = 0, -1$ by \textbf{Lemma} \ref{lem:existofspform} and \ref{lem:uniqofiso}. So we only need to prove the case of $c = 1$.
+	\begin{proof}[Proof of \textbf{Theorem} \ref{thm:spaceform}]
+		We can assume $M = \mathbb{S}^n$. For $p \in \mathbb{S}^n$, let $p^\prime$ be its antipodal point. Then
+		\begin{equation*}
+			\exp_p \colon B(O,\pi) \subset T_p\Sp^n \longrightarrow \Sp^n \backslash \bb{p^\prime}
+		\end{equation*}
+		is a diffeomorphism. Let $\Phi$ be the linear map such that $\Phi(e_i) = \tilde{e}_i$, so it is an isometry. By \textbf{Lemma} \ref{lem:existofspform}, because $\exp_{\tilde{p}}$ is well-defined on $T_{\tilde{p}}\widetilde{M}$,
+		\begin{equation*}
+			\varphi = \exp_{\tilde{p}} \circ \Phi \circ (\exp_p)^{-1} \colon \Sp^n \backslash \bb{p^\prime} \longrightarrow \widetilde{M}
+		\end{equation*}
+		is a local isometry with $\varphi(p) = \tilde{p}$ and $d\varphi_p = \Phi$. Find $z \in \Sp^n \backslash \bb{p^\prime}$ with $z \neq p$ and let $z^\prime$ be the antipodal point of $z$. Denote $\tilde{z} = \varphi(z) \in \widetilde{M}$. Then
+		\begin{equation*}
+			d\varphi_z \colon T_z\Sp^n \longrightarrow T_{\tilde{z}}\widetilde{M}
+		\end{equation*}
+		is an isometry. Then similarly by \textbf{Lemma} \ref{lem:existofspform},
+		\begin{equation*}
+			\psi = \exp_{\tilde{z}} \circ d\varphi_z \circ (\exp_z)^{-1} \colon \Sp^n \backslash \bb{z^\prime} \longrightarrow \widetilde{M}
+		\end{equation*}
+		is a local isometry. Furthermore, because $\varphi(z) = \psi(z) = \tilde{z}$ and $d\psi_z = d\varphi_z$, by \textbf{Lemma} \ref{lem:uniqofiso}, $\varphi = \psi$ on $\Sp^n \backslash \bb{p^\prime,z^\prime}$. Then define
+		\begin{equation*}
+			\theta \colon \Sp^n \longrightarrow \widetilde{M}
+		\end{equation*}
+		as
+		\begin{equation*}
+			\theta(q) = \left\{
+				\begin{array}{ll}
+					\varphi(q),&q \in \Sp^n \backslash \bb{p^\prime} \\
+					\psi(q),& q \in \Sp^n \backslash \bb{z^\prime}
+				\end{array}
+			\right.
+		\end{equation*}
+		Then clearly $\theta$ is $C^\infty$ and a local isometry. Because $\Sp^n$ is complete, $\theta$ is a Riemannian covering by \textbf{Theorem} \ref{thm:ambro}. Furthermore, because $\widetilde{M}$ is simply-connected, $\theta$ is a diffeomorphism. So $\theta$ is an isometry. And the uniqueness of $\theta$ is also by \textbf{Lemma} \ref{lem:uniqofiso}.
+	\end{proof}
+	\begin{cor}
+		Let $(M,g)$ be a $n$-dimensional simply-connected complete Riemannian manifold. Then $(M,g)$ has the constant sectional curvature if and only if for any $p,\tilde{p} \in M$ and any two orthonormal bases $\bb{e_i},\bb{\tilde{e}_i}$ of $T_pM,T_{\tilde{p}}M$ respectively, there is an isometry $\varphi \colon M \sto M$ such that $\varphi(p) = \tilde{p}$ and $d\varphi_p(e_i) = \tilde{e}_i$.
+	\end{cor}
+	\begin{proof}
+		The converse is because any section of $M$ has the same geometry by constructing the isometry $\varphi$.
+	\end{proof}
+	\begin{defn}[Homogeneous Riemannian Manifolds]
+		A Riemannian manifold $(M,g)$ is called homogeneous if for any $p,q \in M$, there is an isometry $\varphi \colon M \sto M$ such that $\varphi(p)=q$. $(M,g)$ is called two-points homogeneous if for any $p_1,p_2,q_1,q_2 \in M$ with $d(p_1,p_2) = d(q_1,q_2)$, there is an isometry $\varphi \colon M \sto M$ such that $\varphi(p_1)=q_1$ and $\varphi(p_2)=q_2$.
+	\end{defn}
+	\begin{cor}
+		All simply-connected space forms are two-points homogeneous.
+	\end{cor}
+	\begin{proof}
+		By the completeness, there is a shortest geodesic $\gamma$ connecting $p_1$ with $p_2$ and a shortest geodesic $\widetilde{\gamma}$ connecting $q_1$ with $q_2$. Let $e_1 = \dot{\gamma}(0)$ and extending it to an orthonormal basis $\bb{e_i}$ of $T_{p_1}M$. Similarly, choose an orthonormal basis $\bb{\tilde{e}_i}$ of $T_{q_1}M$. Then there is an isometry $\varphi$ such that
+		\begin{equation*}
+			\varphi(p_1)=q_1,\quad d\varphi_{p_1}(e_i) = \tilde{e}_i
+		\end{equation*}
+		Because $\gamma$ is a geodesic, $\varphi \circ\gamma$ is also a geodesic. By
+		\begin{equation*}
+			\varphi \circ\gamma(0) = q_1 = \widetilde{\gamma}(0),\quad \lv{\frac{d}{dt}}_{t=0}\varphi \circ\gamma(t) = d\varphi_{p_1}(e_1) = \tilde{e}_1 = \dot{\widetilde{\gamma}}(0)
+		\end{equation*}
+		we know $\varphi \circ\gamma = \widetilde{\gamma}$. So
+		\begin{equation*}
+			\varphi(p_2) = \varphi \circ\gamma(1) = \widetilde{\gamma}(1) = q_2 \qedhere
+		\end{equation*}
+	\end{proof}
+
+	\item \emph{\textbf{Distance function:}}  Let $(M,g)$ be a Riemannian manifold. Given $o \in M$, define the distance function
+	\begin{equation*}
+		\rho(\cdot) = d(o,\cdot)
+	\end{equation*}
+	\begin{defn}
+		We call a function $f \colon M \sto \R$ is convex if for any geodesic $\gamma \colon [a,b] \sto M$, $f\circ \gamma$ is convex.
+	\end{defn}
+	\begin{prop}
+		Let $f \colon M \sto \R$ be $C^\infty$. Then $f$ is convex if and only if
+		\begin{equation*}
+			\op{Hess}f \geq 0
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $p \in M$ and for any $V_p \in T_pM$, let $\gamma(t)$ be the geodesic with $\gamma(0) = p$ and $\dot{\gamma}(0) = V_p$.
+		\begin{equation*}
+			\begin{aligned}
+				\op{Hess}f(V_p,V_p) &= \nabla^2f(V_p,V_p) \\
+				&= \lv{\nabla^2f(\dot{\gamma}(t),\dot{\gamma}(t))}_{t=0} \\
+				&= \bc{\nabla_{\dot{\gamma}(t)}(\nabla f)}(\dot{\gamma}(t)) \\
+				&=\dot{\gamma}(t)\bc{(\nabla f)(\dot{\gamma}(t))} - \bc{\nabla f}\bc{\nabla_{\dot{\gamma}(t)}\dot{\gamma}(t)} \\
+				&= \lv{\dot{\gamma}(t)\bc{\dot{\gamma}(t)(f)}}_{t=0} \\
+				&= \lv{\frac{d}{dt}}_{t=0}\dot{\gamma}(t)(f)(\gamma(t)) \\
+				&= \lv{\frac{d}{dt}}_{t=0} \bc{\lv{\frac{d}{dt}}f(\gamma(t))} = \lv{\frac{d^2}{dt^2}}_{t=0}f(\gamma(t))
+			\end{aligned}
+		\end{equation*}
+		Therefore, it is clear by the property of convexity of real functions.
+	\end{proof}
+	Similarly, we call a $C^\infty$ function $f \colon M \sto \R$ is convex if $\op{Hess}f > 0$.
+	\begin{exam}
+		On Euclidean space, for $X = X^i \frac{\partial}{\partial x^i}$,
+		\begin{equation*}
+			\begin{aligned}
+				\nabla^2 \rho^2(X,X) &= X^iX^j \frac{\partial^2}{\partial x^i \partial x^j}\sum_k(x^k)^2 \\
+				&= 2X^iX^j \delta_{ij}\\
+				&= 2\sum(X^i)^2 > 0
+			\end{aligned}
+		\end{equation*}
+		So $\rho^2$ is strictly convex.
+	\end{exam}
+	\begin{lem}
+		Let $(M,g)$ be a Riemannian manifold and $o \in M$. There is a neighborhood $U$ of $o$ such that $\rho^2$ is $C^\infty$ and strictly convex on $U$.
+	\end{lem}
+	\begin{proof}
+		First, choosing $(x,U)$ be the normal chart of $o = (0,\cdots,0)$, geodesics are radical lines. So for any $x = (x^1,\cdots,x^n) \in U$,
+		\begin{equation*}
+			\rho^2(x) = d^2(o,x) = \sum_{i}(x^i)^2
+		\end{equation*}
+		$\rho^2$ is smooth. Moreover, choosing a geodesic $\gamma(t)$ with $\dot{\gamma}(0) = V = (v^i)$,
+		\begin{equation*}
+			x(t) = x(\gamma(t)) = (tv^1,\cdots,tv^i)
+		\end{equation*}
+		Then by the similar calculation as above, 
+		\begin{equation*}
+			\begin{aligned}
+				\nabla^2\rho^2(V,V) &= \lv{\frac{d^2}{dt^2}}_{t=0}\rho^2\circ \gamma(t) \\
+				&= \lv{\frac{d^2}{dt^2}}_{t=0}\sum_{i}(tv^i)^2 \\
+				&= 2 \sum_{i}(v^i)^2 > 0
+			\end{aligned}
+		\end{equation*}
+		Therefore, $\nabla^2\rho^2 > 0$ at $o$. It follows that $\nabla^2\rho^2 > 0$ on a $V \subset U$.
+	\end{proof}
+	\begin{thm}\label{thm:distconv}
+		Let $(M,g)$ be a simply-connected complete Riemannian manifold with sectional curvature $\leq 0$ and $o \in M$. $\rho^2 \colon M \sto \R$ is $C^\infty$ and strictly convex
+	\end{thm}
+	\begin{proof}
+		First, because $\exp_o \colon T_oM \sto M$ is a diffeomorphism,  by
+		\begin{equation*}
+			\rho^2(x) = d^2(o,x) = g\bc{\exp_o^{-1}(x),\exp_o^{-1}(x)}
+		\end{equation*}
+		$\rho^2$ is smooth. For any $x \in M$ and any nonzero $V \in T_pM$, we claim
+		\begin{equation*}
+			\nabla^2\rho_x(V,V) \geq 0
+		\end{equation*}
+		Let $\xi$ be a geodesic with $\xi(0) = x$ and $\dot{\xi}(0) = V$. By considering a family of geodesics connecting $o$ with $\xi(s)$, the variation
+		\begin{equation*}
+			F(t,s) = \exp_o \frac{t}{r}\exp_o^{-1}\bc{\xi(s)}
+		\end{equation*}
+		where $\rho(x) = r$, $t\in [0,r]$. Note that $F(t,0) = \gamma(t) = \exp_o t \frac{\exp_o^{-1}(x)}{r}$ is a normal geodesic because $\abs{\dot{\gamma}(0)} = 1$. Then the corresponding Jacobian field
+		\begin{equation*}
+			U(t) = \lv{\frac{\partial}{\partial s}}_{s = 0} F(t,s)
+		\end{equation*}
+		which has
+		\begin{equation*}
+			U(0) = 0,\quad U(r) =  \lv{\frac{\partial}{\partial s}}_{s = 0} \exp_o \exp_o^{-1}\bc{\xi(s)} = \dot{\xi}(0) = V
+		\end{equation*}
+		Then
+		\begin{equation*}
+			\begin{aligned}
+				\nabla^2\rho^2_x(V,V) &= \lv{\frac{d^2}{ds^2}}_{s=0}\rho^2 \circ \xi(s)\\
+				&= \lv{\frac{d}{ds}}_{s=0}2\rho(\xi(s))\bc{\frac{d}{ds}\rho(\xi(s))} \\
+				&= 2\rho(\xi(0))\lv{\frac{d^2}{ds^2}}_{s=0}\rho(\xi(s)) + 2\bc{\lv{\frac{d}{ds}}_{s=0}\rho(\xi(s))}^2\\ 
+				&= 2r\lv{\frac{d^2}{ds^2}}_{s=0}\rho(\xi(s)) + 2\bc{\lv{\frac{d}{ds}}_{s=0}\rho(\xi(s))}^2 
+			\end{aligned}
+		\end{equation*}
+		Moreover, note that
+		\begin{equation*}
+			\rho(\xi(s)) = \op{Length}\bc{\gamma_s(t)},\quad \gamma_s(t) = F(t,s),~t\in [0,r]
+		\end{equation*}
+		Let $L(s) = \rho(\xi(s))$, \emph{i.e.}
+		\begin{equation*}
+			L(s) = \int_0^r \sqrt{\inn{\frac{\partial F}{\partial t},\frac{\partial F}{\partial t}}}dt
+		\end{equation*}
+		Then by the similar calculation of the first and second variation of energy, we can get
+		\begin{equation*}
+			\begin{aligned}
+				L^\prime(0) &= \int_0^r \lv{\frac{\inn{\frac{\partial F}{\partial t},\widetilde{\nabla}_{\frac{\partial}{\partial s}}\frac{\partial F}{\partial t}}}{\sqrt{\inn{\frac{\partial F}{\partial t},\frac{\partial F}{\partial t}}}}}_{s=0} dt \\
+				&= \int_0^r \lv{\inn{\frac{\partial F}{\partial t},\widetilde{\nabla}_{\frac{\partial}{\partial s}}\frac{\partial F}{\partial t}}}_{s=0} dt = \int_0^r \lv{\inn{\frac{\partial F}{\partial t},\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial s}}}_{s=0} dt \\
+				&= \int_0^r \inn{T,\nabla_TU} dt = \int_0^r T\inn{T,U} dt= \int_0^r \frac{d}{dt} \inn{T,U} dt \\
+				&= \inn{T(r),U(r)} = \inn{\dot{\gamma}(r),V}
+			\end{aligned}
+		\end{equation*}
+		and
+		\begin{equation*}
+			\begin{aligned}
+				L^{\prime\prime}(0) &= \int_0^r \lv{\frac{d}{ds}}_{s=0}\inn{\frac{\partial F}{\partial t},\widetilde{\nabla}_{\frac{\partial}{\partial s}}\frac{\partial F}{\partial t}} - \inn{T,\nabla_TU}^2 dt \\
+				&= \int_0^r \inn{\nabla_TU,\nabla_TU} - R(U,T,U,T)  - \bc{T\inn{T,U}}^2dt + \left.\left\langle \lv{\widetilde{\nabla}_{\frac{\partial}{\partial s}} \frac{\partial F}{\partial s}}_{s=0}, T\right\rangle\right|_ 0^r \\
+				&= \int_0^r \inn{\nabla_TU,\nabla_TU} - R(U,T,U,T)  - \bc{T\inn{T,U}}^2dt
+			\end{aligned}
+		\end{equation*}
+		because at $t = 0$, $F(s,t) = p$ implies $\widetilde{\nabla}_{\frac{\partial}{\partial s}} U(0) = 0$ and at $t=r$, $F(s,r) =\xi(s)$ that is a geodesic implies that
+		\begin{equation*}
+			\widetilde{\nabla}_{\frac{\partial}{\partial s}} \frac{\partial F}{\partial s}(r,s) = \widetilde{\nabla}_{\frac{\partial}{\partial s}} \dot{\xi}(s) = 0
+		\end{equation*}
+		Besides, let $U^\perp = U - \inn{U,T}T$. Note that by the anti-symmetry of $R$,
+		\begin{equation*}
+			R(U^\perp,T,U^\perp,T) = R(U,T,U,T)
+		\end{equation*}
+		Furthermore,
+		\begin{equation*}
+			\begin{aligned}
+				\inn{\nabla_TU,\nabla_TU} &= \inn{\nabla_TU^\perp,\nabla_TU^\perp} + 2 \inn{\nabla_T (\inn{U,T}T),\nabla_TU^\perp} + \inn{\nabla_T (\inn{U,T}T),\nabla_T (\inn{U,T}T)} \\
+				&= \inn{\nabla_TU^\perp,\nabla_TU^\perp} + 2 T\inn{U,T}\inn{T,\nabla_TU^\perp} + (T\inn{U,T})^2 
+			\end{aligned}
+		\end{equation*}
+		because $\nabla_TT = 0$, $\inn{T,T} = 1$. And
+		\begin{equation*}
+			\begin{aligned}
+				\inn{T,\nabla_TU^\perp} & = \inn{T,\nabla_TU} - \inn{T,\nabla_T(\inn{U,T}T)} \\
+				&= \inn{T,\nabla_TU} - T\inn{U,T} \\
+				&= -\inn{\nabla_TT,U} = 0
+			\end{aligned}
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			\inn{\nabla_TU,\nabla_TU} = \inn{\nabla_TU^\perp,\nabla_TU^\perp} + (T\inn{U,T})^2 
+		\end{equation*}
+		Thus,
+		\begin{equation*}
+			L^{\prime\prime}(0) = \int_0^r \inn{\nabla_TU^\perp,\nabla_TU^\perp} - R(U^\perp,T,U^\perp,T)dt \geq \int_0^r \inn{\nabla_TU^\perp,\nabla_TU^\perp} dt
+		\end{equation*}
+		because $R(U^\perp,T,U^\perp,T) \leq 0$ by the sectional curvature $\leq 0$. Then
+		\begin{equation*}
+			\begin{aligned}
+				\nabla^2\rho_x(V,V) &= 2r\lv{\frac{d^2}{ds^2}}_{s=0}L(s) + 2\bc{\lv{\frac{d}{ds}}_{s=0}L(s)}^2 \\
+				&\geq 2r\int_0^r \inn{\nabla_TU^\perp,\nabla_TU^\perp} dt + 2\inn{\dot{\gamma}(r),V}^2
+			\end{aligned}
+		\end{equation*}
+		First, if $\inn{\dot{\gamma}(r),V} > 0$, then $\nabla^2\rho_x(V,V) > 0$ and we have the desired result. Otherwise, if $\inn{\dot{\gamma}(r),V} = 0 = \inn{\dot{\gamma}(r),U(r)}$, then because $\inn{\dot{\gamma}(0),U(0)} = 0$, $\inn{U,T} \equiv 0$. It follows that $U^\perp = U$ and
+		\begin{equation*}
+			\begin{aligned}
+				\nabla^2\rho_x(V,V) &\geq 2r\int_0^r \inn{\nabla_TU,\nabla_TU} dt 
+			\end{aligned}
+		\end{equation*}
+		If $\nabla^2\rho_x(V,V) = 0$, then $\nabla_TU = 0$. Because $U(0) = 0$, $U \equiv 0$ and $U(r) = V = 0$, contradicting to the assumption. Therefore, $\nabla^2\rho_x(V,V) > 0$.
+	\end{proof}
+	
+	\begin{defn}
+		Let $(M,g)$ be a Riemannian manifold. A subset $\Omega \subset M$ is called convex if whereas $p,q \in \Omega$ and $\gamma$ is the shortest geodesic, $\gamma \subset \Omega$. $\Omega$ is called totally convex if for any $p,q \in \Omega$ and any geodesic $\gamma$ connecting $p,q$, $\gamma \subset \Omega$.
+	\end{defn}
+	\begin{rmk}
+		A simply connected complete Riemannian manifold with non-positive sectional curvature is called a Cartan-Hadamard manifold. For Cartan-Hadamard manifold, totally convexity is equivalent to convexity.
+	\end{rmk}
+
+	\begin{prop}
+		If $\tau \colon M \sto \R$ is $C^\infty$ and convex, the the sub-level of $\tau$
+		\begin{equation*}
+			M_c \defeq \bb{x \in M \colon \tau(x) < c}
+		\end{equation*}
+		(or $\leq c$) is totally convex.
+	\end{prop}
+	\begin{proof}
+		For any $p,q \in M_c$, \emph{i.e.} $\tau(p),\tau(q) < c$. Let $\gamma$ be a geodesic connecting $p$ and $q$. Because $\tau$ is convex, $\tau \circ \gamma$ is convex. It follows that
+		\begin{equation*}
+			\tau \circ \gamma(t) \leq \max\bb{\tau(p),\tau(q)} < c
+		\end{equation*}
+		So $\gamma \subset M_c$.
+	\end{proof}
+
+	\begin{thm}
+		Let $(M,g)$ be a Riemannian manifold. Any $p \in M$ has a convex totally normal neighborhood.
+	\end{thm}
+	\begin{proof}
+		First, let $W$ be a totally normal neighborhood of $p$. By above, there is a neighborhood $U$ of $p$ such that $d^2(p,\cdot)$ is convex on $U$. Choosing $r$ sufficiently small such that
+		\begin{equation*}
+			B(p,3r) \subset W\cap U
+		\end{equation*}
+		\textbf{Claim:} $B(p,r)$ is convex.
+
+		\noindent For any $x,y \in B(p,r)$, there is a shortest geodesic $\gamma$ connecting $x$ and $y$ with
+		\begin{equation*}
+			d(x,y) = \op{Length}(\gamma) \leq d(x,p)+d(y,p) \leq 2r
+		\end{equation*}
+		Therefore, for any $z \in \gamma$, $x,y \in B(z,2r)$. Because $B(z,2r) \cap B(p,r) \neq \varnothing$,
+		\begin{equation*}
+			d(z,p) \leq 3r
+		\end{equation*}
+		So $z \in U$. Because $d^2(p,\cdot)$ is convex on $U$ and $d^2(p,x),d^2(p,y) \leq r^2$,
+		\begin{equation*}
+			d^2(p,z) \leq \max\bb{d^2(p,x),d^2(p,y)} \leq r^2
+		\end{equation*}
+		So $z \in B(p,r)$.
+	\end{proof}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,769 @@
+\chapter{Continuous Time Markov Theory}
+
+\section{Transition Semigroup}
+
+Let $(\Omega, \mathcal{F}, (\mathcal{F}_t)_{t \geq 0}, \Pb)$ be a filtered probability space. Let $(E,\mathcal{E})$ be a measurable space. 
+
+\begin{defn}[Markov Process]
+    A $E$-valued stochastic process $(X_t)_{t \geq 0}$ is called $(\mathcal{F}_t)_{t \geq 0}$-Markov process if
+    \begin{enumerate}[label=(\roman*)]
+        \item $X_t$ is $\mathcal{F}_t$-adapted,
+        \item for any $t > s$ and any $f \in \mathcal{B}_b(E)$ (bounded measurable function),
+        \begin{equation*}
+            \E\bj{f(X_t) \mid \mathcal{F}_s} = \E\bj{f(X_t) \mid \sigma(X_s)}.
+        \end{equation*}
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    If $(X_t)_{t \geq 0}$ is a Markov process, it is obvious a Markov process w.s.t. its natural filtration $\mathcal{F}^X_t = \sigma(X_s \colon s\leq t)$.
+\end{rmk}
+
+\begin{defn}[Transition Kernel]
+    A Markov transition kernel from $E$ to $E$ is a map
+    \begin{equation*}
+        Q \colon E \times \mathcal{E} \sto [0,1]
+    \end{equation*}
+    such that
+    \begin{enumerate}[label=(\roman*)]
+        \item for any $x \in E$, $Q(x,\cdot)$ is a probability measure on $(E,\mathcal{E})$.
+        \item for any $A \in \mathcal{E}$, $Q(\cdot, A)$ is $\mathcal{E}$-measurable.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    Given a Markov transition kernel $Q$, it can define
+    \begin{equation*}
+        Q \colon \mathcal{B}_b(E) \sto \mathcal{B}_b(E)
+    \end{equation*}
+    as
+    \begin{equation*}
+        Qf(x) \defeq \int_E f(y) Q(x,dy),
+    \end{equation*}
+    which is a linear operator.
+\end{rmk}
+
+\begin{defn}[Transition Semigroup]
+    A collection $(Q_t)_{t \geq 0}$ of transition kernels on $E$ is called a transition semigroup if
+    \begin{enumerate}[label=(\roman*)]
+        \item for $x \in E$, $Q_0(x,dy) = \delta_x(dy)$,
+        \item for $s,t \geq 0$ and $A \in \mathcal{E}$,
+        \begin{equation*}
+            Q_{t+s}(x,A) = \int_EQ_t(x,dy)Q_s(y,A).
+        \end{equation*}
+        (Chapman-Kolmogorov equation)
+        \item for any $A \in \mathcal{E}$, $(t,x) \mapsto Q_t(x,A)$ is measurable.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    Note that a transition semigroup induces a semigroup of operators $(Q_t)_{t \geq 0}$. Let $\mathcal{B}_b(E)$ be equipped with $\norm{\cdot} = \norm{\cdot}_\infty$. Then
+    \begin{enumerate}[label=(\roman{*})]
+        \item $Q_0f(x) = \int_E f(y) \delta_x(dy) = f(x)$, i.e., $Q_0 = \op{Id}$.
+        \item $Q_t\mathds{1}(x) = \int_E \mathds{1}(y)Q_t(x,dy) = 1$, i.e., $Q_t \mathds{1} = \mathds{1}$.
+        \item for any $f \geq 0$, $Q_tf \geq 0$.
+        \item for any $s,t \geq 0 $,
+        \begin{align*}
+            Q_{t+s}f(x) &= \int_E f(y) Q_{t+s}(x,dy) \\
+            &= \int_E f(y) \int_E Q_t(x,dz)Q_s(z,dy) \\
+            &= \int_E \bc{\int_E f(y) Q_s(z,dy)} Q_t(x,dz) \\
+            &= \int_E Q_sf(z) Q_t(x,dz) \\
+            &= Q_t\bc{Q_sf}(x),
+        \end{align*}
+        i.e., $Q_{t+s} = Q_t \circ Q_s = Q_t Q_s$.
+    \end{enumerate}
+\end{rmk}
+
+\begin{defn}
+    A Markov process $X =(X_t)_{t \geq 0}$ with transition semigroup $(Q_t)_{t \geq 0}$ is a $(\mathcal{F}_t)_{t \geq 0}$-adapted process with values in $E$ such that for any $s,t \geq 0$ and any $f \in \mathcal{B}_b(E)$,
+    \begin{equation*}
+        \E\bj{f(X_{t+s}) \mid \mathcal{F}_s} = Q_tf(X_s).
+    \end{equation*}
+\end{defn}
+\begin{rmk}
+    Note that it is true Markov because
+    \begin{align*}
+        \E\bj{f(X_{t+s}) \mid \sigma(X_s)} &= \E\bj{\E\bj{f(X_{t+s}) \mid \mathcal{F}_s} \mid \sigma(X_s)} \\
+        &= \E\bj{Q_tf(X_s) \mid \sigma(X_s)} \\
+        &= Q_tf(X_s) = \E\bj{f(X_{t+s}) \mid \mathcal{F}_s}.
+    \end{align*} 
+    Moreover, if $f = \mathbb{I}_A$, then
+    \begin{equation*}
+        Q_t(X_s,A) = \Pb( X_{t+s} \in A \mid \mathcal{F}_s ).
+    \end{equation*}
+\end{rmk}
+
+\begin{thm}[Finite-dimensional Distribution]
+    Given a Markov process $X =(X_t)_{t \geq 0}$ with transition semigroup $(Q_t)_{t \geq 0}$ and $X_0 \sim \gamma(dx)$. For any $0 < t_1 < \cdots < t_p$,
+    \begin{align*}
+        &\quad\Pb(X_0 \in A_0,X_{t_1} \in A_1,\cdots X_{t_p} \in A_p) \\
+        &= \int_{A_0} \gamma(dx) \int_{A_1} Q_{t_1}(x,dx_1) \int_{A_2} Q_{t_2-t_1}(x_1,dx_2) \cdots \int_{A_p}Q_{t_p-t_{p-1}}(x_{p-1},dx_p).
+    \end{align*}
+    More generally, for any $f_i \in \mathcal{B}_b(E)$ ($i=0,1,\cdots,p$),
+    \begin{align*}
+        &\quad\E[f_0(X_0)f_1(X_{t_1})\cdots f_p(X_{t_p})] \\
+        &= \int_{E}f_0(X_0) \gamma(dx) \int_{E}f_1(x_1) Q_{t_1}(x,dx_1) \int_{E}f_2(x_2) Q_{t_2-t_1}(x_1,dx_2) \cdots \int_{E} f_p(x_p)Q_{t_p-t_{p-1}}(x_{p-1},dx_p).
+    \end{align*}
+\end{thm}
+\begin{proof}
+    For $p = 1$,
+    \begin{align*}
+        \E[f_0(X_0)f_1(X_{t_1})] &= \E\bj{f_0(X_0)\bj{ f_1(X_{t_1})\mid \mathcal{F}_0} } \\
+        &= \E\bj{f_0(X_0) Q_{t_1}f_1(X_0)} \\
+        &= \int_E f_0(x) Q_{t_1}f_1(x)\gamma(dx) \\
+        &= \int_E f_0(x) \gamma(dx) \int_E f_1(x_1)Q_{t_1}(x,dx_1).
+    \end{align*}
+    Assume it is true for $p-1$. Then
+    \begin{align*}
+        &\quad\E[f_0(X_0)f_1(X_{t_1})\cdots f_p(X_{t_p})] \\
+        &= \E\bj{ \E\bj{ f_0(X_0)f_1(X_{t_1})\cdots f_p(X_{t_p}) \mid \mathcal{F}_{t_{p-1}} } } = \E\bj{f_0(X_0)\cdots f_{p-1}(X_{t_{p-1}}) \E\bj{f_p(X_{t_p}) \mid \mathcal{F}_{t_{p-1}} } }\\
+        &= \E\bj{f_0(X_0)\cdots f_{p-1}(X_{t_{p-1}})Q_{t_p - t_{p-1}}f_p(X_{t_{p-1}})} \\
+        &= \int_{E}f_0(X_0) \gamma(dx) \cdots \int_{E} f_{p-1}(x_{p-1})Q_{t_p - t_{p-1}}f_p(x_{p-1})Q_{t_{p-1}-t_{p-2}}(x_{p-2},dx_{p-1})\\
+        &= \int_{E}f_0(X_0) \gamma(dx) \cdots \int_{E} f_{p-1}(x_{p-1})Q_{t_{p-1}-t_{p-2}}(x_{p-2},dx_{p-1})\int_E f_p(x_p)Q_{t_p - t_{p-1}}(x_{p-1},dx_p). \qedhere
+    \end{align*}
+\end{proof}
+
+\noindent \textbf{Construction of Markov Process:} Given a transition semigroup $(Q_t)_{t \geq 0}$ and an initial distribution $\gamma$. First, let
+\begin{equation*}
+    \Omega^* = E^{[0,\infty)} \defeq \bb{\omega \colon \omega(\cdot) \colon [0,\infty) \sto E}
+\end{equation*}
+with the coordinate process $X=(X_t)_{t \geq 0}$ defined as
+\begin{equation*}
+    X_t \colon \Omega^* \sto E,\quad X_t(\omega) = \omega(t).
+\end{equation*}
+Then $\sigma$-field $\mathcal{F}^* \defeq \sigma(X_t \colon t \geq 0)$. For any finite subset $U = \bb{0\leq t_1 < t_2 < \cdots < t_p}$ of $[0,\infty)$, define a probability measure on $E^U \cong E^p$,
+\begin{equation*}
+    \mu^U(A_1\times \cdots A_p) \defeq \int_{A_0} \gamma(dx) \int_{A_1} Q_{t_1}(x,dx_1) \int_{A_2} Q_{t_2-t_1}(x_1,dx_2) \cdots \int_{A_p}Q_{t_p-t_{p-1}}(x_{p-1},dx_p).
+\end{equation*}
+Note that for $\bb{\mu^U\colon U \text{ finite}.}$, if $U \subset V$ and let $\pi_U^V \colon E^V \sto E^U$ be the natural projection, then
+\begin{equation*}
+    \mu^U = (\pi^V_U)_{\#}\mu^V,\text{ i.e. } \mu^U(A_1 \times \cdots \times A_{p_U}) = \mu^V(A_1 \times \cdots \times A_{p_U} \times E \times \cdots \times E).
+\end{equation*}
+Then by the Kolmogorov Extension Theorem, there exists a unique $\Pb^*$ on $(\Omega^*, \mathcal{F}^*)$ such that
+\begin{equation*}
+    \Pb^*(X_0 \in A_0,X_{t_1} \in A_1,\cdots, X_{t_p} \in A_p) = \mu^U(A_1\times \cdots A_p).
+\end{equation*}
+Therefore, the coordinate process $(X_t)_{t \geq 0}$ is a Markov process on $(\Omega^*,\mathcal{F}^*,\Pb^*)$ with semigroup $(Q_t)_{t \geq 0}$. Because $\Pb^*$ is determined by $\gamma$, $\Pb^* = \Pb_\gamma$. In particular, $\gamma(dy) = \delta_x(dy)$, $\Pb_\gamma = \Pb_x$.
+\begin{rmk}
+    For $A \in \mathcal{E}^U$, let
+    \begin{equation*}
+        \bb{\omega \in \Omega^* \colon (\omega(t_1),\cdots,\omega(t_p)) \in A}
+    \end{equation*}
+    be called a finite-dimensional cylinder. Let $\mathcal{C}$ be the set of finite-dimensional cylinders. Then in fact $\mathcal{F}^* = \sigma(\mathcal{C})$. 
+\end{rmk}
+
+\begin{rmk}
+    For any Markov process $(X_t)_{t \geq 0}$ on $(\Omega,\Pb)$ with semigroup $(Q_t)_{t \geq 0}$ and $X_0 \sim \gamma$, we can construct $\Pb_\gamma$ on $(\Omega^*,\mathcal{F}^*)$ by $(Q_t)_{t \geq 0}$. Then we have $X_\#\Pb = \Pb_\gamma$ and $(X_t)_{t \geq 0}$ has the same finite-dimensional distribution as the coordinate process $(\pi_t)_{t \geq 0}$ on $(\Omega^*,\mathcal{F}^*,\Pb^*)$.
+\end{rmk}
+
+\begin{exam}
+    If
+    \begin{equation*}
+        Q_t(x,dy) = \frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}}dy
+    \end{equation*}
+    then the Markov process with $X_0 = 0$, then the corresponding Markov process is a standard Brownian motion.
+\end{exam}
+
+\section{Resolvent}
+
+\begin{defn}[Resolvent]
+    Let $\lambda > 0$. The $\lambda$-resolvent of the transition semigroup $(Q_t)_{t \geq 0}$ is a linear operator $R_\lambda \colon \mathcal{B}_b(E) \sto \mathcal{B}_b(E)$ defined as
+    \begin{equation*}
+        R_\lambda f(x) \defeq \int_0^\infty e^{-\lambda t} Q_tf(x) dt,
+    \end{equation*}
+    or formally, $R_\lambda = \int_0^\infty e^{-\lambda t}Q_t dt$.
+\end{defn}
+
+\begin{prop}
+    Given a transition semigroup $(Q_t)_{t \geq 0}$ and the corresponding $R_\lambda$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\norm{R_\lambda f} \leq \frac{1}{\lambda} \norm{f}$.
+        \item If $0 \leq f \leq 1$, $0 \leq \lambda R_\lambda f \leq 1$.
+        \item If $\lambda,\mu > 0$, then
+        \begin{equation*}
+            R_\lambda - R_\mu + (\lambda - \mu) R_\lambda R_\mu = 0.
+        \end{equation*}
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For $t \geq 0$,
+        \begin{align*}
+            \norm{Q_t f} &= \sup_x \abs{\int_E f(y) Q_t(x,dy)} \\
+            &\leq \sup_x \int_E \abs{f(y)} Q_t(x,dy) \\
+            &\leq \norm{f}.
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            \norm{R_\lambda f} &= \norm{\int_0^\infty e^{-\lambda t}Q_tf dt} \\
+            &\leq \int_0^\infty e^{-\lambda t}\norm{Q_tf} dt \\
+            &\leq \norm{f} \int_0^\infty e^{-\lambda t} dt = \frac{1}{\lambda} \norm{f}.
+        \end{align*}
+
+        \item It is obvious by $(1)$.
+
+        \item By definition,
+        \begin{align*}
+            R_\lambda R_\mu f(x) &= \int_0^\infty e^{-\lambda t} Q_t\bc{\int_0^\infty e^{-\mu s} Q_s f(x) ds}dt \\
+            &= \int_0^\infty\int_0^\infty e^{-\lambda t}  e^{-\mu s} Q_{t+s} f(x) ds dt \\
+            &= \int_0^\infty \frac{e^{-\mu r} - e^{-\lambda r}}{\lambda -\mu}Q_rf  dr\\
+            &= \frac{R_\mu - R_\lambda}{\lambda -\mu} f(x). \qedhere
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{lem}
+    Let $(X_t)_{t \geq 0}$ be a Markov process with semigroup $(Q_t)_{t \geq 0}$. Let $h \in \mathcal{B}_b(E)$ and $h \geq 0$. For $\lambda > 0 $, 
+    \begin{equation*}
+        Y_t = e^{-\lambda t}R_\lambda h (X_t)
+    \end{equation*}
+    is a supermartingale.
+\end{lem}
+\begin{proof}
+    For $s > 0$,
+    \begin{align*}
+        Q_s(R_\lambda h) &= Q_s \bc{\int_0^\infty e^{-\lambda t} Q_t h dt} \\
+        &= \int_0^\infty e^{-\lambda t} Q_{t+s} h dt \\
+        &= e^{\lambda s}\int_s^\infty e^{-\lambda u}Q_u h du.
+    \end{align*}
+    So
+    \begin{equation*}
+        e^{-\lambda s}Q_s(R_\lambda h) = \int_s^\infty e^{-\lambda u}Q_u h du \leq \int_0^\infty e^{-\lambda u}Q_u h du = R_\lambda h.
+    \end{equation*}
+    Then
+    \begin{align*}
+        \E\bj{Y_{t+s} \mid \mathcal{F}_s} &= \E\bj{e^{-\lambda (t+s)}R_\lambda h (X_{t+s}) \mid \mathcal{F}_s} \\
+        &= e^{-\lambda (t+s)}\E\bj{R_\lambda h (X_{t+s}) \mid \mathcal{F}_s} \\
+        &= e^{-\lambda (t+s)} Q_tR_\lambda h (X_s) = e^{-\lambda s} e^{-\lambda t} Q_tR_\lambda h (X_s)\\
+        &\leq e^{-\lambda s}R_\lambda h (X_s) = Y_s.
+    \end{align*}
+    So $(Y_t)_{t \geq 0}$ is a supermartingale.
+\end{proof}
+
+
+\section{Feller Semigroup and Generator}
+
+Let $E$ be a metric space that is locally compact. Moreover, assume $E$ is a union of countably many compact sets, which implies that there exists compact $K_n \uparrow E$ and any compact subset of $E$ is contained in some $K_n$. That is $E$ is a $\sigma$-compact metric space. In such case, a function $f \colon E \sto \R$ is called trending to $0$ at infinity if for any $\varepsilon > 0$, there exists a compact $K$ such that $\abs{f(x)} \leq \varepsilon$ for all $x \notin K$, which is equivalent to 
+\begin{equation*}
+    \lim_{n \sto \infty} \sup_{x \in E \backslash K_n} \abs{f(x)} < \varepsilon.
+\end{equation*}
+Let
+\begin{equation*}
+    C_0(E) \defeq \bb{f \colon f \in C(E),~ f \text{ trends to } 0 \text{ at infinity.}}
+\end{equation*}
+Then $C_0(E)$ is a Banach space with the norm defined as
+\begin{equation*}
+    \norm{f} = \sup_{x \in E} \abs{f(x)}.
+\end{equation*}
+
+\begin{defn}
+    A transition semigroup $(Q_t)_{t \geq 0}$ if
+    \begin{enumerate}[label=(\roman{*})]
+        \item for any $f \in C_0(E)$, $Q_t \in C_0(E)$,
+        \item for any $f \in C_0(E)$, $\norm{Q_t f - f} \sto 0$ as $t \sto 0$.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    \begin{enumerate}[label=(\roman*)]
+        \item It follows that for $f \in C_0(E)$, 
+        \begin{equation*}
+            R_\lambda f = \int_0^\infty e^{-\lambda t}Q_t f dt \in C_0(E).
+        \end{equation*}
+        \item Note that given $f \in C_0(E)$, $t \mapsto Q_tf$ is uniformly continuous because
+        \begin{equation*}
+            \norm{Q_{t+s}f - Q_t f} \leq \norm{Q_sf - f} \sto 0
+        \end{equation*}
+        which is independent of $t$ as $s \sto 0$. 
+    \end{enumerate}
+\end{rmk}
+
+\begin{exam}
+    Consider a standard Brownian motion $(B_t)_{t \geq 0}$,
+    \begin{equation*}
+        Q_tf(x) = \int_\R \frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}}f(y)dy.
+    \end{equation*}
+    For any $f \in C_0(\R)$, it is obvious $Q_tf \in C(\R)$. Moreover, choose a $K$ such that
+    \begin{equation*}
+        Q_tf(x) = \int_K + \int_{\R \backslash K}\frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}}f(y)dy \leq \int_K + \varepsilon
+    \end{equation*}
+    Then as $\abs{x} \sto \infty$, by DCT, $\abs{Q_tf(x)} \sto 0$. So $Q_tf \in C_0(\R)$. 
+\end{exam}
+
+\begin{prop}
+    Let $(Q_t)_{t \geq 0}$ be a Feller semigroup. For any $\lambda > 0$, let 
+    \begin{equation*}
+        \mathcal{D} = \bb{R_\lambda f \colon f \in C_0(E)}.
+    \end{equation*}
+    Then $\mathcal{D}$ is independent of $\lambda$ and $\mathcal{D} \subset C_0(E)$ is dense.
+\end{prop}
+\begin{proof}
+    For any $\lambda, \mu > 0$, because
+    \begin{equation*}
+        R_\lambda f = R_\mu f + (\mu-\lambda)R_\mu R_\lambda f = R_\mu (f + f + (\mu-\lambda)R_\lambda f),
+    \end{equation*}
+    $\Img R_\lambda \subset \Img R_\mu$. So $\Img R_\lambda = \Img R_\mu$. For density, for any $f \in C_0(E)$, 
+    \begin{align*}
+        R_\lambda (\lambda f) &= \lambda R_\lambda f = \lambda \int_0^\infty e^{-\lambda t}Q_t f dt \\
+        &= \int_0^\infty e^{-u}Q_{\frac{u}{\lambda}}f du \sto f
+    \end{align*}
+    as $\lambda \sto \infty$ by MCT.
+\end{proof}
+
+\begin{defn}[Generator]
+    Let $(Q_t)_{t \geq 0}$ be a Feller semigroup. Set 
+    \begin{equation*}
+        \mathcal{D}(L) \defeq \bb{f \in C_0(E)\colon \lim_{t \sto 0} \frac{Q_tf - f}{t} \text{ converges in } C_0(E)}.
+    \end{equation*}
+    that is a linear subspace. Then for any $f \in \mathcal{D}(L)$,
+    \begin{equation*}
+        Lf \defeq \lim_{t \sto 0} \frac{Q_tf - f}{t}.
+    \end{equation*}
+    $L$ is called the generator of $(Q_t)_{t \geq 0}$, a linear operator.
+\end{defn}
+
+\begin{prop}
+    Let $f \in \mathcal{D}(L)$. Then for any $s \geq 0$, $Q_sf \in D(L)$ and
+    \begin{equation*}
+        L(Q_s f) = Q_s (L f).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Because $Q_s$ is bounded,
+    \begin{equation*}
+        \lim_{t \sto 0} \frac{Q_tQ_sf - Q_sf}{t} = \lim_{t \sto 0} Q_s \frac{Q_t f - f}{t} = Q_s L f.
+    \end{equation*}
+    So $Q_s f \in \mathcal{D}(L)$ and the LHS
+    \begin{equation*}
+        L(Q_sf) = Q_s L f. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    If $f \in \mathcal{D}(L)$, for any $t \geq 0$,
+    \begin{equation*}
+        Q_t f - f = \int_0^t Q_s(Lf)ds = \int_0^t L(Q_s f)ds.
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    Consider $t \mapsto Q_t f$,
+    \begin{equation*}
+        \frac{d}{dt}Q_tf = \lim_{s \sto 0} \frac{Q_{t+s}f - Q_t f}{s} = Q_tLf. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{prop}
+    Let $\lambda > 0$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item For any $g \in C_0(E)$, $R_\lambda g \in \mathcal{D}(L)$ and
+        \begin{equation*}
+            (\lambda - L)R_\lambda g = g.
+        \end{equation*}
+        \item If $f \in D(L)$,
+        \begin{equation*}
+            R_\lambda (\lambda - L) f = f.
+        \end{equation*}
+    \end{enumerate}
+    It follows that $\Img R_\lambda = \mathcal{D}(L)$ and $R_\lambda = (\lambda - L)^{-1}$.
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Note that
+        \begin{align*}
+            Q_\varepsilon R_\lambda g &= Q_\varepsilon \int_0^\infty e^{-\lambda t}Q_t g dt\\
+            &=\int_0^\infty e^{-\lambda t}Q_{\varepsilon+t} g dt \\
+            &= \int_\varepsilon^\infty e^{-\lambda (u -\varepsilon)} Q_u g du.
+        \end{align*}
+        So
+        \begin{equation*}
+            \frac{1}{\varepsilon}(Q_\varepsilon R_\lambda g - R_\lambda g) = \frac{\mathrm{e}^{\lambda \varepsilon}-1}{\varepsilon} R_\lambda g-\mathrm{e}^{\lambda \varepsilon} \frac{1}{\varepsilon} \int_0^\varepsilon \mathrm{e}^{-\lambda t} Q_t g d t.
+        \end{equation*}
+        As $\varepsilon \sto 0$,
+        \begin{equation*}
+            \lim_{\varepsilon \sto 0}(Q_\varepsilon R_\lambda g - R_\lambda g) = \lambda R_\lambda g - g = LR_\lambda g.
+        \end{equation*}
+        and so $R_\lambda g \in \mathcal{D}(L)$.
+
+        \item First, for $f \in \mathcal{D}(L)$,
+        \begin{equation*}
+            \frac{d}{dt}Q_tf = Q_tLf = LQ_tf.
+        \end{equation*}
+        and so
+        \begin{equation*}
+            Q_t f - f = \int_0^t Q_s(Lf)ds.
+        \end{equation*}
+        Therefore,
+        \begin{align*}
+            R_\lambda f &= \int_0^\infty e^{-\lambda t}Q_t f dt \\
+            &= \int_0^\infty e^{-\lambda t}\bc{f+\int_0^t Q_s(Lf)ds} dt \\
+            &= \frac{1}{\lambda}f + \int_0^\infty \frac{e^{-\lambda s}}{\lambda} Q_sLfds \\
+            &= \frac{1}{\lambda}f + \frac{1}{\lambda}R_\lambda Lf. \qedhere
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+\begin{rmk}
+    If we have $(L,\mathcal{D}(L))$, then define for $\lambda \geq 0$
+    \begin{equation*}
+        R_\lambda = (\lambda -L)^{-1}.
+    \end{equation*}
+    Such $R_\lambda$ determines $(Q_t)_{t \geq 0}$ because $R_\lambda$ is the Laplace transform of $(Q_t)_{t \geq 0}$.
+\end{rmk}
+
+\begin{exam}
+    Consider a standard Brownian motion $(B_t)_{t \geq 0}$. Then
+    \begin{equation*}
+        Q_tf(x) = \int_\R \frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}}f(y)dy.
+    \end{equation*}
+    So the resolvent
+    \begin{align*}
+        R_\lambda f &= \int_0^\infty e^{-\lambda t} \bc{ \int_\R \frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}}f(y)dy }dt \\
+        &= \int_\R f(y)\bc{\int_0^\infty e^{-\lambda t} \frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}} dt } dy \\
+        &= \int_\R f(y) \frac{1}{\sqrt{2 \lambda}} e^{-\sqrt{2\lambda} \abs{y-x}} dy.
+    \end{align*}
+    Assume $f \in C_0(E)$ and $f^{\prime \prime}$ exists.
+    \begin{align*}
+        &\quad\lv{\frac{d}{dt}Q_tf(x)}_{t = 0} \\
+        &= \lim_{t \sto 0} \frac{ \int_\R \frac{1}{\sqrt{2\pi t}}e^{-\frac{(x-y)^2}{2t}}(f(y) - f(x))dy }{t} \\
+        &= \lim_{t \sto 0} \frac{1}{t\sqrt{2\pi t}}\int_\R e^{-\frac{(x-y)^2}{2t}}\bc{f^{\prime}(x)(y-x)+f^{\prime \prime}(x) \frac{(y-x)^2}{2}+f^{\prime \prime \prime}\left(\theta_{x, y}\right) \frac{(y-x)^3}{6}}dy \\
+        &= \lim_{t \sto 0}\frac{1}{t}\bc{f^{\prime}(x) \mathbb{E}\left[B_t^0\right]+\frac{1}{2} f^{\prime \prime}(x) \mathbb{E}\left[\left(B_t^0\right)^2\right]+\int_{\mathbb{R}}\left[f^{\prime \prime \prime}\left(\theta_{x, y}\right) \frac{(y-x)^3}{6}\right] \frac{1}{\sqrt{2 \pi t}} \exp \left\{-\frac{(y-x)^2}{2 t}\right\} \mathrm{d} y }\\
+        &= \frac{1}{2} f^{\prime \prime}(x)+\lim_{t\sto 0} \frac{1}{t}\int_{\mathbb{R}}\left[f^{\prime \prime \prime}\left(\theta_{x, y}\right) \frac{(y-x)^3}{6}\right] \frac{1}{\sqrt{2 \pi t}} \exp \left\{-\frac{(y-x)^2}{2 t}\right\} \mathrm{d} y \\
+        &= \frac{1}{2} f^{\prime \prime}(x),
+    \end{align*}
+    (It is because $f \in C_0(E)$ implies that $f^{(n)} \in C_0(E)$). So
+    \begin{equation*}
+        Lf(x) = f^{\prime\prime}(x).
+    \end{equation*}
+\end{exam}
+
+\begin{thm}\label{thm:martingale_markov}
+    Given a Markov process $(X^x_t)_{t \geq 0}$ with $X_0^x = x$ and it has RLCC paths. Let $h ,g \in C_0(E)$. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $h \in \mathcal{D}(L)$ and $Lh = g$.
+        \item For any $x \in E$,
+        \begin{equation*}
+            M_t = h(X_t^x) - \int_0^t g(X_s^x)ds
+        \end{equation*}
+        is a martingale.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    $(1)~\Rightarrow~(2):$ Note that
+    \begin{align*}
+        \E\bj{M_{t+s} \mid \mathcal{F}_t} &= \E\bj{h(X_{t+s}^x) - \int_0^{t+s} g(X_u^x)du \mid \mathcal{F}_t} \\
+        &= \E\bj{ h(X_{t+s}^x)  \mid \mathcal{F}_t } - \E\bj{\int_0^t g(X_u^x)du \mid \mathcal{F}_t} - \E\bj{\int_t^{t+s} g(X_u^x)du \mid \mathcal{F}_t} \\
+        &= Q_sh(X_t^x) - \int_0^t g(X_u^x)du - \int_t^{t+s} \E\bj{ g(X_u^x) \mid \mathcal{F}_t} du\\
+        &= Q_sh(X_t^x) - \int_0^t g(X_u^x)du - \int_t^{t+s} Q_{u-t}g(X_t^x) du \\
+        &= Q_sh(X_t^x) - \int_0^t g(X_u^x)du - \int_0^s Q_{u}g(X_t^x)du.
+    \end{align*}
+    By above,
+    \begin{equation*}
+        Q_t h = h + \int_0^t Q_sg ds.
+    \end{equation*}
+    So
+    \begin{equation*}
+         \E\bj{M_{t+s} \mid \mathcal{F}_t} = h(X_t^x) - \int_0^t g(X_u^x)du = M_t. \qedhere
+    \end{equation*}
+
+    \noindent $(2) ~\Rightarrow~(1):$ First,
+    \begin{equation*}
+        \E\bj{M_t} = \E[M_0] = h(x).
+    \end{equation*}
+    On the other hand,
+    \begin{align*}
+        \E\bj{M_t} &= \E\bj{h(X_t^x)} - \E\bj{\int_0^t g(X_s^x)ds} \\
+        &= Q_th(x) - \int_0^t Q_s g(x) ds 
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        \int_0^t Q_s g(x) ds = \int_0^t Q_s Lh(x)ds~\Rightarrow~ Q_t(g -Lh) = 0
+    \end{equation*}
+    because $t \mapsto Q_tf$ is uniform continuous. Because $Q_t$ is invertible, $g = Lh$.
+\end{proof}
+
+\section{Markov Property}
+
+\begin{defn}
+    For two processes $(X_t)_{t \geq 0}$ and $(X_t^\prime)_{t \geq 0}$,
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If for any $t \geq 0$,
+        \begin{equation*}
+            \Pb(X_t = X_t^\prime) = 1,
+        \end{equation*}
+        then $(X_t)_{t \geq 0}$ is called a modification of $(X_t^\prime)_{t \geq 0}$.
+        \item If 
+        \begin{equation*}
+            \Pb(X_t = X_t^\prime,~t\geq 0) = 1,
+        \end{equation*}
+        then $(X_t)_{t \geq 0}$ and $(X_t^\prime)_{t \geq 0}$ are called indistinguishable.
+    \end{enumerate}
+\end{defn}
+
+\begin{thm}
+    Assume $(X_t)_{t \geq 0}$ is a Markov process with Feller semigroup $(Q_t)_{t \geq 0}$. Then $(X_t)_{t \geq 0}$ has a Markov modification $(X_t^\prime)_{t \geq 0}$ that is c\`adl\`ag.
+\end{thm}
+\begin{proof}[Sketch of Proof]
+    Consider $\bb{R_\lambda f}$ such that $Y_t = e^{-\lambda}R_\lambda f(X_t)$ is a supermartingale that has a c\`adl\`ag modification. Because such family is rich enough, $(X_t)_{t \geq 0}$ has a c\`adl\`ag modification
+\end{proof}
+
+\noindent Assume $E$ is a metric space. Given a semigroup $(Q_t)_{t \geq 0}$. For $x \in E$, $(X^x_t)_{t \geq 0}$ is a Markov process with $X_0^x = x$ associated with $(Q_t)_{t \geq 0}$. Assume $(X^x_t)_{t \geq 0}$ is c\`adl\`ag. Let
+\begin{equation*}
+    D(E) \defeq \bb{f \colon [0,\infty) \sto E \colon f \text{ is c\`adl\`ag.}} ( = E^{[0,\infty)} ).
+\end{equation*}
+equipped with the $\sigma$-field $\mathcal{D}$ generated by the coordinate process $W_t(\omega) = \omega (t)$ for $\omega \in D(E)$.
+\begin{rmk}
+    If $X=(X_t)_{t \geq 0}$ is a c\`adl\`ag process on $(\Omega, \mathcal{F},\mathbb{P})$, then $X \colon \Omega \sto D(E)$ i.e. $X$ can be viewed as $D(E)$-value random variable. Furthermore, let $\Pb_X = X_{\#}\Pb$ be the law of $X$ on $D(E)$.
+\end{rmk}
+
+\begin{defn}[Shift Operator]
+    Fix $t \geq 0$,
+    \begin{equation*}
+        \theta_t \colon D(E) \sto D(E)
+    \end{equation*}
+    is defined as for any $\omega \in D(E)$,
+    \begin{equation*}
+        \theta_t(\omega)(s) \defeq \omega(t+s).
+    \end{equation*}
+\end{defn}
+
+\begin{thm}[Markov Property]
+    Let $X=(X_t)_{t \geq 0}$ be a c\`adl\`ag Markov process associated with semigroup $(Q_t)_{t \geq 0}$. Let $s \geq 0$ and $\Phi \colon D(E) \sto \R$ be a measurable and bounded function. Then
+    \begin{equation*}
+        \E\bj{\Phi(\theta_s \circ X) \mid \mathcal{F}_s} = \E_{X_s}[\Phi].
+    \end{equation*}
+\end{thm}
+\begin{rmk}
+    Note that because $\E_{X_s}[\Phi]$ is $\sigma(X_s)$-measurable,
+    \begin{equation*}
+        \E\bj{\Phi(\theta_s \circ X) \mid \mathcal{F}_s} = \E\bj{\Phi(\theta_s \circ X) \mid \sigma(X_s)}.
+    \end{equation*}
+\end{rmk}
+\begin{proof}
+    By Monotone Class Theorem, assume 
+    \begin{equation*}
+        \Phi(f) = \varphi_1(f(t_1))\cdots \varphi_p(f(t_p)).
+    \end{equation*}
+    So the RHS is
+    \begin{align*}
+        \E_{X_s}[\Phi] &= \E_{X_s}\bj{ \varphi_1(W_{t_1})\cdots \varphi_p(W_{t_p}) } \\
+        &= \int_E \delta_{X_s}(dx_0) \int_E \varphi_1(x_1)Q_{t_1}(x_0,dx_1)\int_E \varphi_2(x_2)Q_{t_2 - t_1}(x_1,dx_2) \cdots \int_E  \varphi_p(x_p)Q_{t_p - t_{p-1}}(x_{p-1},dx_p) \\
+        &= \int_E \varphi_1(x_1)Q_{t_1}(X_s,dx_1)\int_E \varphi_2(x_2)Q_{t_2 - t_1}(x_1,dx_2) \cdots \int_E  \varphi_p(x_p)Q_{t_p - t_{p-1}}(x_{p-1},dx_p)
+    \end{align*}
+     the LHS is
+    \begin{equation*}
+        \E\bj{\Phi(\theta_s \circ X) \mid \mathcal{F}_s} = \E\bj{\varphi_1(X_{t_1 + s})\cdots \varphi_p(X_{t_p+s}) \mid \mathcal{F}_s}.
+    \end{equation*}
+    For $p = 1$,
+    \begin{equation*}
+        \E\bj{\varphi_1(X_{t_1 + s}) \mid \mathcal{F}_s} = Q_{t_1}\varphi_1(X_s) = \int_E \varphi_1(x_1)Q_{t_1}(X_s,dx_1).
+    \end{equation*}
+    So it is true. Assume it is true for $p-1$.
+    \begin{align*}
+        &\quad\E\bj{\varphi_1(X_{t_1 + s})\cdots \varphi_p(X_{t_p+s}) \mid \mathcal{F}_s} \\
+        &= \E\bj{\E\bj{\varphi_1(X_{t_1 + s})\cdots \varphi_p(X_{t_p+s}) \mid \mathcal{F}_{t_{p-1}+s}} \mid \mathcal{F}_s}\\
+        &= \E\bj{\varphi_1(X_{t_1 + s})\cdots \varphi_{p-1}(X_{t_{p-1}+s}) \E\bj{\varphi_p(X_{t_p+s}) \mid \mathcal{F}_{t_{p-1}+s}} \mid \mathcal{F}_s}\\
+        &= \E\bj{\varphi_1(X_{t_1 + s})\cdots \varphi_{p-1}(X_{t_{p-1}+s}) Q_{t_p - t_{p-1}}\varphi_p(X_{t_{p-1}+s}) \mid \mathcal{F}_s} \\
+        &= \int_E \varphi_1(x_1)Q_{t_1}(X_s,dx_1) \cdots \int_E  \varphi_{p-1}(x_{p-1})Q_{t_p - t_{p-1}}\varphi_p(x_{p-1})Q_{t_{p-1} - t_{p-2}}(x_{p-2},dx_{p-1}) \\
+        &= \int_E \varphi_1(x_1)Q_{t_1}(X_s,dx_1) \cdots \int_E  \varphi_{p-1}(x_{p-1})Q_{t_{p-1} - t_{p-2}}(x_{p-2},dx_{p-1})\int_E \varphi_p(x_p) Q_{t_p - t_{p-1}}(x_{p-1},dx_p). \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}[Strong Markov Property]
+    Let $(Q_t)_{t \geq 0}$ be a Feller semigroup and $(X_t)_{t \geq 0}$ be the corresponding Markov process with RLCC paths. Let $T$ be a stopping time and $\Phi \colon D(E) \sto \R$ be a measurable and bounded function. 
+    \begin{equation*}
+        \E\bj{ \mathbb{I}_{\bb{T < \infty}}\Phi(\theta_T \circ X) \mid \mathcal{F}_T } = \mathbb{I}_{\bb{T < \infty}} \E_{Y_T}[\Phi].
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    By Monotone Class Theorem, assume 
+    \begin{equation*}
+        \Phi(f) = \varphi_1(f(t_1))\cdots \varphi_p(f(t_p)).
+    \end{equation*}
+    The integrability and measurability are obvious. It suffices to show that for any $A \in \mathcal{F}_T$,
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} \Phi(\theta_T \circ X)} = \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} \E_{X_T}[\Phi]}.
+    \end{equation*}
+    and it is sufficient to consider $p = 1$, i.e.
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}}\varphi_1(X_{t_1 + T})} = \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} \E_{X_T}[\Phi]}.
+    \end{equation*}
+    Note that
+    \begin{equation*}
+         \E_{X_T}[\Phi]  = Q_{t_1}\varphi_1(X_T).
+    \end{equation*}
+    So the RHS is
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} \E_{X_T}[\Phi]} = \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} Q_{t_1}\varphi_1(X_T)},
+    \end{equation*}
+    and our goal is to show
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}}\varphi_1(X_{t_1 + T})} = \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} Q_{t_1}\varphi_1(X_T)}.
+    \end{equation*}
+    Let
+    \begin{equation*}
+        T_n = \sum_{i=0}^\infty \frac{i+1}{2^n} \mathbb{I}_{\bb{\frac{i}{2^n} < T \leq \frac{i+1}{2^n}}} + \infty \mathbb{I}_{\bb{T = \infty}}.
+    \end{equation*}
+    Then $T_n \downarrow T$ stopping time. By Monotone Class Theorem, we further assume $\varphi_1$ is continuous. So by the continuity of $X_t$ and Feller property of $Q_t$,
+    \begin{align*}
+        \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}}\varphi_1(X_{t_1 + T})} &= \lim_{n \sto \infty} \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}}\varphi_1(X_{t_1 + T_n})} \\
+        &= \lim_{n \sto \infty} \sum_{i=0}^\infty \E\bj{\mathbb{I}_{A \cap \bb{\frac{i}{2^n} < T \leq \frac{i+1}{2^n}}}\varphi_1(X_{t_1 + \frac{i}{2^n}})} \\
+        &=\lim_{n \sto \infty} \sum_{i=0}^\infty \E\bj{\mathbb{I}_{A \cap \bb{\frac{i}{2^n} < T \leq \frac{i+1}{2^n}}}\E\bj{\varphi_1(X_{t_1 + \frac{i+1}{2^n}}) \mid \mathcal{F}_{\frac{i+1}{2^n}}}}\\
+        &= \lim_{n \sto \infty} \sum_{i=0}^\infty \E\bj{\mathbb{I}_{A \cap \bb{\frac{i}{2^n} < T \leq \frac{i+1}{2^n}}} Q_{t_1}\varphi_1(X_{\frac{i+1}{2^n}})} \\
+        &= \lim_{n \sto \infty} \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} Q_{t_1}(X_{T_n})} \\
+        &= \E\bj{\mathbb{I}_{A \cap \bb{T < \infty}} Q_{t_1}\varphi_1(X_T)}.
+    \end{align*}
+    For $p > 1$, it can be done by the Markov property and induction.
+\end{proof}
+
+\section{Jump Process and L\'evy Process}
+
+\paragraph{Jump Markov Process.} Assume the state space $E$ is finite equipping with the discrete metric $d(x,y) = \delta_x(y)$ and $\sigma$-field $\mathcal{P}(E)$. Let $f \in D(E)$, i.e. $f \colon [0,\infty) \sto E$ is c\`adl\`ag. Note that for $\bb{y_n} \in E$,
+\begin{equation*}
+    y_n \sto y \quad \Leftrightarrow \quad \exists~m,~ y_n = y,~\forall~ n \geq m. 
+\end{equation*}
+Therefore, there exists $t \in (0,\infty]$ such that $f(s) = f(0)$ for all $s \in (0,t)$. Let
+\begin{equation*}
+    t_1 = \max \bb{t > 0 \colon f(s) = f(0),\quad \forall~s \in (0,t)}.
+\end{equation*}
+If $t_1 < \infty$, there exists $t_2 > t_1$ such that
+\begin{equation*}
+    t_2 = \max \bb{t > t_1 \colon f(s) = f(t_1),~\forall~s \in (t_1,t)}.
+\end{equation*}
+Therefore, there exist $0 < t_1 < t_2 < \cdots$ such that
+\begin{equation*}
+    f(t) = f(t_n),\quad \forall~ t \in [t_n,t_{n+1}).
+\end{equation*}
+Let $(Q_t)_{t \geq 0}$ be a semigroup on $E$. Because $C(E) = B(E)$, $(Q_t)_{t \geq 0}$ is a Feller semigroup. So we can construct a measure space $(\Omega ,\mathcal{F})$ on which there is a family $(\Pb_x\colon x\in E)$ and a process $(X_t)_{t \geq 0}$ with c\`adl\`ag paths such that $(X_t)_{t \geq 0}$ is a Markov process associated with $(Q_t)_{t \geq 0}$ when $X_0 = x$. For every $\omega \in \Omega$, there exists a sequence
+\begin{equation*}
+    0 = T_0(\omega) < T_1(\omega) < \cdots < T_n(\omega) < \cdots,
+\end{equation*}
+such that
+\begin{equation*}
+    X_t(\omega) = X_{T_n}(\omega),\quad \forall~ t \in [T_n,T_{n+1}).
+\end{equation*}
+Moreover, $T_n$ is a stopping time, like
+\begin{equation*}
+    \left\{T_1<t\right\}=\bigcup_{q \in[0, t) \cap \mathbb{Q}}\left\{X_q \neq X_0\right\} \in \mathcal{F}^X_t.
+\end{equation*}
+Note that for a $t$, on the set of $\bb{\omega: t < T_1(\omega)}$, then $T_1(\omega) = t + T_1 \circ \theta_t$. So we have
+\begin{equation*}
+    T_2 = T_1 + T_1 \circ \theta_{T_1}.
+\end{equation*}
+
+\begin{lem}
+    Let $x \in E$. There exists a $q(x) \geq 0$ such that $T_1$ is exponentially distributed with parameter $q(x)$ under $\Pb_x$. Furthermore, if $q(x)>0$, then $T_1$ and $X_{T_1}$ are independent.
+\end{lem}
+\begin{proof}
+    First,
+    \begin{align*}
+        \Pb_x(T_1 > s+t) &= \Pb_x(T_1 > s+t,~T_1>s) \\
+        &= \Pb_x(s + T_1 \circ \theta_s > s+t,~T_1 > s)\\
+        &= \Pb_x(T_1 \circ \theta_s > t,~T_1 > s)\\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 \circ \theta_s > t}}\mathbb{I}_{\bb{T_1 > s}}} \\
+        &= \E_x\bj{\E_x\bj{\mathbb{I}_{\bb{T_1 \circ \theta_s > t}}\mathbb{I}_{\bb{T_1 > s}} \mid \mathcal{F}_s}} \\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 > s}}\E_x\bj{\mathbb{I}_{\bb{T_1 \circ \theta_s > t}} \mid \mathcal{F}_s}} \\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 > s}}\E_{X_s}\bj{\mathbb{I}_{T_1 > t}}} \\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 > s}}\E_x\bj{\mathbb{I}_{T_1 > t}}} \\
+        &= \Pb_x(T_1 > s)\Pb_x(T_1 >t),
+    \end{align*}
+    which implies that there exists a $q(x) \geq 0$ such that
+    \begin{equation*}
+        \Pb_x(T_1 >t) = e^{-q(x)t}.
+    \end{equation*}
+    When $q(x) > 0$, $T_1 < \infty$. Let $y \in E$. Consider
+    \begin{align*}
+        \Pb_x(T_1 > t,~X_{T_1} = y) &= \Pb_x(T_1 > t,~X_{t+T_1\circ \theta_t} = y) \\
+        &=\Pb_x(T_1 > t,~X_{T_1} \circ \theta_t = y) \\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 > t}} \mathbb{I}_{\bb{X_{T_1} \circ \theta_t = y}}} \\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 > t}}\E_{X_t}\bj{\mathbb{T}_{X_{T_1} = Y}}} \\
+        &= \Pb_x(T_1 > t)\Pb_x\bc{X_{T_1} = y}. \qedhere
+    \end{align*} 
+\end{proof}
+
+\noindent Note that if $q(x) = 0$, $X_t \equiv x$. If $q(x) > 0$, for $x,y \in E$, define
+\begin{equation*}
+    \pi(x,y) = \Pb_x(X_{T_1} = y).
+\end{equation*}
+So $(\pi(x,y))_{x,y \in E}$ is a transition matrix. 
+
+\begin{prop}
+    Let $L$ be the generator of $(Q_t)_{t \geq 0}$. Then $\mathcal{D}(L) = C(E) = B(E)$. And for any $\varphi \in C(E)$, $x \in E$, if $q(x) = 0$, then $L\varphi(x) = 0$, and if $q(x) > 0$,
+    \begin{equation*}
+        L \varphi (x) = q(x)\sum_{y \in E,y\neq x}\pi(x,y)\bc{\varphi(y) - \varphi(x)}.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Note that
+    \begin{equation*}
+        L\varphi(x) = \lim_{t \sto 0} \frac{Q_t \varphi(x) - \varphi(x)}{t}.
+    \end{equation*}
+    If $q(x) = 0$, $X_t \equiv x$ and $T_1 = \infty$. So
+    \begin{equation*}
+        Q_t \varphi(x) = \E_x[\varphi(X_t)] = \E_x[\varphi(x)] = \varphi(x).
+    \end{equation*}
+    So $L\varphi(x) = 0$.
+
+    \noindent Assume $q(x) > 0$. Then $T_1 < \infty$.
+
+    \noindent \textbf{Claim:} We claim
+    \begin{equation*}
+        \Pb_x(T_2 \leq t) = O(t^2),\quad t \sto 0
+    \end{equation*}
+    In fact, 
+    \begin{align*}
+        \Pb_x(T_2 \leq t) &= \Pb_x(T_1 \leq t,~ T_1 + T_1 \circ \theta_{T_1} \leq t) \\
+        &\leq \Pb_x(T_1 \leq t,~ T_1 + T_1 \circ \theta_{T_1} \leq t + T_1) \\
+        &= \Pb_x(T_1 \leq t,~ T_1 \circ \theta_{T_1} \leq t) \\
+        &= \E_x\bj{\mathbb{I}_{\bb{T_1 \leq t}} \E_{X_{T_1}}\bj{\mathbb{I}_{\bb{ T_1 \leq t }}}} \\
+        &\leq \E_x\bj{\mathbb{I}_{\bb{T_1 \leq t}} \sup_{y \in E} \Pb_y(T_1 \leq t)} \\
+        &= \sup_{y \in E} \Pb_y(T_1 \leq t)\Pb_x(T_1 \leq t) \\
+        &= \sup _{y \in E}\left(1-e^{-q(y) t}\right)\left(1-e^{-q(x) t}\right) \leq Ct^2,
+    \end{align*}
+    when $t \sto 0$.
+
+    \noindent Then we have
+    \begin{align*}
+        Q_t\varphi(x) &= \E_x\bj{\varphi(X_t)} \\
+        &= \E_x\bj{\varphi(X_t)\mathbb{I}_{\bb{t < T_1}}} + \E_x\bj{\varphi(X_t)\mathbb{I}_{\bb{t \geq T_1}}} \\
+        &=\varphi(x)\Pb_x(T_1 > t) + \E_x\bj{\varphi(X_t)\mathbb{I}_{\bb{t \geq T_1}}\mathbb{I}_{\bb{t < T_2}}}+ \E_x\bj{\varphi(X_t)\mathbb{I}_{\bb{t \geq T_1}}\mathbb{I}_{\bb{t \geq T_2}}} \\
+        &= \varphi(x)\Pb_x(T_1 > t) + E_x\bj{\varphi(X_{T_1})\mathbb{I}_{\bb{T_1 \leq t < T_2}}} + O(t^2) \\
+        &= \varphi(x)\Pb_x(T_1 > t) + E_x\bj{\varphi(X_{T_1})\mathbb{I}_{\bb{T_1 \leq t}}} - E_x\bj{\varphi(X_{T_1})\mathbb{I}_{\bb{T_2 \leq t}}} +O(t^2)\\
+        &= \varphi(x)\Pb_x(T_1 > t) + E_x\bj{\varphi(X_{T_1})\mathbb{I}_{\bb{T_1 \leq t}}} + O(t^2) \\
+        &= \varphi(x)e^{-q(x)t} + \E_x[\varphi(X_{T_1})]\Pb_x(T_1 \leq t) + O(t^2) \\
+        &= \varphi(x)e^{-q(x)t} + (1 - e^{-q(x)t})\sum_{y\in E, y\neq x}\pi(x,y)\varphi(y)+ O(t^2).
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+         L\varphi(x) = q(x)\sum_{y \in E,y\neq x}\pi(x,y)\bc{\varphi(y) - \varphi(x)}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    If $q(y) > 0$ for all $y$, then $T_1 < T_2 < \cdots <\infty$ a.e.. Moreover, $\bc{X_{T_n}}_{n \geq 0}$ is a Markov chain with the transition matrix $\pi(x,y)$.
+\end{thm}
+\begin{proof}
+    First,
+    \begin{align*}
+        \mathbb{P}_x\left(X_{T_1}=z_1, X_{T_2}=z_2\right) & =\mathbb{P}_x\left(X_{T_1}=z_1, X_{T_1+T_1 \circ \theta_{T_1}}=z_2\right) \\
+        & =\mathbb{P}_x\left(X_{T_1}=z_1, X_{T_1} \circ \theta_{T_1}=z_2\right) \\
+        & =\mathbb{P}_x\left(X_{T_1}=z_1, E_{X_{T_1}}\left[X_{T_1}=z_2\right]\right) \\
+        & =\mathbb{P}_x\left(X_{T_1}=z_1, E_{z_1}\left[X_{T_1}=z_2\right]\right) \\
+        & =\mathbb{P}_x\left(X_{T_1}=z_1\right) P_{z_1}\left(X_{T_1}=z_2\right) \\
+        & =\pi\left(x, z_1\right) \pi\left(z_1, z_2\right)
+    \end{align*}
+    Then by induction, we have
+    \begin{equation*}
+        P_x\left(X_{T_1}=z_1, X_{T_2}=z_2, \cdots, X_{T_n}=z_n\right)=\pi\left(x, z_1\right) \pi\left(z_1, z_2\right) \cdots \pi\left(z_{n-1}, z_n\right). \qedhere
+    \end{equation*}
+\end{proof}
+
+\paragraph{L\'evy Process.} Let $Y=(Y_t)_{t \geq 0}$ be a stochastic process such that
+\begin{enumerate}[label=(\roman*)]
+    \item $Y_0 = 0$ a.e.
+    \item for any $s \leq t$, $Y_t - Y_s$ is independent of $\sigma(Y_r\colon r \leq s)$,
+    \item $Y_t \sto 0$ in probability as $t \sto 0$.
+\end{enumerate}
+Then $Y$ is called a L\'ey process.
+
+\begin{thm}
+    For $t \geq 0$, let $Q_t(x,dy)$ be the law of $Y_t + x$, i.e.,
+    \begin{equation*}
+        Q_tf(x) = \E\bj{f(Y_t+x)}.
+    \end{equation*}
+    $(Q_t)_{t \geq 0}$ is a Feller semigroup and $Y$ is a Markov process associated with $(Q_t)_{t \geq 0}$.
+\end{thm}

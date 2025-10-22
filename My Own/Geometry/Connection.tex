@@ -1,0 +1,1692 @@
+\chapter{Connections}
+
+\section{Affine Connections}
+The main goal is to define the derivative of tensor fields, which can be compatible with the Riemannian structure.
+\begin{defn}
+	An affine connection $\nabla$ on a smooth manifold $M$ is a map
+	\begin{equation*}
+		\nabla \colon \Gamma(TM) \times \Gamma(TM) \longrightarrow \Gamma(TM)
+	\end{equation*}
+	denoted by $(X,Y) \sto \nabla_XY$ satisfying for any $X,Y,Z \in \Gamma(TM)$
+	\begin{enumerate}[label=\Roman{*}.]
+		\item linearity:
+		\begin{equation*}
+			\nabla_X(Y+Z) = \nabla_XY+\nabla_YZ
+		\end{equation*}
+		\item function linearity:
+		\begin{equation*}
+			\nabla_{fX+gY}Z = f\nabla_XZ + g\nabla_YZ,\quad \forall~f,g \in C^\infty(M)
+		\end{equation*}
+		\item Leibniz property:
+		\begin{equation*}
+			\nabla_X(fY) = X(f)Y+f\nabla_XY,\quad \forall~f \in C^\infty(M)
+		\end{equation*}
+	\end{enumerate}
+	Moreover, $\nabla_XY$ is called the covariant derivative of $Y$ along $X$.
+\end{defn}
+\begin{rmk}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item Note that by Leibniz property, we have $\nabla_Xf = X(f)$.
+		\item We can formally define the covariant differential. Consider the map
+		\begin{equation*}
+			\nabla \colon \Gamma(TM) \longrightarrow \Gamma(TM)\otimes \Gamma(T^*M)
+		\end{equation*}
+		for any $Y \in \Gamma(TM)$, $\nabla Y \in \Gamma(TM)\otimes \Gamma(T^*M)$ viewed as
+		\begin{equation*}
+			\nabla Y \colon \Gamma(T^*M)\times \Gamma(TM) \longrightarrow C^\infty(M)
+		\end{equation*}
+		is defined
+		\begin{equation*}
+			\nabla Y(\omega,X) = \omega(\nabla_XY)
+		\end{equation*}
+
+		\item Note that, locally covariant derivative is not the directional derivative. Considering two charts $(x,U)$ and $(y,V)$ with $p \in U \cap V$, let
+		\begin{equation*}
+			Y = f^i\frac{\partial}{\partial x_i} = g^j \frac{\partial}{\partial y_j}
+		\end{equation*}
+		If $\nabla_XY$ is the directional derivatives, then
+		\begin{equation*}
+			\nabla_XY(p) =(D_{X(p)}f^i) \frac{\partial}{\partial x_i} = (D_{X(p)}g^j) \frac{\partial}{\partial y_j}
+		\end{equation*}
+		However,
+		\begin{equation*}
+			\begin{aligned}
+				D_{X(p)}f^i \frac{\partial}{\partial x_i} &= (D_{X(p)}g^j)   \frac{\partial x^l}{\partial y_j}\frac{\partial}{\partial x_l} 
+				\\
+				&= \bc{D_{X(p)} f^k \frac{\partial y^j}{\partial x^k} } \frac{\partial x^l}{\partial y_j}\frac{\partial}{\partial x_l} \\
+				&= (D_{X(p)} f^k)\frac{\partial y^j}{\partial x^k}\frac{\partial x^l}{\partial y_j}\frac{\partial}{\partial x_l} + f^k\bc{D_{X(p)} \frac{\partial y^j}{\partial x^k}}\frac{\partial x^l}{\partial y_j}\frac{\partial}{\partial x_l} \\
+				&= (D_{X(p)} f^k)\frac{\partial}{\partial x^k} + f^k\bc{D_{X(p)}\bc{\frac{\partial y^j}{\partial x^k} \frac{\partial x^l}{\partial y_j}}- \frac{\partial y^j}{\partial x^k}D_{X(p)}\bc{\frac{\partial x^l}{\partial y_j}}}\frac{\partial}{\partial x_l} \\
+				&= (D_{X(p)} f^k)\frac{\partial}{\partial x^k} - g^jD_{X(p)}\bc{\frac{\partial x^l}{\partial y_j}}\frac{\partial}{\partial x_l}
+			\end{aligned}
+		\end{equation*}
+		which induces a contradiction.
+	\end{enumerate}
+\end{rmk}
+\begin{rmk}
+	In fact, affine connection exists infinitely. For any atlas $\bb{U_\alpha}_{\alpha \in \Lambda}$ of $M$, we can find a partition of unity $\bc{V_\beta,\varphi_\beta}_{\beta \in B}$. Then
+	\begin{equation*}
+		\nabla_XY(p) \defeq \sum_{\beta \in B} \varphi_\beta(p) D_X^{V_\beta} Y(p)
+	\end{equation*}
+	Moreover, it is clear that the affine combination of affine connections is also an affine connection, that is, for affine connections $\nabla^{(1)},\cdots,\nabla^{(k)}$,
+	\begin{equation*}
+		\nabla \defeq \sum_{i=1}^{k} f_i\nabla^{(i)},\quad f_1,\cdots,f_k \in C^\infty(M) \text{ with } \sum_{i=1}^kf_i = 1
+	\end{equation*}
+	is an affine connection.
+\end{rmk}
+
+\noindent Similarly as derivatives, affine connections also have the local property.
+\begin{prop}
+	For any open set $U \subset M$, if
+	\begin{equation*}
+		X|_U = \tilde{X}|_U,\quad Y|_U = \tilde{Y}|_U
+	\end{equation*}
+	then we have
+	\begin{equation*}
+		(\nabla_XY)|_U = (\nabla_{\tilde{X}}\tilde{Y})|_U
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item First, check $(\nabla_XY)|_U = (\nabla_{\tilde{X}}Y)|_U$. By function linearity, it is sufficient to check
+		\begin{equation*}
+			X|_U = 0 ~\Rightarrow~ (\nabla_XY)|_U = 0
+		\end{equation*}
+		For any $p \in U$, there is a compact $V \subset U$ containing $p$ such that $f \in C^\infty(U)$ and $f \equiv 1$ on $V$. Then we have
+		\begin{equation*}
+			(1-f)X = X
+		\end{equation*}
+		So function linearity,
+		\begin{equation*}
+			\nabla_XY(p) = \nabla_{(1-f)X}Y(p) = (1-f(p))\nabla_XY(p) = 0
+		\end{equation*}
+
+		\item Next, check $(\nabla_{\tilde{X}}Y)|_U = (\nabla_{\tilde{X}}\tilde{Y})|_U$. By linearity, it is sufficient to check
+		\begin{equation*}
+			Y|_U = 0 ~\Rightarrow~ (\nabla_XY)|_U = 0
+		\end{equation*}
+		For any $p \in U$, as similar choosing, we have $(1-f)Y = Y$. Then by Leibniz property,
+		\begin{equation*}
+			\nabla_XY(p) = \nabla_X(1-f)Y(p) = X(1-f)(p)Y(p) + (1-f(p))\nabla_XY(p) = 0
+		\end{equation*}
+		because $X(1-f)(p) = 0$ by the local property of vector fields. \qedhere
+	\end{enumerate}
+\end{proof}
+
+
+\noindent Let's see the local expression of connection. On a chart $(x,U)$, let
+\begin{equation*}
+	X = X^i \frac{\partial}{\partial x_i},\quad Y = Y^j \frac{\partial}{\partial x_j}
+\end{equation*}
+Then by the properties of the affine connection,
+\begin{equation*}
+	\begin{aligned}
+		\nabla_XY(p) &= \nabla_{X^i \frac{\partial}{\partial x_i}}Y \\
+		&= X^i \nabla_{\frac{\partial}{\partial x_i}}Y^j \frac{\partial}{\partial x_j} \\
+		&= X^i \frac{\partial Y^j}{\partial x_i}\frac{\partial}{\partial x_j}+X^iY^j\bc{\nabla_{\frac{\partial}{\partial x_i}}\frac{\partial}{\partial x_j}}
+	\end{aligned}
+\end{equation*}
+So the main part is $\nabla_{\frac{\partial}{\partial x_i}}\frac{\partial}{\partial x_j}$. Then we introduce new coefficients
+\begin{equation*}
+	\nabla_{\frac{\partial}{\partial x_i}}\frac{\partial}{\partial x_j} = \bracenom{k}{i,j}\frac{\partial}{\partial x_k}
+\end{equation*}
+It follows that
+\begin{equation*}
+	\nabla_XY(p) = \bc{X^i\frac{\partial Y^k}{\partial x_i}+X^iY^j\bracenom{k}{i,j}}\frac{\partial}{\partial x_k}
+\end{equation*}
+So by this calculation, we can directly obtain the following properties.
+\begin{prop}
+	If $X(p) = \tilde{X}(p)$, then
+	\begin{equation*}
+		\nabla_XY(p) = \nabla_{\tilde{X}}Y(p)
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	By function linearity, it is sufficient to prove
+	\begin{equation*}
+		X(p) = 0 ~\Rightarrow~ \nabla_XY(p) = 0
+	\end{equation*}
+	From above, $X(p) = $ implies $X^i(p) = 0$ for all $i$, and so by above $\nabla_XY(p) = 0$
+\end{proof}
+\begin{rmk}
+	First, from this, we have for any $v \in T_pM$
+	\begin{equation*}
+		\nabla_vY = \nabla_{X}Y(p)
+	\end{equation*}
+	for any $X$ with $X(p) = v$.
+\end{rmk}
+
+\noindent Note that if $Y(p) = 0$, it does not implies $\nabla_XY(p) = 0$ because it just satisfies the linearity. However, if along a curve, we can have similar result.
+\begin{prop}
+	Let $C^\infty$ curve $\gamma \colon (-\varepsilon,\varepsilon) \sto M$ satisfy $\gamma(0) = p$ and $\dot{\gamma}(0) = v \in T_pM$. Suppose $Y(\gamma(t)) = \tilde{Y}(\gamma(t))$.
+	\begin{equation*}
+	 	\nabla_vY(p) = \nabla_v\tilde{Y}(p)
+	\end{equation*} 
+\end{prop}
+\begin{proof}
+	Similarly, it is sufficient to prove that
+	\begin{equation*}
+		Y(\gamma(t)) = 0 ~\Rightarrow~ \nabla_vY(p) = 0
+	\end{equation*}
+	First, at $p$, $Y^i(p) = 0$. So the second term of $\nabla_vY(p) = 0$. For the first term, because
+	\begin{equation*}
+		0 = \lv{\frac{d}{dt}}_{t=0}Y^k(\gamma(t)) = X^i(p)\frac{\partial Y^k}{\partial x_i}(p) \qedhere
+	\end{equation*}
+\end{proof}
+
+\section{Parallel Moving}
+
+For a $C^\infty$ curve $c \colon [a,b] \sto M$, a vector field along $c$ is a map
+\begin{equation*}
+	V \colon [a,b] \longrightarrow TM
+\end{equation*}
+such that for any $t \in [a,b]$
+\begin{equation*}
+	V(t) \in T_{c(t)}M
+\end{equation*}
+or in local expression
+\begin{equation*}
+	V(t) = V^i(t) \lv{\frac{\partial}{\partial x^i}}_{c(t)}
+\end{equation*}
+\begin{rmk}
+	The reason why we need the definition of vector fields along curves is that
+	\begin{equation*}
+		c_*\bc{\frac{d}{dt}} = \dot{c}(t)
+	\end{equation*}
+	in general, is not a vector field, for example, $c$ intersects itself. But $\dot{c}(t)$ is a vector field along $c$.
+\end{rmk}
+
+Moreover, we denote the covariant derivative of $V$ along $c$ by $\frac{D}{dt}V$, which is defined as the following proposition.
+\begin{prop}
+	Let smooth manifold $M$ be equipped with an affine connection $\nabla$. Then there is a unique map $V \mapsto \frac{D}{dt}V$ such that
+	\begin{enumerate}[label=(\arabic{*})]
+		\item linearity
+		\begin{equation*}
+			\frac{D}{dt}(V+W) = \frac{D}{dt}V +\frac{D}{dt}W
+		\end{equation*}
+		\item Leibniz property
+		\begin{equation*}
+			\frac{D}{dt}(fV) = \frac{df}{dt}V+ f\frac{D}{dt}V,\quad \forall~f \in C^\infty([a,b])
+		\end{equation*}
+		\item if $V = Y|_{c(t)}$, where $Y$ is a $C^\infty$ vector field defined on a neighborhood of $c$, then
+		\begin{equation*}
+			\frac{D}{dt}V = \nabla_{\dot{c}(t)}Y
+		\end{equation*}
+	\end{enumerate}
+\end{prop}
+\begin{proof}
+	For the uniqueness, similarly as the proof of connections, by the linearity and Leibniz property, it is local, so we can assume $c(t) \in U$ a chart $(x,U)$. Then
+	\begin{equation*}
+		V(t) = V^i(t)\lv{\frac{\partial}{\partial x^i}}_{c(t)}
+	\end{equation*}
+	So we have
+	\begin{equation*}
+		\begin{aligned}
+			\frac{D}{dt}V(t) &= \frac{D}{dt}\bc{V^i(t)\lv{\frac{\partial}{\partial x^i}}_{c(t)}} \\
+			&= \frac{dV^i(t)}{dt}\lv{\frac{\partial}{\partial x^i}}_{c(t)} + V^i(t)\frac{D}{dt}\lv{\frac{\partial}{\partial x^i}}_{c(t)} \\
+			&= \frac{dV^i(t)}{dt}\lv{\frac{\partial}{\partial x^i}}_{c(t)} + V^i(t)\nabla_{\dot{c}(t)}\lv{\frac{\partial}{\partial x^i}}_{c(t)} 
+		\end{aligned}
+	\end{equation*}
+	which is uniquely determined.
+
+	\noindent For existence, locally we defined
+	\begin{equation*}
+		\frac{D}{dt}V(t) \defeq \frac{dV^i(t)}{dt}\lv{\frac{\partial}{\partial x^i}}_{c(t)} + V^i(t)\nabla_{\dot{c}(t)}\lv{\frac{\partial}{\partial x^i}}_{c(t)}
+	\end{equation*}
+	We need to check it is independent with the choice of coordinates. For
+	\begin{equation*}
+		V(t) = V^i(t)\lv{\frac{\partial}{\partial x^i}}_{c(t)} = \tilde{V}^j(t)\lv{\frac{\partial}{\partial y^j}}_{c(t)},\quad V^i(t) = \tilde{V}^j(t) \frac{\partial x^i}{\partial y^j}(c(t))
+	\end{equation*}
+	we get
+	\begin{equation*}
+		\begin{aligned}
+			\frac{D}{dt}V(t) &= \frac{d}{dt} \bc{\tilde{V}^j(t) \frac{\partial x^i}{\partial y^j}(c(t))}\lv{\frac{\partial}{\partial x^i}}_{c(t)} + \tilde{V}^j(t) \frac{\partial x^i}{\partial y^j}(c(t))\nabla_{\dot{c}(t)} \frac{\partial y^j}{\partial x^i}(c(t))\lv{\frac{\partial}{\partial y^j}}_{c(t)}\\
+			&= \frac{d\tilde{V}^j(t)}{dt}\lv{\frac{\partial}{\partial y^j}}_{c(t)} + \tilde{V}^j(t)\nabla_{\dot{c}(t)}\lv{\frac{\partial}{\partial y^j}}_{c(t)} \\
+			&\quad + \tilde{V}^j(t) \bc{\frac{d}{dt}\frac{\partial x^i}{\partial y^j}(c(t))} \lv{\frac{\partial}{\partial x^i}}_{c(t)} + \tilde{V}^j(t) \frac{\partial x^i}{\partial y^j}(c(t))\bc{\frac{d}{dt}\frac{\partial y^j}{\partial x^i}(c(t))}\lv{\frac{\partial}{\partial y^j}}_{c(t)}
+		\end{aligned}
+	\end{equation*}
+	Besides, note that
+	\begin{equation*}
+		\begin{aligned}
+			\tilde{V}^j(t) \frac{\partial x^i}{\partial y^j}(c(t))\bc{\frac{d}{dt}\frac{\partial y^j}{\partial x^i}(c(t))}\lv{\frac{\partial}{\partial y^j}}_{c(t)} &= -\tilde{V}^j(t) \frac{\partial y^j}{\partial x^i}(c(t))\bc{\frac{d}{dt}\frac{\partial x^i}{\partial y^j}(c(t))}\lv{\frac{\partial}{\partial y^j}}_{c(t)} \\
+			&= -\tilde{V}^j(t)\bc{\frac{d}{dt}\frac{\partial x^i}{\partial y^j}(c(t))}\lv{\frac{\partial}{\partial x^i}}_{c(t)} 
+		\end{aligned}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\frac{D}{dt}V(t) = \frac{d\tilde{V}^j(t)}{dt}\lv{\frac{\partial}{\partial y^j}}_{c(t)} + \tilde{V}^j(t)\nabla_{\dot{c}(t)}\lv{\frac{\partial}{\partial y^j}}_{c(t)}
+	\end{equation*}
+	Next, we need to prove the properties. The linearity and Leibniz property are clear. For the third one, if $c = (c^1,\cdots,c^m)$, then $\dot{c}(t) = \frac{d}{dt}c^i(t)\frac{\partial}{\partial x^i}$ and so
+	\begin{equation*}
+		\nabla_{\dot{c}(t)} \frac{\partial}{\partial x^j} = \frac{d}{dt}c^i(t) \nabla_{\frac{\partial}{\partial x^i}} \frac{\partial}{\partial x^j} =\frac{d}{dt}c^i(t) \bracenom{k}{i,j}\frac{\partial}{\partial x_k}
+	\end{equation*}
+	It follows that
+	\begin{equation*}
+		\frac{D}{dt}V(t) = \bc{ \frac{dV^k(t)}{dt} + V^j(t)\frac{d}{dt}c^i(t) \bracenom{k}{i,j}}\frac{\partial}{\partial x_k}
+	\end{equation*}
+	If $V(t) = Y(c(t))$ for some $Y \in \Gamma(TM)$, then by above
+	\begin{equation*}
+		\frac{D}{dt}V(t) = \nabla_{\dot{c}(t)}Y(c(t)) \qedhere
+	\end{equation*}
+\end{proof}
+
+\begin{defn}
+	Let $M$ be a smooth manifold with an affine connection $\nabla$. A vector field $V$ along a curve $c \colon [a,b] \sto M$ is called parallel if 
+	\begin{equation*}
+		\frac{D}{dt}V(t) = 0,\quad \forall~t \in [a,b]
+	\end{equation*}
+\end{defn}
+
+\noindent Moreover, by the uniqueness of ODE, we clearly have the following result.
+\begin{prop}
+	Let $M$ be a smooth manifold with an affine connection $\nabla$ and $c \colon [a,b] \sto M$ be a smooth curve. Then for any $V_0 \in T_{c(t_0)}M$, there is a unique parallel vector field $V$ along $c$ such that $V(t_0) = V_0$.
+\end{prop}
+
+\noindent Based on this, we can consider a map from $T_pM$ to $T_qM$, where $p = c(0)$ and $q = c(t_0)$ for a smooth curve $c \colon [0,b] \sto M$,
+\begin{equation*}
+	\mathcal{P}_{c,0,t_0} \colon T_pM \longrightarrow T_qM
+\end{equation*}
+For any $V_0 \in T_pM$, let $V$ be the unique parallel vector field along $c$ and so
+\begin{equation*}
+	\mathcal{P}_{c,0,t_0}(V_0) \defeq V(t_0)
+\end{equation*}
+Moreover,
+\begin{enumerate}[label=(\arabic{*})]
+	\item by the linearity of ODE, $\mathcal{P}_{c,0,t_0}$ is linear,
+	\item because we can clearly get the inverse of $\mathcal{P}_{c,0,t_0}$ by the uniqueness of parallel vector field, $\mathcal{P}_{c,0,t_0}$ is bijective.
+\end{enumerate}
+Therefore, $\mathcal{P}_{c,0,t_0}$ is a linear isomorphism.
+
+\begin{prop}\label{prop:movingframe}
+	Let $c$ be a smooth curve with $c(0) = p$ and $\dot{c}(0)=X(p)$. Let $Y \in \Gamma(TM)$. Then we have
+	\begin{equation*}
+		\nabla_{X}Y(p) = \lim_{h\sto 0}\frac{\mathcal{P}_{c,0,h}^{-1}(Y(c(h))) - Y(c(0))}{h}
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	Let $V_1,V_2,\cdots,V_m$ be parallel vector fields along $c$, which are linearly independent at each point, which can be done by choosing a basis in $T_{c(0)}M$ and then generate the linear independent vector fields because $\mathcal{P}_{c,0,t}$ is isomorphic. Then we have $f^i(t)$ such that
+	\begin{equation*}
+		Y(c(t)) = f^i(t)V_i(t)
+	\end{equation*}
+	So
+	\begin{equation*}
+		\begin{aligned}
+			\text{RHS} &= \lim_{h \sto 0} \frac{f^i(h)V_i(0) - f^i(0)V_i(0)}{h} \\
+			&= \lv{\frac{df^i}{dt}}_{t=0}V_i(0) \\
+			&= \lv{\frac{D}{dt}}_{t=0}(f^i(t)V^i(t))\\
+			&= \lv{\frac{D}{dt}}_{t=0}Y(c(t)) \\
+			&= \nabla_{X}Y(p)
+		\end{aligned}
+	\end{equation*} \qedhere
+\end{proof}
+
+\noindent Let $\varphi \colon N \sto M$ be a smooth map between two smooth manifolds and let $\nabla$ be an affine connection on $M$. A vector field $V$ along $\varphi$ is a smooth map
+\begin{equation*}
+	x \in N \mapsto V(x) \in T_{\varphi(x)}M
+\end{equation*}
+Let $E_i$ be a frame vector field of $M$ of a neighborhood containing $\varphi(x) \in N$, \emph{i.e.}
+\begin{equation*}
+	V(x) = V^i(x)E_i(\varphi(x))
+\end{equation*}
+Then given any $u \in T_xN$, define
+\begin{equation*}
+	\widetilde{\nabla}_uV(\varphi(x)) \defeq u(V^i(x))E_i(\varphi(x)) + V^i(x)\nabla_{d\varphi_x(u)}E_i(\varphi(x))
+\end{equation*}
+and $\widetilde{\nabla}_u$ is so-called the induced connection on $N$. Similarly as above, it is well-defined, \emph{i.e.} it is independent with the choice of $E_i$. Note that
+\begin{equation*}
+	\frac{D}{dt} = \widetilde{\nabla}_{\frac{d}{dt}}
+\end{equation*}
+of $\varphi = c \colon [a,b] \sto M$. Moreover, if $V(x) = W(\varphi(x))$ for some $W \in \Gamma(TM)$ (such $V$ is called extendible), then
+\begin{equation*}
+	\widetilde{\nabla}_uV(x) = \nabla_{d\varphi(u)} W(\varphi(x))
+\end{equation*}
+\noindent For a smooth map $\varphi \colon N \sto M$ and $X \in \Gamma(TN)$, we cannot define $d\varphi(X)$ as a vector field in $M$, even in $\text{Im}\varphi$. In general, there are following two methods.
+\begin{enumerate}[label=\Roman{*}.]
+	\item We define related vector field, that is, a vector field $X \in \Gamma(TN)$ is called $\varphi$-related to a vector field $\bar{X} \in \Gamma(TM)$ if for any $p \in N$,
+	\begin{equation*}
+		d\varphi_{p}(X_{p})= \lv{\bar{X}}_{\varphi(p)}
+	\end{equation*}
+	For example, if $\varphi$ is a diffeomorphism, then $d\varphi(X) \in \Gamma(TM)$ is well-defined by
+	\begin{equation*}
+		\lv{d\varphi(X)}_{q} = d\varphi_{\varphi^{-1}(q)}(X_{\varphi^{-1}(q)}),\quad \forall~q \in M
+	\end{equation*}
+	Then $X$ is $\varphi$-related to $d\varphi(X)$.
+	\begin{lem}
+		For a smooth map $\varphi \colon N \sto M$, a vector field $X \in \Gamma(TN)$ is $\varphi$-related to a vector field $\bar{X} \in \Gamma(TM)$ if and only if for any $g \in C^\infty(M)$
+		\begin{equation*}
+			X(g \circ \varphi) = (\bar{X}g)\circ \varphi
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		For any $g \in C^\infty(M)$ and any $p \in M$, by
+		\begin{equation*}
+			\begin{aligned}
+				(\bar{X}g)\circ \varphi(p)&= (\bar{X}g)(\varphi(p)) = \bar{X}_{\varphi(p)}(g),\\
+				X(g \circ \varphi)(p) &= X_p(g \circ \varphi) = (d\varphi_p(X_p))(g)
+			\end{aligned}
+		\end{equation*}
+		we have
+		\begin{equation*}
+			X(g \circ \varphi) = (\bar{X}g)\circ \varphi ~\Leftrightarrow~\bar{X}_{\varphi(p)} = d\varphi_p(X_p) \qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{prop}
+		For a smooth map $\varphi \colon N \sto M$, if $X,Y \in \Gamma(TN)$ are $\varphi$-related to $\bar{X},\bar{Y} \in \Gamma(TM)$ respectively, then $[X,Y]$ is $\varphi$-related to $[\bar{X},\bar{Y}]$. In particular, if $\varphi$ is a diffeomorphism, then
+		\begin{equation*}
+			d\varphi([X,Y]) = [d\varphi(X),d\varphi(Y)]
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $g \in C^\infty(M)$,
+		\begin{equation*}
+			\begin{aligned}
+				[X,Y](g\circ \varphi) &= XY(g \circ \varphi) - YX(g \circ \varphi) \\
+				&= X\bc{(\bar{Y}g)\circ \varphi} - Y\bc{(\bar{X}g)\circ \varphi} \\
+				&= (\bar{X}\bar{Y}g)\circ \varphi - (\bar{Y}\bar{X}g)\circ \varphi \\
+				&= ([\bar{X},\bar{Y}]g) \circ \varphi
+			\end{aligned}
+		\end{equation*}
+		Then it can get by above lemma.
+	\end{proof}
+
+	\item We can define $d\varphi(X)$ as a vector field along $\varphi$, because for any $p \in N$
+	\begin{equation*}
+		d\varphi(X)(p) \defeq d\varphi_p(X_p) \in T_{\varphi(p)}M
+	\end{equation*}
+	Moreover, we also have the similar result.
+	\begin{lem}\label{lem:lieforinduce}
+		For a smooth map $\varphi \colon N \sto M$, for any $X,Y \in \Gamma(TN)$,
+		\begin{equation*}
+			d\varphi([X,Y]) = [d\varphi(X),d\varphi(Y)],\quad X,Y \in \Gamma(TN)
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		It is sufficient to prove that locally. Let $(U,(x^1,\cdots,x^n))$ be a chart in $N$ around $p$ and $(V,(y^1,\cdots,y^m))$ be a chart in $M$ around $\varphi(p)$, and $\varphi = (\varphi^1,\cdots,\varphi^m)$ with $y^j = \varphi^j(x^1,\cdots,x^n)$. Let
+		\begin{equation*}
+			X=X^i\frac{\partial}{\partial x^i},\quad Y = Y^k\frac{\partial}{\partial x^k}
+		\end{equation*}
+		So by the following \textbf{Lemma} \ref{lem:liebracket}
+		\begin{equation*}
+			\begin{aligned}
+				[X,Y] &= \bj{X^i\frac{\partial}{\partial x^i},Y^k\frac{\partial}{\partial x^k}} \\
+				&= X^i\frac{\partial Y^k}{\partial x^i}\frac{\partial}{\partial x^k} - Y^k\frac{\partial X^i}{\partial x^k}\frac{\partial}{\partial x^i}
+			\end{aligned}
+		\end{equation*}
+		and thus
+		\begin{equation*}
+			d\varphi([X,Y]) = \bc{X^i\frac{\partial Y^k}{\partial x^i}\frac{\partial y^j}{\partial x^k} - Y^k\frac{\partial X^i}{\partial x^k}\frac{\partial y^j}{\partial x^i}}\frac{\partial}{\partial y^j}
+		\end{equation*}
+		Moreover,
+		\begin{equation*}
+			d\varphi(X) = X^i\frac{\partial y^j}{\partial x^i}\frac{\partial}{\partial y^j},\quad d\varphi(Y) = Y^k\frac{\partial y^l}{\partial x^k}\frac{\partial}{\partial y^l}
+		\end{equation*}
+		By the fact,
+		\begin{equation*}
+			\frac{\partial^2 y^j}{\partial x^i\partial x^k} =\frac{\partial^2 y^j}{\partial x^k\partial x^i}
+		\end{equation*}
+		we have
+		\begin{equation*}
+			\begin{aligned}
+				[d\varphi(X),d\varphi(Y)] &= \bj{X^i\frac{\partial y^j}{\partial x^i}\frac{\partial}{\partial y^j}, Y^k\frac{\partial y^l}{\partial x^k}\frac{\partial}{\partial y^l}} \\
+				&= X^i\frac{\partial y^j}{\partial x^i}\frac{\partial}{\partial y^j}\bc{Y^k\frac{\partial y^l}{\partial x^k}}\frac{\partial}{\partial y^l} - Y^k\frac{\partial y^l}{\partial x^k}\frac{\partial}{\partial y^l}\bc{X^i\frac{\partial y^j}{\partial x^i}}\frac{\partial}{\partial y^j} \\
+				&= X^i\frac{\partial y^j}{\partial x^i}\bc{\frac{\partial Y^k}{\partial y^j}\frac{\partial y^l}{\partial x^k} + Y^k\frac{\partial^2 y^l}{\partial y^j\partial x^k}}\frac{\partial}{\partial y^l} \\
+				&\quad - Y^k\frac{\partial y^l}{\partial x^k}\bc{\frac{\partial X^i}{\partial y^l}\frac{\partial y^j}{\partial x^i} +X^i\frac{\partial^2 y^j}{\partial y^l\partial x^i}}\frac{\partial}{\partial y^j} \\
+				&= \bc{X^i\frac{\partial Y^k}{\partial x^i}\frac{\partial y^l}{\partial x^k}+X^iY^k\frac{\partial^2 y^l}{\partial x^i\partial x^k}}\frac{\partial}{\partial y^l} \\
+				& \quad - \bc{Y^k\frac{\partial X^i}{\partial x^k}\frac{\partial y^j}{\partial x^i} - Y^kX^i\frac{\partial^2 y^j}{\partial x^k\partial x^i}}\frac{\partial}{\partial y^j} \\
+				&= \bc{X^i\frac{\partial Y^k}{\partial x^i}\frac{\partial y^j}{\partial x^k} - Y^k\frac{\partial X^i}{\partial x^k}\frac{\partial y^j}{\partial x^i}}\frac{\partial}{\partial y^j}
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			[d\varphi(X),d\varphi(Y)] = d\varphi([X,Y])\qedhere
+		\end{equation*}
+	\end{proof}
+\end{enumerate}
+
+\begin{lem}\label{lem:liebracket}
+	Let $M$ be a smooth manifold. For $X,Y \in \Gamma(TM)$ and $f,g \in C^\infty(M)$,
+	\begin{equation*}
+		[fX,gY] =fg[X,Y] + f(Xg)Y - g(Yf)X
+	\end{equation*}
+\end{lem}
+
+\section{Levi-Civita Connection}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \textbf{\emph{Affine connection on tensor fields}}:
+		\begin{prop}
+		Let $M$ be a smooth manifold with an affine connection $\nabla$. Then there is a unique map
+		\begin{equation*}
+			\nabla \colon \Gamma(TM)\times \Gamma(\bigotimes^{r,s}TM) \longrightarrow \Gamma(\bigotimes^{r,s}TM)
+		\end{equation*}
+		such that
+		\begin{enumerate}[label=(\arabic{*})]
+			\item function linearity: for $A \in \Gamma(\bigotimes^{r,s}TM)$, $X,Y\in \Gamma(TM)$,
+			\begin{equation*}
+				\nabla_{fX+gY}A = f\nabla_XA + g\nabla_YA,\quad \forall~f,g \in C^\infty(M)
+			\end{equation*}
+			\item linearity: for $A_1,A_2 \in \Gamma(\bigotimes^{r,s}TM)$, $X\in \Gamma(TM)$,
+			\begin{equation*}
+				\nabla_X(A_1+A_2) = \nabla_XA_1 + \nabla_XA_2
+			\end{equation*}
+			\item Leibniz property: for $A \in \Gamma(\bigotimes^{r,s}TM)$, $X\in \Gamma(TM)$,
+			\begin{equation*}
+				\nabla_X(fA) = X(f)A+f\nabla_XA,\quad \forall~f \in C^\infty(M)
+			\end{equation*}
+			\item for $r=1,s=0$, $\nabla$ coincides with $\nabla$ as above
+			\item tensor property: $A_1,A_2 \in \Gamma(\bigotimes^{r,s}TM)$, $X\in \Gamma(TM)$
+			\begin{equation*}
+				\nabla_X(A_1 \otimes A_2) = (\nabla_XA_1)\otimes A_2 + A_1 \otimes (\nabla_XA_2)
+			\end{equation*}
+			\item contraction: $c \colon \Gamma(\bigotimes^{r,s}TM) \sto \Gamma(\otimes^{r-1,s-1}TM)$ contraction
+			\begin{equation*}
+				c(\nabla_X A) = \nabla_X c(A)
+			\end{equation*}
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		In local expression,
+		\begin{equation*}
+			A = A^{i_1 \cdots i_r}_{j_1 \cdots j_s} Y_{i_1}\otimes \cdots \otimes Y_{i_r} \otimes \omega^{j_1} \otimes \cdots \otimes \omega^{j_s}
+		\end{equation*}
+		To guarantee above properties, we need 
+		\begin{equation*}
+			\begin{aligned}
+				\nabla_XA &= \sum \nabla_X\bc{A^{i_1 \cdots i_r}_{j_1 \cdots j_s} Y_{i_1}\otimes \cdots \otimes Y_{i_r} \otimes \omega^{j_1} \otimes \cdots \otimes \omega^{j_s}} \\
+				&= \sum X\bc{A^{i_1 \cdots i_r}_{j_1 \cdots j_s}} Y_{i_1}\otimes \cdots \otimes Y_{i_r} \otimes \omega^{j_1} \otimes \cdots \otimes \omega^{j_s} \\
+				&\quad + \sum A^{i_1 \cdots i_r}_{j_1 \cdots j_s} \nabla_X \bc{Y_{i_1}\otimes \cdots \otimes Y_{i_r} \otimes \omega^{j_1} \otimes \cdots \otimes \omega^{j_s}}
+			\end{aligned}
+		\end{equation*}
+		where the second term can be divided into $\nabla_XY$ and $\nabla_X\omega$. So the main goal is to define
+		\begin{equation*}
+			\nabla \colon \Gamma(TM) \times \Gamma(T^*M) \longrightarrow \Gamma(T^*M)
+		\end{equation*}
+		For any $X,Y \in \Gamma(TM)$ and $\omega \in \Gamma(T^*M)$, we have
+		\begin{equation*}
+			\begin{aligned}
+				X(\omega(Y)) &= \nabla_X (\omega(Y)) \\
+				&= \nabla_X(c(Y\otimes \omega)) \\
+				&= c((\nabla_XY)\otimes \omega + Y \otimes (\nabla_X \omega))\\
+				&= \omega(\nabla_XY)+ (\nabla_X\omega)(Y)
+			\end{aligned}
+		\end{equation*}
+		Therefore, we define $\nabla_X\omega$ by
+		\begin{equation*}
+			(\nabla_X\omega)(Y) = X(\omega(Y)) - \omega(\nabla_XY)\qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{rmk}
+		For $A \in \Gamma(\bigotimes^{r,s}TM)$ ($r,s > 0$), then contraction $c(A) \in \Gamma(\bigotimes^{r-1,s-1}TM)$ is defined as
+		\begin{equation*}
+			c(A)(\omega_1,\cdots,\omega_{r-1},X_1,\cdots, X_{s-1}) \defeq \sum_i A(E_i^*,\omega_1,\cdots,\omega_{r-1},E_i,X_1,\cdots, X_{s-1})
+		\end{equation*}
+		where $\bb{E_i}$ and $\bb{E_i^*}$ are a pair of dual orthonormal bases. Note that the definition is independent with the choice of orthonormal basis by linearity. Locally,
+		\begin{equation*}
+			c(A)^{i_1 \cdots i_{r-1}}_{j_1 \cdots j_{s-1}} = A^{i i_1 \cdots i_{r-1}}_{ij_1 \cdots j_{s-1}}
+		\end{equation*}
+		In particular, for $A \in \Gamma(\bigotimes^{0,2}TM)$,
+		\begin{equation*}
+			c(A) = \sum_iA(E_i,E_i),\quad E_i \text{ orthonormal basis of }TM
+		\end{equation*}
+		Locally,
+		\begin{equation*}
+			A = A_{ij}dx^i \otimes dx^j~\Rightarrow~c(A) = g^{ik}A_{ki}
+		\end{equation*}
+		Similarly, for $A \in \Gamma(\bigotimes^{2,0}TM)$,
+		\begin{equation*}
+			c(A) = \sum_iA(E_i^*,E_i^*),\quad E_i^* \text{ orthonormal basis of }T^*M
+		\end{equation*}
+		Locally,
+		\begin{equation*}
+			A = A^{ij}\frac{\partial}{\partial x^i} \otimes \frac{\partial}{\partial x^j}~\Rightarrow~c(A) = g_{ik}A^{ki}
+		\end{equation*}
+		Also, $c = \op{tr}$.
+	\end{rmk}
+	\begin{rmk}
+		Note that $(1)-(6)$ are not independent.
+		\begin{enumerate}[label=(\roman*)]
+			\item $(3)$ can be obtained by $(5)$ because $fA = f\otimes A$.
+			\item $(1)$ can be obtained by $(2)-(6)$ because
+			\begin{equation*}
+				(fX+gY)(\omega(Z)) = (\nabla_{fX+gY}\omega)(Z) + \omega(\nabla_{fX+gY}Z)
+			\end{equation*}
+			where the LHS equals to
+			\begin{equation*}
+				f\bc{\nabla_{X}\omega)(Z) + \omega(\nabla_{X}Z)}+g\bc{(\nabla_{Y}\omega)(Z) + \omega(\nabla_{Y}Z)}
+			\end{equation*}
+			we have $(1)$.
+		\end{enumerate}
+	\end{rmk}
+
+	\begin{cor}
+		For any $A \in \Gamma(\bigotimes^{r,s}TM)$, let $\omega^1,\cdots,\omega^r \in \Gamma(T^*M)$ and $Y_1,\cdots,Y_s \in \Gamma(TM)$. Then we get
+		\begin{equation*}
+			\begin{aligned}
+				(\nabla_XA)(\omega^1,\cdots,\omega^r,Y_1,\cdots,Y_s) &= X(A(\omega^1,\cdots,\omega^r,Y_1,\cdots,Y_s))-\sum A(\cdots,\nabla_X\omega^i,\cdots)\\
+				&\quad - \sum A(\cdots,\nabla_XY_j,\cdots)
+			\end{aligned}
+		\end{equation*}
+	\end{cor}
+
+	\noindent Besides, in local expression, for the coordinates, we already have
+	\begin{equation*}
+		\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} = \bracenom{k}{i,j}\frac{\partial}{\partial x^k}
+	\end{equation*}
+	So
+	\begin{equation*}
+		\begin{aligned}
+			(\nabla_{\frac{\partial}{\partial x^i}}dx^j)(\frac{\partial}{\partial x^k}) &= \frac{\partial}{\partial x^k}\bc{dx^j (\frac{\partial}{\partial x^k})} - dx^j\bc{\nabla_{\frac{\partial}{\partial x^i}} \frac{\partial}{\partial x^k}} \\
+			&= -dx^j\bc{\bracenom{l}{i,k}\frac{\partial}{\partial x^l}} \\
+			&= -\bracenom{j}{i,k}
+		\end{aligned}
+	\end{equation*}
+	It follows that
+	\begin{equation*}
+		\nabla_{\frac{\partial}{\partial x^i}}dx^j = -\bracenom{j}{i,k}dx^k
+	\end{equation*}
+	In conclusion, we have
+	\begin{equation*}
+		\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} = \bracenom{k}{i,j}\frac{\partial}{\partial x^k},\quad \nabla_{\frac{\partial}{\partial x^i}}dx^j = -\bracenom{j}{i,k}dx^k
+	\end{equation*}
+
+	\noindent Apart from the connection, the parallel moving map can also be extended. First,
+	\begin{equation*}
+		\mathcal{P}_{c,0,t} \colon T_{c(0)}M \longrightarrow T_{c(t)}M
+	\end{equation*}
+	Then by canonical duality, we have
+	\begin{equation*}
+		\mathcal{P}_{c,0,t}^* \colon T_{c(t)}^*M \longrightarrow T_{c(0)}^*M
+	\end{equation*}
+	Moreover, since $\mathcal{P}_{c,0,t}$ is isomorphic, we can consider $(\mathcal{P}_{c,0,t}^*)^{-1} \colon T_{c(0)}^*M \longrightarrow T_{c(t)}^*M$. Therefore, the parallel moving can be extended on tensors.
+	\begin{equation*}
+		\tilde{\mathcal{P}}_{c,0,t} \colon \bigotimes^{r,s} T_{c(0)}M \longrightarrow \bigotimes^{r,s} T_{c(t)}M
+	\end{equation*}
+	By choosing a basis $V_i(0)$ in $T_{c(0)}M$, we can generate $V_i(t) = \mathcal{P}_{c,0,t}(V_i(0))$ that is also a basis in $T_{c(t)}M$ because $\mathcal{P}_{c,0,t}$ is isomorphic. Besides, if we choose the canonical dual basis $\omega^j(0)$ of $V_i(0)$ in $T_{c(0)}^*M$ and let $\omega^j(t) = (\mathcal{P}_{c,0,t}^*)^{-1}(\omega^j(0))$ that is also a basis in $T_{c(t)}^*M$, then by
+	\begin{equation*}
+		\begin{aligned}
+			\omega^j(t)\bc{V_i(t)} &= \omega^j(t)\bc{\mathcal{P}_{c,0,t}(V_i(0))} \\
+			&= \mathcal{P}_{c,0,t}^*\omega^j(t)(V_i(0)) \\
+			&= \omega^j(0)(V_i(0)) \\
+			&= \delta_i^j
+		\end{aligned}
+	\end{equation*}
+	it is also the dual basis. So as similar as above, by choosing the basis $V_{i_1}(t)\otimes \cdots \otimes V_{i_r}(t)\otimes \omega^{j_1}(t)\otimes \cdots \otimes \omega^{j_s}(t)$ in $\bigotimes^{r,s} T_{c(t)}M$, we can prove
+	\begin{equation*}
+		\nabla_XA(p) = \lim_{h \sto 0} \frac{\tilde{\mathcal{P}}_{c,0,t}^{-1}(A(c(h))) - A(c(0))}{h}
+	\end{equation*}
+	where $X(p) = \dot{c}(0)$.
+	\begin{defn}
+		A tensor field $A$ is called parallel if 
+		\begin{equation*}
+			\nabla_XA = 0,\quad \forall~X \in \Gamma(TM)
+		\end{equation*}
+	\end{defn}
+
+	\item \textbf{\emph{Levi-Civita connection:}} Based on above calculation, we have seen an affine connection $\nabla$ can be determined by the coefficients
+	\begin{equation*}
+		\nabla_{\frac{\partial}{\partial x_i}}\frac{\partial}{\partial x_j} = \bracenom{k}{i,j}\frac{\partial}{\partial x_k}
+	\end{equation*}
+	\begin{prop}
+		Let $(M,g)$ be a Riemannian manifold with an affine connection $\nabla$ that provides the coefficients $\bracenom{i}{j,k}$.
+		\begin{enumerate}[label=(\arabic{*})] 
+			\item $\nabla_Xg = 0$ for all $X \in \Gamma(TM)$ if and only if
+			\begin{equation*}
+				g_{ij,l} = g_{ik}\bracenom{k}{l,j} + g_{kj}\bracenom{k}{l,i}
+			\end{equation*}
+
+			\item $\bracenom{k}{i,j}=\bracenom{k}{j,i}$ if and only if
+			\begin{equation*}
+				T(X,Y) = \nabla_XY - \nabla_YX - [X,Y] = 0
+			\end{equation*}
+		\end{enumerate}
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item On local chart $(x,U)$,
+			\begin{equation*}
+				\begin{aligned}
+					\nabla_{\frac{\partial}{\partial x^l}}g &= \nabla_{\frac{\partial}{\partial x^l}}\bc{g_{ij}dx^i\otimes dx^j} \\
+					&= g_{ij,l}dx^i\otimes dx^j -g_{ij}\bracenom{i}{l,\alpha}dx^\alpha\otimes dx^j - g_{ij}\bracenom{j}{l,\beta}dx^i\otimes dx^\beta \\
+					&= \bc{g_{ij,l}-g_{kj}\bracenom{k}{l,i}-g_{ik}\bracenom{k}{l,j}}dx^i\otimes dx^j
+				\end{aligned}
+			\end{equation*}
+			So $\nabla_Xg = 0$ for all $X \in \Gamma(TM)$ if and only if $\nabla_{\frac{\partial}{\partial x^l}}g = 0$ for all $l$ and it is if and only if 
+			\begin{equation*}
+				g_{ij,l}-g_{kj}\bracenom{k}{l,i}-g_{ik}\bracenom{k}{l,j} = 0,\quad \forall~ i,j,l
+			\end{equation*}
+
+			\item Clearly, by definition,
+			\begin{equation*}
+				\bracenom{k}{i,j}=\bracenom{k}{j,i} ~\Leftrightarrow~ \nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} = \nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i}
+			\end{equation*}
+			In a local chart, let
+			\begin{equation*}
+				X = X^i\frac{\partial}{\partial x^i},\quad Y = Y^j\frac{\partial}{\partial x^j}
+			\end{equation*}
+			So we have
+			\begin{equation*}
+				\begin{aligned}
+					\nabla_XY &= \nabla_{X^i\frac{\partial}{\partial x^i}}Y = X^i\nabla_{\frac{\partial}{\partial x^i}}Y^j\frac{\partial}{\partial x^j} \\
+					&= X^i\frac{\partial Y^j}{\partial x^i}\frac{\partial}{\partial x^j} +X^iY^j\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} \\
+					&= Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial}{\partial x^i} +X^iY^j\nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i} +X^i\frac{\partial Y^j}{\partial x^i}\frac{\partial}{\partial x^j} - Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial}{\partial x^i}\\
+					&\quad +  X^iY^j\bc{\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} - \nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i}} \\
+					&= \nabla_YX + [X,Y] + X^iY^j\bc{\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} - \nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i}}
+				\end{aligned}
+			\end{equation*}
+			Therefore, $T(X,Y) = 0$ for all $X,Y$ if and only if
+			\begin{equation*}
+				\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^j} = \nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i}
+			\end{equation*}
+			for all $i,j$. \qedhere
+		\end{enumerate}
+	\end{proof}
+	\begin{rmk}
+		\begin{enumerate}[label=(\roman{*})]
+			\item Clearly, the Christoffel coefficients
+			\begin{equation*}
+				\Gamma^i_{jk} = \frac{1}{2}g^{il}\bc{g_{lk,j}+g_{kj,l}-g_{jl,k}}
+			\end{equation*}
+			satisfies above two conditions. 
+			\item For a curve $c(t) = (c^1(t),\cdots,c^m(t))$ in a chart $(x,U)$, if we choose the Christoffel coefficients, then
+			\begin{equation*}
+				\begin{aligned}
+					\frac{D}{dt}(\dot{c}(t)) &= \frac{D}{dt}\bc{\frac{dc^i(t)}{dt}\frac{\partial}{\partial x^i}} \\
+					&= \frac{d^2c^i(t)}{dt^2}\frac{\partial}{\partial x^i} + \frac{dc^i(t)}{dt}\nabla_{\dot{c}(t)}\frac{\partial}{\partial x^i}\\
+					&= \frac{d^2c^i(t)}{dt^2}\frac{\partial}{\partial x^i} + \frac{dc^i(t)}{dt}\frac{dc^j(t)}{dt}\nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i}\\
+					&= \bc{\frac{d^2c^k(t)}{dt^2}+\Gamma_{ij}^k\frac{dc^i(t)}{dt}\frac{dc^j(t)}{dt}}\frac{\partial}{\partial x^k} =0
+				\end{aligned}
+			\end{equation*}
+			if and only if
+			\begin{equation*}
+				\frac{d^2c^k(t)}{dt^2}+\Gamma_{ij}^k\frac{dc^i(t)}{dt}\frac{dc^j(t)}{dt} = 0
+			\end{equation*}
+			which is the geodesic equation. So
+			\begin{center}
+				$c(t)$ is a geodesic $\Leftrightarrow$ $\frac{D}{dt}(\dot{c}(t)) = 0$.
+			\end{center}
+			\item Because
+			\begin{equation*}
+				Z(g(X,Y)) = (\nabla_Zg)(X,Y) + g(\nabla_ZX,Y) + g(X,\nabla_Z Y)
+			\end{equation*}
+			$(1)$ implies that
+			\begin{equation*}
+				Z\inn{X,Y} = \inn{\nabla_ZX,Y}+\inn{X,\nabla_Z Y}
+			\end{equation*}
+			\item The $(1)$ condition is called that the connection is compatible with the Riemannian metric and the $(2)$ condition is called torsion-free.
+		\end{enumerate}
+	\end{rmk}
+
+	\begin{defn}
+		Let $(M,g)$ be a Riemannian manifold. An affine connection $\nabla$ on $M$ is called a Levi-Civita connection if it is compatible with $g$ and it is torsion-free.
+	\end{defn}
+
+	\begin{thm}
+		For any Riemannian manifold $(M,g)$, there is a unique Levi-Civita connection $\nabla$.
+	\end{thm}
+	\begin{proof}
+		First, to prove the uniqueness, let $X,Y,Z \in \Gamma(TM)$.
+		\begin{equation*}
+			\begin{aligned}
+				\inn{\nabla_XY,Z} &= X\inn{Y,Z} - \inn{Y,\nabla_XZ} \\
+				&= X\inn{Y,Z} - \inn{Y,\nabla_ZX + [X,Z]} \\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - \inn{Y,\nabla_ZX} \\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{\nabla_ZY, X}\\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{\nabla_YZ+[Z,Y],X} \\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{[Z,Y],X} + \inn{\nabla_YZ,X} \\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{[Z,Y],X}\\
+				&\quad+ Y\inn{Z,X} - \inn{Z,\nabla_YX} \\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{[Z,Y],X}\\
+				&\quad+ Y\inn{Z,X} - \inn{Z,\nabla_XY + [Y,X]} \\
+				&= X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{[Z,Y],X}\\
+				&\quad+ Y\inn{Z,X} - \inn{Z, [Y,X]} -\inn{Z, \nabla_XY} \\
+			\end{aligned}
+		\end{equation*}
+		Therefore, we have
+		\begin{equation*}
+			\inn{\nabla_XY,Z} = \frac{1}{2}\bc{X\inn{Y,Z} - \inn{Y,[X,Z]} - Z\inn{Y,X} + \inn{[Z,Y],X}+ Y\inn{Z,X} - \inn{Z, [Y,X]}}
+		\end{equation*}
+		which means $\nabla$ is uniquely determined by the Riemannian metric $g$.
+
+		\noindent For existence, locally, we define
+		\begin{equation*}
+			\nabla_XY = \bc{X^i\frac{\partial Y^k}{\partial x_i}+X^iY^j\Gamma^k_{ij}}\frac{\partial}{\partial x_k}
+		\end{equation*}
+		where
+		\begin{equation*}
+			\Gamma^k_{ij} = \frac{1}{2}g^{kl}\bc{g_{jl,i}+g_{li,j}-g_{ij,l}}
+		\end{equation*}
+		for 
+		\begin{equation*}
+			X=X^i\frac{\partial}{\partial x^i},\quad Y=Y^j\frac{\partial}{\partial x^j}
+		\end{equation*}
+		on a chart $(x,U)$. To check that it is well-defined, we need to prove it is independent with the choice of coordinates. So let $(y,U)$ be another coordinates. On $(y,U)$,
+		\begin{equation*}
+			X^i = \tilde{X}^\alpha\frac{\partial x^i}{\partial y^\alpha},\quad Y^j = \tilde{Y}^\beta\frac{\partial x^j}{\partial y^\beta}
+		\end{equation*}
+		and
+		\begin{equation*}
+			g_{ij} = \tilde{g}_{\alpha\beta}\frac{\partial y^\alpha}{\partial x^i}\frac{\partial y^\beta}{\partial x^j},\quad g^{kl} = \tilde{g}^{\mu\nu}\frac{\partial x^k}{\partial y^\mu}\frac{\partial x^l}{\partial y^\nu}
+		\end{equation*}
+		So
+		\begin{equation*}
+			\begin{aligned}
+				g_{ij,l} &= \frac{\partial}{\partial x^l}\bc{\tilde{g}_{\alpha\beta}\frac{\partial y^\alpha}{\partial x^i}\frac{\partial y^\beta}{\partial x^j}} \\
+				&= \bc{\frac{\partial}{\partial x^l}\tilde{g}_{\alpha\beta}}\frac{\partial y^\alpha}{\partial x^i}\frac{\partial y^\beta}{\partial x^j} + \tilde{g}_{\alpha\beta}\frac{\partial^2 y^\alpha}{\partial x^i\partial x^l}\frac{\partial y^\beta}{\partial x^j} + \tilde{g}_{\alpha\beta}\frac{\partial y^\alpha}{\partial x^i}\frac{\partial^2 y^\beta}{\partial x^j\partial x^l} \\
+				&=\tilde{g}_{\alpha\beta,\gamma}\frac{\partial y^\gamma}{\partial x^l}\frac{\partial y^\alpha}{\partial x^i}\frac{\partial y^\beta}{\partial x^j} + \tilde{g}_{\alpha\beta}\frac{\partial y^\alpha}{\partial x^i}\frac{\partial^2 y^\beta}{\partial x^j\partial x^l} + \tilde{g}_{\alpha\beta}\frac{\partial y^\beta}{\partial x^j}\frac{\partial^2 y^\alpha}{\partial x^l\partial x^i}
+			\end{aligned}
+		\end{equation*}
+		and thus
+		\begin{equation*}
+			\begin{aligned}
+				\Gamma^k_{ij} &= \frac{1}{2}\tilde{g}^{\alpha\nu}\frac{\partial x^k}{\partial y^\alpha}\frac{\partial x^l}{\partial y^\nu}\left(\tilde{g}_{ab,c}\frac{\partial y^c}{\partial x^i}\frac{\partial y^a}{\partial x^j}\frac{\partial y^b}{\partial x^l} + \tilde{g}_{ab}\frac{\partial y^a}{\partial x^j}\frac{\partial^2 y^b}{\partial x^l\partial x^i} + \tilde{g}_{ab}\frac{\partial y^b}{\partial x^l}\frac{\partial^2 y^a}{\partial x^i\partial x^j}\right. \\
+				&\quad + \tilde{g}_{ab,c}\frac{\partial y^c}{\partial x^j}\frac{\partial y^a}{\partial x^l}\frac{\partial y^b}{\partial x^i} + \tilde{g}_{ab}\frac{\partial y^a}{\partial x^l}\frac{\partial^2 y^b}{\partial x^i\partial x^j} + \tilde{g}_{ab}\frac{\partial y^b}{\partial x^i}\frac{\partial^2 y^a}{\partial x^j\partial x^l} \\
+				&\quad\left.-  \tilde{g}_{ab,c}\frac{\partial y^c}{\partial x^l}\frac{\partial y^a}{\partial x^i}\frac{\partial y^b}{\partial x^j} - \tilde{g}_{ab}\frac{\partial y^a}{\partial x^i}\frac{\partial^2 y^b}{\partial x^j\partial x^l} - \tilde{g}_{ab}\frac{\partial y^b}{\partial x^j}\frac{\partial^2 y^a}{\partial x^l\partial x^i} \right) \\
+				&= \frac{1}{2}\tilde{g}^{\alpha\nu}\frac{\partial x^k}{\partial y^\alpha}\left(\tilde{g}_{a\nu,c}\frac{\partial y^c}{\partial x^i}\frac{\partial y^a}{\partial x^j} + \tilde{g}_{a\nu}\frac{\partial^2 y^a}{\partial x^i\partial x^j} + \tilde{g}_{\nu b,c}\frac{\partial y^c}{\partial x^j}\frac{\partial y^b}{\partial x^i} +\tilde{g}_{\nu b}\frac{\partial^2 y^b}{\partial x^i\partial x^j} - \tilde{g}_{ab,\nu}\frac{\partial y^a}{\partial x^i}\frac{\partial y^b}{\partial x^j}\right) \\
+				&= \frac{1}{2}\tilde{g}^{\alpha\nu}\left(\tilde{g}_{\gamma\nu,\beta} + \tilde{g}_{\nu \beta,\gamma} - \tilde{g}_{\beta\gamma,\nu}\right)\frac{\partial x^k}{\partial y^\alpha}\frac{\partial y^\beta}{\partial x^i}\frac{\partial y^\gamma}{\partial x^j} + \frac{\partial^2 y^\alpha}{\partial x^i\partial x^j}\frac{\partial x^k}{\partial y^\alpha} \\
+				&= \tilde{\Gamma}^\alpha_{\beta\gamma}\frac{\partial x^k}{\partial y^\alpha}\frac{\partial y^\beta}{\partial x^i}\frac{\partial y^\gamma}{\partial x^j} + \frac{\partial^2 y^\alpha}{\partial x^i\partial x^j}\frac{\partial x^k}{\partial y^\alpha}
+			\end{aligned}
+		\end{equation*}
+		which means that the Christoffel symbol is not a tensor. 
+
+		\noindent It follows that
+		\begin{equation*}
+			\begin{aligned}
+				\nabla_XY &= \bc{X^i\frac{\partial Y^k}{\partial x_i}+X^iY^j\Gamma^k_{ij}}\frac{\partial}{\partial x_k} \\
+				&= \frac{\partial y^{\alpha^\prime}}{\partial x^k} \frac{\partial}{\partial y^{\alpha^\prime}} \left(\tilde{X}^\beta\frac{\partial x^i}{\partial y^\beta}\frac{\partial}{\partial x_i}\bc{\tilde{Y}^\alpha\frac{\partial x^k}{\partial y^\alpha}} \right.\\ 
+				&\quad \left.+ \tilde{X}^{\beta^\prime}\frac{\partial x^i}{\partial y^{\beta^\prime}}\tilde{Y}^{\gamma^\prime}\frac{\partial x^j}{\partial y^{\gamma^\prime}}\bc{\tilde{\Gamma}^\alpha_{\beta\gamma}\frac{\partial x^k}{\partial y^\alpha}\frac{\partial y^\beta}{\partial x^i}\frac{\partial y^\gamma}{\partial x^j} + \frac{\partial^2 y^\alpha}{\partial x^i\partial x^j}\frac{\partial x^k}{\partial y^\alpha}}\right)\\
+				&= \left(\tilde{X}^\beta\frac{\partial \tilde{Y}^\alpha}{\partial y^\beta} \frac{\partial x^k}{\partial y^\alpha} + \tilde{X}^\beta\tilde{Y}^\alpha \frac{\partial^2 x^k}{\partial y^\alpha\partial y^\beta} + \tilde{X}^{\beta}\tilde{Y}^{\gamma}\tilde{\Gamma}^\alpha_{\beta\gamma}\frac{\partial x^k}{\partial y^\alpha}\right)\frac{\partial y^{\alpha^\prime}}{\partial x^k} \frac{\partial}{\partial y^{\alpha^\prime}} \\
+				&= \left(\tilde{X}^\beta\frac{\partial \tilde{Y}^\alpha}{\partial y^\beta} + \tilde{X}^{\beta}\tilde{Y}^{\gamma}\tilde{\Gamma}^\alpha_{\beta\gamma}\right) \frac{\partial}{\partial y^{\alpha}}
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\begin{exam}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Euclidean space: For $\R^n$, let $g$ be the standard Euclidean metric. It follows that all Christoffel coefficients are $0$. So the Levi-Civita connection $\clo{\nabla}$
+			\begin{equation*}
+				\clo{\nabla}_XY = X^i\frac{\partial Y^k}{\partial x^i} \frac{\partial}{\partial x^k}
+			\end{equation*}
+			\item Sphere: For $\Sp^n \subset \R^{n+1}$, let $g$ be the induced Riemannian metric. Let $\clo{\nabla}$ be the Levi-Civita connection on $\R^{n+1}$. For any $X,Y \in \Gamma(T\Sp^n)$, we can extend $X,Y$ to $\bar{X},\bar{Y} \in \Gamma(T\R^{n+1})$. By the local properties of connection, $\clo{\nabla}_{\bar{X}}\bar{Y}$ is independent with the choice of the extension, so it can be written as $\clo{\nabla}_XY$. Then define
+			\begin{equation*}
+				\nabla_XY \defeq \clo{\nabla}_XY - \inn{\clo{\nabla}_XY,\vec{n}}\vec{n}
+			\end{equation*}
+			where $\vec{n} = (x^1,\cdots,x^{n+1})$ is the outer unit normal vector. Note that
+			\begin{equation*}
+				\clo{\nabla}_X\vec{n} = X^i\frac{\partial x^j}{\partial x^i} \frac{\partial}{\partial x^j} = X
+			\end{equation*}
+			Because $0 = X\inn{Y,\vec{n}} = \inn{\clo{\nabla}_XY,\vec{n}} + \inn{Y,\clo{\nabla}_X\vec{n}}$,
+			\begin{equation*}
+				\inn{\clo{\nabla}_XY,\vec{n}} =- \inn{Y,\clo{\nabla}_X\vec{n}} = -\inn{X,Y}
+			\end{equation*}
+			Therefore
+			\begin{equation*}
+				\nabla_XY = \clo{\nabla}_XY + \inn{X,Y}\vec{n}
+			\end{equation*}
+			First, the linearity, functional linearity and Leibniz property are clearly by the corresponding properties of $\clo{\nabla}$ and the linearity of $\inn{\cdot,\cdot}$. For the torsion-free property,
+			\begin{equation*}
+				\nabla_XY - \nabla_YX = \clo{\nabla}_XY - \clo{\nabla}_YX = [X,Y]
+			\end{equation*}
+			and the compatibility, because $g$ is the induced metric,
+			\begin{equation*}
+				X\inn{Y,Z} = \inn{\clo{\nabla}_XY,Z} + \inn{Y,\clo{\nabla}_XZ} = \inn{{\nabla}_XY,Z} + \inn{Y,{\nabla}_XZ}
+			\end{equation*}
+			Therefore, $\nabla$ is the Levi-Civita connection on $\mathbb{S}^n$.
+			\begin{rmk}
+				In general, if $(M,g)$ is a Riemannian manifold with the Levi-Civita connection $\nabla^M$ and $N$ is a submanifold of $M$ by $\iota \colon N \hookrightarrow M$ with the induce metric $\iota^*g$, then
+				\begin{equation*}
+					\nabla^N_XY \defeq \bc{\nabla^M_XY}^T
+				\end{equation*}
+				the orthogonal projection of $\nabla^M_XY$ onto $TN$, is the Levi-Civita connection.
+			\end{rmk}
+			\item Hyperbolic space: Let $\mathbb{H}^n$ be the upper half-space in the $\mathbb{R}^n$,
+			\begin{equation*}
+				\mathbb{H}^n\defeq\left\{\left(x^1, \cdots, x^n\right) \in \mathbb{R}^n \mid x^n>0\right\},
+			\end{equation*}
+			equipped with the hyperbolic metric
+			\begin{equation*}
+				g=\frac{1}{\left(x^n\right)^2}\left(d x^1 \otimes d x^1+\cdots+d x^n \otimes d x^n\right) \quad \Rightarrow \quad g_{ij} = \frac{1}{\left(x^n\right)^2} \delta_{ij}
+			\end{equation*}
+			So $g^{ij} = \left(x^n\right)^2 \delta^{ij}$ and
+			\begin{equation*}
+				g_{ij,k} = \left\{
+					\begin{array}{ll}
+						0, &k \neq n\\
+						-\frac{2\delta_{ij}}{\left(x^n\right)^3},& k=n
+					\end{array}
+				\right.\quad \Rightarrow \quad g_{ij,k} = -\frac{2\delta_{ij}\delta_{kn}}{\left(x^n\right)^3}
+			\end{equation*}
+			It follows that 
+			\begin{equation*}
+				\begin{aligned}
+					\Gamma_{i j}^k&=\frac{1}{2} g^{k l}\left(g_{j l, i}+g_{l i, j}-g_{i j, l}\right) \\
+					&= -\frac{1}{x^n} \delta^{kl}\left(\delta_{jl}\delta_{in}+\delta_{li}\delta_{jn}-\delta_{ij}\delta_{ln}\right) \\
+					&= -\frac{1}{x^n} \left(\delta^k_j\delta_{in} + \delta^k_i\delta_{jn} - \delta^k_n\delta_{ij}\right)
+				\end{aligned}
+			\end{equation*}
+			So the nonzero cases are
+			\begin{equation*}
+				\Gamma^n_{ii} = \frac{1}{x^n}~(i \neq n),\quad \Gamma^k_{nk} = -\frac{1}{x^n}
+			\end{equation*}
+			And this provides the Levi-Civita connection on $\mathbb{H}^n$.
+		\end{enumerate}
+	\end{exam}
+
+	\begin{lem}
+		Let $(M,g)$ be a Riemannian manifolds with an affine connection $\nabla$ that is compatible with $g$ and $c \colon [a,b] \sto M$ be a $C^\infty$ curve. Let $V(t)$ and $W(t)$ be two vector fields along $c$. Then we have
+		\begin{equation*}
+			\frac{d}{dt}\inn{V(t),W(t)} = \inn{\frac{D}{dt}V(t),W(t)} +\inn{V(t),\frac{D}{dt}W(t)}
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		WLTG assume $c \subset U$ of a char $(x,U)$ and 
+		\begin{equation*}
+			V(t) = V^i(t)\frac{\partial}{\partial x^i},\quad W(t) = W^j(t)\frac{\partial}{\partial x^j}
+		\end{equation*}
+		Then  by the compatibility of Levi-Civita connection, 
+		\begin{equation*}
+			\begin{aligned}
+				\text{LHS}&=\frac{d}{dt}\bc{V^i(t)W^j(t)\inn{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}}}\\
+				&=\frac{d}{dt}\bc{V^i(t)}W^j(t)\inn{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}} + V^i(t)\frac{d}{dt}\bc{W^j(t)}\inn{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}} \\
+				&\quad + V^i(t)W^j(t)\bc{\inn{\nabla_{\dot{c}(t)}\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}}+\inn{\frac{\partial}{\partial x^i},\nabla_{\dot{c}(t)}\frac{\partial}{\partial x^j}}} \\
+				&= \text{RHS}
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	\begin{rmk}
+		If $c(t)$ is a geodesic, then $\dot{c}(t)$ is clearly a vector field along $c$ and
+		\begin{equation*}
+			\frac{d}{dt}\inn{\dot{c}(t),\dot{c}(t)} = 2\inn{\frac{D}{dt}\dot{c}(t),\dot{c}(t)} = 0
+		\end{equation*}
+		which also provides the proof of $\abs{c(t)} \equiv const.$
+	\end{rmk}
+
+	\begin{prop}
+		Let $(M,g)$ be a Riemannian manifolds with an affine connection $\nabla$ that is compatible with $g$. For $C^\infty$ map $\varphi \colon N \sto M$ between two manifolds, $N$ with the induced connection $\widetilde{\nabla}$, we have
+		\begin{equation*}
+			u\inn{V,W} = \inn{\widetilde{\nabla}_uV,W}+\inn{V,\widetilde{\nabla}_uW}
+		\end{equation*}
+		for all $u \in T_xN$ and $V,W$ vector fields along $\varphi$.
+	\end{prop}
+	\begin{proof}
+		By the linearity, we only need to check for $u = \frac{\partial}{\partial \tilde{x}_i}$, which is clearly true by above lemma.
+	\end{proof}
+
+	\begin{prop}
+		Let $(M,g)$ be a Riemannian manifolds with an affine connection $\nabla$. $\nabla$ is compatible with $g$ if and only if any parallel map is isometric.
+	\end{prop}
+	\begin{proof}
+		Let $c \colon [a,b] \sto M$ be a $C^\infty$ curve and
+		\begin{equation*}
+			\mathcal{P} \defeq \mathcal{P}_{c,0,t} \colon T_{c(0)}M \longrightarrow T_{c(t)}M
+		\end{equation*}
+		be a parallel map.
+		\begin{itemize}
+			\item ``$\Rightarrow$'': For any $V_0,W_0 \in T_{c(0)}M$, let
+			\begin{equation*}
+				V_t = \mathcal{P}(V_0),\quad W_t = \mathcal{P}(W_0)
+			\end{equation*}
+			Then by parallel moving, we have
+			\begin{equation*}
+				\frac{d}{dt}\inn{V_t,W_t} = \inn{\frac{D}{dt}V_t,W_t}+\inn{V_t,\frac{D}{dt}W_t} = 0
+			\end{equation*}
+			\item ``$\Leftarrow$'': For any $X,Y,Z \in \Gamma(TM)$ and any $p \in M$, choosing a smooth curve such that $c(0) = p$ and $\dot{c}(0) = X(p)$. By the parallel moving, let $\bb{E_i(t)}_{i=1}^m$ be an orthonormal frame along $c$, which can be done because of isometry of any parallel map. let $Y(t),Z(t)$ be the restriction of $Y$ and $Z$ on $c$, so
+			\begin{equation*}
+				Y(t) = Y^i(t)E_i(t),\quad Z(t) = Z^j(t)E_j(t)
+			\end{equation*}
+			Then we have
+			\begin{equation*}
+				\begin{aligned}
+					X\inn{Y,Z}(p) &= \lv{\frac{d}{dt}}_{t=0}\inn{Y,Z}(c(t)) \\
+					&= \sum_{i=1}^m\lv{\frac{d}{dt}}_{t=0}Y^i(t)Z^i(t)\\
+					&= \sum_{i=1}^m\bc{\lv{\frac{d}{dt}}_{t=0}\bc{Y^i(t)}Z^i(t) + Y^i(t)\lv{\frac{d}{dt}}_{t=0}\bc{Z^i(t)}}\\
+					&= \inn{\nabla_XY,Z}(p)+\inn{Y,\nabla_XZ}(p)
+				\end{aligned}
+			\end{equation*}
+			where the final equality is can be seen in the proof of \textbf{Proposition} \ref{prop:movingframe}.\qedhere
+		\end{itemize}
+	\end{proof}
+
+	\begin{prop}
+		Let $(M,g)$ be Riemannian with an affine connection $\nabla$ that is torsion-free and $N$ be a smooth manifold. For $\varphi \colon N \sto M$ and $X,Y$ vector fields in $N$, we have
+		\begin{equation*}
+			\widetilde{\nabla}_X d\varphi(Y) - \widetilde{\nabla}_Yd\varphi(X) = d\varphi([X,Y])
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		Let $x \in N$ and consider a neighborhood $U$ around $\varphi(x)$ with coordinate $y$. Let
+		\begin{equation*}
+			\begin{aligned}
+				d\varphi(X)(x) &= d\varphi_x(X_x) = X^i(x)\lv{\frac{\partial}{\partial y^i}}_{\varphi(x)} \\
+				d\varphi(Y)(x) &= d\varphi_x(Y_x) = Y^i(x)\lv{\frac{\partial}{\partial y^i}}_{\varphi(x)}
+			\end{aligned}
+		\end{equation*}
+		Then by definition,
+		\begin{equation*}
+			\begin{aligned}
+				\widetilde{\nabla}_{X}d\varphi(Y)(x) &= X_x(Y^i)\lv{\frac{\partial}{\partial y^i}}_{\varphi(x)}+Y^i(x)\nabla_{d\varphi_x(X_x)}\frac{\partial}{\partial y^i}(\varphi(x)) \\
+				\widetilde{\nabla}_{Y}d\varphi(X)(x) &=Y_x(X^i)\lv{\frac{\partial}{\partial y^i}}_{\varphi(x)}+X^i(x)\nabla_{d\varphi_x(Y_x)}\frac{\partial}{\partial y^i}(\varphi(x))
+			\end{aligned}
+		\end{equation*}
+		Therefore, we get
+		\begin{equation*}
+			\begin{aligned}
+				\widetilde{\nabla}_{X}d\varphi(Y)(x) - \widetilde{\nabla}_{Y}d\varphi(X)(x) &= d\varphi_x([X,Y]_x) \\
+				&\quad+ \bc{Y^i\nabla_{d\varphi_x(X_x)}\frac{\partial}{\partial y^i} - X^i\nabla_{d\varphi_x(Y_x)}\frac{\partial}{\partial y^i}}(\varphi(x))
+			\end{aligned}
+		\end{equation*}
+		and for the second term,
+		\begin{equation*}
+			Y^i\nabla_{d\varphi(X)}\frac{\partial}{\partial y^i} - X^j\nabla_{d\varphi(Y)}\frac{\partial}{\partial y^j} = Y^iX^j\nabla_{\frac{\partial}{\partial y^j}}\frac{\partial}{\partial y^i} - X^jY^i\nabla_{\frac{\partial}{\partial y^i}}\frac{\partial}{\partial y^j} = 0
+		\end{equation*}
+		because $\nabla$ is torsion-free.
+	\end{proof}
+	\noindent Note that $d\varphi([X,Y])$ is not a vector field on $M$ but a vector field along $\varphi$.
+
+	\begin{cor}
+		Let $(M,g)$ be Riemannian with an affine connection $\nabla$ that is torsion-free. Let $s \colon \R^2 \sto M$ be smooth and $V(x,y) \in T_{s(x,y)}M$ be a vector field along $s$. For convenience,
+		\begin{equation*}
+			\frac{\partial s}{\partial x} \defeq ds\bc{\frac{\partial}{\partial x}},\quad \frac{\partial s}{\partial y} \defeq ds\bc{\frac{\partial}{\partial y}}
+		\end{equation*}
+		By equipping $\R^2$ with induced connection $\widetilde{\nabla}$, we have
+		\begin{equation*}
+			\widetilde{\nabla}_{\frac{\partial}{\partial x}} \frac{\partial s}{\partial y} = \widetilde{\nabla}_{\frac{\partial}{\partial y}} \frac{\partial s}{\partial x}
+		\end{equation*}
+	\end{cor}
+	\noindent Note that $\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}$ are not vector fields in $\Gamma(TM)$ but vector fields along $s$.
+\end{enumerate}
+
+\section{Variation and Curvature Tensor}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{First variation formula:}} Let $c \colon [a,b] \sto M$ be a smooth curve. A variation of $c$ is a smooth map
+	\begin{equation*}
+		F \colon [a,b] \times (-\varepsilon,\varepsilon) \longrightarrow M
+	\end{equation*}
+	such that $F(t,0) = c(t)$.
+	\begin{rmk}
+		For convenience, let
+		\begin{equation*}
+			\frac{\partial F}{\partial t} = dF\bc{\frac{\partial }{\partial t}},\quad \frac{\partial F}{\partial s} = dF\bc{\frac{\partial }{\partial s}}
+		\end{equation*}
+		The variational field is
+		\begin{equation*}
+			V(t) = \frac{\partial F}{\partial s}(t,0) \in T_{c(t)}M
+		\end{equation*}
+	\end{rmk}
+	Let $c_s(t) = F(t,s)$ be the curve at $s$. Then
+	\begin{equation*}
+		\begin{aligned}
+			E(s) \defeq E(c_s) &= \frac{1}{2}\int_a^b \inn{\dot{c}_s(t),\dot{c}_s(t)} dt \\
+			&=  \frac{1}{2}\int_a^b \inn{\frac{\partial F}{\partial t}(s,t),\frac{\partial F}{\partial t}(s,t)} dt
+		\end{aligned}
+	\end{equation*}
+	and $E \colon (-\varepsilon,\varepsilon) \sto M$. By taking derivative, we have 
+	\begin{equation*}
+		\begin{aligned}
+			E^\prime(s) &= \frac{1}{2}\int_a^b \frac{d}{ds}\inn{\frac{\partial F}{\partial t}(s,t),\frac{\partial F}{\partial t}(s,t)} dt \\
+			&= \int_a^b \inn{\frac{D}{ds}\frac{\partial F}{\partial t}(s,t),\frac{\partial F}{\partial t}(s,t)} dt \\
+			&= \int_a^b \inn{\widetilde{\nabla}_{\frac{\partial}{\partial s}}\frac{\partial F}{\partial t}(s,t),\frac{\partial F}{\partial t}(s,t)} dt \\
+			&= \int_a^b \inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial s}(s,t),\frac{\partial F}{\partial t}(s,t)} dt \\
+			&= \int_a^b \inn{\frac{D}{dt}\frac{\partial F}{\partial s}(s,t),\frac{\partial F}{\partial t}(s,t)} dt \\
+			&= \int_a^b \frac{d}{dt}\inn{\frac{\partial F}{\partial s}(s,t),\frac{\partial F}{\partial t}(s,t)} - \inn{\frac{\partial F}{\partial s}(s,t),\frac{D}{dt}\frac{\partial F}{\partial t}(s,t)} dt \\
+			&= \lv{\inn{\frac{\partial F}{\partial s}(s,t),\frac{\partial F}{\partial t}(s,t)}}_{t=a}^{t=b} - \int_a^b\inn{\frac{\partial F}{\partial s}(s,t),\frac{D}{dt}\frac{\partial F}{\partial t}(s,t)} dt
+		\end{aligned}
+	\end{equation*}
+	The first variation formula of energy is
+	\begin{equation}\label{eq:firstvariation}
+		E^\prime(s)= \lv{\inn{\frac{\partial F}{\partial s}(s,t),\frac{\partial F}{\partial t}(s,t)}}_{t=a}^{t=b} - \int_a^b\inn{\frac{\partial F}{\partial s}(s,t),\frac{D}{dt}\frac{\partial F}{\partial t}(s,t)} dt
+	\end{equation}
+	In particular, at $s = 0$,
+	\begin{equation*}
+		E^\prime(0) = \lv{\inn{V(t),\dot{c}(t)}}_{a}^{b} - \int_a^b\inn{V(t),\frac{D}{dt}\dot{c}(t)} dt
+	\end{equation*}
+	\begin{rmk}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item If end points are fixed, \emph{i.e.} $V(a) = V(b) = 0$, then $c$ with the minimal length implies
+			\begin{equation*}
+				0 = E^\prime(0) = - \int_a^b\inn{V(t),\frac{D}{dt}\dot{c}(t)} dt
+			\end{equation*}
+			Because it is true for any variation, 
+			\begin{equation*}
+				\frac{D}{dt}\dot{c}(t) = 0
+			\end{equation*}
+			which means $c$ satisfies the geodesic equation.
+
+			\item Setting $a =0, b=1$ and $c(0) = p$. Consider a geodesic variation, \emph{i.e.} $c_s(t)$ is a geodesic for any $s$, let
+			\begin{equation*}
+				v \colon (-\varepsilon,\varepsilon) \longrightarrow T_pM
+			\end{equation*}
+			with $v(0) = \dot{c}(0) = v$ and $\dot{v}(0) = w$. Moreover, WTLG, assume $\abs{v(s)} \equiv r$. Then let
+			\begin{equation*}
+				F(t,s) = \exp_p(tv(s)) = c_s(t)
+			\end{equation*}
+			So $F(t,s)$ is a geodesic variation with $F(t,0) = c(t)$ and $F(0,s) = p$ ($V(0) = 0$). Besides,
+			\begin{equation*}
+			 	V(t) = \lv{dF\bc{\frac{\partial}{\partial s}}}_{s=0} = (d\exp_p)_v(tw)
+			\end{equation*}
+			Because
+			\begin{equation*}
+				E(s) = \frac{1}{2}\int_0^1\inn{\dot{c}_s(t),\dot{c}_s(t)}dt = \frac{1}{2}r^2
+			\end{equation*}
+			we have
+			\begin{equation*}
+				\begin{aligned}
+					0 = E^\prime(0) &= \lv{\inn{V(t),\dot{c}(t)}}_{0}^{1} - \int_0^1\inn{V(t),\frac{D}{dt}\dot{c}(t)} dt \\
+					&= \inn{V(1),\dot{c}(1)}- \inn{V(0),\dot{c}(0)} \\
+					&= \inn{V(1),\dot{c}(1)} \\
+					&= \inn{(d\exp_p)_v(w),(d\exp_p)_v(v)}
+				\end{aligned}
+			\end{equation*}
+			by $\dot{c}(1) = \lv{dF\bc{\frac{\partial}{\partial t}}}_{s=0,t=1} = (d\exp_p)_v(v)$.
+		\end{enumerate}
+	\end{rmk}
+	\begin{lem}[Gauss]\label{lem:gausslem}
+		Let $(M,g)$ be a Riemannian manifold $p \in M$. There is a $\varphi > 0$ such that for any $v,w \in B_{\varepsilon}(0) \subset T_pM (\simeq T_vT_pM)$,
+		\begin{equation*}
+			\inn{(d\exp_p)_v(w),(d\exp_p)_v(v)}_{\exp_p(v)} = \inn{w,v}_{p}
+		\end{equation*}
+	\end{lem}
+	\begin{proof}
+		First, for $v \in B_{\varepsilon}(0)$, let $c(t) = \exp_p(tv)$ be the geodesic starting from $p$ with $v$. So we have
+		\begin{equation*}
+			\begin{aligned}
+				\inn{(d\exp_p)_v(v),(d\exp_p)_v(v)} &= \inn{\dot{c}(1),\dot{c}(1)} \\
+				&= \inn{\dot{c}(0),\dot{c}(0)} \\
+				&= \inn{v,v}
+			\end{aligned}
+		\end{equation*}
+		by $\abs{\dot{c}(t)} \equiv const.$ Then for $v,w$, let $w = w_T + w_N$ with $w_T = av$ and $w_N \top v$. By above, we get
+		\begin{equation*}
+			\begin{aligned}
+				\inn{(d\exp_p)_v(w),(d\exp_p)_v(v)} &= \inn{(d\exp_p)_v(w_T),(d\exp_p)_v(v)} +\inn{(d\exp_p)_v(w_N),(d\exp_p)_v(v)} \\
+				&= a\inn{(d\exp_p)_v(v),(d\exp_p)_v(v)} \\
+				&= \inn{w_T,v} \\
+				&= \inn{w,v} 
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+
+	\begin{lem}\label{lem:shortperp}
+		Let $N_1, N_2$ be two submanifolds of a complete Riemannian manifold $(M, g)$, and let $\gamma:[0, a] \rightarrow M$ be a geodesic such that $\gamma(0) \in N_1, \gamma(a) \in N_2$ and $\gamma$ is the shortest curve from $N_1$ to $N_2$. Prove that $\dot{\gamma}(0)$ is perpendicular to $T_{\gamma(0)} N_1$, and $\dot{\gamma}(a)$ is perpendicular to $T_{\gamma(t)} N_2$.
+	\end{lem}
+	\begin{proof}
+		Let $V(t)$ be a vector field along $\gamma$ such that $V(0) \in T_{\gamma(0)}N_1$ and $V(a) = 0 \in T_{\gamma(a)}N_2$. Consider the variation
+		\begin{equation*}
+			F(t,s) = \exp_{\gamma(t)}sV(t)
+		\end{equation*}
+		which has $\lv{\frac{\partial}{\partial s}}_{s=0} F(t,s) = V(t)$. Because $\gamma$ is the shortest curve,
+		\begin{equation*}
+			0 = E^\prime(0) = \inn{V(0),\dot{\gamma}(0)}
+		\end{equation*}
+		Therefore, $\dot{\gamma}(0) \perp N_1$. For $N_2$, it is similar.
+	\end{proof}
+
+	\item \emph{\textbf{Second variation formula:}} Let $c \colon [a,b] \sto M$ be a geodesic. Consider a two-variable variation of $c$ that is a smooth map
+	\begin{equation*}
+		F \colon [a,b] \times (-\varepsilon,\varepsilon) \times (-\delta,\delta) \longrightarrow M
+	\end{equation*}
+	such that $F(t,v,w)|_{v=0,w=0} = c(t)$, it has two canonical variation fields,
+	\begin{equation*}
+		V(t) = \frac{\partial F}{\partial v}(t,0,0),\quad W(t) = \frac{\partial F}{\partial w}(t,0,0)
+	\end{equation*}
+	Let $c_{v,w}(t) = F(t,v,w)$ be a curve at $v,w$. Then for its energy $E(v,w) = E(c_{s,w})$,
+	\begin{equation*}
+		\begin{aligned}
+			\frac{\partial^2 E}{\partial w \partial v} &= \frac{\partial}{\partial w}\bc{\frac{\partial E}{\partial v}} \\
+			&= \frac{\partial}{\partial w}\int_a^b\inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial v}, \frac{\partial F}{\partial t}}dt \\
+			&= \int_a^b\inn{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\bc{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial v}}, \frac{\partial F}{\partial t}} + \inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial v}, \widetilde{\nabla}_{\frac{\partial}{\partial w}}\frac{\partial F}{\partial t}}dt = \int_a^b\bc{\text{\RNum{1}} + \text{\RNum{2}}}dt
+		\end{aligned}
+	\end{equation*}
+	First, for \RNum{1},
+	\begin{equation*}
+		\begin{aligned}
+			\text{\RNum{1}} &= \inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\bc{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\frac{\partial F}{\partial v}}, \frac{\partial F}{\partial t}}+ \inn{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\bc{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial v}}, \frac{\partial F}{\partial t}} -  \inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\bc{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\frac{\partial F}{\partial v}}, \frac{\partial F}{\partial t}} \\
+			&= \frac{d}{dt}\inn{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\frac{\partial F}{\partial v}, \frac{\partial F}{\partial t}}+ \inn{\bc{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\widetilde{\nabla}_{\frac{\partial}{\partial t}} - \widetilde{\nabla}_{\frac{\partial}{\partial t}}\widetilde{\nabla}_{\frac{\partial}{\partial w}}}\frac{\partial F}{\partial v}, \frac{\partial F}{\partial t}}-\inn{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\frac{\partial F}{\partial v}, \frac{D}{dt}\frac{\partial F}{\partial t}}
+		\end{aligned}
+	\end{equation*}
+	and by setting $v=w=0$, the last term is $0$ because $F(t,0,0)$ is a geodesic. For \RNum{2},
+	\begin{equation*}
+		\text{\RNum{2}} = \inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial v}, \widetilde{\nabla}_{\frac{\partial}{\partial t}}\frac{\partial F}{\partial w}}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			\frac{\partial^2 E}{\partial w \partial v}(0,0) &= \lv{\inn{\widetilde{\nabla}_{\frac{\partial}{\partial w}}V(t),\dot{c}(t)}}_a^b + \int_a^b\inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}V(t), \widetilde{\nabla}_{\frac{\partial}{\partial t}}W(t)}dt\\
+			&\quad + \int_a^b\inn{\bc{\widetilde{\nabla}_{\frac{\partial}{\partial w}}\widetilde{\nabla}_{\frac{\partial}{\partial t}} - \widetilde{\nabla}_{\frac{\partial}{\partial t}}\widetilde{\nabla}_{\frac{\partial}{\partial w}}}V(t), \dot{c}(t)} dt
+		\end{aligned}
+	\end{equation*}
+	In particular, when considering one-variable variation,
+	\begin{equation*}
+		\begin{aligned}
+			E^{\prime\prime}(0) &= \lv{\inn{\widetilde{\nabla}_{\frac{\partial}{\partial s}}V(t),\dot{c}(t)}}_a^b + \int_a^b\inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}V(t), \widetilde{\nabla}_{\frac{\partial}{\partial t}}V(t)}dt\\
+			&\quad + \int_a^b\inn{\bc{\widetilde{\nabla}_{\frac{\partial}{\partial s}}\widetilde{\nabla}_{\frac{\partial}{\partial t}} - \widetilde{\nabla}_{\frac{\partial}{\partial t}}\widetilde{\nabla}_{\frac{\partial}{\partial s}}}V(t), \dot{c}(t)} dt
+		\end{aligned}
+	\end{equation*}
+
+	\item \emph{\textbf{Curvature tensor:}} For any $X,Y,Z \in \Gamma(TM)$,
+	\begin{equation*}
+		R(X,Y,Z) = \nabla_X\nabla_YZ-\nabla_Y\nabla_XZ -\nabla_{[X,Y]}Z = R(X,Y)Z
+	\end{equation*}
+	\begin{prop}
+		$R$ is a $(1,3)$-tensor, that is a function-linear map
+		\begin{equation*}
+			R \colon \Gamma(TM) \times \Gamma(TM) \times \Gamma(TM) \longrightarrow \Gamma(TM)
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		For any $f \in C^\infty(M)$, by \textbf{Lemma} \ref{lem:liebracket},
+		\begin{equation*}
+			\begin{aligned}
+				R(fX,Y)Z &= \nabla_{fX}\nabla_YZ - \nabla_Y\nabla_{fX}Z -\nabla_{[fX,Y]}Z \\
+				&= f\nabla_{X}\nabla_YZ - \nabla_Y(f\nabla_{X}Z) - \nabla_{f[X,Y]-(Yf)X}Z \\
+				&= f\nabla_{X}\nabla_YZ - Y(f)\nabla_{X}Z -f\nabla_Y\nabla_{X}Z-f\nabla_{[X,Y]}Z + Y(f)\nabla_{X}Z \\
+				&= fR(X,Y)Z
+			\end{aligned}
+		\end{equation*}
+		Similarly proof for $R(X,fY)Z$ by the following remark.
+		\begin{equation*}
+			\begin{aligned}
+				R(X,Y)fZ &= \nabla_X\nabla_Y(fZ)-\nabla_Y\nabla_X(fZ) -\nabla_{[X,Y]}(fZ) \\
+				&= \nabla_X(Y(f)Z+ f\nabla_YZ) - \nabla_Y(X(f)Z+f\nabla_{X}Z)\\
+				&\quad - [X,Y](f)Z  - f\nabla_{[X,Y]}Z \\
+				&= XY(f)Z+Y(f)\nabla_{X}Z+X(f)\nabla_YZ+f\nabla_{X}\nabla_YZ \\
+				&\quad - YX(f)Z - X(f)\nabla_YZ - Y(f)\nabla_{X}Z - f\nabla_Y\nabla_{X}Z \\
+				&\quad - [X,Y](f)Z  - f\nabla_{[X,Y]}Z \\
+				&= fR(X,Y)
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	
+	\begin{prop}
+		Let $s \colon \R^2 \rightarrow M$ be smooth and $V$ be a vector field along $s$. Then
+		\begin{equation*}
+			\widetilde{\nabla}_{\frac{\partial}{\partial x}}\widetilde{\nabla}_{\frac{\partial}{\partial y}}V - \widetilde{\nabla}_{\frac{\partial}{\partial y}}\widetilde{\nabla}_{\frac{\partial}{\partial x}}V = R\bc{\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}}V
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		It is sufficient to prove in a local chart. Let $V = V^i(x)\frac{\partial}{\partial x^i}$ on $M$. Then by the linearity of $R$,
+		\begin{equation*}
+			\begin{aligned}
+				R\bc{\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}}V &=V^i R\bc{\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}}\frac{\partial}{\partial x^i} \\
+				&= V^i\bc{\nabla_{\frac{\partial s}{\partial x}}\nabla_{\frac{\partial s}{\partial y}} - \nabla_{\frac{\partial s}{\partial y}}\nabla_{\frac{\partial s}{\partial x}} - \nabla_{[\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}]}}\frac{\partial}{\partial x^i} \\
+				&= V^i\bc{\nabla_{\frac{\partial s}{\partial x}}\nabla_{\frac{\partial s}{\partial y}} - \nabla_{\frac{\partial s}{\partial y}}\nabla_{\frac{\partial s}{\partial x}}}\frac{\partial}{\partial x^i}
+			\end{aligned}
+		\end{equation*}
+		where the final equality is because
+		\begin{equation*}
+			\bj{\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}} = ds\bj{\frac{\partial}{\partial x},\frac{\partial}{\partial y}} = 0 
+		\end{equation*}
+		by \textbf{Lemma} \ref{lem:lieforinduce}. For the other hand, by definition
+		\begin{equation*}
+			\widetilde{\nabla}_{\frac{\partial}{\partial y}}V = \frac{\partial V^i}{\partial y}\frac{\partial}{\partial x^i}+V^i\nabla_{\frac{\partial s}{\partial y}} \frac{\partial}{\partial x^i}
+		\end{equation*}
+		and so
+		\begin{equation*}
+			\begin{aligned}
+				\widetilde{\nabla}_{\frac{\partial}{\partial x}}\widetilde{\nabla}_{\frac{\partial}{\partial y}}V &= \widetilde{\nabla}_{\frac{\partial}{\partial x}}\bc{\frac{\partial V^i}{\partial y}\frac{\partial}{\partial x^i}+V^i\nabla_{\frac{\partial s}{\partial y}} \frac{\partial}{\partial x^i}} \\
+				&= \frac{\partial^2 V^i}{\partial x\partial y}\frac{\partial}{\partial x^i} + \frac{\partial V^i}{\partial y}{\nabla}_{\frac{\partial s}{\partial x}}\frac{\partial}{\partial x^i} + \frac{\partial V^i}{\partial x}\nabla_{\frac{\partial s}{\partial y}} \frac{\partial}{\partial x^i}+ V^i\nabla_{\frac{\partial s}{\partial x}}\nabla_{\frac{\partial s}{\partial y}} \frac{\partial}{\partial x^i} 
+			\end{aligned}
+		\end{equation*}
+		Similarly,
+		\begin{equation*}
+			\widetilde{\nabla}_{\frac{\partial}{\partial y}}\widetilde{\nabla}_{\frac{\partial}{\partial x}}V =\frac{\partial^2 V^i}{\partial y\partial x}\frac{\partial}{\partial x^i} + \frac{\partial V^i}{\partial x}{\nabla}_{\frac{\partial s}{\partial y}}\frac{\partial}{\partial x^i} + \frac{\partial V^i}{\partial y}\nabla_{\frac{\partial s}{\partial x}} \frac{\partial}{\partial x^i}+ V^i\nabla_{\frac{\partial s}{\partial y}}\nabla_{\frac{\partial s}{\partial x}} \frac{\partial}{\partial x^i} 
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\begin{aligned}
+				\widetilde{\nabla}_{\frac{\partial}{\partial x}}\widetilde{\nabla}_{\frac{\partial}{\partial y}}V -\widetilde{\nabla}_{\frac{\partial}{\partial y}}\widetilde{\nabla}_{\frac{\partial}{\partial x}}V &= V^i\bc{\nabla_{\frac{\partial s}{\partial x}}\nabla_{\frac{\partial s}{\partial y}}  - \nabla_{\frac{\partial s}{\partial y}}\nabla_{\frac{\partial s}{\partial x}}} \frac{\partial}{\partial x^i} \\
+				&= R\bc{\frac{\partial s}{\partial x},\frac{\partial s}{\partial y}}V
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	Therefore, if the variation is with fixed end points, then
+	\begin{equation*}
+			E^{\prime\prime}(0) = \int_a^b\inn{\widetilde{\nabla}_{\frac{\partial}{\partial t}}V(t), \widetilde{\nabla}_{\frac{\partial}{\partial t}}V(t)}dt + \int_a^b\inn{R\bc{W(t),\dot{c}(t)}V(t), \dot{c}(t)} dt
+	\end{equation*}
+
+	\noindent Furthermore, in a local chart $(U,x)$, let
+	\begin{equation*}
+		\begin{aligned}
+			R^k_{lij}\frac{\partial}{\partial x^k} &= R\bc{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^l} \\
+			&= \nabla_{\frac{\partial}{\partial x^i}}\nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^l} - \nabla_{\frac{\partial}{\partial x^j}}\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^l}  \\
+			&= \nabla_{\frac{\partial}{\partial x^i}}\bc{\Gamma^p_{jl}\frac{\partial}{\partial x^p}} - \nabla_{\frac{\partial}{\partial x^j}}\bc{\Gamma^p_{il}\frac{\partial}{\partial x^p}} \\
+			&= \frac{\partial \Gamma^p_{jl}}{\partial x^i}\frac{\partial}{\partial x^p} + \Gamma^p_{jl} \nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^p}-\frac{\partial \Gamma^p_{il}}{\partial x^j}\frac{\partial}{\partial x^p} - \Gamma^p_{il} \nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^p} \\
+			&= \bc{\frac{\partial \Gamma^k_{jl}}{\partial x^i} - \frac{\partial \Gamma^k_{il}}{\partial x^j}+\Gamma^p_{jl}\Gamma^k_{ip} - \Gamma^p_{il}\Gamma^k_{jp}}\frac{\partial}{\partial x^k}
+		\end{aligned}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		R^k_{lij} = \frac{\partial \Gamma^k_{jl}}{\partial x^i} - \frac{\partial \Gamma^k_{il}}{\partial x^j}+\Gamma^p_{jl}\Gamma^k_{ip} - \Gamma^p_{il}\Gamma^k_{jp}
+	\end{equation*}
+	Note that by $R(X,Y)Z = - R(Y,X)Z$,
+	\begin{equation*}
+		R^k_{lij} = -R^k_{lji}
+	\end{equation*}
+	\begin{exam}
+		\begin{enumerate}[label=(\arabic{*})]
+			\item Euclidean space: Clearly, because all Christoffel coefficients are $0$, $R^k_{lij} = 0$ on $\R^n$ and it also means
+			\begin{equation*}
+				\clo{\nabla}_X\clo{\nabla}_Y Z + \clo{\nabla}_Y\clo{\nabla}_X Z - \clo{\nabla}_{[X,Y]}Z = 0
+			\end{equation*}
+			Besides, note that $\clo{\nabla}_{[X,Y]}Z = 0$.
+			\item Sphere: We have seen the Levi-Civita connection on $\Sp^n$ is defined by
+			\begin{equation*}
+				\nabla_X Y=\clo{\nabla}_X Y+\langle X, Y\rangle \vec{n}
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+				\begin{aligned}
+					\nabla_X\nabla_YZ &= \clo{\nabla}_X\nabla_YZ + \inn{X,\nabla_YZ}\vec{n}\\
+					&= \clo{\nabla}_X\bc{\clo{\nabla}_Y Z+\langle Y, Z\rangle \vec{n}} + Y\langle X, Z\rangle \vec{n}-\left\langle\nabla_Y X, Z\right\rangle \vec{n} \\
+					&= \clo{\nabla}_X\clo{\nabla}_Y Z+\bc{X(\langle Y, Z\rangle)+ \langle Y, Z\rangle X+Y\langle X, Z\rangle}\vec{n} - \left\langle\nabla_Y X, Z\right\rangle \vec{n}
+				\end{aligned}
+			\end{equation*}
+			Therefore,
+			\begin{equation*}
+				\begin{aligned}
+					R(X,Y)Z &= X(\langle Y, Z\rangle) \vec{n}+\langle Y, Z\rangle X+Y(\langle X, Z\rangle) \vec{n}-\left\langle\nabla_Y X, Z\right\rangle \vec{n} \\
+					&\quad -Y(\langle X, Z\rangle) \vec{n}-\langle X, Z\rangle Y-X(\langle Y, Z\rangle) \vec{n}+\left\langle\nabla_X Y, Z\right\rangle \vec{n}-\left\langle\nabla_Y X, Z\right\rangle \vec{n} \\
+					&= \langle Y, Z\rangle X-\langle X, Z\rangle Y
+				\end{aligned}
+			\end{equation*}
+			\item Hyperbolic space: We have already have
+			\begin{equation*}
+				\Gamma^k_{ij} = -\frac{1}{x^n} \left(\delta^k_j\delta_{in} + \delta^k_i\delta_{jn} - \delta^k_n\delta_{ij}\right)
+			\end{equation*}
+			for the Christoffel coefficients. So by above we have
+			\begin{equation*}
+				\begin{aligned}
+					R_{l i j}^k&= \frac{\partial \Gamma_{j l}^k}{\partial x^i}-\frac{\partial \Gamma_{i l}^k}{\partial x^j}+\Gamma_{j l}^p \Gamma_{i p}^k-\Gamma_{i l}^p \Gamma_{j p}^k\\
+					&= \frac{1}{\bc{x^n}^2}\bc{\delta^k_j\delta_{il}-\delta^k_i\delta_{lj}}
+				\end{aligned}
+			\end{equation*}
+		\end{enumerate}
+	\end{exam}
+
+	\begin{rmk}
+		There is another source to consider the curvature tensor by answering the problem that is if a metric $g$ can be transformed to Euclidean metric. Let $(M,g)$ be a Riemannian manifold. For a chart $(U,y)$,
+		\begin{equation*}
+			g = g_{ij}dy^i\otimes dy^j
+		\end{equation*}
+		with Christoffel $\Gamma^l_{ij}$ and a chart $(V,x)$,
+		\begin{equation*}
+			g = g_{\alpha\beta}dx^\alpha \otimes dx^\beta
+		\end{equation*}
+		with Christoffel $\widetilde{\Gamma}^\lambda_{\alpha\beta}$. Then by the transformation rule, we have
+		\begin{equation*}
+			\Gamma^p_{jk} = \widetilde{\Gamma}^\eta_{\alpha\beta}\frac{\partial y^p}{\partial x^\eta}\frac{\partial x^\alpha}{\partial y^j}\frac{\partial x^\beta}{\partial y^k} + \frac{\partial^2 x^\mu}{\partial y^j \partial y^k} \frac{\partial y^p}{\partial x^\mu}
+		\end{equation*}
+		So
+		\begin{equation*}
+			\frac{\partial x^\lambda}{\partial y^p}\Gamma^p_{jk} = \widetilde{\Gamma}^\lambda_{\alpha\beta}\frac{\partial x^\alpha}{\partial y^j}\frac{\partial x^\beta}{\partial y^k} + \frac{\partial^2 x^\lambda}{\partial y^j \partial y^k}
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			\frac{\partial}{\partial y^k}\bc{\frac{\partial x^\lambda}{\partial y^j}} = \frac{\partial x^\lambda}{\partial y^p}\Gamma^p_{jk} - \widetilde{\Gamma}^\lambda_{\alpha\beta}\frac{\partial x^\alpha}{\partial y^j}\frac{\partial x^\beta}{\partial y^k} 
+		\end{equation*}
+		So we have a ODE system for $\frac{\partial x^\lambda}{\partial y^j}$, where $\lambda,j,k = 1,2,\cdots,m$. In particular, consider the Euclidean metric $g_{\alpha\beta} = \delta_{\alpha \beta}$, which implies $\widetilde{\Gamma}^\lambda_{\alpha\beta} = 0$, the system becomes
+		\begin{equation*}
+			\frac{\partial}{\partial y^k}\bc{\frac{\partial x^\lambda}{\partial y^j}} = \frac{\partial x^\lambda}{\partial y^p}\Gamma^p_{jk}
+		\end{equation*}
+		If such system has a solution $\frac{\partial x^\lambda}{\partial y^j}$, then we have
+		\begin{equation}\label{eq:sourceofcurvature}
+		 	\frac{\partial}{\partial y^l}\frac{\partial}{\partial y^k}\bc{\frac{\partial x^\lambda}{\partial y^j}} = \frac{\partial}{\partial y^k}\frac{\partial}{\partial y^l}\bc{\frac{\partial x^\lambda}{\partial y^j}}
+		\end{equation}
+		First, for the left-hand side
+		\begin{equation*}
+			\begin{aligned}
+				\text{LHS} &= \frac{\partial}{\partial y^l}\bc{\frac{\partial x^\lambda}{\partial y^p}\Gamma^p_{jk}} \\
+				&= \frac{\partial\Gamma^p_{jk} }{\partial y^l}\frac{\partial x^\lambda}{\partial y^p} + \Gamma^p_{jk}\frac{\partial}{\partial y^l}\bc{\frac{\partial x^\lambda}{\partial y^p}} \\
+				&= \frac{\partial\Gamma^p_{jk} }{\partial y^l}\frac{\partial x^\lambda}{\partial y^p} + \Gamma^p_{jk}\Gamma^s_{pl}\frac{\partial x^\lambda}{\partial y^s} \\
+				&= \bc{\frac{\partial\Gamma^p_{jk} }{\partial y^l}+ \Gamma^i_{jk}\Gamma^p_{il}}\frac{\partial x^\lambda}{\partial y^p}
+			\end{aligned}
+		\end{equation*}
+		Similarly, 
+		\begin{equation*}
+			\text{RHS} = \bc{\frac{\partial\Gamma^p_{jl} }{\partial y^k}+ \Gamma^i_{jl}\Gamma^p_{ik}}\frac{\partial x^\lambda}{\partial y^p}
+		\end{equation*}
+		Therefore, equation (\ref{eq:sourceofcurvature}) is satisfied if and only if
+		\begin{equation*}
+			\frac{\partial\Gamma^p_{kj} }{\partial y^l}-\frac{\partial\Gamma^p_{lj} }{\partial y^k} + \Gamma^i_{kj}\Gamma^p_{li} -\Gamma^i_{lj}\Gamma^p_{ki} = R^p_{jlk} = 0
+		\end{equation*}
+	\end{rmk}
+	So we have the result that if $(M,g)$ is locally isometric to $\R^m$, then the curvature tensor $R=0$. In fact the converse is also true.
+	\begin{thm}
+		Let $(M,g)$ be a Riemannian manifold with Levi-Civita connection $\nabla$ such that the curvature tensor $R=0$. Then $M$ is locally isometric to $\R^m$.
+	\end{thm}
+	\begin{proof}
+		Let $(U,y)$ be a local chart and $g = g_{ij}dy^i\otimes dy^j$. So the goal is to find a local chart $(V,x)$ with $V \subset U$ such that $g = \sum_i dx^i \otimes dx^i$.
+		\begin{itemize}
+			\item Step $1$: For any $X_0 \in T_OU$, there is an $X \in \Gamma(TU)$ such that $\nabla X = 0$ and $X(0)=X_0$.
+
+			\noindent First, considering the curve $t \mapsto (t,0,\cdots,0)$, we move $X_0$ in parallel to get a vector field $\tilde{X}$ along this curve. Second, for any fixed $y^1$, considering the curve $t \mapsto (y^1,t,0,\cdots,0)$, we move $\tilde{X}(y_1)$ in parallel. Then by construction, we get a vector field $X$ that is along
+			\begin{equation*}
+				s \colon \R^2 \longrightarrow \R^m
+			\end{equation*}
+			defined by $s(x,y) = (x,y,0,\cdots,0)$. Then we directly have
+			\begin{equation*}
+				\widetilde{\nabla}_{\frac{\partial}{\partial y^2}}X = 0 \quad \text{along}~s
+			\end{equation*}
+			But for the other direction, we only know
+			\begin{equation*}
+				\widetilde{\nabla}_{\frac{\partial}{\partial y^1}}X(y^1,0,\cdots,0) = 0 
+			\end{equation*}
+			Because
+			\begin{equation*}
+				\widetilde{\nabla}_{\frac{\partial}{\partial y^1}}\widetilde{\nabla}_{\frac{\partial}{\partial y^2}}X-\widetilde{\nabla}_{\frac{\partial}{\partial y^2}}\widetilde{\nabla}_{\frac{\partial}{\partial y^1}}X = R\bc{\frac{\partial s}{\partial y^1},\frac{\partial s}{\partial y^2}}X = 0
+			\end{equation*}
+			we know
+			\begin{equation*}
+				\widetilde{\nabla}_{\frac{\partial}{\partial y^2}}\widetilde{\nabla}_{\frac{\partial}{\partial y^1}}X = 0
+			\end{equation*}
+			Then by the uniqueness of ODE, we get
+			\begin{equation*}
+				\widetilde{\nabla}_{\frac{\partial}{\partial y^1}}X = 0 \quad \text{along}~s
+			\end{equation*}
+			Therefore, $\widetilde{\nabla}X = 0$ along $s$. By induction we have such $X$.
+
+			\item Step $2$: Let $X_1^{(0)},\cdots,X_m^{(0)} \in T_OU$ be orthonormal. Let move them in parallel to get global vector fields $X_1,\cdots, X_m$ as in Step $1$. So they are also orthonormal. Moreover,
+			\begin{equation*}
+				[X_i,X_j] = \nabla_{X_i}X_j - \nabla_{X_j}X_i = 0
+			\end{equation*}
+			Then by Frobenius Theorem, there is a chart $(V,x)$ with $V \subset U$ such that
+			\begin{equation*}
+				X_i = \frac{\partial}{\partial x_i}
+			\end{equation*}
+			So $g = \delta_{ij}dx^i \otimes dx^j$.\qedhere
+		\end{itemize}
+	\end{proof}
+\end{enumerate}
+
+\section{Covariant Differential}
+In this section, let $(M,g)$ be a Riemannian manifold with the Levi-Civita connection $\nabla$. 
+
+\noindent Let $A$ be a $(r,s)$-tensor. Its covariant differential $\nabla A$ is a $(r,s+1)$-tensor defined as
+\begin{equation*}
+	(\nabla A)(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s,X) \defeq (\nabla_XA)(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s)
+\end{equation*}
+Moreover, $\nabla^2 A = \nabla (\nabla A)$ is a $(r,s+2)$-tensor and
+\begin{equation*}
+	\begin{aligned}
+		(\nabla^2 A)(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s,X,Y) &=  \bc{\nabla (\nabla A)}(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s,X,Y)\\
+		&= \bc{\nabla_Y(\nabla A)}(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s,X)\\
+		&= Y\bc{(\nabla A)(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s,X)} \\
+		&\quad - \sum_{i=1}^r(\nabla A)(\cdots,\nabla_Y \omega_i,\cdots,X)\\
+		&\quad - \sum_{i=1}^s(\nabla A)(\cdots,\nabla_Y X_i,\cdots,X) - (\nabla A)(\cdots,\nabla_Y X)
+	\end{aligned}
+\end{equation*}
+Therefore,
+\begin{equation*}
+	\begin{aligned}
+		(\nabla^2 A)(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s,X,Y) &= Y\bc{(\nabla_X A)(\omega_1,\cdots,\omega_r,X_1,\cdots,X_s)} \\
+		&\quad -\sum_{i=1}^r(\nabla_X A)(\cdots,\nabla_Y \omega_i,\cdots) \\
+		&\quad - \sum_{i=1}^s(\nabla_X A)(\cdots,\nabla_Y X_i,\cdots) - (\nabla_{\nabla_Y X} A)(\cdots)
+	\end{aligned}
+\end{equation*}
+It follows that
+\begin{equation*}
+	\nabla^2 A (\cdots,X,Y) = \nabla_Y\nabla_X A - \nabla_{\nabla_Y X} A
+\end{equation*}
+and so
+\begin{equation*}
+	\nabla^2 A (\cdots,X,Y) - \nabla^2 A (\cdots,Y,X) = -(\nabla_X\nabla_Y - \nabla_Y\nabla_X - \nabla_{[X,Y]})A = -R(X,Y)A
+\end{equation*}
+\begin{exam}[Hessian]
+	For $A = f \in C^\infty(M)$ $(0,0)$-tensor,
+	\begin{equation*}
+		\begin{aligned}
+			(\nabla^2f)(X,Y) &=(\nabla_Y(\nabla f))(X) \\
+			&= Y((\nabla f)(X)) - (\nabla f)(\nabla_YX) \\
+			&= Y(X(f)) - (\nabla_YX)(f)
+		\end{aligned}
+	\end{equation*}
+	So we get
+	\begin{equation*}
+		(\nabla^2f)(X,Y) - (\nabla^2f)(Y,X) = -[X,Y]f + [X,Y]f = 0
+	\end{equation*}
+	\emph{i.e.} $\nabla^2f$ is a symmetric $(0,2)$-tensor, called the Hessian of $f$. Locally, for
+	\begin{equation*}
+		X = X^i\frac{\partial}{\partial x^i},\quad Y = Y^j\frac{\partial}{\partial x^j}
+	\end{equation*}
+	we have
+	\begin{equation*}
+		\begin{aligned}
+			(\nabla^2f)(X,Y) &= Y^j\frac{\partial}{\partial x^j}\bc{X^i\frac{\partial f}{\partial x^i}} - Y^j\nabla_{\frac{\partial}{\partial x^j}}\bc{X^i\frac{\partial}{\partial x^i}}(f) \\
+			&= Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial f}{\partial x^i} + X^iY^j\frac{\partial^2 f}{\partial x^j\partial x^i} - Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial f}{\partial x^i} - X^iY^j\bc{\nabla_{\frac{\partial}{\partial x^j}}\frac{\partial}{\partial x^i}}(f) \\
+			&= X^iY^j\frac{\partial^2 f}{\partial x^j\partial x^i} - X^iY^j\Gamma_{ij}^k\frac{\partial f}{\partial x^k}
+		\end{aligned}
+	\end{equation*}
+	Therefore, in matrix form,
+	\begin{equation*}
+		(\nabla^2f)_{ij} = \frac{\partial^2 f}{\partial x^i\partial x^j} - \Gamma_{ij}^k\frac{\partial f}{\partial x^k}
+	\end{equation*}
+	from which we can also see that $\nabla^2f$ is symmetric.
+\end{exam}
+\noindent Considering the covariant differential locally, let $(U,x)$ be a chart and $A \in \Gamma(\bigotimes^{r,s}TM)$ with
+\begin{equation*}
+	A = A^{i_1 \cdots i_r}_{j_1 \cdots j_s}\frac{\partial}{\partial x_{i_1}}\otimes \cdots \otimes \frac{\partial}{\partial x_{i_r}}\otimes dx^{j_1}\otimes \cdots \otimes dx^{j_s}
+\end{equation*}
+Then $\nabla A \in \Gamma(\bigotimes^{r,s+1}TM)$. Assume
+\begin{equation*}
+	\nabla A = B^{i_1\cdots i_r}_{j_1\cdots j_s k}\frac{\partial}{\partial x_{i_1}}\otimes \cdots \otimes \frac{\partial}{\partial x_{i_r}}\otimes dx^{j_1}\otimes \cdots \otimes dx^{j_s} \otimes dx^k
+\end{equation*}
+where
+\begin{equation*}
+	\begin{aligned}
+		B^{i_1 \cdots i_r}_{j_1 \cdots j_s k} &= (\nabla A)\bc{dx^{i_1}, \cdots, dx^{i_r}, \frac{\partial}{\partial x_{j_1}}, \cdots , \frac{\partial}{\partial x_{j_s}}, \frac{\partial}{\partial x_{k}}} \\
+		&= (\nabla_{\frac{\partial}{\partial x_{k}}} A)\bc{dx^{i_1}, \cdots, dx^{i_r}, \frac{\partial}{\partial x_{j_1}}, \cdots , \frac{\partial}{\partial x_{j_s}}} \\
+		&= \frac{\partial}{\partial x_{k}}\bc{A(dx^{i_1}, \cdots, dx^{i_r}, \frac{\partial}{\partial x_{j_1}}, \cdots , \frac{\partial}{\partial x_{j_s}})} \\
+		&\quad - \sum_{h=1}^r A\bc{\cdots,\nabla_{\frac{\partial}{\partial x_{k}}} dx^{i_h},\cdots} - \sum_{h=1}^s A\bc{\cdots,\nabla_{\frac{\partial}{\partial x_{k}}} \frac{\partial}{\partial x_{j_h}},\cdots} \\
+		&= \frac{\partial}{\partial x_{k}}A^{i_1 \cdots i_r}_{j_1 \cdots j_s} + \sum_{h=1}^r A^{i_1 \cdots i_{h-1} l i_{h+1}  \cdots i_r}_{j_1 \cdots j_s}\Gamma^{i_h}_{kl}-\sum_{h=1}^sA^{i_1 \cdots i_r}_{j_1 \cdots j_{h-1}lj_{h+1} \cdots j_s}\Gamma^l_{kj_h}
+	\end{aligned}
+\end{equation*}
+If we denote
+\begin{equation*}
+	A^{i_1 \cdots i_r}_{j_1 \cdots j_s,k} = \frac{\partial}{\partial x_{k}}A^{i_1 \cdots i_r}_{j_1 \cdots j_s},\quad A^{i_1 \cdots i_r}_{j_1 \cdots j_s;k} = B^{i_1 \cdots i_r}_{j_1 \cdots j_s k}
+\end{equation*}
+the it follows that
+\begin{equation*}
+	A^{i_1 \cdots i_r}_{j_1 \cdots j_s;k} = A^{i_1 \cdots i_r}_{j_1 \cdots j_s,k}+ \sum_{h=1}^r A^{i_1 \cdots i_{h-1} l i_{h+1}  \cdots i_r}_{j_1 \cdots j_s}\Gamma^{i_h}_{kl}-\sum_{h=1}^sA^{i_1 \cdots i_r}_{j_1 \cdots j_{h-1}lj_{h+1} \cdots j_s}\Gamma^l_{kj_h}
+\end{equation*}
+\begin{exam}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item Consider vector field, \emph{i.e.} $(1,0)$-tensor $X = X^i \frac{\partial}{\partial x^i}$, then
+		\begin{equation*}
+			\begin{aligned}
+				\nabla X &= X^i_{;k} \frac{\partial}{\partial x^i} \otimes dx^k \\
+				&= \bc{\frac{\partial X^i}{\partial x^k} + X^h\Gamma^i_{kh}}\frac{\partial}{\partial x^i} \otimes dx^k
+			\end{aligned}
+		\end{equation*}
+		Therefore, for $Y = Y^l\frac{\partial}{\partial x^l}$,
+		\begin{equation*}
+			\nabla_YX = \nabla X(-,Y) = \bc{Y^k\frac{\partial X^i}{\partial x^k} + Y^kX^h\Gamma^i_{kh}}\frac{\partial}{\partial x^i}
+		\end{equation*}
+		\item Consider $1$-form, \emph{i.e.} $(0,1)$-tensor $\omega = \omega_i dx^i$, then
+		\begin{equation*}
+			\begin{aligned}
+				\nabla \omega &= \omega_{i;k}dx^i\otimes dx^k \\
+				&= \bc{\frac{\partial \omega_i}{\partial x^k} - \omega_h\Gamma^h_{ki}}dx^i\otimes dx^k
+			\end{aligned}
+		\end{equation*}
+		Therefore, for $Y = Y^l\frac{\partial}{\partial x^l}$,
+		\begin{equation*}
+			\nabla_Y\omega = \nabla \omega(-,Y) = \bc{Y^k\frac{\partial \omega_i}{\partial x^k} - Y^k\omega_h\Gamma^h_{ki}}dx^i
+		\end{equation*}
+		\item For $f \in C^\infty(M)$, $\nabla^2 f$ is a $(0,2)$-tensor with
+		\begin{equation*}
+			\nabla^2 f = f_{;i;j}dx^i\otimes dx^j
+		\end{equation*}
+		Then
+		\begin{equation*}
+			f_{;i} = \frac{\partial f}{\partial x_i}
+		\end{equation*}
+		and so
+		\begin{equation*}
+			\begin{aligned}
+				f_{;i;j} & = \frac{\partial f_{;i}}{\partial x_j} - f_{;k}\Gamma^k_{ji} \\
+				&= \frac{\partial^2 f}{\partial x_i \partial x_j} -  \frac{\partial f}{\partial x_k}\Gamma^k_{ij}
+			\end{aligned}
+		\end{equation*}
+		which is as same as above.
+	\end{enumerate}
+\end{exam}
+\begin{thm}
+	Let $A^{i_1 \cdots i_r}_{j_1 \cdots j_s}$ be a $(r,s)$-tensor.
+	\begin{equation*}
+		A^{i_1 \cdots i_r}_{j_1 \cdots j_s;k;l} - A^{i_1 \cdots i_r}_{j_1 \cdots j_s;l;k} = \sum_{\alpha=1}^s A^{i_1 \cdots i_r}_{j_1 \cdots j_{\alpha-1}h j_{\alpha+1} \cdots j_s}R^h_{j_\alpha kl} - \sum_{\beta=1}^rA^{i_1 \cdots i_{\beta-1} h i_{\beta+1} \cdots i_r}_{j_1 \cdots j_s}R^{i_\beta}_{hkl}
+	\end{equation*}
+	where $R(\frac{\partial}{\partial x_i},\frac{\partial}{\partial x_j})\frac{\partial}{\partial x_l} = R^k_{lij}\frac{\partial}{\partial x_k}$.
+\end{thm}
+\begin{proof}
+	For any $p \in M$, let $(U,x)$ be a normal chart and then $g_{ij}(p) = \delta_{ij}$ and $\Gamma^k_{ij}(p) = 0$ and $g_{ij,k}(p) = 0$. Then
+	\begin{equation*}
+		\begin{aligned}
+			A^{i_1 \cdots i_r}_{j_1 \cdots j_s;k;l}(p) &= \lv{\frac{\partial}{\partial x_l}}_pA^{i_1 \cdots i_r}_{j_1 \cdots j_s;k} \\
+			&=\lv{\frac{\partial}{\partial x_l}}_p \bc{\frac{\partial}{\partial x_{k}}A^{i_1 \cdots i_r}_{j_1 \cdots j_s} + \sum_{\beta=1}^r A^{\cdots i_{\beta-1} h\cdots}_{j_1 \cdots j_s}\beta^{i_\beta}_{kh}-\sum_{\alpha=1}^sA^{i_1 \cdots i_r}_{\cdots j_{\alpha-1}h \cdots}\beta^h_{kj_\alpha}} \\
+			&= \frac{\partial^2 A^{i_1 \cdots i_r}_{j_1 \cdots j_s}}{\partial x_{l}\partial x_{k}}(p) + \sum_{\beta=1}^r A^{\cdots i_{\beta-1} h\cdots}_{j_1 \cdots j_s}(p)\frac{\partial \beta^{i_\beta}_{kh}}{\partial x_l}(p)-\sum_{\alpha=1}^sA^{i_1 \cdots i_r}_{\cdots j_{\alpha-1}h \cdots}(p)\frac{\partial \beta^h_{kj_\alpha}}{\partial x_l}(p)
+		\end{aligned}
+	\end{equation*}
+	It follows that at $p$,
+	\begin{equation*}
+		\begin{aligned}
+			A^{i_1 \cdots i_r}_{j_1 \cdots j_s;k;l} -A^{i_1 \cdots i_r}_{j_1 \cdots j_s;l;k} &= \sum_{\beta=1}^r A^{\cdots i_{\beta-1} h\cdots}_{j_1 \cdots j_s}\bc{\frac{\partial \beta^{i_\beta}_{kh}}{\partial x_l} - \frac{\partial \beta^{i_\beta}_{lh}}{\partial x_k}}-\sum_{\alpha=1}^sA^{i_1 \cdots i_r}_{\cdots j_{\alpha-1}h \cdots}\bc{\frac{\partial \beta^h_{kj_\alpha}}{\partial x_l} - \frac{\partial \beta^h_{lj_\alpha}}{\partial x_k}} \\ 
+			&= \sum_{\beta=1}^r A^{\cdots i_{\beta-1} h\cdots}_{j_1 \cdots j_s}R^{i_\beta}_{hlk}-\sum_{\alpha=1}^sA^{i_1 \cdots i_r}_{\cdots j_{\alpha-1}h \cdots}R^h_{j_\alpha lk} \\
+			&= \sum_{\alpha=1}^s A^{i_1 \cdots i_r}_{j_1 \cdots j_{\alpha-1}h j_{\alpha+1} \cdots j_s}R^h_{j_\alpha kl} - \sum_{\beta=1}^rA^{i_1 \cdots i_{\beta-1} h i_{\beta+1} \cdots i_r}_{j_1 \cdots j_s}R^{i_\beta}_{hkl}
+		\end{aligned}
+	\end{equation*}
+\end{proof}
+Next, let's consider some classical differential.
+\begin{enumerate}[label=\Roman{*}.]
+	\item Divergence: For a vector field $X$, \emph{i.e.} $(1,0)$-tensor, $\nabla X$ is a $(1,1)$-tensor. Locally, if $X = X^i \frac{\partial}{\partial x^i}$, then
+	\begin{equation*}
+		\nabla X = X^i_{;k} \frac{\partial}{\partial x^i} \otimes dx^k = \bc{\frac{\partial X^i}{\partial x^k} + X^h\Gamma^i_{kh}}\frac{\partial}{\partial x^i} \otimes dx^k
+	\end{equation*}
+	Then the divergence of $X$ is
+	\begin{equation*}
+		\op{div}(X) \defeq \op{tr} (\nabla X) \bc{= \sum_i \nabla X\bc{dx^i,\frac{\partial}{\partial x^i}} = \sum_i X^i_{;i}}
+	\end{equation*}
+	\begin{prop}
+		Locally, we have
+		\begin{equation*}
+			\op{div}(X) = \sum_i X^i_{;i} = \sum_i \frac{1}{\sqrt{g}}\frac{\partial}{\partial x^i}\bc{\sqrt{g}X^i}
+		\end{equation*}
+	\end{prop}
+	\begin{proof}
+		First, by above the left-hand side is
+		\begin{equation*}
+			\text{LHS} = \sum_i\frac{\partial X^i}{\partial x^i} + X^h\Gamma^i_{ih}
+		\end{equation*}
+		For the right-hand side,
+		\begin{equation*}
+			\text{RHS} = \sum_i \frac{\partial X^i}{\partial x^i} + X^i\frac{1}{\sqrt{g}}\frac{\partial\sqrt{g}}{\partial x^i}
+		\end{equation*}
+		Therefore, LHS$=$RHS if and only if we have
+		\begin{equation*}
+			\sum_i \Gamma^i_{ih} = \frac{1}{\sqrt{g}}\frac{\partial\sqrt{g}}{\partial x^h} = \frac{\partial}{\partial x^h}(\log \sqrt{g}) =\frac{1}{2}\frac{\partial}{\partial x^h}(\log \abs{g})
+		\end{equation*}
+		where $\abs{g} = \det(g)$.
+
+		\noindent \textbf{Claim:} $\sum_i \Gamma^i_{ih}= \frac{1}{2}\frac{\partial}{\partial x^h}(\log \abs{g})$
+
+		\noindent For the left-hand side,
+		\begin{equation*}
+			\begin{aligned}
+				\text{LHS} &= \frac{1}{2}\sum_i \sum_k g^{ik}\bc{g_{hk,i} + g_{ki,h} - g_{ih,k}} \\
+				&= \frac{1}{2}\sum_i \sum_kg^{ik}g_{ki,h}\\
+				&= \frac{1}{2} \op{tr}\bc{(g^{ik})(g_{ki,h})} \\
+				&= \frac{1}{2}\frac{\partial}{\partial x^h}(\log \abs{g})
+			\end{aligned}
+		\end{equation*}
+		where the final identity is by the Jacobi's formula, $\frac{d}{dt}\log\det(A(t)) = \tr\bc{A(t)^{-1}\frac{d}{dt}A(t)}$.
+	\end{proof}
+
+	\item Gradient: For $f \in C^\infty(M)$, $f$ is also a $(0,0)$-tensor. So $\nabla f$ is a $(0,1)$-tensor
+	\begin{equation*}
+		\nabla f = f_{;i}dx^i
+	\end{equation*}
+	However, $f_{;i} = \frac{\partial f}{\partial x^i}$. So
+	\begin{equation*}
+		\nabla f = df
+	\end{equation*}
+	But in some case, we also use $\nabla f$ to denote the gradient of $f$
+	\begin{equation*}
+		\text{grad} f = \nabla f = \sharp(df) = g^{ij}\frac{\partial f}{\partial x^j}\frac{\partial}{\partial x^i}
+	\end{equation*}
+
+	\item Laplacian: For $f \in C^\infty(M)$, let
+	\begin{equation*}
+		\Delta f \defeq \op{div}(\op{grad} f)
+	\end{equation*}
+	called the Laplacian of $f$.
+	\begin{prop}
+		For $f \in C^\infty(M)$, $\Delta f = \op{tr}(\nabla^2 f)$.
+	\end{prop}
+	\begin{proof}
+		It is sufficient to prove that in a local chart $(U,x)$. First,
+		\begin{equation*}
+			\nabla f = \frac{\partial f}{\partial x^j}dx^j~\Rightarrow~ \op{grad}(f) = g^{ij}\frac{\partial f}{\partial x^j}\frac{\partial}{\partial x^i}
+		\end{equation*}
+		Therefore, by definition
+		\begin{equation*}
+			\begin{aligned}
+				\Delta f &= \sum_i \bc{g^{ij}\frac{\partial f}{\partial x^j}}_{;i} \\
+				&= \sum_i \bc{\frac{\partial}{\partial x^i} \bc{g^{ij}\frac{\partial f}{\partial x^j}} + g^{hj}\frac{\partial f}{\partial x^j}\Gamma^i_{hi}} \\
+				&= g^{ij}\frac{\partial^2 f}{\partial x^i\partial x^j} +\frac{\partial}{\partial x^i} \bc{g^{ij}}\frac{\partial f}{\partial x^j} +g^{hj}\frac{\partial f}{\partial x^j}\Gamma^i_{hi}
+			\end{aligned}
+		\end{equation*}
+		Then 
+		\begin{equation*}
+			\begin{aligned}
+				\Delta f &= \op{tr}(\nabla^2 f) = g^{ij}f_{;ij} \\
+				&= g^{ij}\bc{\frac{\partial^2 f}{\partial x^i\partial x^j} - \frac{\partial f}{\partial x^h}\Gamma^h_{ij}}
+			\end{aligned}
+		\end{equation*}
+		if and only if
+		\begin{equation*}
+			0 = \frac{\partial}{\partial x^i} \bc{g^{ij}} +g^{hj}\Gamma^i_{hi} + g^{ih}\Gamma^j_{ih} = g^{ij}_{;i}
+		\end{equation*}
+		\textbf{Check:} $g^{ij}_{;h} = 0$.
+		\begin{equation*}
+			\nabla g = g_{ij;h}dx^i\otimes dx^j \otimes dx^h = 0 ~\Leftrightarrow~ g_{ij;h} = 0
+		\end{equation*}
+		and
+		\begin{equation*}
+			\begin{aligned}
+				\bc{g_{ij}g^{jk}}_{;p} &= (\delta^k_i)_{;p} \\
+				&= \frac{\partial \delta^k_i}{\partial x^p} + \delta^h_i\Gamma^k_{ph} - \delta^k_h\Gamma^h_{pi} \\
+				&= 0
+			\end{aligned}
+		\end{equation*}
+		Moreover, by the contraction property of $\nabla$,
+		\begin{equation*}
+			\begin{aligned}
+				\bc{g_{ij}g^{jk}}_{;p} &= \nabla_p c\bc{g_{ij} \otimes g^{lk}} \\
+				&=c\bc{\nabla_p (g_{ij}) \otimes g^{lk}} + c\bc{g_{ij} \otimes \nabla_p(g^{lk})} \\
+				&= g_{ij;p}g^{jk}+g_{ij}g^{jk}_{;p}
+			\end{aligned}
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+			g^{jk}_{;p} = 0\qedhere
+		\end{equation*}
+	\end{proof}
+	\begin{rmk}
+		For any $X,Y \in \Gamma(TM)$,
+		\begin{equation*}
+			\begin{aligned}
+				g(\sharp \nabla^2f(X,-),Y) &= \nabla^2f(X,Y) \\
+				&= \nabla^2f(Y,X) = \nabla_X (\nabla f)(Y) \\
+				&= X(\nabla f (Y)) - \nabla f (\nabla_XY) \\
+				&= X(g(\text{grad} f, Y)) - g(\text{grad}f,\nabla_XY)\\
+				&=g(\nabla_X\text{grad} f, Y )
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\sharp \nabla^2f(X,-) = \nabla_X\text{grad} f
+		\end{equation*}
+		Note that
+		\begin{equation*}
+			\Delta f = \op{tr}(\nabla^2f) = \op{tr}(X \mapsto \sharp \nabla^2f(X,-)) = \op{tr}(\nabla_X\text{grad} f)
+		\end{equation*}
+	\end{rmk}
+\end{enumerate}

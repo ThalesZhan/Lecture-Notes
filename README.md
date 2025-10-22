@@ -1,2 +1,1 @@
-# Lecture-Notes
-# Lecture-Notes
+The lecture notes I found from websites and also I wrote from learning

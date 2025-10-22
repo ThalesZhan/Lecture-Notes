@@ -1,0 +1,177 @@
+\chapter{Poisson Process}
+
+\section{Construction}
+
+\begin{defn}[Poisson Process]
+    A stochastic process $(N_t)_{t \geq 0}$ with $N_0 = 0$ is called a Poisson process of rate $\lambda$ if
+    \begin{enumerate}[label=(\roman{*})]
+        \item (Independent increasing) for any $t_1<s_1<t_2<s_2 < \cdots < t_n < s_n$,
+        \begin{equation*}
+            N_{s_1}-N_{t_1},~N_{s_2}-N_{t_2},\cdots N_{s_n}-N_{t_n}
+        \end{equation*}
+        are independent.
+        \item for any $s < t$, $N_t - N_s \sim \text{Pois}(\lambda(t-s))$.
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    In general, $N_t = $ the number of times an event occurs in $[0,t]$.
+\end{rmk}
+
+\noindent The next problem is how to construct a Poisson process: Given a $\lambda > 0$, let $\xi_1,\cdots,\xi_n,\cdots$ be i.i.d. with exponential distribution $\exp(\lambda)$, i.e.
+\begin{equation*}
+    \Pb(\xi_i > t) = e^{-\lambda t},
+\end{equation*}
+(In fact, $\xi_i$ is the time between incidents). Let $T_0 = 0$ and $T_n = \xi_1 + \cdots +\xi_n$ that is the time at which the $n$-th incident occurs. Define
+\begin{equation*}
+    N_t = \sup\bb{n > 0 \colon T_n \leq t}.
+\end{equation*}
+Then $(N_t)_{t \geq 0}$ is a Poisson process.
+\begin{proof}
+    \noindent Step 1: $N_t \sim \text{Pois}(\lambda)$.
+
+    \noindent Note that $T_n \sim \Gamma(n,\lambda)$, i.e., its density function is
+    \begin{equation*}
+        f_{T_n}(s) = \frac{\lambda^n s^{n-1}}{(n-1)!}e^{-\lambda s}.
+    \end{equation*}
+    As we know,
+    \begin{equation*}
+        \bb{N_t = 0} = \bb{T_1 > t} = \bb{\xi_1 > t}
+    \end{equation*}
+    which implies
+    \begin{equation*}
+        \Pb(N_t = 0) = e^{-\lambda t}.
+    \end{equation*}
+    For $N_t = n$ with $n \geq 1$,
+    \begin{equation*}
+        \begin{aligned}
+            \Pb(N_t = n) &= \Pb(T_n \leq t < T_{n+1}) \\
+            &= \Pb(T_n \leq t < T_n + \xi_{n+1}) \\
+            &= \iint_{s \leq t < s+u}f_{T_n}(s)f_{\xi_{n+1}}(u)dsdu\\
+            &= \frac{(\lambda t)^n}{n!}e^{-\lambda t}.
+        \end{aligned}
+    \end{equation*}
+
+    \noindent Step 2: Fix $t$, let
+    \begin{equation*}
+        T_1^\prime = T_{N_t + 1} - t,~T_2^\prime = T_{N_t + 2} - T_{N_t+1},~\cdots T_k^\prime = T_{N_t + k} - T_{N_t+k-1},\cdots
+    \end{equation*}
+
+    \noindent \textbf{Claim:} $T_1^\prime,~T_2^\prime,~\cdots$ are i.i.d. $\exp(\lambda)$ and they are independent with $N_t$. 
+    
+    \noindent First, 
+    \begin{equation*}
+        \begin{aligned}
+            \Pb(T_{n+1} - t \geq s \mid N_t = n) &= \frac{\Pb(T_{n+1} - t \geq s, N_t = n)}{\Pb(N_t = n)} \\
+            &= \frac{\Pb(T_{n+1} - t \geq s, T_n\leq t)}{\Pb(N_t = n)} \\
+            &= \frac{\Pb(T_{n} + \xi_{n+1} - t \geq s, T_n\leq t)}{\Pb(N_t = n)} \\
+            &= \frac{e^{-\lambda(t+s)}\frac{(\lambda t)^2}{n!}}{\Pb(N_t = n)} \\
+            &= e^{-\lambda s}.
+        \end{aligned}
+    \end{equation*}
+    Then consider
+    \begin{equation*}
+        \begin{aligned}
+            &\quad\Pb(T_n \leq t,~T_{n+1} - t \geq s,~T_{n+k} - T_{n+k-1} \geq v_k,k=2,3,\cdots,m)\\
+            &=\Pb(T_n \leq t,~T_{n+1} - t \geq s,~\xi_{n+k} \geq v_k,k=2,3,\cdots,m) \\
+            &=\Pb(T_n \leq t,~T_{n+1} - t \geq s)\prod_{k=2}^{m}\Pb(\xi_{n+k} \geq v_k),
+        \end{aligned}
+    \end{equation*}
+    which implies that
+    \begin{align*}
+        &\quad\Pb(T_{n+1} - t \geq s,~T_{n+k} - T_{n+k-1} \geq v_k,k=2,3,\cdots,m \mid N_t = n)\\
+        &= \frac{\Pb(T_n \leq t,~T_{n+1} - t \geq s,~\xi_{n+k} \geq v_k,k=2,3,\cdots,m)}{\Pb(N_t = n)} \\
+        &= \frac{\Pb(T_n \leq t,~T_{n+1} - t \geq s)}{\Pb(N_t = n)}\prod_{k=2}^{m}\Pb(\xi_{n+k} \geq v_k) \\
+        &= e^{-\lambda s} \prod_{k=2}^{m} e^{-\lambda v_k}
+    \end{align*}
+    For the independence,
+    \begin{align*}
+        &\quad\Pb(T_1^\prime \geq s,~T_k^\prime \geq v_k,k=2,3,\cdots m,~N_t \leq \ell) \\
+        &= \sum_{n=0}^\ell \Pb(T_1^\prime \geq s,~T_k^\prime \geq v_k,k=2,3,\cdots m,~N_t = \ell) \\
+        &= \sum_{n=0}^\ell \Pb(T_{N_t + 1} - t \geq s,~T_{N_t + k} - T_{N_t+k-1} \geq v_k,k=2,3,\cdots m \mid N_t = n) \Pb(N_t = n)\\
+        &= \sum_{n=0}^\ell \Pb(T_{n + 1} - t \geq s,~T_{n + k} - T_{n+k-1} \geq v_k,k=2,3,\cdots m \mid N_t = n) \Pb(N_t = n) \\
+        &= e^{-\lambda s} \prod_{k=2}^{m} e^{-\lambda v_k} \Pb(N_t \leq \ell).
+    \end{align*}
+
+    \noindent Step 3: For any $t_0 < t_1 < t_2 < \cdots < t_n$, it suffices to check
+    \begin{equation*}
+        \Pb(N_{t_i} - N_{t_i - 1} \geq k_i,i=1,\cdots,n) = \prod_{i=1}^{n} e^{-\lambda (t_i - t_{i-1})}\frac{(\lambda(t_i-t_{i-1}))^{k_i}}{k_i!}.
+    \end{equation*}
+
+    \noindent It only needs to prove for $N_{t_2} - N_{t_1}$ and $N_{t_1}$. Let $T_1^\prime = T_{N_{t_1}+1} - t_1$ and $T_k^\prime = T_{N_{t_1} + k} - T_{N_{t_1} + k - 1}$. Then by Step 2, $T_1^\prime,\cdots,T_k^\prime$ are independent with $N_{t_1}$. Note that
+    \begin{equation*}
+        \begin{aligned}
+            \bb{N_{t_2} - N_{t_1} = m} &= \bb{T_{N_{t_1}+m} \leq t_2,~T_{N_{t_1}+m + 1} > t_2} \\
+            &= \bb{T_{N_{t_1}+m} - t_1 \leq t_2 - t_1,~T_{N_{t_1}+m + 1} - t_1 > t_2 - t_1} \\
+            &= \bb{ T_1^\prime + \sum_{k=2}^m T_k^\prime \leq t_2 - t_1,~ T_1^\prime + \sum_{k=2}^{m+1} T_k^\prime > t_2 - t_1},
+        \end{aligned}
+    \end{equation*}
+    which follows that $N_{t_2} - N_{t_1}$ is independent with $N_{t_1}$ and moreover
+    \begin{equation*}
+        \Pb \bc{N_{t_2} - N_{t_1} = m} = e^{-\lambda(t_2 - t_1)}\frac{(\lambda(t_2 - t_1))^m}{m!}
+    \end{equation*}
+    by Step 2.
+\end{proof}
+
+\section{Compound Poisson Process}
+
+\begin{defn}[Compound Poisson Process]
+    Let $(N_t)_{t \geq 0}$ be a Poisson process with $\lambda$ and $Y_1,\cdots,Y_n,\cdots$ be i.i.d. and independent with $N_t$. Then
+    \begin{equation*}
+        S(t) = \sum_{k=1}^{N_t}Y_k
+    \end{equation*}
+    is called a compound Poisson process.
+\end{defn}
+
+\begin{thm}
+    Let $Y_1,\cdots,Y_n,\cdots$ be i.i.d. and $N \geq 0$ be an integer-valued and independent random variable. Let
+    \begin{equation*}
+        S = Y_1 + Y_2 + \cdots + Y_N,
+    \end{equation*}
+    and $S = 0$ if $N = 0$. Then
+    \begin{enumerate}[label=(\roman{*})]
+        \item $\E[S] = \E[N]\E[Y_i]$.
+        \item $\Var(S) = \E[N]\Var(Y_i) + \Var(N)\bc{\E[Y_i]}^2$. In particular, if $N \sim \op{Pois}(\lambda)$, then $\Var(S) = \lambda \E[Y_i^2]$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    First, by independence,
+    \begin{equation*}
+        \begin{aligned}
+            \E[S] & = \sum_{n = 0}^\infty \E[S\mathbb{I}_{\bb{N=n}}] \\
+            &= \sum_{n = 0}^\infty \E[Y_i]\E[\mathbb{I}_{\bb{N=n}}] \\
+            &= \E[Y_i] \E[N].
+        \end{aligned}
+    \end{equation*}
+    For $\Var(S) = \E[S^2] - (\E[S])^2$,
+    \begin{equation*}
+        \begin{aligned}
+            \E[S^2] &= \sum_{n=1}^\infty \E[S^2\mathbb{I}_{\bb{N=n}}] \\
+            &= \sum_{n=1}^\infty \E[(Y_1 + \cdot +Y_n)^2\mathbb{I}_{\bb{N=n}}] \\
+            &= \sum_{n=1}^\infty \E[S_n^2]\E[\mathbb{I}_{\bb{N=n}}]\\
+            &= \sum_{n=1}^\infty\bc{n\Var(Y_i) + (n\E[Y_i])^2}\Pb(N = n)\\
+            &= \Var(Y_i)\E[N]+ \E[Y_i]^2\E[N^2]
+        \end{aligned}
+    \end{equation*}
+    for $S_n = Y_1 + \cdots + Y_n$. Furthermore, $(\E[S])^2 = \E[Y_i]^2 \E[N]^2$. So it is obtained.
+\end{proof}
+
+\begin{thm}
+    Suppose $(N_t)_{t \geq 0}$ is a Poisson process with rate $\lambda$, which describes the number of points come by time $t$. We keep a point that lands at $s$ with probability $p_s$. Let $\bar{N}_t$ be the number of points landing at $s$ by time $t$. Then $(\bar{N}_t)$ is also a Poisson process with rate $\lambda p_s$.
+\end{thm}
+\begin{proof}
+    \noindent \textbf{Independent Increasing:} Because $\bar{N}_{t_1} - \bar{N}_{t_2}$ is determined by $N_{t_1} - N_{t_2}$.
+
+    \noindent \textbf{Poisson Distribution:} First,
+    \begin{equation*}
+        \begin{aligned}
+            \Pb(\bar{N}_t = m) &= \Pb(\bar{N}_t = m,~N_t \geq m) \\
+            &= \sum_{k=m}^\infty \Pb(\bar{N}_t = m,~N_t = k) \\
+            &= \sum_{k=m}^\infty \Pb(\bar{N}_t = m\mid N_t = k)\Pb(N_t = k) \\
+            &= \sum_{k=m}^\infty \binom{k}{m}(p_s)^m(1-p_s)^{k-m} e^{-\lambda t}\frac{(\lambda t)^k}{k!} \\
+            &= \frac{e^{-\lambda t}(\lambda t)^{m}}{m!}(p_s)^m \sum_{k=m}^\infty  \frac{\bc{\lambda t(1 - p_s)^{k-m}}}{(k-m)!}\\
+            &= \frac{e^{-\lambda t}(\lambda t)^{m}}{m!}(p_s)^m e^{\lambda t (1 - p_s)} = e^{- \lambda p_s t} \frac{(\lambda p_s t)^{m}}{m!}.
+        \end{aligned}
+    \end{equation*}
+    It is similar for others.
+\end{proof}
+

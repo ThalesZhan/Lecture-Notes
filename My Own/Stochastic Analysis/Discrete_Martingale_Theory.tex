@@ -1,0 +1,1118 @@
+\chapter{Discrete Martingale Theory}
+
+\section{Stochastic Process}
+
+\begin{defn}[Stochastic Process]
+    A family of $\bb{X_t: t \in I}$ of random variables on the probability space $(\Omega, \mathcal{F},\Pb)$ is called a stochastic process, where
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $I = \N \cup \bb{0}$ or
+        \item $I = [0,\infty)$.
+    \end{enumerate}
+\end{defn}
+
+\begin{defn}[Finite Dimensional Distribution]
+    A finite distribution of a stochastic process $\bb{X_t: t \in I}$ for a give sequence of time $0 \leq t_1 \leq t_2 \leq \cdots \leq t_n$ is the probability law of $(X_{t_1},\cdots,X_{t_n})$. If two stochastic processes has same finite distributions, then they are called having the same law.
+\end{defn}
+
+\section{Discrete Martingale}
+
+\begin{thm}
+    Let $X_1,\cdots,X_n$ be a sequence of random variables. Then $Y$ is $\sigma(X_1,\cdots,X_n)$-measurable if and only if $Y = g(X_1,\cdots,X_n)$ for some measurable function $g$.
+\end{thm}
+
+
+\begin{exam}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $\bb{\mathcal{F}_n}$ be a filtration and $Y$ be an integrable random variable. Let $Z_n = \E[Y \mid \mathcal{F}_n]$. Clearly, $Z_n$ is $\mathcal{F}_n$-measurable and by Jensen's Inequality,
+        \begin{equation*}
+            \E\bj{\abs{Z_n}} \leq \E{\abs{Y}} < \infty.
+        \end{equation*}
+        Furthermore,
+        \begin{equation*}
+            \E[Z_{n+1} \mid \mathcal{F}_n] = \E\bj{\E[Y \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n} = \E[Y \mid \mathcal{F}_n] = Z_n,
+        \end{equation*}
+        i.e. $Z_n$ is a $\bb{\mathcal{F}_n}$-martingale.
+
+        \item Assume $X_1,X_n,\cdots$ are independent, integrable random variables with $a_n = \E[X_n] \neq 0$. Define
+        \begin{equation*}
+            Z_n = \frac{X_1X_2\cdots X_n}{a_1a_2\cdots a_n}
+        \end{equation*}
+        and $Z_0 = 1$. Let $\mathcal{F}_n = \sigma(X_1,\cdots,X_n)$. So $Z_n$ is $\mathcal{F}_n$-measurable and is integrable by the independence. Moreover,
+        \begin{equation*}
+            \E[Z_{n+1} \mid \mathcal{F}_n] = \frac{X_1\cdots X_n}{a_1\cdots a_na_{n+1}}\E[X_{n+1} \mid \mathcal{F}_n] =  \frac{X_1\cdots X_n}{a_1\cdots a_n} =Z_n
+        \end{equation*}
+        i.e. $Z_n$ is a $\bb{\mathcal{F}_n}$-martingale.
+
+        \item Assume $X_1,X_n,\cdots$ are independent, integrable random variables valued $1,-1$ with $\Pb(X_n = 1) = \Pb(X_n = -1) = \frac{1}{2}$. Define
+        \begin{equation*}
+            Z_n = S_n^2 - n,\quad S_n = \sum_{i=1}^nX_n.
+        \end{equation*}
+        Let $\mathcal{F}_n = \sigma(X_1,\cdots,X_n)$. Then clearly $Z_n$ is $\mathcal{F}_n$-measurable and is integrable.
+        \begin{equation*}
+            \begin{aligned}
+                \E[Z_{n+1} \mid \mathcal{F}_n] &= \E\bj{ (S_n + X_{n+1})^2 \mid \mathcal{F}_n} - n - 1 \\
+                &= S_n^2 + 2S_n\E[X_{n+1} \mid \mathcal{F}_n] + \E[X_{n+1}^2 \mid \mathcal{F}_n] - n - 1 \\
+                &= S_n^2 + 2S_n\E[X_{n+1}] + \E[X_{n+1}^2] - n - 1\\
+                &= S_n^2 - n = Z_n.
+            \end{aligned}
+        \end{equation*}
+        So $Z_n$ is a $\bb{\mathcal{F}_n}$-martingale.
+    \end{enumerate}
+\end{exam}
+
+\begin{prop}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $(X_n)_{n \geq 0}$ is a martingale w.r.t. $\bb{\mathcal{F}_n}$ and $\varphi$ is a convex function such that $\varphi(X_n) \in L^1$, then $\bb{\varphi(X_n)}_{n \geq 0}$ is a submartingale.
+
+        \item If $(X_n)_{n \geq 0}$ is a sub(sup)-martingale w.r.t. $\bb{\mathcal{F}_n}$ and  $\varphi$ is a increasing(decreasing) convex function such that $\varphi(X_n) \in L^1$, then $\bb{\varphi(X_n)}_{n \geq 0}$ is a submartingale. In particular, $\bb{(X_n - a)_+}$ is a submartingale.
+    \end{enumerate}
+\end{prop}
+
+\section{Stopping Time}
+
+\begin{defn}[Stopping Time]
+    Let $\bb{\mathcal{F}_n}_{n \geq 0}$ be a filtration. A random variable $T(\omega) \in \N \cup \bb{0} \cup \bb{\infty}$ is called a stopping time w.s.t $\bb{\mathcal{F}_n}_{n \geq 0}$ if 
+    \begin{equation*}
+        \bb{T \leq n} \in \mathcal{F}_n,\quad n \in \N \cup \bb{0} \cup \bb{\infty}.
+    \end{equation*}
+\end{defn}
+\begin{rmk}
+    By the definition, it is clear that $\bb{T > n} \in \mathcal{F}_n$ and so $\bb{T = n} = \bb{T \leq n} \cap \bb{T > n - 1} \in \mathcal{F}_n$ and also $\bb{T < n} = \cup_{k=1}^{n-1}\bb{T = k} \in \mathcal{F}_n$.
+\end{rmk}
+
+\begin{defn}[Stopping Process]
+    Let $T$ be a stopping time and $\bb{Z_n}_{n \geq 0}$ be a stochastic process. Define
+    \begin{equation*}
+        Z_{T \wedge n}(\omega) = \left\{
+            \begin{aligned}
+                Z_n(\omega),&n\leq T(\omega) \\
+                Z_T(\omega),&n > T(\omega)
+            \end{aligned}
+        \right.
+    \end{equation*}
+    Then the process $\bb{Z_{T\wedge n}}_{n \geq 0}$ is called the stopping process of $Z$ at $T$.
+\end{defn}
+
+\begin{thm}
+    If $\bb{Z_n}_{n \geq 0}$ is a (sub or sup-)martingale w.s.t. $\mathbb{F} = \bb{\mathcal{F}_n}_{n \geq 0}$ and $T$ is a stopping time w.s.t. $\mathbb{F}$, then the stopping process $\bb{Z_{T\wedge n}}_{n \geq 0}$ is also a (sub or sup-)martingale w.s.t. $\mathbb{F}$.
+\end{thm}
+\begin{proof}
+    Let $Y_n = Z_{T\wedge n}$. Then
+    \begin{equation*}
+        \begin{aligned}
+            Y_n &= Z_{T\wedge n} \mathbb{I}_{\bb{T \geq n}} + Z_{T\wedge n} \mathbb{I}_{\bb{T < n}} \\
+            &= Z_n\mathbb{I}_{\bb{T \geq n}} + Z_T\mathbb{I}_{\bb{T < n}} \\
+            &= Z_n\mathbb{I}_{\bb{T \geq n}} + \sum_{k=0}^{n-1} Z_k\mathbb{I}_{\bb{T = k}}
+        \end{aligned}
+    \end{equation*}
+    Therefore, $Y_n$ is $\mathcal{F}_n$-measurable and $L^1$. For the martingale property, first note that
+    \begin{equation*}
+        \begin{aligned}
+            Y_{n+1} &= Z_{T\wedge {n+1}} \\
+            &= Z_{T\wedge n} + \mathbb{I}_{\bb{T \geq n + 1}}(Z_{n+1}-Z_n) \\
+            &= Y_n + \mathbb{I}_{\bb{T \geq n + 1}}(Z_{n+1}-Z_n).
+        \end{aligned}
+    \end{equation*}
+    Therefore, by $[\mathbb{I}_{\bb{T \geq n + 1}} = \mathbb{I}_{\bb{T < n}}^c \in \mathcal{F}_n$,
+    \begin{equation*}
+        \begin{aligned}
+            \E[Y_{n+1} \mid \mathcal{F}_n] &= \E[Y_{n} \mid \mathcal{F}_n] + \E[\mathbb{I}_{\bb{T \geq n + 1}}(Z_{n+1}-Z_n) \mid \mathcal{F}_n] \\
+            &= Y_n + \mathbb{I}_{\bb{T \geq n + 1}}\E[(Z_{n+1}-Z_n) \mid \mathcal{F}_n] \\
+            &= Y_n.
+        \end{aligned}
+    \end{equation*}
+    Similarly, the reasoning is true for sub or sup-martingale. \qedhere
+\end{proof}
+
+
+\begin{lem}\label{lem:two_stopping_times_integral}
+    Suppose $(X_n)$ is a supermartingale. Let $T,S$ be two bounded stopping times with $S \leq T \leq N$. Then
+    \begin{equation*}
+        \int_{S \leq N} X_T ~\mathrm{d}\Pb \leq  \int_{S \leq N} X_S ~\mathrm{d}\Pb.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Let $Y_n = X_{T \wedge n} - X_{S \wedge n}$ and note that
+    \begin{equation*}
+        Y_n - Y_{n-1} = \mathbb{I}_{\bb{T \geq n > S}}(X_n - X_{n-1}).
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \E[Y_n - Y_{n-1} \mid \mathcal{F}_{n-1}] = \E\bj{  \mathbb{I}_{\bb{T \geq n > S}}(X_n - X_{n-1}) \mid \mathcal{F}_{n-1} } = \mathbb{I}_{\bb{T \geq n > S}}\E\bj{(X_n - X_{n-1}) \mid \mathcal{F}_{n-1} } \leq 0
+    \end{equation*}
+    because $\bb{T \geq n > S} \in \mathcal{F}_{n-1}$. Therefore, $Y_n$ is a supermartingale, i.e.,
+    \begin{equation*}
+        \E[Y_N \mid \mathcal{F}_n] \leq Y_n,\quad \forall~ n \leq N.
+    \end{equation*}
+    It implies that
+    \begin{equation*}
+        \mathbb{I}_{S = n}Y_n \geq \E[\mathbb{I}_{S = n} Y_N \mid \mathcal{F}_n]
+    \end{equation*}
+    and by taking expectation we have
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{S = n}Y_N} \leq \E[\mathbb{I}_{S = n} Y_n] = 0,
+    \end{equation*}
+    i.e.,
+    \begin{equation*}
+        \E\bj{\mathbb{I}_{S = n}Y_N} = \E\bj{\mathbb{I}_{S = n}(X_T - X_S)} \leq 0
+    \end{equation*}
+    Taking summation of $n$ from $1$ to $N$, we get
+    \begin{equation*}
+        \int_{S \leq N} X_T ~\mathrm{d}\Pb \leq  \int_{S \leq N} X_S ~\mathrm{d}\Pb. \qedhere
+    \end{equation*}
+\end{proof}
+
+\section{Martingale Convergence Theorem}
+
+For a real-valued $\mathbb{F} = (\mathcal{F}_n)$-adapted process $(X_n)$ and $a < b$, define a sequence of stopping times $(\tau_n)$ as follows,
+\begin{equation*}
+    \begin{aligned}
+        &\tau_1 \defeq \min\bb{n \colon X_n \leq a},\quad \tau_2 \defeq \bb{ n \geq \tau_1  \colon X_n \geq b}, \cdots \\
+        &\tau_{2k + 1} \defeq \min\bb{n \geq \tau_{2k} \colon X_n \leq a},\quad \tau_{2k + 2} \defeq \min\bb{n \geq \tau_{2k+1} \colon X_n \geq b},\cdots
+    \end{aligned}
+\end{equation*}
+Set a random variable
+\begin{equation*}
+    U_N^X(a,b) \defeq \max \bb{k \colon \tau_{2k} \leq N}
+\end{equation*}
+Then $U_N^X(a,b)$ is the number of up-crossing of $(X_n)_{n=0}^N$ for the interval $[a,b]$.
+
+\begin{thm}
+    Let $(X_n)$ is a supermartingale. We have
+    \begin{equation*}
+        \Pb\bc{U_N^X(a,b) > j} \leq \frac{1}{b-a} \int_{U_N^X(a,b) = j} (X_N -a)^- ~\mathrm{d}\Pb
+    \end{equation*}
+    and
+    \begin{equation*}
+        \E\bj{U_N^X(a,b)} \leq \frac{1}{b-a} \E\bj{(X_N -a)^-}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    WTLG, assume $a = 0$ and $(X_n)_{n=0}^N$. Set
+    \begin{equation*}
+        S = \tau_{2j+1} \wedge (N+1),\quad T = \tau_{2(j+1)} \wedge (N+1).
+    \end{equation*}
+    Then 
+    \begin{equation*}
+        \bb{\tau_{2j+1} \leq N} = \bb{S \leq N},
+    \end{equation*}
+    on $\bb{S \leq N}$, $X_S = X_{\tau_{2j+1}} \leq a = 0$, and 
+    \begin{equation*}
+        \bb{\tau_{2(j+1)} \leq N} = \bb{U_N^X(a,b) \geq j+1} = \bb{U_N^X(a,b) > j},
+    \end{equation*}
+    which follows that
+    \begin{equation*}
+        \bb{U_N^X(0,b) > j} = \bb{\tau_{2(j+1)} \leq N} = \bb{S < N,~X_T \geq b}.
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+        \bb{S < N,~X_T < b} = \bb{S < N,~T = N+1} \subset \bb{U_N^X(a,b) = j}.
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \begin{aligned}
+            b\Pb\bc{U_N^X(0,b) > j} &= \int_{\bb{U_N^X(0,b) > j}} b ~\mathrm{d}\Pb  = \int_{\bb{S < N,~X_T \geq b}} b ~\mathrm{d}\Pb \\
+            &\leq \int_{\bb{S < N,~X_T \geq b}} X_T ~\mathrm{d}\Pb \\
+            &= \int_{\bb{S < N}} X_T ~\mathrm{d}\Pb - \int_{\bb{S < N,~X_T < b}} X_T ~\mathrm{d}\Pb\\
+            &\leq \int_{\bb{S < N}} X_S ~\mathrm{d}\Pb - \int_{\bb{S < N,~T = N+1}} X_T ~\mathrm{d}\Pb\\
+            &\leq 0 - \int_{\bb{S < N,~T = N+1}} X_N ~\mathrm{d}\Pb \leq \int_{\bb{S < N,~T = N+1}} X_N^- ~\mathrm{d}\Pb \\
+            &\leq \int_{\bb{U_N^X(a,b) = j}} X_N^- ~\mathrm{d}\Pb.
+        \end{aligned}
+    \end{equation*}
+    and the second result is by taking the sum of $j$ from $0$ to $\infty$.
+\end{proof}
+
+\begin{thm}[Martingale Convergence Theorem]
+    Let $(X_n)$ be a supermartingale with
+    \begin{equation*}
+        \sup_n \E[X_n^-] < \infty.
+    \end{equation*}
+    Then
+    \begin{equation*}
+        X(\omega) \defeq \lim_{n \sto \infty}X_n(\omega)
+    \end{equation*}
+    exists almost everywhere. In particular, if $\sup_n \E[\abs{X_n}] < \infty$, $X \in L^1$.
+\end{thm}
+\begin{proof}
+    For any $a < b$, let
+    \begin{equation*}
+        U^X(a,b) = \lim_{N \sto \infty} U_N^X(a,b),
+    \end{equation*}
+    which always exists by taking value in $[0,\infty]$ since $U_N^X(a,b)$ is monotone increasing. By MCT,
+    \begin{equation*}
+        \E\bj{U^X(a,b)} = \lim_{N \sto \infty} \E\bj{U_N^X(a,b)} \leq \frac{1}{b-a}\sup_{N} \E\bj{(X_N-a)^-} < \infty.
+    \end{equation*}
+    Set $W_{a,b} = \bb{U^X(a,b) = \infty}$, so $\Pb(W_{a,b}) = 0$. Define
+    \begin{equation*}
+        V_{a,b} = \bb{\liminf_n X_n < a,~\limsup_n X_n > b},
+    \end{equation*}
+    and so $V_{a,b} \subset W_{a,b}$ and $\Pb(V_{a,b}) = 0$. Next,
+    \begin{equation*}
+        \bb{\liminf_n X_n < \limsup_n X_n} = \bigcup_{a < b \in \Q}V_{a,b}
+    \end{equation*}
+    So
+    \begin{equation*}
+        \Pb{\bb{\liminf_n X_n < \limsup_n X_n}} = 0. 
+    \end{equation*}
+    When $\sup_n \E[\abs{X_n}] < \infty$, by Fatou's lemma, it is obvious $X \in L^1$.
+\end{proof}
+
+\begin{exam}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $(X_n)$ be a martingale with $\abs{X_{n+1} - X_n} \leq M$ for any $n$. Let
+        \begin{equation*}
+            C = \bb{\lim_n X_n \text{ exists and finite.}}
+        \end{equation*}
+        and
+        \begin{equation*}
+            D = \bb{\liminf_n X_n = -\infty,~ \limsup_n X_n = \infty}.
+        \end{equation*}
+        Then we have
+        \begin{equation*}
+            \Pb\bc{C \cup D} = 1.
+        \end{equation*}
+        \begin{proof}
+            WTLG, assume $X_0 = 0$. For any $k \in \N$, let
+            \begin{equation*}
+                N_k \defeq \inf\bb{n \colon X_n \leq -k},
+            \end{equation*}
+            which is a stopping time. So $(X_{n \wedge N_k})$ is also a martingale. Note that
+            \begin{equation*}
+                X_{N_k} = X_{N_k} - X_{N_k - 1} + X_{N_k - 1} \geq -M-k,
+            \end{equation*}
+            so
+            \begin{equation*}
+                X_{n \wedge N_k} \geq -k - M ~\Rightarrow~ X_{n \wedge N_k} +a +M \geq 0
+            \end{equation*}
+            Then by the martingale convergence theorem, $\lim_n X_{n \wedge N_k}$ exists. So $\lim_n X_{n}$ exists on $\bb{N_k = \infty}$.
+            \begin{equation*}
+                \bb{\liminf_n X_n > -\infty} = \bigcup_k \bb{N_k = \infty}
+            \end{equation*}
+            It implies that $\lim_n X_{n}$ exists on $\bb{\liminf_n X_n > -\infty}$. Similarly, by considering $-X_n$, $\lim_n X_{n}$ exists on $\bb{\limsup_n X_n < \infty}$. \qedhere
+        \end{proof}
+
+        \item Let $(\mathcal{F}_n)$ be a filtration with $\mathcal{F}_0 = \bb{\emptyset,\Omega}$. Let $B_n \in \mathcal{F}_n$ be a sequence of events.
+        \begin{equation*}
+            \bigcap_n \bigcup_{k \geq n} B_k = \bb{ \sum_{n=1}^\infty \E\bj{ \mathbb{I}_{B_n} \mid \mathcal{F}_{n-1}} = \infty}
+        \end{equation*}
+        \begin{proof}
+            Set $X_0 = 0$ and $X_n = \sum_{m = 1}^n \mathbb{I}_{B_m}$. Note that
+            \begin{equation*}
+                \bigcap_n \bigcup_{k \geq n} B_k = \bb{\sum_{m=1}^\infty \mathbb{I}_{B_m} = \infty}
+            \end{equation*}
+            Define $M_0 = 0$ and
+            \begin{equation*}
+                M_n = X_n - \sum_{m=1}^n \E\bj{\mathbb{I}_{B_m} \mid \mathcal{F}_{m - 1}} = \sum_{m=1}^n \bc{\mathbb{I}_{B_m} - \E\bj{\mathbb{I}_{B_m} \mid \mathcal{F}_{m - 1}}}
+            \end{equation*}
+            and so $(M_n)$ is a martingale w.s.t. $(\mathcal{F}_n)$. Moreover,
+            \begin{equation*}
+                \abs{M_{n+1} - M_n} = \abs{\mathbb{I}_{B_{n+1}} - \E\bj{\mathbb{I}_{B_{n+1}} \mid \mathcal{F}_{n}}} \leq 2
+            \end{equation*}
+            By above, it suffices to prove that on $C$ and $D$. For $C$, because $\lim_n M_n$ exists,
+            \begin{equation*}
+                \sum_{m=1}^\infty \mathbb{I}_{B_m} = \infty ~\Leftrightarrow~ \sum_{m=1}^\infty \E\bj{\mathbb{I}_{B_m} \mid \mathcal{F}_{m - 1}} = \infty.
+            \end{equation*}
+            On $D$, it is also true. \qedhere
+        \end{proof}
+    \end{enumerate}
+\end{exam}
+
+\section{Doob's Decomposition}
+
+\begin{defn}
+    Let $(\mathcal{F}_n)$ be a filtration.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item A stochastic process $(H_n)$ is called adapted w.s.t. $(\mathcal{F}_n)$ if $H_n$ is $\mathcal{F}_{n}$-measurable.
+        \item A stochastic process $(H_n)$ is called predictable w.s.t. $(\mathcal{F}_n)$ if $H_n$ is $\mathcal{F}_{n-1}$-measurable.
+    \end{enumerate}
+\end{defn}
+
+\begin{thm}[Doob's Decomposition Theorem]
+    Any submartingale $(X_n)$ can be uniquely written as
+    \begin{equation*}
+        X_n = M_n + A_n
+    \end{equation*}
+    where $M_n$ is a martingale and $A_n$ is a predictable increasing process with $A_0 = 0$.
+\end{thm}
+\begin{proof}
+    If $X_n = M_n + A_n$, then
+    \begin{equation*}
+        \E[X_n \mid \mathcal{F}_{n-1}] = \E[M_n + A_n \mid \mathcal{F}_{n-1}] = M_{n-1} + A_n = X_{n-1} - A_{n-1} +A_n.
+    \end{equation*}
+    So
+    \begin{equation*}
+        A_n - A_{n-1} = \E[X_n - X_{n-1} \mid \mathcal{F}_{n-1}],
+    \end{equation*}
+    which implies that by setting $A_0$
+    \begin{equation*}
+        A_n = \sum_{k = 1}^n \E[X_k - X_{k-1} \mid \mathcal{F}_{k-1}]
+    \end{equation*}
+    that is predictable and increasing because $(X_n)$ is a submartingale. Let $M_n \defeq X_n - A_n$.
+    \begin{equation*}
+        \begin{aligned}
+            \E\bj{M_n \mid \mathcal{F}_{n-1}} &= \E[X_n \mid \mathcal{F}_{n-1}] - A_n \\
+            &= \E[X_n - X_{n-1} \mid \mathcal{F}_{n-1}] - A_n + X_{n-1} \\
+            &= A_n - A_{n-1} - A_n + X_{n-1} = M_{n-1}.
+        \end{aligned}
+    \end{equation*}
+    So $M_n$ is a martingale. \qedhere
+\end{proof}
+\begin{rmk}
+    Note that if $(X_n)$ is a supermartingale then it can be uniquely written as
+    \begin{equation*}
+        X_n = M_n - A_n,
+    \end{equation*}
+    for a martingale $M_n$ and a predictable increasing process $A_t$ with $A_0 = 0$.
+\end{rmk}
+
+\section{\texorpdfstring{$L^p$}{Lp} Convergence}
+
+\begin{lem}[Bounded Optional Stopping Time Theorem]
+    If $(X_n)$ is a submartingale and $N$ is a finite stopping time with $N \leq K$, then
+    \begin{equation*}
+        \E[X_0] \leq \E[X_N] \leq \E[X_K]
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    We have known $(X_{n \wedge N})$ is a submartingale, i.e.,
+    \begin{equation*}
+        \E[X_0] = \E[X_{0 \wedge N}] \leq \E[X_{N \wedge K}] = \E[X_N].
+    \end{equation*}
+    For the second part, because $N \leq K$, $\Omega = \bigcup_{n=0}^K\bb{N = n}$. It follows that
+    \begin{equation*}
+        \E[X_N] = \sum_{n=0}^K \E[X_N\mathbb{I}_{\bb{N=n}}] = \sum_{n=0}^K \E[X_n\mathbb{I}_{\bb{N=n}}].
+    \end{equation*}
+    Moreover, for any $n \leq K$, because $(X_n)$ is a submartingale
+    \begin{equation*}
+        X_n \leq \E[X_K \mid \mathcal{F}_n].
+    \end{equation*}
+    Because $N$ is a stopping time,
+    \begin{equation*}
+        X_n\mathbb{I}_{\bb{N=n}} \leq \E[X_K\mathbb{I}_{\bb{N=n}} \mid \mathcal{F}_n]~\Rightarrow~ \E[X_n\mathbb{I}_{\bb{N=n}}] \leq \E[X_K\mathbb{I}_{\bb{N=n}}].
+    \end{equation*}
+    So
+    \begin{equation*}
+        \E[X_N] \leq \sum_{n=0}^K \E[X_K\mathbb{I}_{\bb{N=n}}] = \E[X_K].\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}[Doob's Martingale Inequality]
+    Let $(X_n)$ be a submartingale. Define
+    \begin{equation*}
+        A = \bb{\max_{0 \leq m \leq n} X_m \geq \lambda},~\lambda > 0.
+    \end{equation*}
+    Then we have
+    \begin{equation*}
+        \Pb(A) \leq \frac{1}{\lambda} \E[X_n\mathbb{I}_A] \leq \frac{1}{\lambda} \E[X_n^+\mathbb{I}_A] \leq \frac{1}{\lambda} \E[X_n^+]
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    Define
+    \begin{equation*}
+        N = \min \bb{m \colon X_m \geq \lambda} \wedge n
+    \end{equation*}
+    Clearly, $N \leq n$ is a stopping time. On $A$, $X_N \geq \lambda$. It follows that
+    \begin{equation*}
+        \lambda \Pb(A) = \int_A \lambda ~\mathrm{d}\Pb \leq \int_A X_N ~\mathrm{d}\Pb = \E[X_N\mathbb{I}_A]
+    \end{equation*}
+    By above lemma, $\E[X_N] \leq \E[X_n]$. Note that
+    \begin{equation*}
+        \begin{aligned}
+            \E[X_N] &= \E[X_N\mathbb{I}_A] + \E[X_N\mathbb{I}_{A^c}] \\
+            &= \E[X_N\mathbb{I}_A] + \E[X_n\mathbb{I}_{A^c}]
+        \end{aligned}
+    \end{equation*}
+    and
+    \begin{equation*}
+        \E[X_n] = \E[X_n\mathbb{I}_A] + \E[X_n\mathbb{I}_{A^c}].
+    \end{equation*}
+    So $\E[X_N\mathbb{I}_A] \leq \E[X_n\mathbb{I}_A]$.
+\end{proof}
+
+\begin{thm}
+    Let $(X_n)$ be a submartingale. Set
+    \begin{equation*}
+        \bar{X}_n = \max_{0 \leq m \leq n} X_n.
+    \end{equation*}
+    Then for any $p > 1$,
+    \begin{equation*}
+        \E\bj{\bar{X}_n^p} \leq \bc{\frac{p}{p-1}}^p \E\bj{(X_n^+)^p}.
+    \end{equation*}
+    In particular, if $(Y_n)$ is a martingale and set $Y_n^* = \max_{0 \leq m \leq n}\abs{Y_m}$, then for $p > 1$
+    \begin{equation*}
+        \E\bj{(Y^*_n)^p} \leq \bc{\frac{p}{p-1}}^p \E\bj{\abs{Y_n}^p}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    For $M > 0$, note that
+    \begin{equation*}
+        \bb{\bar{X}_n \wedge M \geq \lambda} = \bb{\bar{X}_n \geq \lambda} \text{ or } \emptyset.
+    \end{equation*}
+    First,
+    \begin{equation*}
+        \begin{aligned}
+            \E\bj{(\bar{X}_n \wedge M)^p} &= \E\bj{\int_0^{\bar{X}_n \wedge M}p\lambda^{p-1}~\mathrm{d}\lambda } \\
+            &= \E\bj{\int_0^\infty \mathbb{I}_{\bb{\bar{X}_n \wedge M \geq \lambda}} p\lambda^{p-1}d\lambda} \\
+            &= \int_0^\infty p\lambda^{p-1} \Pb(\bb{\bar{X}_n \wedge M \geq \lambda}) ~\mathrm{d}\lambda \\
+            &= \int_0^\infty p\lambda^{p-1} \Pb(\bb{\bar{X}_n \geq \lambda})\mathbb{I}_{\bb{M \leq \lambda}} ~\mathrm{d}\lambda \\
+            &\leq \int_0^\infty p\lambda^{p-1} \frac{1}{\lambda} \int X_n^+ \mathbb{I}_{\bb{\bar{X}_n \wedge M \geq \lambda}} ~\mathrm{d}\Pb~\mathrm{d}\lambda \\
+            &= \int X_n^+ \int_0^{\bar{X}_n \wedge M}p\lambda^{p-2} ~\mathrm{d}\lambda~\mathrm{d}\Pb \\
+            &= \frac{p}{p-1}\int X_n^+ (\bar{X}_n \wedge M)^{p-1} ~\mathrm{d}\Pb \\
+            &\leq \frac{p}{p-1} \E\bj{\abs{X_n^+}^p}^{\frac{1}{p}}\E\bj{(\bar{X}_n \wedge M)^p}^{\frac{p-1}{p}},
+        \end{aligned}
+    \end{equation*}
+    where the final inequality is by the H\"older's Inequality. So
+    \begin{equation*}
+        \E\bj{(\bar{X}_n \wedge M)^p} \leq \E\bj{\abs{X_n^+}^p}.
+    \end{equation*}
+    As $M \sto \infty$, by Fatou's lemma,
+    \begin{equation*}
+        \E\bj{\bar{X}_n^p} \leq \bc{\frac{p}{p-1}}^p \E\bj{(X_n^+)^p}.
+    \end{equation*}
+    In particular, when $(Y_n)$ is a martingale, $\abs{Y_n}$ is a submartingale by Jensen's Inequality. \qedhere
+\end{proof}
+
+\begin{thm}
+    Let $(X_n)$ be a martingale with $\sup_n \E[\abs{X_n}^p] < \infty$ for $p > 1$. Then $X_n \sto X$ a.e. and it is in $L^p$ ($p > 1$), i.e.,
+    \begin{equation*}
+        \E[\abs{X_n - X}^p] \sto 0.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    Define $Y = \sup_{n} \abs{X_n}$. Then by MCT and by above theorem,
+    \begin{equation*}
+        \E[Y^p] = \lim_n \E\bj{\sup_{0 \leq m \leq n} \abs{X_m}^p} \leq \limsup_n \bc{\frac{p}{p-1}}^p \E\bj{\abs{X_n}^p} \leq \bc{\frac{p}{p-1}}^p \sup_n \E[\abs{X_n}^p]
+    \end{equation*}
+    Because $\abs{X_n - X}^p \sto 0$ a.e. and $\abs{X_n - X}^p \leq c(\abs{X_n}^p + \abs{X}^p) \leq c(\abs{Y}^p + \abs{X}^p)$, by DCT
+    \begin{equation*}
+        \E[\abs{X_n - X}^p] \sto 0. \qedhere
+    \end{equation*}
+\end{proof}
+
+
+\section{UI and \texorpdfstring{$L^1$}{L1} Convergence}
+\begin{defn}[Uniform Integrability]
+    A family of random variables $(X_i,i\in I)$ is said uniformly integrable (UI) if
+    \begin{equation*}
+        \lim_{M \sto \infty} \sup_{i \in I} \E\bj{\abs{X_i}\mathbb{I}_{\bb{\abs{X_i} \geq M}}} = 0.
+    \end{equation*}
+\end{defn}
+
+\begin{exam}
+    If $\abs{X_i} \leq Y$ and $Y \in L^1$, then
+    \begin{equation*}
+        \sup_i \E\bj{\abs{X_i}\mathbb{I}_{\bb{\abs{X_i} \geq M}}}  \leq \E\bj{\abs{Y}\mathbb{I}_{\bb{\abs{X_i} \geq M}}} \leq \E\bj{\abs{Y}\mathbb{I}_{\bb{\abs{Y} \geq M}}} \sto 0.
+    \end{equation*}
+\end{exam}
+
+\begin{lem}
+    If $X \in L^1$, then
+    \begin{equation*}
+        \lim_{\Pb\bc{A} \sto 0} \int_A \abs{X}~\mathrm{d}\Pb = 0
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Since $X \in L^1$,
+    \begin{equation*}
+        \int \abs{X}\mathbb{I}_{\bb{\abs{X} \geq M}} ~\mathrm{d}\Pb \sto 0,\text{ as } M \sto \infty.
+    \end{equation*}
+    For any $M > 0$,
+    \begin{equation*}
+        \begin{aligned}
+            \int_A \abs{X}~\mathrm{d}\Pb &= \int_{A \cap \bb{\abs{X} \leq M}} \abs{X}~\mathrm{d}\Pb + \int_{A \cap \bb{\abs{X} > M}} \abs{X}~\mathrm{d}\Pb \\
+            &\leq M\Pb(A) + \int_{\bb{\abs{X} > M}} \abs{X}~\mathrm{d}\Pb
+        \end{aligned}
+    \end{equation*}
+    For any $\varepsilon > 0$, it can choose $M$ such that $\int_{\bb{\abs{X} > M}} \abs{X}~\mathrm{d}\Pb \leq \varepsilon / 2$. For such $M$, by choosing $\delta \leq \varepsilon / (2M)$, then for any $A$ with $\Pb(A) \leq \delta$, $\int_A \abs{X}~\mathrm{d}\Pb \leq \varepsilon$. \qedhere
+\end{proof}
+
+\begin{exam}
+    Let $X \in L^1$. Then
+    \begin{equation*}
+        \bb{\E[X \mid \mathcal{G}]\colon \mathcal{G} \subset \mathcal{F}}
+    \end{equation*}
+    is UI.
+    \begin{proof}
+        For any $\varepsilon > 0$, by above lemma, it can choose $\delta > 0$ so that if $\Pb(A) < \delta$, then
+        \begin{equation*}
+            \int_A \abs{X} ~\mathrm{d}\Pb < \delta.
+        \end{equation*}
+        Note that
+        \begin{equation*}
+            \begin{aligned}
+                \int_{\bb{\abs{\E[X \mid \mathcal{G}]} \geq M}}\abs{\E[X \mid \mathcal{G}]} ~\mathrm{d}\Pb & \leq \E\bj{\E[\abs{X}\mathbb{I}_{\bb{\E[\abs{X} \mid \mathcal{G}] \geq M}} \mid \mathcal{G}]} \\
+                &= \E\bj{\mathbb{I}_{\bb{\E[\abs{X} \mid \mathcal{G}] \geq M}}\E[\abs{X} \mid \mathcal{G}]} = \E\bj{\abs{X}\mathbb{I}_{\bb{\E[\abs{X} \mid \mathcal{G}] \geq M}}} \\
+                &= \int_{\bb{\E[\abs{X} \mid \mathcal{G}] \geq M}} \abs{X}~\mathrm{d}\Pb
+            \end{aligned}
+        \end{equation*}
+        On the other hand, by Chebyshev's Inequality
+        \begin{equation*}
+            \Pb\bc{\bb{\E[\abs{X} \mid \mathcal{G}] \geq M}} \leq \frac{1}{M} \E\bj{\E[\abs{X} \mid \mathcal{G}]} = \frac{\E[\abs{X}]}{M}
+        \end{equation*}
+        Therefore, it can choose $M \geq M_0$ such that
+        \begin{equation*}
+            \Pb\bc{\bb{\E[\abs{X} \mid \mathcal{G}] \geq M}} \leq \delta
+        \end{equation*}
+        So
+        \begin{equation*}
+            \sup_{\mathcal{G}} \int_{\bb{\abs{\E[X \mid \mathcal{G}]} \geq M}}\abs{\E[X \mid \mathcal{G}]} ~\mathrm{d}\Pb \leq \varepsilon. \qedhere
+        \end{equation*}
+    \end{proof}
+\end{exam}
+
+\begin{thm}
+    Let $\varphi(x) \geq 0$ and $\frac{\varphi(x)}{x} \sto \infty$ as $x \sto \infty$. If
+    \begin{equation*}
+        \sup_{i \in I} \E\bj{\varphi(X_i)} < \infty,
+    \end{equation*}
+    then $(X_i,i\in I)$ is UI.
+\end{thm}
+\begin{proof}
+    Let
+    \begin{equation*}
+        \varepsilon_M \defeq \sup\bb{\frac{x}{\varphi(x)} \colon x \geq M},
+    \end{equation*}
+    so $\varepsilon_M \sto 0$ as $M \sto \infty$.
+    \begin{equation*}
+        \begin{aligned}
+            \E\bj{\abs{X_i},\abs{X_i} \geq M} &= \E\bj{\frac{\abs{X_i}}{\varphi(X_i)}\varphi(X_i),\abs{X_i} \geq M} \\
+            &\leq \varepsilon_M \E[\varphi(X_i)] \leq C\varepsilon_M \sto 0.
+        \end{aligned}
+    \end{equation*}
+    So it is UI.
+\end{proof}
+\begin{rmk}
+    In particular, for $p > 1$, $\varphi(x) = \abs{x}^p$ is valid. So if 
+    \begin{equation*}
+        \sup_i \norm{X_i}_p < \infty
+    \end{equation*}
+    for some $p > 1$, $(X_i,i\in I)$ is UI.
+\end{rmk}
+
+\begin{thm}
+    $(X_i,i\in I)$ is UI if and only if it satisfies the following two conditions:
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $\sup_{i\in I}\E\bj{\abs{X_i}} < \infty$,
+        \item for any $\varepsilon > 0$, there exists $\delta = \delta(\varepsilon) > 0$ such that for any $E \in \mathcal{F}$,
+        \begin{equation*}
+            \Pb(E) \leq \delta \quad \Rightarrow \quad \int_E \abs{X_i} d\Pb \leq \varepsilon,~\forall~i\in I.
+        \end{equation*}
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    First, assume $(X_i,i\in I)$ is UI. Then for (\rnum{1}), there exists $M > 0$ such that $\sup_{i\in I}\E\bj{\abs{X_i}\mathbb{I}_{\bb{\abs{X_i} \geq M}}} < 1$
+    \begin{equation*}
+         \sup_{i\in I}\E\bj{\abs{X_i}} = \sup_{i\in I}\E\bj{\abs{X_i}\mathbb{I}_{\bb{\abs{X_i} < M}}} +\sup_{i\in I}\E\bj{\abs{X_i}\mathbb{I}_{\bb{\abs{X_i} \geq M}}} \leq M + 1 < \infty.
+    \end{equation*}
+    For (\rnum{2}), choose $M > 0$ such that $\sup_{i\in I}\E\bj{\abs{X_i}\mathbb{I}_{\bb{\abs{X_i} \geq M}}} \leq \varepsilon / 2$. Then for $\delta = \varepsilon / (2M)$ and $A \in \mathcal{F}$ with $\Pb(A) \leq \delta$,
+    \begin{align*}
+        \E\bj{\abs{X_i}\mathbb{I}_A} &= \E\bj{\abs{X_i}\mathbb{I}_{A\cap \bb{\abs{X_i} < M}}} + \E\bj{\abs{X_i}\mathbb{I}_{A \cap \bb{\abs{X_i} \geq M}}} \\
+        &\leq M\Pb(A) + \frac{\varepsilon}{2} = \varepsilon.
+    \end{align*}
+
+    \noindent Conversely, for $M = C / \delta$, by Markov's inequality
+    \begin{equation*}
+        \Pb(\abs{X_i} \geq M) \leq \frac{1}{M}\E\bj{\abs{X_i}} \leq \delta.
+    \end{equation*}
+    So
+    \begin{equation*}
+        \sup_{i \in I}\E\bj{\abs{X_i} \mathbb{I}_{\bb{\abs{X_i} \geq M}}} \leq \varepsilon.\qedhere
+    \end{equation*}
+\end{proof}
+
+
+\begin{thm}
+    Let $(X_n)$ be a sequence of $L^1$ random variables. If $X_n \sto X$ in probability, then TFAE
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $(X_n)$ is UI,
+        \item $X_n \sto X$ in $L^1$,
+        \item $\E\bj{\abs{X_n}} \sto \E[\abs{X}]$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    $(3) \Rightarrow (2)$: Let $Y_n = \abs{X_n}$, $Y = \abs{X}$, and 
+    \begin{equation*}
+        Z_n = Y_n + Y - \abs{X_n - X} \geq 0.
+    \end{equation*}
+    By $(3)$, $Z_n \sto 2Y$ in measure. Then by Fatou's lemma,
+    \begin{equation*}
+        2\E[Y] \leq \liminf_n \E[Z_n] \leq 2Y - \limsup_n\E[\abs{X_n - X}]
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \limsup_n\E[\abs{X_n - X}] \sto 0
+    \end{equation*}
+
+    \noindent $(2) \Rightarrow (1)$: 
+    \begin{equation*}
+        \begin{aligned}
+            \E\bj{\abs{X_n}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} &\leq \E\bj{\abs{X_n - X}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} + \E\bj{\abs{X}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} \\
+            &\leq \E\bj{\abs{X_n - X}} + \E\bj{\abs{X}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} 
+        \end{aligned}
+    \end{equation*}
+    $X_n \sto X$ in $L^1$, so $\E\bj{\abs{X_n - X}} \leq \varepsilon / 2$ for sufficiently large $n > N_0$. For the other term, by Chebyshev's Inequality
+    \begin{equation*}
+        \Pb(\bb{\abs{X_n} \geq M}) \leq \frac{\E[\abs{X_n}]}{M} \leq \frac{C}{M}
+    \end{equation*}
+    because $X_n$ is convergent in $L^1$. So for $M > \bar{M}$, $\Pb(\bb{\abs{X_n} \geq M}) < \delta$ and $\E\bj{\abs{X}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} \leq \varepsilon / 2$. For $n = 0,1,\cdots,N_0$, choose $M_n$ such that $\E\bj{\abs{X_n}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} \leq \varepsilon$. Then let $M^* = \max\bb{M_0,\cdots,M_{N_0},\bar{M}}$. Then for all $n$,
+    \begin{equation*}
+        \E\bj{\abs{X_n}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} \leq \varepsilon,\quad \forall~M > M^*.
+    \end{equation*}
+
+    \noindent $(1) \Rightarrow (3)$: By Fatou's Lemma, $\E[\abs{X}] \leq \liminf_n \E[\abs{X_n}]$. So it suffices to prove that
+    \begin{equation*}
+        \limsup_n \E[\abs{X_n}] \leq \E[\abs{X}].
+    \end{equation*}
+    For any $\varepsilon > 0$, by UI, there exists $M$ such that
+    \begin{equation*}
+        \E\bj{\abs{X_n}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} < \varepsilon.
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \begin{aligned}
+            \E[\abs{X_n}] &= \E\bj{\abs{X_n}\mathbb{I}_{\bb{\abs{X_n} < M}}} + \E\bj{\abs{X_n}\mathbb{I}_{\bb{\abs{X_n} \geq M}}} \\
+            &\leq \E\bj{(\abs{X_n-X})\mathbb{I}_{\bb{\abs{X_n} < M}}} + \E\bj{\abs{X}} + \varepsilon,
+        \end{aligned}
+    \end{equation*}
+    which follows that
+    \begin{equation*}
+        \limsup_n \E[\abs{X_n}] \leq \varepsilon + \E\bj{\abs{X}} + \limsup_n \E\bj{(\abs{X_n-X})\mathbb{I}_{\bb{\abs{X_n} < M}}}
+    \end{equation*}
+    Because $X_n \sto X$ in probability, by DCT,
+    \begin{equation*}
+         \limsup_n \E\bj{(\abs{X_n-X})\mathbb{I}_{\bb{\abs{X_n} < M}}} = 0.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \limsup_n \E[\abs{X_n}] \leq \E\bj{\abs{X}}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{exam}[Random Walk]
+    Let $S_0 = 1$ and $S_n = S_0 + \xi_1+\cdots+\xi_n$, where $\xi_i$ are i.i.d with $\Pb(\xi_i = 1) = \Pb(\xi=-1) = 1/2$. Define
+    \begin{equation*}
+        N = \inf\bb{ n \colon S_n = 0 }.
+    \end{equation*}
+    that is a stopping time. Because $(S_n)$ is a martingale, $(S_{n \wedge N})$ is also a martingale. Moreover, $S_{n \wedge N} \geq 0$. Then by the Martingale Convergence Theorem, $X_n = S_{n \wedge N} \sto 0$ a.e.. However, 
+    \begin{equation*}
+        \E[X_n] = \E[S_{n \wedge N}] = \E[S_0] = 1,
+    \end{equation*}
+    so $(X_n)$ is not UI.
+\end{exam}
+
+\begin{thm}
+    For a submartingale $(X_n)$, TFAE
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $(X_n)$ is UI.
+        \item $X_n \sto X$ in $L^1$ and a.e..
+        \item $X_n \sto X$ in $L^1$.
+    \end{enumerate}
+    Furthermore, if $(X_n)$ is a martingale, then $X_n = \E[X \mid \mathcal{F}_n]$.
+\end{thm}
+\begin{proof}
+    It suffices to prove $(1) \Rightarrow (2)$. If $(X_n)$ is UI, then
+    \begin{equation*}
+        \sup_n \E[\abs{X_n}] < \infty.
+    \end{equation*}
+    So by the Martingale Convergence Theorem, $X_n \sto X$ a.e.. Then by above theorem, $X_n \sto X$ in $L^1$.
+
+    \noindent For martingale, for any $n \leq k$ and $A \in \mathcal{F}_n$
+    \begin{equation*}
+        \E\bj{X_k\mathbb{I}_A} = \E[\mathbb{I}_A\E[X_k \mid \mathcal{F}_n]] = \E[X_n\mathbb{I}_A]
+    \end{equation*}
+    Therefore, for any $A \in \mathcal{F}_n$, because $X_n \sto X$ in $L^1$, by DCT,
+    \begin{equation*}
+        \E[X\mathbb{I}_A] = \E[X_n\mathbb{I}_A].
+    \end{equation*}
+    Then by the uniqueness of conditional expectation, $X_n = \E[X \mid \mathcal{F}_n]$. \qedhere
+\end{proof}
+
+
+\begin{thm}[L\'evy's upward theorem]
+    Suppose a sequence of $\sigma$-fields $\mathcal{F}_n \uparrow \mathcal{F}_\infty = \sigma(\cup \mathcal{F}_n)$. Assume $\E[\abs{X}] < \infty$. Then
+    \begin{equation*}
+        \E[X \mid \mathcal{F}_n] \sto \E[X \mid \mathcal{F}_\infty]
+    \end{equation*}
+    in $L^1$ and a.e..
+\end{thm}
+\begin{proof}
+    Let $Y_n = \E[X \mid \mathcal{F}_n]$. Then $Y_n$ is a martingale w.s.t. $(\mathcal{F}_n)$ and $(Y_n)$ is UI. So
+    \begin{equation*}
+        Y_n \sto Y_\infty
+    \end{equation*}
+    in $L^1$ and a.e.. It suffices to prove $Y_\infty = \E[X \mid \mathcal{F}_\infty]$. First, it is obvious that $Y_\infty$ is $\mathcal{F}_\infty$-measurable. For any $n$ and any $A \in \mathcal{F}_n \subset \mathcal{F}_m$ $(m > n)$,
+    \begin{equation*}
+        \E[Y_m\mathbb{I}_A] = \E[X\mathbb{I}_A].
+    \end{equation*}
+    As $m \sto \infty$, because $Y_n \sto Y_\infty$ in $L^1$, $\E[Y_\infty \mathbb{I}_A] = \E[X \mathbb{I}_A]$. By the uniqueness of conditional expectation, $Y_\infty = \E[X \mid \mathcal{F}_\infty]$. \qedhere
+\end{proof}
+
+
+\begin{thm}
+    Suppose a sequence of $\sigma$-fields $\mathcal{F}_n \uparrow \mathcal{F}_\infty$. Assume that $Y_n \sto Y$ a.e.. If $\abs{Y_n} \leq Z$ for some $Z \in L^1$, then
+    \begin{equation*}
+        \E[Y_n \mid \mathcal{F}_n] \sto \E[Y \mid \mathcal{F}_\infty]
+    \end{equation*}
+    a.e..
+\end{thm}
+\begin{proof}
+    Let $W_N = \sup \bb{\abs{Y_n - Y_m} \colon n,m \geq N}$. So $(W_N)$ is decreasing to $0$ and $\abs{W_N} \leq 2Z$. Then
+    \begin{equation*}
+        \E[W_N \mid \mathcal{F}_\infty] \sto 0.
+    \end{equation*}
+    For any $N$, by Fatou's Lemma and above theorem
+    \begin{equation*}
+        \begin{aligned}
+            \lim\sup_n \E\bj{\abs{Y_n - Y} \mid \mathcal{F}_n} &\leq \lim\sup_n \liminf_m \E\bj{\abs{Y_n - Y_m} \mid \mathcal{F}_n} \\
+            &\leq \limsup_n \E[W_N \mid \mathcal{F}_n] = \E[W_N \mid \mathcal{F}_\infty] \sto 0,\text{ as } N \sto \infty
+        \end{aligned}
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \lim_n\E\bj{Y_n \mid \mathcal{F}_n} = \lim_n\E\bj{Y \mid \mathcal{F}_n} = \E\bj{Y \mid \mathcal{F}_\infty}.
+    \end{equation*}
+\end{proof}
+
+\begin{exam}
+    Let $(Y_n)$ and $(Z_m)$ be independent random variables with the same distribution
+    \begin{equation*}
+        \begin{aligned}
+            \Pb(Y_n = 1) = \frac{1}{n},&\quad \Pb(Y_n = 0) = 1-\frac{1}{n}, \\
+            \Pb(Z_n = n) = \frac{1}{n},&\quad \Pb(Z_n = 0) = 1-\frac{1}{n}.
+        \end{aligned}
+    \end{equation*}
+    Let $X_n = Z_nY_n$. Then $\Pb(X_n \geq 0) = 1 / n^2$. By the Borel–Cantelli lemma, $X_n \sto 0$ a.e.. Moreover,
+    \begin{equation*}
+        \E[X_n\mathbb{I}_{\bb{X_n \geq 1}}] = \frac{1}{n} \sto 0,
+    \end{equation*}
+    which means $(X_n)$ is UI. Let $\mathcal{F}_n = \sigma(Y_0,\cdots,Y_n,)$.
+    \begin{equation*}
+        \E[X_n \mid \mathcal{F}_n] = Y_n\E[Z_n] = Y_n
+    \end{equation*}
+    But by the Borel–Cantelli lemma, $Y_n$ does not converges to $0$.
+\end{exam}
+
+\section{Backward Martingale}
+
+Fix $n \leq 0$, let $(\mathcal{F}_n)_{n \leq 0}$ be a family of decreasing $\sigma$-field as $n \sto -\infty$.
+
+\begin{defn}[Backward Martingale]
+    We say a stochastic process $(X_n)_{n \leq 0}$ is a backward martingale w.s.t. $(\mathcal{F}_n)_{n \leq 0}$ if
+    \begin{equation*}
+        \E[X_{n+1} \mid \mathcal{F}_n] = X_n,\quad n\leq -1.
+    \end{equation*}
+    Moreover, ``$\geq$'' is a backward submartingale and ``$\leq$'' is a backward supermartingale.
+\end{defn}
+
+
+\begin{thm}
+    If $(X_n)_{n \leq 0}$ is a backward martingale, then
+    \begin{equation*}
+        X_{-\infty} = \lim_{n \sto -\infty}X_n
+    \end{equation*}
+    a.e. and in $L^1$.
+\end{thm}
+\begin{proof}
+    Let $U_n(a,b)$ be the number of up-crossing of $X_{n},\cdots,X_{-1},X_0$ on $[a,b]$. As before,
+    \begin{equation*}
+        \E[U_n(a,b)] \leq \frac{1}{b - a}\E[(X_0 - a)^-]
+    \end{equation*}
+    Therefore, similarly, we always have
+    \begin{equation*}
+        X_{-\infty} = \lim_{n \sto -\infty}X_n
+    \end{equation*}
+    a.e. by the Martingale Convergence Theorem. By the backwark martingale property,
+    \begin{equation*}
+        X_n = \E[X_0 \mid \mathcal{F}_n].
+    \end{equation*}
+    So $(X_n)_{n \leq 0}$ is UI and it implies that $X_{-\infty} = \lim_{n \sto -\infty}X_n$ in $L^1$.
+\end{proof}
+
+\begin{thm}
+    Let $(X_n)_{n \leq 0}$ be a backward martingale. Let $\mathcal{F}_{-\infty} = \cap \mathcal{F}_n$. Then
+    \begin{equation*}
+        X_{-\infty} = \lim_{n \sto -\infty}X_n = \E[X_0 \mid \mathcal{F}_{-\infty}].
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    First, because $X_n$ is $\mathcal{F}_{-\infty}$-measurable, $X_{-\infty}$ is $\mathcal{F}_{-\infty}$-measurable. For any $A \in \mathcal{F}_{-\infty}$, 
+    \begin{equation*}
+        \E[X_{-\infty}\mathbb{I}_A] = \lim_{n\sto -\infty} \E[X_n\mathbb{I}_A] = \lim_{n\sto -\infty} \E[\mathbb{I}_A\E[X_0 \mid \mathcal{F}_n]] = \E[X_0\mathbb{I}_A].\qedhere
+    \end{equation*}
+\end{proof}
+\begin{rmk}
+    If $(X_n)_{n \leq 0}$ is a backward submartingale with $\sup_n \E[\abs{X_n}] < \infty$, then
+    \begin{equation*}
+        \lim_{n \sto \infty}\E[X_n] = X_{-\infty},
+    \end{equation*}
+    a.e. and in $L^1$ and
+    \begin{equation*}
+        X_{-\infty} \leq \E[X_m \mid \mathcal{F}_{-\infty}],\quad \forall~m \in -\N_0.
+    \end{equation*}
+\end{rmk}
+
+
+
+\begin{thm}[L\'evy's downward theorem]
+    If $\mathcal{F}_n \downarrow \mathcal{F}_{-\infty}$ as $n \sto -\infty$, then for any $Y \in L^1$,
+    \begin{equation*}
+        \E[Y \mid \mathcal{F}_n] \sto \E[Y \mid \mathcal{F}_{-\infty}]
+    \end{equation*}
+    a.e. and in $L^1$.
+\end{thm}
+\begin{proof}
+    Let $X_n = \E[Y \mid \mathcal{F}_n]$ that is a backward martingale. Then by above
+    \begin{equation*}
+        X_n \sto \E[X_0 \mid \mathcal{F}_{-\infty}] = \E[Y \mid \mathcal{F}_{-\infty}]
+    \end{equation*}
+    a.e. and in $L^1$.
+\end{proof}
+
+\begin{exam}[Strong Law of Large Number]
+    Let $\xi_1,\xi_2,\cdots$ be a sequence of i.i.d. $L^1$ random variables. Define
+    \begin{equation*}
+        X_{-n} = \frac{S_n}{n},\quad S_n =\xi_1 + \cdots + x_n.
+    \end{equation*}
+    Let $\mathcal{F}_{-n} = \sigma(S_n,S_{n+1},\cdots)$. By symmetry, for any $j,k \leq n+1$,
+    \begin{equation*}
+        \E[\xi_k \mid \mathcal{F}_{-n-1}] = \E[\xi_j \mid \mathcal{F}_{-n-1}]
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \E[\xi_{n+1} \mid \mathcal{F}_{-n-1}] = \frac{1}{n+1}\sum_{k=1}^{n+1}\E[\xi_k \mid \mathcal{F}_{-n-1}] = \frac{1}{n+1}\E[S_{n+1} \mid \mathcal{F}_{-n-1}] = \frac{S_{n+1}}{n+1}
+    \end{equation*}
+    So $X_{-n}$ is a backward martingale. So
+    \begin{equation*}
+        \frac{S_n}{n} \sto \E[X_0 \mid \mathcal{F}_{-\infty}] = \E[X_0].
+    \end{equation*}
+\end{exam}
+
+\section{Doob's Optional Stopping Theorem}
+
+\begin{thm}
+    If $X=(X_n)$ is a UI submartingale, then for any stopping time $N$, $(X_{n \wedge N})$ is also UI.
+\end{thm}
+\begin{proof}
+    Note that $(X_n^+)$ is also a submartingale. So $(X_{n \wedge N}^+)$ is a submartingale. Moreover, because $n \wedge N$ is a bounded stopping time
+    \begin{equation*}
+        \E\bj{X_{n \wedge N}^+} \leq \E\bj{X_n^+},
+    \end{equation*}
+    and because $(X_n)$ is UI,
+    \begin{equation*}
+        \sup_n\E\bj{X_{n \wedge N}^+} \leq \sup_n\E\bj{X_n^+} = \sup_n \E[\abs{X_n}] < \infty
+    \end{equation*}
+    Then by the Martingale Convergence Theorem,
+    \begin{equation*}
+        X_{n \wedge N} \sto X_N,~a.e.
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+        \mathbb{E}\left[X_{N \wedge n}^{-}\right]=\mathbb{E}\left[X_{N \wedge n}^{+}\right]-\mathbb{E}\left[X_{N \wedge n}\right] \leqslant \mathbb{E}\left[X_{N \wedge n}^{+}\right]-\mathbb{E}\left[X_0\right].
+    \end{equation*}
+    So
+    \begin{equation*}
+        \sup _n \mathbb{E}\left[X_{N \wedge n}^{-}\right] \leqslant \sup _n \mathbb{E}\left[X_{N \wedge n}^{+}\right]-\mathbb{E}\left[X_0\right]<+\infty.
+    \end{equation*}
+    It follows that $\sup_n \E[\abs{X_{n \wedge N}}] < \infty$. So by Fatou's Lemma,
+    \begin{equation*}
+        \E[\abs{X_N}] \leq \liminf_n \E[\abs{X_{n \wedge N}}] < \infty
+    \end{equation*}
+    To verify the uniform integrability,
+    \begin{equation*}
+        \begin{aligned}
+            \E\bj{\abs{X_{n \wedge N}} ,{\abs{X_{n \wedge N}} \geq K}} &= \E\bj{\abs{X_{N}} ,{\abs{X_{N}} \geq K},N \leq n}+\E\bj{\abs{X_{n}} ,{\abs{X_{n}} \geq K},N > n} \\
+            &\leq \E\bj{\abs{X_{N}} ,{\abs{X_{N}} \geq K}} + \E\bj{\abs{X_{n}} ,{\abs{X_{n}} \geq K}}
+        \end{aligned}
+    \end{equation*}
+    Because $X_N \in L^1$ and $(X_n)$ is UI, for any $\varepsilon > 0$, it can find $K_1,K_2$ such that
+    \begin{equation*}
+        \E\bj{\abs{X_{N}} ,{\abs{X_{N}} \geq K_1}},~\E\bj{\abs{X_{n}} ,{\abs{X_{n}} \geq K_2}} \leq \frac{1}{2}\varepsilon.
+    \end{equation*}
+    Therefore, $(X_{n \wedge N})$ is also UI. \qedhere
+\end{proof}
+\begin{rmk}
+    For the positive and negative part, because $f^+(x) = \max \bb{f(x),0}$ and $f^-(x) = \max \bb{-f(x),0}$, we know $\abs{f} = f^+ + f^-$ and
+    \begin{equation*}
+        (-f)^- = f^+,\quad (-f)^+ = f^-
+    \end{equation*}
+    Moreover, if $f \leq g$, then
+    \begin{equation*}
+        f^+ \leq g^+,\quad f^- \geq g^-.
+    \end{equation*}
+\end{rmk}
+
+\begin{thm}[Doob's Optional Theorem]
+    Suppose $(X_n)$ is a submartingale and $N$ is a stopping time. If $X_N \in L^1$ and $(X_n\mathbb{I}_{N > n})$ is UI, then $(X_{n \wedge N})$ is UI and
+    \begin{equation*}
+        \E[X_0] \leq \E[X_N].
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    The uniform integrability is directly obtained by the proof of above theorem. Because of it,
+    \begin{equation*}
+        X_{n \wedge N} \sto X_N
+    \end{equation*}
+    a.e. and in $L^1$. Moreover, because
+    \begin{equation*}
+        \E[X_0] \leq \E[X_{n \wedge N}],
+    \end{equation*}
+    as $n \sto \infty$, $\E[X_0] \leq \E[X_N]$. \qedhere
+\end{proof}
+
+\begin{thm}
+    If $(X_n)$ is a UI submartingale, then for any stopping time $N$, we have
+    \begin{equation*}
+        \E[X_0] \leq \E[X_N] \leq \E[X_\infty],
+    \end{equation*}
+    where $X_\infty = \lim_n X_n$.
+\end{thm}
+\begin{proof}
+    First, we have $X_\infty = \lim_n X_n$ a.e. and in $L^1$. Fix any $n$,
+    \begin{equation*}
+        \E[X_0] \leq \E[X_{n \wedge N}] \leq \E[X_n]
+    \end{equation*}
+    By above theorem, as $n \sto \infty$, we have
+    \begin{equation*}
+        \E[X_0] \leq \E[X_N] \leq \E[X_\infty]. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    If $(X_n)$ is a UI submartingale and $M \leq N$ are two stopping times, then
+    \begin{equation*}
+        \E[X_0] \leq \E[X_M] \leq \E[X_N] \leq \E[X_\infty]
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    Consider the submartingale $Y_n = X_{N \wedge n}$ that is a UI submartingale. By applying above theorem to $(Y_n)$,
+    \begin{equation*}
+        \E[Y_0] = \E[X_0] \leq \E[Y_M] = \E[X_M] \leq \E[Y_\infty] = \E[X_N]. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    Suppose $(X_n)$ is a submartingale with $\sup_n\E[\abs{X_{n+1} - X_n} \mid \mathcal{F}_n] \leq B$ for a constant $B$. If $N$ is a stopping time with $\E[N] < \infty$, then $(X_{N\wedge n})$ is UI and so we have $\E[X_0] \leq \E[X_N]$.
+\end{thm}
+\begin{proof}
+    Observe that
+    \begin{equation*}
+        \begin{aligned}
+            \abs{X_{N \wedge n}} &= \abs{X_0 + \sum_{m=0}^{N\wedge n - 1} (X_{m+1} - X_m)} \\
+            &\leq \abs{X_0}+ \sum_{m=0}^{N-1} \abs{X_{m+1} - X_m} = \abs{X_0}+ \sum_{m=0}^{\infty} \abs{X_{m+1} - X_m}\mathbb{I}_{\bb{m \leq N-1}} \eqdef Y
+        \end{aligned}
+    \end{equation*}
+    It suffices to prove $Y \in L^1$. Note that $\bb{N \geq m+1} = \bb{N < m}^c \in \mathcal{F}_{m}$
+    \begin{equation*}
+        \begin{aligned}
+            \E[Y] &= \E[\abs{X_0}]+\sum_{m=0}^{\infty} \E\bj{\abs{X_{m+1} - X_m}\mathbb{I}_{\bb{N \geq m+1}}} \\
+            &= \E[\abs{X_0}]+\sum_{m=0}^{\infty} \E\bj{\mathbb{I}_{\bb{N \leq m+1}}\E\bj{\abs{X_{m+1} - X_m} \mid \mathcal{F}_m}}\\
+            &\leq \E[\abs{X_0}]+B\sum_{m=0}^{\infty} \Pb\bc{\bb{N \leq m+1}} = \E[\abs{X_0}]+B \E[N] < \infty\\
+        \end{aligned}
+    \end{equation*}
+    So $Y \in L^1$ and $(X_{N\wedge n})$ is UI. \qedhere
+\end{proof}
+
+\begin{exam}[Gambler's Ruin Problem]
+    Consider $A,B$ play a series of games against each other in which a fair coin in tossed respectively. In each game, gambler $A$ wins or losses $1$ dollar with probability $1/2$ and $1/2$. The initial capital of gambler $A$ is $a$ dollars, and that of gambler $B$ is $b$ dollars. They continue play until one of them is ruined. Determine the probability of that $A$ will be ruined and the expected number of games.
+
+    \noindent \emph{Solution:} Let $\hat{S}_n$ be the fortune if $A$ after $n$-th games, so
+    \begin{equation*}
+        \hat{S}_n = a + X_1 + \cdots + X_n = a + S_n,
+    \end{equation*}
+    where $X_i$ are i.i.d. $\Pb(X_i = 1) = \Pb(X_i = -1) = 1 / 2$. The game will stop of
+    \begin{equation*}
+        T = \min \bb{n \colon S_n = -a \text{ or } S_n = b}
+    \end{equation*}
+    that is a stopping time. Then
+    \begin{equation*}
+        \bb{\text{ Gambler } A \text{ is ruined }} = \bb{S_T = -a}.
+    \end{equation*}
+    So it needs to find $\Pb(\bb{S_T = -a})$ and $\E[T]$.
+
+    We already know $(S_n)$ is a martingale with $S_0 = 0$, so is the stopping process $(S_{T \wedge n})$. Moreover, because
+    \begin{equation*}
+        \abs{S_{T \wedge n}} \leq a + b,
+    \end{equation*}
+    $(S_{T \wedge n})$ is UI. So
+    \begin{equation*}
+        \E[S_T] = \E[S_0] = 0
+    \end{equation*}
+    Note that
+    \begin{equation*}
+        \E[S_T] = -a\Pb(S_T = -a) + b \Pb(S_T = b) = 0
+    \end{equation*}
+    Moreover,
+    \begin{equation*}
+        \Pb(S_T = -a) + \Pb(S_T = b) = 1.
+    \end{equation*}
+    So
+    \begin{equation*}
+        \Pb(S_T = -a) = \frac{b}{a+b},\quad \Pb(S_T = b) = \frac{a}{a+b}.
+    \end{equation*}
+
+    First, we need to check $\E[T] < \infty$. By induction it can have
+    \begin{equation*}
+        \mathbb{P}(T>m(a+b)) \leqslant\left(1-\left(\frac{1}{2}\right)^{a+b}\right)^m, m \geqslant 1
+    \end{equation*}
+    So
+    \begin{equation*}
+        \begin{aligned}
+            \mathbb{E}[T] & =\mathbb{E}\left[T \mathbb{I}_{\{T \leqslant a+b\}}\right]+\mathbb{E}\left[T \mathbb{I}_{\{T>a+b\}}\right] \\
+            & =\mathbb{E}\left[T \mathbb{I}_{\{T \leqslant a+b\}}\right]+\sum_{m=1}^{\infty} \mathbb{E}\left[T \mathbb{I}_{\{m(a+b)<T \leqslant(m+1)(a+b)\}}\right] \\
+            & \leqslant a+b+\sum_{m=1}^{\infty}(m+1)(a+b) \mathbb{P}(m(a+b)<T \leqslant(m+1)(a+b)) \\
+            & \leqslant a+b+\sum_{m=1}^{\infty}(m+1)(a+b) \mathbb{P}(T>m(a+b)) \\
+            & \leqslant a+b+\sum_{m=1}^{\infty}(m+1)(a+b)\left(1-\left(\frac{1}{2}\right)^{a+b}\right)^m<+\infty
+        \end{aligned}
+    \end{equation*}
+    Note that $(Y_n = S_n^2 - n)$ is also a martingale. So by the bounded optional stopping time theorem
+    \begin{equation*}
+        \E\bj{S^2_{T \wedge n} - T \wedge n} = \E[S^2_0] = 0 ~\Rightarrow~\E\bj{S^2_{T \wedge n}} = \E\bj{T \wedge n}
+    \end{equation*}
+    Because $\abs{S^2_{T \wedge n}} \leq (a+b)^2$, by DCT, as $n \sto \infty$,
+    \begin{equation*}
+        \E[T] = \E\bj{S^2_T} = ab.
+    \end{equation*}
+\end{exam}
+
+\begin{exam}[Random Walk]
+    $\xi_1,\cdots,\xi_n \cdots$ is i.i.d with $\Pb(\xi = 1) = p$ and $\Pb(\xi = -1) = q$. $S_0 = k < N$ and $S_n = S_0 + \xi_1 + \cdots +\xi_n$. Find the probability that the random walk hints $0$ before $N$.
+
+    \noindent \emph{Solution:} Let
+    \begin{equation*}
+        T = \inf \bb{n \colon S_n = 0 \text{ or } S_n = N}.
+    \end{equation*}
+    Define $Z_n = \bc{\frac{q}{p}}^{S_n}$ that can be proved a martingale w.s.t. $\mathcal{F}_n = \sigma(S_0,\cdots,S_n)$. Therefore, $(Z_{T \wedge n})$ is also a martingale and it is UI because $\abs{S_T} < \infty$. Then
+    \begin{equation*}
+        \E[Z_{T}] = \E[Z_0] = \bc{\frac{q}{p}}^k
+    \end{equation*}
+    Note that
+    \begin{equation*}
+        \E[Z_{T}] = \E\bj{\bc{\frac{q}{p}}^{S_T}} = \Pb(S_T = 0) + \bc{\frac{q}{p}}^N\Pb(S_T = N)
+    \end{equation*}
+    Combining it with $\Pb(S_T = N) + \Pb(S_T = 0) = 1$, we have
+    \begin{equation*}
+        \Pb(S_T = 0) = \frac{\left(\frac{q}{p}\right)^k-\left(\frac{q}{p}\right)^N}{1-\left(\frac{q}{p}\right)^N}.
+    \end{equation*}
+\end{exam}
+
+\begin{exam}
+    Let $(X_n)$ be i.i.d. with $\E[X_n] = \mu$ and $N \in L^1$ be a stopping time w.s.t. $\mathcal{F}_n = \sigma(X_1,\cdots,X_n)$. How to calculate $\E\bj{\sum_{i=1}^NX_i}$.
+
+    \noindent \emph{Solution:} Let $Y_0 = 0$ and
+    \begin{equation*}
+        Y_n = \sum_{i=1}^n X_i- n\mu
+    \end{equation*}
+    that is clear a martingale. Then $(Y_{N \wedge n})$ is also a martingale. Because
+    \begin{equation*}
+        \E\bj{\abs{Y_{n+1}-Y_n} \mid \mathcal{F}_n} \leq \mu + \E\bj{\abs{X_{n+1}} \mid \mathcal{F}_n} = \mu + \E\bj{\abs{X_{n+1}}} = 2\mu < \infty,
+    \end{equation*}
+    $(Y_{N \wedge n})$ is UI and so
+    \begin{equation*}
+        \E\bj{Y_N} = \E\bj{\sum_{i=1}^{N}X_i - N\mu} = \E[Y_0] = 0.
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \E\bj{\sum_{i=1}^{N}X_i} = \E\bj{N}\mu.
+    \end{equation*}
+\end{exam}
+

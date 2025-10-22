@@ -1,0 +1,357 @@
+\chapter{Submanifolds}
+
+\section{More for Distance Function}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Local Distance Function:}}	Suppose $(M,g)$ be a Riemannian manifold and $S \subset M$ be any subset, for each $\gamma(t) \in M$,
+	\begin{equation*}
+		d(x,S) \defeq \inf\bb{d(x,p) \colon p \in S}
+	\end{equation*}
+	Then we can see
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $d(x,S) \leq d(x,y) + d(y,S)$ by the triangular inequality;
+		\item $x \mapsto d(x,S)$ is a continuous function on $M$ by definition and the continuity of distance function.
+	\end{enumerate}
+	\begin{rmk}
+	    Let $S$ be a closed set. First, clearly $d(\cdot,S)$ can be smooth around a neighborhood of $M \backslash S$. Besides, $(1)$ implies that $d(\cdot,S)$ is $1$-Lipschitz continuous, which means $d(\cdot,S)$ is continuously differentiable \emph{a.e.} on $M \backslash S$. Moreover. if $S$ is further a smooth submanifold, $d(\cdot,S)$ is smooth \emph{a.e.} on $M \backslash S$.
+	\end{rmk}
+
+	\begin{thm}
+	    Let $(M,g)$ be a Riemannian manifold and $S \subset M$ be any subset and $f \colon M \sto [0,\infty)$ be $f(x) = d(x,S)$. If $f$ is $C^1$ on some open set $U \subset M \backslash S$, then $\abs{\op{grad} f} \equiv 1$ on $U$.
+	\end{thm}
+	\begin{proof}
+	   Let $x \in U$. First, we want to prove $\abs{\op{grad} f(x)} \leq 1$. Assume $\abs{\op{grad} f} \neq 0$. Let $v \in T_xM$ with $\abs{v} = 1$ and $\gamma$ be the shortest geodesic with $\gamma(0) = x$ and $\dot{\gamma}(0) = v$. By above,
+	   \begin{equation*}
+	       f(\gamma(t)) \leq t + f(\gamma(0))~\Rightarrow~\left.\frac{d}{d t}\right|_{t=0} f(\gamma(t))=\lim _{t\sto 0} \frac{f(\gamma(t))-f(\gamma(0))}{t} \leq 1
+	   \end{equation*}
+	   On the other hand, if we let $v = (\op{grad}f(x)) / \abs{\op{grad}f(x)}$, then
+	   \begin{equation*}
+	       \left.\frac{d}{d t}\right|_{t=0} f(\gamma(t)) = \inn{\op{grad}f(x),v} = \abs{\op{grad}f(x)} \leq 1
+	   \end{equation*}
+	   Next, assume $\abs{\op{grad}f(x)} < 1$. By continuity of $\op{grad}f$, there exist $\delta,\varepsilon > 0$ such that $\abs{\op{grad} f} \leq 1 -\delta$ on a closed geodesic ball $\clo{B}_\varepsilon(x) \subset U$. Let $0<c<\varepsilon\delta$. There is arc length parametrized curve $\alpha \colon [0,b] \sto M$ such that
+	   \begin{equation*}
+	       \alpha(0)= x,~\alpha(b) \in S,~b = \op{Leng}(\alpha) < d(x,S) + c
+	   \end{equation*}
+	   Furthermore, if $b < \varepsilon$, $\alpha(b) \in \clo{B}_\varepsilon(x) \subset M \backslash S$, contradicting to $\alpha(b) \in S$, so $b > \varepsilon$. It follows that
+	   \begin{equation*}
+	       d(\alpha(\varepsilon),S) \leq \op{Leng}(\alpha|_{[\varepsilon,b]}) = b-\varepsilon < d(x,S) + c -\varepsilon
+	   \end{equation*}
+	   However, from another view, for $0 \leq t \leq \varepsilon$, $\alpha(t) \in \clo{B}_\varepsilon(x)$ implies that
+	   \begin{equation*}
+	       \abs{\frac{d}{t}f(\alpha(t))} = \abs{\inn{\op{grad}f,\dot{\alpha}(t)}} \leq \abs{\op{grad}f}\abs{\dot{\alpha}(t)} \leq 1-\delta ~\Rightarrow~\frac{d}{d t} f(\alpha(t)) \geq -(1-\delta)
+	   \end{equation*}
+	   which follows that
+	   \begin{equation*}
+	       f(\alpha(t)) \geq f(x)-(1-\delta) t
+	   \end{equation*}
+	   By setting $t = \varepsilon$,
+	   \begin{equation*}
+	       d(\alpha(\varepsilon), S) \geq d(x, S)-(1-\delta) \varepsilon >  d(x,S) + c -\varepsilon
+	   \end{equation*}
+	   which induces a contradiction.
+	\end{proof}
+
+	\begin{defn}
+	    Let $(M,g)$ be a Riemannian manifold and $U \subset M$ be an open set. A local distance function on $U$ is a $C^1$ function $f \colon U \sto \R$ such that $\abs{\op{grad} f} \equiv 1$ on $U$.
+	\end{defn}
+
+	\begin{thm}
+	    Suppose $f$ is a smooth local distance function on a open subset $U \subset M$. Then
+	    \begin{equation*}
+	        \nabla_{\op{grad}f}(\op{grad}f) \equiv 0
+	    \end{equation*}
+	    and so each integral curve of $\op{grad} f$ is a normal geodesic.
+	\end{thm}
+	\begin{proof}
+	    Let $F = \op{grad} f$, \emph{i.e.} $W f=d f(W)=\langle F, W\rangle$ and so $F f=\langle F, F\rangle=|\operatorname{grad} f|^2=1$. Then we get
+	    \begin{equation*}
+	        \begin{aligned}
+				\left\langle W, \nabla_F F\right\rangle & =F\langle W, F\rangle-\left\langle\nabla_F W, F\right\rangle \\
+				& =F W f-\langle[F, W], F\rangle-\left\langle\nabla_W F, F\right\rangle \\
+				& =F W f-[F, W] f-\frac{1}{2} W|F|^2 \\
+				& =W F f-\frac{1}{2} W|F|^2 \\
+				& =0
+			\end{aligned}
+	    \end{equation*}
+	    Therefore, $\nabla_F F = 0$.
+	\end{proof}
+
+	\begin{lem}
+	    Let $K \subset M$ and $f \colon K \sto \R$ is a continuous function and $f|_W$ is a smooth distance function on a open set $W \subset K$. Then for any curve $[a,b] \sto K$ with $\sigma \subset W$, we have
+	    \begin{equation*}
+	        \op{Leng}(\sigma) \geq \abs{f(\sigma(b)) - f(\sigma(a))}
+	    \end{equation*}
+	\end{lem}
+	\begin{proof}
+	    By $\abs{\op{grad} f} \equiv 1$,
+	    \begin{equation*}
+	        \begin{aligned}
+	        	\abs{f(\sigma(b)) - f(\sigma(a))} &\leq \int_a^b \abs{\frac{d}{dt}f(\sigma(t))} dt \\
+	        	&\leq \int_a^b \abs{\inn{\op{grad} f, \dot{\sigma(t)}}}dt \\
+	        	&\leq \int_a^b \abs{\op{grad} f} \abs{\dot{\sigma(t)}} dt \\
+	        	&= \int_a^b \abs{\dot{\sigma(t)}} dt = \op{Leng}(\sigma)\\
+	        \end{aligned}
+	    \end{equation*}
+	    so we have the desired result.
+	\end{proof}
+
+	\begin{thm}
+	    Let $(M,g)$ be a Riemannian manifold and $U \subset M$ be an open set. Let $S \subset U$ and $f \colon U \sto [0,\infty)$ be a continuous function such that $S = f^{-1}(0)$. Assume $f$ is a smooth local distance function on $U \backslash S$. Then there is a neighborhood $U_0 \subset U$ of $S$ in which $f(x) = d(x,S)$.
+	\end{thm}
+	\begin{proof}
+	    Let
+	    \begin{equation*}
+	        U_0 = \bigcup_{p\in S}B_{\varepsilon_p}(p)
+	    \end{equation*}
+	    where $B_{\varepsilon_p}(p)$ is a $\delta_p$-uniform totally normal ball of $p$ and $\varepsilon_p$ is chosen such that $B_{w\varepsilon_p}(p) \subset U$. Let $x \in U_0$ arbitrary and $c = f(x)$. We need to check $d(x,S) = c$. First, if $x \in S$, it is clearly true. Assume $x \notin S$. There is some $p \in S$ such that $x \in B_{\varepsilon_p}(p)$, which means that $d(x,S) < \varepsilon_p$. Let $\alpha \colon [0,b] \sto B_{\varepsilon_p}(p)$ be the radical geodesic connecting $p$ to $x$. Then by above lemma,
+	    \begin{equation*}
+	        \op{Leng}(\alpha) \geq \abs{f(x)-f(p)} = c~\Rightarrow~c \leq \op{Leng}(\alpha) < \varepsilon_p
+	    \end{equation*} 
+	    Let $\gamma \colon (-\varepsilon_p,\varepsilon_p) \sto U$ be the normal geodesic starting from $x$ with $\dot{\gamma}(0) = -\op{grad}f(x)$. So
+	    \begin{equation*}
+	        \frac{d}{d t} f(\gamma(t))=\inn{\operatorname{grad} f, \dot{\gamma}(t)}=-\abs{\operatorname{grad} f}^2=-1
+	    \end{equation*}
+	    and
+	    \begin{equation*}
+	        f(\gamma(t)) = c - t
+	    \end{equation*}
+	    for $t < c <\varepsilon$, so $f(\gamma(c)) = 0$ by continuity, \emph{i.e.} $\gamma(c) \in S$. It follows that
+	    \begin{equation*}
+	        d(x,S) \leq c
+	    \end{equation*} 
+	    To prove the reverse inequality, suppose $\alpha:[a, b] \rightarrow M$ is any admissible curve starting at $x$ and ending at a point of $S$. Assume first that $\alpha(t) \in U$ for all $t \in[a, b]$, and let $b_0 \in[a, b]$ be the first time that $\alpha\left(b_0\right) \in S$. Then
+	    \begin{equation*}
+	        \op{Leng}(\alpha) \geq \op{Leng}\left(\left.\alpha\right|_{\left[a, b_0\right]}\right) \geq\left|f\left(\alpha\left(b_0\right)\right)-f(\alpha(a))\right|=c
+	    \end{equation*}
+	    On the other hand, suppose $\alpha(t) \in M \backslash U$ for some $t$. The triangle inequality implies, 
+	    \begin{equation*}
+	        B_{\varepsilon_p}(x) \subset B_{2 \varepsilon_p}(p) \subset U
+	    \end{equation*}
+	    so there is a first time $b_0 \in[a, b]$ such that $d\left(x, \alpha\left(b_0\right)\right) \geq \varepsilon_p$. Then
+	    \begin{equation*}
+	        \op{Leng}(\alpha) \geq \op{Leng}\left(\left.\alpha\right|_{\left[a, b_0\right]}\right) \geq \varepsilon_p>c
+	    \end{equation*}
+	    Taken together, these two inequalities show that $\op{Leng}(\alpha) \geq c$ for every such $\alpha$, which implies $d(x, S) \geq c$.
+	\end{proof}
+	\begin{cor}
+	    Let $(M, g)$ be a Riemannian manifold, and let $f$ be a smooth local distance function on an open subset $U \subseteq M$. If c is a real number such that $S=f^{-1}(c)$ is nonempty, then there is a neighborhood $U_0$ of $S$ in $U$ on which $|f(x)-c|$ is equal to the distance in $M$ from $x$ to $S$.
+	\end{cor}
+
+	\item \emph{\textbf{Fermi Coordinates:}} Let $(M,g)$ be a Riemannian manifold and $P \subset M$ be an embedded submanifold. Let $\pi \colon NP \sto P$ be the normal bundle of $P$ in $m$.
+	\begin{equation*}
+	    \mathcal{E} \defeq \bb{(p,v) \in TM \colon \exp_p(tv) \text{ defined on }[0,1]}
+	\end{equation*}
+	called the domain of exponential map, that is $\exp \colon \mathcal{E} \sto M$ by $(p,v) \mapsto \exp_p(v)$. Then let $\mathcal{E}_P \defeq \mathcal{E} \cap NP$ and $E = \exp|_\mathcal{E} \colon \mathcal{E}_P \sto M$ be called normal exponential map of $P$ in $M$. 
+	\begin{defn}
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item A normal neighborhood of $P$ in $M$ is an open subset $U \subset M$ such that $E \colon V=E^{-1}(U) \sto U$ is diffeomorphic and $V \subset \mathcal{E}_P$ open, whose intersection with each fiber $N_xP$ is star-shaped.
+
+	    	\item  A normal neighborhood of $P$ in $M$ is called a tubular neighborhood if 
+	    	\begin{equation*}
+	    	    V = \bb{(x,v) \in NP \colon \abs{v} < \delta(x)}
+	    	\end{equation*}
+	    	for some continuous function $\delta \colon P \sto (0,\infty)$. If $\delta(x) \equiv \varepsilon$, it is called a $\varepsilon$-uniform tubular neighborhood, or $\varepsilon$-tubular neighborhood.
+	    \end{enumerate}
+	\end{defn}
+
+	\begin{thm}[Tubular Neighborhood Theorem]
+	    Let $(M,g)$ be a Riemannian manifold. Every embedded submanifold $M$ has a tubular neighborhood in $M$ and every compact submanifold has a uniform tubular neighborhood.
+	\end{thm}
+	\begin{proof}
+		Let $P \subset M$ be an embedded submanifold and $P_0 = \bb{(x,0) \colon x\in P} \subset NP$. 
+		\begin{enumerate}[label=(\roman*)]
+			\item First, we want to show there is a neighborhood of $P_0$ such that $E$ is a local diffeomorphism on it. It is sufficient to show $dE_{(x,0)}$ is bijective on each $(x,0) \in P_0$.
+
+		    \noindent Note that $E|_{P_0} \colon P_0 \sto P$ is a diffeomorphism by $P \hookrightarrow M$, so
+		    \begin{equation*}
+		        dE_{(x,0)} \colon T_{(x,0)}P_0 \subset T_{(x,0)}NP \longrightarrow T_xP
+		    \end{equation*}
+		    is isomorphic. On the other hand, $E|_{N_xP} = \exp_x$, which is a local  diffeomorphism. $dE_{(x,0)} \colon T_{(x,0)}N_xP \sto N_xP$ is isomorphic. So
+		    \begin{equation*}
+		        dE_{(x,0)} \colon T_{(x,0)}NP \longrightarrow T_xM = T_xP \oplus N_xP
+		    \end{equation*}
+		    is surjective, so it is bijective by dimension equality. So $E$ is a local diffeomorphism. For any $(x,0) \in P_0$, there is a sufficiently small $\delta>0$ such that $E$ is diffeomorphic on
+		    \begin{equation*}
+		        V_\delta(x)=\left\{\left(x^{\prime}, v^{\prime}\right) \in N P: d\left(x, x^{\prime}\right)<\delta,\left|v^{\prime}\right|<\delta\right\}
+		    \end{equation*}
+
+		    \item For any $x \in P$, define
+		    \begin{equation*}
+		        \Delta(x) \defeq \sup\bb{\delta \leq 1 \colon E \text{ diffeomorphic on } V_{\delta}(x)}
+		    \end{equation*}
+		    By above, $\Delta(x) > 0$. Moreover, $E$ is injective on $V_{\Delta(x)}(x)$ because any $\left(x_1, v_1\right),\left(x_2, v_2\right)$ in this set are in $V_\delta(x)$ for some $\delta<\Delta(x)$. So $E$ is diffeomorphic on $V_{\Delta(x)}(x)$. Moreover, for any $x,x^\prime \in P$, if $d(x,x^\prime) < \Delta(x)$, by triangular inequality
+		    \begin{equation*}
+		       V_\delta(x^\prime) \subset V_{\Delta(x)}(x),\quad \delta = \Delta(x) - d(x,x^\prime)
+		    \end{equation*}
+		    This implies that $\Delta(x^\prime) \geq \Delta(x) - d(x,x^\prime)$, \emph{i.e.}
+		    \begin{equation*}
+		        \Delta(x)-\Delta\left(x^{\prime}\right) \leq d\left(x, x^{\prime}\right)
+		    \end{equation*}
+		    and it is also true when $d(x,x^\prime) > \Delta(x)$. Thus
+		    \begin{equation*}
+		        \left|\Delta(x)-\Delta\left(x^{\prime}\right)\right| \leq d\left(x, x^{\prime}\right)
+		    \end{equation*}
+		    which means $\Delta$ is continuous.
+
+		    \item Consider
+		    \begin{equation*}
+		        V=\left\{(x, v) \in N P:|v|_g<\frac{1}{2} \Delta(x)\right\}
+		    \end{equation*}
+		    Let $(x,v),(x^\prime,v^\prime) \in V$ with $E(x,v)= E(x^\prime,v^\prime)$. Assume $\Delta(x^\prime) \leq \Delta(x)$. Because $\exp_x(v) = \exp_{x^\prime}(v^\prime)$, there is a curve from $x$ to $x^\prime$ with length $\abs{v}+\abs{v^\prime}$. So
+		    \begin{equation*}
+		        d\left(x, x^{\prime}\right) \leq|v|+\left|v^{\prime}\right|<\frac{1}{2} \Delta(x)+\frac{1}{2} \Delta\left(x^{\prime}\right) \leq \Delta(x)
+		    \end{equation*}
+		    Therefore, $(x,v),(x^\prime,v^\prime) \in V_{\Delta(x)}(x)$, so $(x,v)=(x^\prime,v^\prime)$. Because $E$ is a local diffeomorphism, $E \colon V \sto E(V)$ is a diffeomorphism. \qedhere
+		\end{enumerate}
+	\end{proof}
+	Assume $\dim P = p$. Let $(W_0,\psi=(x^1,\cdots,x^p))$ be a coordinate chart of $P$ and $E_1,\cdots,E_{n-p}$ be a local orthogonal frame of $NP$. Let
+	\begin{equation*}
+	    V_0 = V \cap NP|_{W_0} \subset NP,\quad U_0 = E(V_0) \subset M
+ 	\end{equation*}
+ 	Then define the coordinate map $\varphi \colon U_0 \sto \R^n$ by
+ 	\begin{equation*}
+ 	    E(q,v^1E_1|_q+\cdots +v^{n-p}E_{n-p}|_q) \mapsto (x^1(q),\cdots,x^p(q),v^1,\cdots,v^{n-p})
+ 	\end{equation*}
+ 	called Fermi coordinates.
+
+ 	\begin{prop}
+ 	    Using notations as above and let $x^{p+j} = v^j$ for convenience.
+ 	    \begin{enumerate}[label=(\roman*)]
+ 	    	\item $q \in P \cap U_0$ has the coordinate $x^{p+1} = \cdots = x^n =0$.
+ 	    	\item At each $q \in P \cap U_0$,
+ 	    	\begin{equation*}
+ 	    	    g_{i j}=g_{j i}= \begin{cases}0, & 1 \leq i \leq p \text { and } p+1 \leq j \leq n, \\ \delta_{i j}, & p+1 \leq i, j \leq n .\end{cases}
+ 	    	\end{equation*}
+ 	    	\item For any $q \in P \cap U_0$ and $v=\left.v^1 E_1\right|_q+\cdots+\left.v^{n-p} E_{n-p}\right|_q \in N_q P$, the geodesic $\gamma$ starting from $\gamma(0) = q$ with initial velocity $v$ has coordinate expression
+ 	    	\begin{equation*}
+ 	    	    \gamma(t)=\left(x^1(q), \ldots, x^p(q), t v^1, \ldots, t v^{n-p}\right)
+ 	    	\end{equation*}
+ 	    	\item At each $q \in P \cap U_0$, $\Gamma^k_{ij}(q) = 0$ for $p+1 \leq i,j \leq n$.
+ 	    	\item At each $q \in P \cap U_0$,
+ 	    	\begin{equation*}
+ 	    	    \frac{\partial}{\partial x^i}g_{jk}(q) = 0,\quad p+1 \leq i,j,k \leq n
+ 	    	\end{equation*} 
+ 	    \end{enumerate}
+ 	\end{prop}
+
+ 	\item \emph{\textbf{Distance to Submanifolds:}} Let $(M,g)$ be a $n$-dimensional Riemannian manifold and $S \subset M$ be a $k$-dimensional submanifold. Let $U$ be any normal neighborhood of $S$ in $M$.
+ 	\begin{prop}
+ 	    There exist a unique continuous function $r \colon U \sto [0,\infty)$ and smooth vector field $V_r$ on $U \backslash S$ that has the coordinate representation in terms of any Fermi coordinates $(x^1,\cdots,x^k,v^1,\cdots,v^{n-k})$ for $S$ on a subset $U_0 \subset U$
+ 	    \begin{equation*}
+ 	        \begin{aligned}
+				r\left(x^1, \ldots, x^k, v^1, \ldots, v^{n-k}\right) & =\sqrt{\left(v^1\right)^2+\cdots+\left(v^{n-k}\right)^2}, \\
+				\partial_r & =\frac{v^1}{r(x, v)} \frac{\partial}{\partial v^1}+\cdots+\frac{v^{n-k}}{r(x, v)} \frac{\partial}{\partial v^{n-k}} .
+			\end{aligned}
+ 	    \end{equation*}
+ 	    Moreover, $r$ is smooth on $U \backslash S$, and $r^2$ is smooth on all of $S$.
+ 	\end{prop}
+ 	\begin{proof}
+ 	    It only needs to prove $r$ and $V_r$ can be defined on $U$ and $U \backslash S$ respectively. Let $E \colon V \subset NS \sto U$ be diffeomorphic.
+ 	    \begin{enumerate}[label=(\roman*)]
+ 	    	\item Define a function $\rho \colon V \sto [0,\infty)$ by $\rho(p,v) = \abs{v}$ and $r \colon U \sto [0,\infty)$ by $r = \rho \circ E^{-1}$.
+ 	    	\item Let $q \in U \backslash S$. Then $q = \exp_p(v)$ for a unique $(p,v) \in V$, and the geodesic $\gamma \colon [0,1] \sto U$ given by $\gamma(t) = \exp_p(tv)$ connecting $p$ to $q$, which has the coordinate expression
+ 	    	\begin{equation*}
+ 	    	    \gamma(t) = (x^1,\cdots,x^k,tv^1,\cdots,tv^{n-k}),\quad x(q)= (x^i),~v = v^iE_i|_{p}
+ 	    	\end{equation*}
+ 	    	Define
+ 	    	\begin{equation*}
+ 	    	    V_r(q) \defeq \frac{1}{r(q)}\dot{\gamma}(1) \qedhere
+ 	    	\end{equation*}
+ 	    \end{enumerate}
+ 	\end{proof}
+
+ 	\begin{thm}[Gauss Lemma]
+ 	    With the same notations, on $U \backslash S$, $V_r$ is a unit vector field orthogonal to the level sets of $r$.
+ 	\end{thm}
+ 	\begin{proof}
+ 		\begin{enumerate}[label=(\roman*)]
+ 			\item For $q \in U \backslash S$ with coordinate $(x^1,\cdots,x^k,v^1,\cdots,v^{n-k})$, consider the corresponding geodesic
+	 	    \begin{equation*}
+	 	        \gamma(t) = \exp_p(tv) = (x^1,\cdots,x^k,tv^1,\cdots,tv^{n-k})
+	 	    \end{equation*}
+	 	    Then
+	 	    \begin{equation*}
+	 	        \left|\gamma^{\prime}(0)\right|=|v|=\sqrt{\left(v^1\right)^2+\cdots+\left(v^{n-k}\right)^2}=r(q)
+	 	    \end{equation*}
+	 	    and thus $\abs{\dot{\gamma}(1)} = r(q)$, and $\abs{V_r(q)} = 1$. 
+
+	 	    \item  For orthogonality, let $q \in U \backslash S$ and $q = \exp_{p_0}(v_0)$ for $p_0 \in S$ and $v_0 \in N_{p_0}S$ with $v_0 \neq 0$. Let $b = r(q) = \abs{v_0}$. So $q \in r^{-1}(b)$, which is an embedded submanifold. Let $\sigma \colon (-\varepsilon,\varepsilon) \sto r^{-1}(q)$ be starting from $q$ and denote $w = \dot{\sigma}(0)$. Then
+	 	    \begin{equation*}
+	 	        \sigma(s) = \exp_{x(s)}(v(s))
+	 	    \end{equation*}
+	 	    where $x(s) \in S$ with $x(0) = p_0$, $v(s) \in N_{x(s)}S$ with $\abs{v(s)} \equiv b$ and $v(0)=v_0$. Consider a variation
+	 	    \begin{equation*}
+	 	        F(s,t) = \exp_{x(s)}\bc{\frac{t}{b}v(s)} \colon (-\varepsilon,\varepsilon) \times [0,b] \sto M
+	 	    \end{equation*}
+	 	    with $T(t) = \frac{\partial}{\partial t}F(0,t)$ and Jacobian field $J(t) = \frac{\partial}{\partial s}F(0,t)$.
+	 	    \begin{equation*}
+	 	        T(0) = v_0,\quad T(b) = V_r(q)
+	 	    \end{equation*}
+	 	    and
+	 	    \begin{equation*}
+	 	        J(0) = \dot{x}(0),\quad J(b) = w
+	 	    \end{equation*}
+	 	    Consider the energy
+	 	    \begin{equation*}
+	 	        E(s) = \frac{1}{2} \int_0^b \inn{\frac{\partial}{\partial t}F(s,t),\frac{\partial}{\partial t}F(s,t)}dt = \frac{1}{2} \int_0^b \abs{v(s)}^2dt = \frac{1}{2}r^2b
+	 	    \end{equation*}
+	 	    we have
+	 	    \begin{equation*}
+	 	        \begin{aligned}
+	 	            0 = \dot{E}(0) &= \inn{J(b),T(b)} - \inn{J(0),T(0)} \\
+	 	            &= \inn{w,V_r(q)}
+	 	        \end{aligned}
+	 	    \end{equation*}
+	 	    because $\inn{\dot{x}(0),v_0} = 0$. \qedhere
+ 		\end{enumerate}
+ 	\end{proof}
+ 	\begin{cor}
+ 	    Using same notations and assumptions as above,
+ 	    \begin{enumerate}[label=(\arabic{*})]
+ 	    	\item $V_r = \op{grad} r$ on $U \backslash S$.
+ 	    	\item $r$ is a local distance function
+ 	    	\item  each unit-speed geodesic $\gamma:[a, b) \rightarrow U$ with $\dot{\gamma}(a)$ normal to $S$ coincides with an integral curve of $V_r$ on $(a, b)$.
+			\item  $S$ has a tubular neighborhood in which the distance in $M$ to $S$ is equal to $r$.
+ 	    \end{enumerate}
+ 	\end{cor}
+\end{enumerate}
+
+\section{Riemannian Submanifold}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

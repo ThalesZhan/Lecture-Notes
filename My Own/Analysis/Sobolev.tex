@@ -1,0 +1,790 @@
+\chapter{Sobolev Space} 
+
+\section{Sobolev Space \texorpdfstring{$W^{m,p}(\Omega)$}{Wmp}}
+
+\begin{defn}
+	For $1 \leq p \leq \infty$ and $m \in \N_0$,
+	\begin{equation*}
+		W^{m,p}(\Omega) \defeq \bb{u \in L^p(\Omega) \mid \partial^\alpha u \in L^p(\Omega),~\forall~\abs{\alpha} \leq m}
+	\end{equation*}
+	is called a Sobolev space.
+\end{defn}
+\begin{rmk}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For $1 \leq p \leq \infty$, $W^{m,p}(\Omega) \subset L^p(\Omega)$ subspace. And $W^{0,p}(\Omega) = L^p(\Omega)$.
+		\item For $m_1 \leq m_2$, $W^{m_2,p}(\Omega) \subset W^{m_1,p}(\Omega)$.
+		\item $C^\infty_c(\Omega) \subset W^{m,p}(\Omega)$.
+	\end{enumerate}
+\end{rmk}
+
+\noindent Then consider the norm on $W^{m,p}(\Omega)$.
+\begin{itemize}
+	\item For $1 \leq p < \infty$, $u \in W^{m,p}(\Omega)$
+	\begin{equation*}
+		\|u\|_{W^{m, p}(\Omega)}:=\left(\sum_{|\alpha| \leq m}\left\|\partial^\alpha u\right\|_{L^p(\Omega)}^p\right)^{1 / p}=\left(\sum_{|\alpha| \leq m} \int_{\Omega}\left|\partial^\alpha u(x)\right|^p d x\right)^{1 / p}
+	\end{equation*}
+	\item For $p = \infty$, $u \in W^{m,\infty}(\Omega)$
+	\begin{equation*}
+		\|u\|_{W^{m, \infty}(\Omega)}:=\sup _{|\alpha| \leq m}\left\|\partial^\alpha u\right\|_{L^{\infty}(\Omega)}
+	\end{equation*}
+\end{itemize}
+Note that $\|u\|_{W^{0, p}(\Omega)}=\|u\|_{L^p(\Omega)}$.
+
+\begin{prop}
+	For $1 \leq p \leq \infty$ and $m \in \N_0$, $W^{m, p}(\Omega)$ with $\norm{\cdot}_{W^{m, p}(\Omega)}$ is a Banach space.
+\end{prop}
+\begin{proof}
+	$\norm{\cdot}_{W^{m, p}(\Omega)}$ is a norm clearly, so we only need to prove the completeness. And assume $1 \leq p \leq \infty$ and $m \in \N$ ($m = 0$ is clear.)
+
+	\noindent Let $\bb{u_n}_{n \in \N}$ in $W^{m, p}(\Omega)$ be Cauchy in $\norm{\cdot}_{W^{m, p}(\Omega)}$. Then by the definition, for any $\alpha$ with $\abs{\alpha} \leq m$, $\bb{\partial u_n}_{n \in \N}$ in $L^p(\Omega)$ is Cauchy. So by the completeness of $L^p$, there is a $v_\alpha$ such that
+	\begin{equation*}
+		\left\|\partial^\alpha u_n-v_\alpha\right\|_{L^p(\Omega)} \longrightarrow 0
+	\end{equation*}
+	Then let $u = v_{(0, \ldots, 0)}$. So it is sufficient to prove $\partial^\alpha u = v_\alpha$, which is equivalent to proving that for any $\varphi \in C_c^\infty(\Omega)$,
+	\begin{equation*}
+		\int_{\Omega} u(x) \partial^\alpha \varphi(x) d x=(-1)^{|\alpha|} \int_{\Omega} v_\alpha(x) \varphi(x) d x
+	\end{equation*}
+	First,
+	\begin{equation*}
+		\int_{\Omega} u_n(x) \partial^\alpha \varphi(x) d x=(-1)^{|\alpha|} \int_{\Omega} \partial^\alpha u_n(x) \varphi(x) d x
+	\end{equation*}
+	Then because 
+	\begin{equation*}
+		\left\|u_n-u\right\|_{L^p(\Omega)} \rightarrow 0,\quad\left\|\partial^\alpha u_n-v_\alpha\right\|_{L^p(\Omega)} \rightarrow 0
+	\end{equation*}
+	by H\"older's Inequality, as $n \sto \infty$
+	\begin{equation*}
+		\int_{\Omega} u(x) \partial^\alpha \varphi(x) d x=(-1)^{|\alpha|} \int_{\Omega} v_\alpha(x) \varphi(x) d x
+	\end{equation*}
+	So $\partial^\alpha u=v_\alpha$ by the density of $C_c^\infty(\Omega)$ in $L^p(\Omega)$.
+\end{proof}
+\begin{rmk}
+	For $1 \leq p \leq \infty$ and $m_1 \leq m_2$, it is clear that for any $u \in W^{m_2, p}(\Omega) \subset W^{m_1, p}(\Omega)$,
+	\begin{equation*}
+		\|u\|_{W^{m_1, p}(\Omega)} \leq\|u\|_{W^{m_2, p}(\Omega)}
+	\end{equation*}
+	So $W^{m_2, p}(\Omega) \hookrightarrow W^{m_1, p}(\Omega)$.
+\end{rmk}
+
+\noindent When considering $p = 2$, for any $u,v \in W^{m, 2}(\Omega)$,
+\begin{equation*}
+	\inn{u,v}_{W^{m, 2}(\Omega)} \defeq \sum_{|\alpha| \leq m}\inn{\partial^\alpha u, \partial^\alpha v}_{L^2(\Omega)}=\sum_{|\alpha| \leq m} \int_{\Omega} \partial^\alpha u(x) \overline{\partial^\alpha v(x)} d x
+\end{equation*}
+
+\begin{thm}
+	Let $m \in \N_0$. $\inn{\cdot,\cdot}_{W^{m, 2}(\Omega)}$ is a inner product on $_{W^{m, 2}(\Omega)}$ with
+	\begin{equation*}
+		\|u\|_{W^{m, 2}(\Omega)}=\sqrt{\inn{u, u}_{W^{m, 2}(\Omega)}}
+	\end{equation*}
+	and thus $\bc{W^{m, 2}(\Omega),\inn{\cdot,\cdot}_{W^{m, 2}(\Omega)}}$ is a Hilbert space.
+\end{thm}
+
+\noindent Sobolev spaces refine the differentiability of distributions.
+\begin{prop}
+	Let $1 \leq p \leq \infty$ and $m \in \N_0$. Let $u \in L^p(\Omega)$. Then the following statements are equivalent.
+	\begin{enumerate}[label=(\alph{*})]
+		\item $u \in W^{m,p}(\Omega)$.
+		\item For any $\alpha$ with $\abs{\alpha} \leq m$, there is a $v_{\alpha} \in L^p(\Omega)$ such that
+		\begin{equation*}
+			\partial^\alpha T_u=T_{v_\alpha}
+		\end{equation*}
+	\end{enumerate}
+\end{prop}
+\begin{rmk}
+	When $(a)$ or $(b)$ holds, $v_\alpha = \partial^\alpha u \in L^p(\Omega)$.
+\end{rmk}
+\begin{proof}
+	\noindent $(a) \Rightarrow(b)$ : Assume $u \in W^{m, p}(\Omega)$. There is a $u_\alpha \in L^p(\Omega)$ s.t.
+	$$
+	\int_{\Omega} u(x) \partial^\alpha \varphi(x) d x=(-1)^{|\alpha|} \int_{\Omega} u_\alpha(x) \varphi(x) d x, \forall \varphi \in C_c^{\infty}(\Omega)
+	$$
+	By definition of $T_u$,
+	$$
+	\left\langle T_u, \varphi\right\rangle=\int_{\Omega} u(x) \varphi(x) d x, \forall \varphi \in \mathcal{D}(\Omega)
+	$$
+	Then
+	$$
+	\begin{aligned}
+	\left\langle\partial^\alpha T_u, \varphi\right\rangle & =(-1)^{|\alpha|}\left\langle T_u, \partial^\alpha \varphi\right\rangle \\
+	& =(-1)^{|\alpha|} \int_{\Omega} u(x) \partial^\alpha \varphi(x) d x \\
+	& =\int_{\Omega} u_\alpha(x) \varphi(x) d x \\
+	& =\left\langle T_{u_\alpha}, \varphi\right\rangle, \quad \forall \varphi \in \mathcal{D}(\Omega)
+	\end{aligned}
+	$$
+	Therefore, $v_\alpha=u_\alpha \in L^p(\Omega)$ and $\partial^\alpha T_u=T_{v_\alpha}$.
+
+	\noindent $(b) \Rightarrow(a)$ : That is
+	$$
+	\begin{aligned}
+	\left\langle\partial^\alpha T_u, \varphi\right\rangle & =(-1)^{|\alpha|} \int_{\Omega} u(x) \partial^\alpha \varphi(x) d x \\
+	& =\left\langle T_{v_\alpha}, \varphi\right\rangle \\
+	& =\int_{\Omega} v_\alpha(x) \varphi(x) d x
+	\end{aligned}
+	$$
+	Then
+	$$
+	\int_{\Omega} u(x) \partial^\alpha \varphi(x) d x=(-1)^{|\alpha|} \int_{\Omega} v_\alpha(x) \varphi(x) d x
+	$$
+	Thus, $v_\alpha=u_\alpha$. Since $v_\alpha \in L^p(\Omega), u_\alpha \in L^p(\Omega)$. So $u \in W^{m, p}(\Omega)$.
+\end{proof}
+
+\noindent Let $1 \leq p \leq \infty$ and $m \in \N_0$. By $C_c^{\infty}(\Omega) \subset W^{m, p}(\Omega)$,
+\begin{equation*}
+	W_c^{m, p}(\Omega):={\overline{C_c^{\infty}(\Omega)}}^{\|\cdot\|_{W^{m, p}(\Omega)}}
+\end{equation*}
+
+\begin{thm}\label{thm:cdenseinsob}
+	For $1 \leq p < \infty$ and $m \in \N_0$,
+	\begin{equation*}
+		W_c^{m, p}(\R^N) = W^{m, p}(\R^N)
+	\end{equation*}
+	\emph{i.e.} $C_c^{\infty}(\R^N)$ is dense in $W^{m, p}(\R^N)$.
+\end{thm}
+
+\noindent The idea is to choose a mollifier (summability kernel). Let $\eta \in C_c^\infty(\R^N)$ with 
+\begin{itemize}
+	\item $\eta(x) \geq 0$ for all $x \in \R^N$,
+	\item $\operatorname{supp} \eta \subset\left\{x \in \mathbb{R}^N \mid | x | \leq 1\right\}$,
+	\item $\int_{\mathbb{R}^N} \eta(x) d x=1$.
+\end{itemize}
+Then for $\varepsilon > 0$, define $\eta_{\varepsilon}$ as
+\begin{equation*}
+	\eta_{\varepsilon}(x)=\frac{1}{\varepsilon^N} \eta\left(\frac{x}{\varepsilon}\right),\quad x \in \R^N
+\end{equation*}
+Then it satisfies
+\begin{itemize}
+	\item $\eta_\varepsilon \in C^\infty_c(\R^N)$ with $\operatorname{supp} \eta_{\varepsilon} \subset\left\{x \in \mathbb{R}^N \mid | x | \leq \varepsilon\right\}$,
+	\item $\eta_\varepsilon(x) \geq 0$ for all $x \in \R^N$,
+	\item $\int_{\mathbb{R}^N} \eta_{\varepsilon}(x) d x=1$.
+\end{itemize}
+and it is called a mollifier (summability kernel), because for any $u \in L^p(\varphi)$ ($1 \leq p < \infty$), $\eta_\varepsilon * u \in C^\infty(\R^N) \cap L^p(\R^N)$ with 
+\begin{equation*}
+	\partial^\alpha\left(\eta_{\varepsilon} * w\right)(x)=\int_{\mathbb{R}^N} \partial^\alpha(\eta_{\varepsilon})(x-y) w(y) d y
+\end{equation*}
+and 
+\begin{equation*}
+	\lim _{\varepsilon \rightarrow+0}\left\|\eta_{\varepsilon} * u-u\right\|_{L^p\left(\mathbb{R}^N\right)}=0
+\end{equation*}
+where the proof is in Theorem \ref{thm:summability}.
+
+\begin{proof}[Proof of Theorem \ref{thm:cdenseinsob}]
+	Assume $1 \leq p < \infty$ and $m \in \N$.
+	\begin{enumerate}[label=(\roman*)]
+		\item \textbf{Check:} $C^{\infty}\left(\mathbb{R}^N\right) \cap W^{m, p}\left(\mathbb{R}^N\right)$ is dense in $W^{m, p}\left(\mathbb{R}^N\right)$.
+
+		\noindent Choose a mollifier $\eta_\varepsilon$. Let $u \in W^{m, p}\left(\mathbb{R}^N\right) \subset L^p\left(\mathbb{R}^N\right)$. Then $\partial^\alpha u \in L^p\left(\mathbb{R}^N\right)$. By Proposition \ref{prop:convofdistri},
+		\begin{equation*}
+			\partial^\alpha\left(\eta_{\varepsilon} * u\right) = \partial^\alpha\left(\eta_{\varepsilon}\right) * u= \eta_{\varepsilon} * \left(\partial^\alpha u\right)
+		\end{equation*}
+		which mean $\eta_{\varepsilon} * u \in C^{\infty}\left(\mathbb{R}^N\right) \cap W^{m, p}\left(\mathbb{R}^N\right)$ and
+		\begin{equation*}
+			\partial^\alpha\left(\eta_{\varepsilon} * u\right) \sto \partial^\alpha u
+		\end{equation*}
+		in $L^p$. So
+		\begin{equation*}
+			\left\|\eta_{\varepsilon} * u-u\right\|_{W^{m, p}\left(\mathbb{R}^N\right)} \longrightarrow 0
+		\end{equation*}
+
+		\item \textbf{Check:} $C^{\infty}_c\left(\mathbb{R}^N\right)$ is dense in $W^{m, p}\left(\mathbb{R}^N\right)$.
+
+		\noindent Let $u \in W^{m, p}\left(\mathbb{R}^N\right)$ and fix any $\gamma > 0$. By $(i)$, there is a $v \in C^{\infty}\left(\mathbb{R}^N\right) \cap W^{m, p}\left(\mathbb{R}^N\right)$ such that
+		\begin{equation*}
+			\|u-v\|_{W^{m, p}\left(\mathbb{R}^N\right)}<\frac{\gamma}{2}
+		\end{equation*}
+		So it is sufficient to prove that there is a sequence $\bb{v_n}_{n \in \N}$ in $C_c^\infty(\R^N)$ such that
+		\begin{equation*}
+			\left\|v_n-v\right\|_{W^{m, p}\left(\mathbb{R}^N\right)} \rightarrow 0,\quad \text{as } n\sto \infty
+		\end{equation*}
+		Choose $\rho \in C_c^\infty(\R^N)$ such that $0 \leq \rho(x) \leq 1$, $\rho(x) = 1$ for $\abs{x} \leq 1$, and $\rho(x) = 0$ for $\abs{x} \geq 2$. Then define
+		\begin{equation*}
+			v_n(x):=\rho\left(\frac{x}{n}\right) v(x)
+		\end{equation*}
+		for all $n \in \N$. Clearly, $v_n \in C_c^\infty(\R^N)$. First, for any $x \in \R^N$,
+		\begin{equation*}
+			\left|v_n(x)-v(x)\right|^p=\left|\left\{\rho\left(\frac{x}{n}\right)-1\right\} v(x)\right|^p \longrightarrow 0,\quad \text{as } n\sto \infty
+		\end{equation*}
+		Moreover, $\left|v_n(x)-v(x)\right|^p \leq \left|v(x)\right|^p$. So by DCT,
+		\begin{equation*}
+			\left\|v_n-v\right\|_{L^p\left(\mathbb{R}^N\right)} \rightarrow 0,\quad \text{as } n\sto \infty
+		\end{equation*}
+		Let $\alpha$ with $1 \leq \abs{\alpha} \leq m$. Next, we need to consider $\left\|\partial^\alpha v_n-\partial^\alpha v\right\|_{L^p\left(\mathbb{R}^N\right)}$. For any $\beta$ with $\beta \leq \alpha$, denote 
+		\begin{equation*}
+			\binom{\alpha}{\beta}=\frac{\alpha!}{\beta!(\alpha-\beta)!}
+		\end{equation*}
+		Then we have
+		\begin{equation*}
+			\begin{aligned}
+				& \partial^\alpha v_n(x)-\partial^\alpha v(x)=\partial^\alpha\left\{\rho\left(\frac{x}{n}\right) v(x)\right\}-\partial^\alpha v(x) \\
+				& =\sum_{\beta \leq \alpha}\binom{\alpha}{\beta} \partial^\beta\left\{\rho\left(\frac{x}{n}\right)\right\} \partial^{\alpha-\beta} v(x)-\partial^\alpha v(x) \\
+				& =\left\{\rho\left(\frac{x}{n}\right)-1\right\} \partial^\alpha v(x) \\
+				& \quad+\sum_{\beta \leq \alpha,|\beta| \neq 0}\binom{\alpha}{\beta} \frac{1}{n^{|\beta|}}\left(\partial^\beta \rho\right)\left(\frac{x}{n}\right) \partial^{\alpha-\beta} v(x)
+			\end{aligned}
+		\end{equation*}
+		For the first term, because $\partial^\alpha v \in L^p(\R^N)$, similarly we have
+		\begin{equation*}
+			\left\|\left\{\rho\left(\frac{\cdot}{n}\right)-1\right\} \partial^\alpha v\right\|_{L^p\left(\mathbb{R}^N\right)} \longrightarrow 0,\quad \text{as } n\sto \infty
+		\end{equation*}
+		For the second term, there are $C,C^\prime > 0$ such that
+		\begin{equation*}
+			\begin{aligned}
+				& \left\|\sum_{\beta \leq \alpha,|\beta| \neq 0}\binom{\alpha}{\beta} \frac{1}{n^{|\beta|}}\left(\partial^\beta \rho\right)\left(\frac{\cdot}{n}\right) \partial^{\alpha-\beta} v\right\|_{L^p\left(\mathbb{R}^N\right)} \\
+				& \leq \frac{C}{n}\left\{\sup_{\abs{\beta}\leq m}\left\|\left(\partial^\beta \rho\right)\left(\frac{\cdot}{n}\right)\right\|_{L^{\infty}\left(\mathbb{R}^N\right)}\right\}\|v\|_{W^{m, p}\left(\mathbb{R}^N\right)} \\
+				& \leq \frac{C^{\prime}}{n}\|\rho\|_{W^{m, \infty}\left(\mathbb{R}^N\right)}\|v\|_{W^{m, p}\left(\mathbb{R}^N\right)} \longrightarrow 0, \quad(n \rightarrow \infty)
+			\end{aligned}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+			\left\|\partial^\alpha v_n-\partial^\alpha v\right\|_{L^p\left(\mathbb{R}^N\right)} \rightarrow 0,\quad \text{as } n\sto \infty
+		\end{equation*}
+		and thus $\left\|v_n-v\right\|_{W^{m, p}\left(\mathbb{R}^N\right)} \rightarrow 0$.
+	\end{enumerate}
+\end{proof}
+
+\section{Sobolev Space \texorpdfstring{$H^s(\R^N)$}{Hs}}
+
+Note that for $1 \leq p \leq \infty$,
+\begin{equation*}
+	C_c^{\infty}\left(\mathbb{R}^N\right) \subset \mathcal{S}\left(\mathbb{R}^N\right) \subset W^{m, p}\left(\mathbb{R}^N\right)
+\end{equation*}
+In particular, for $1 \leq p < \infty$, $\mathcal{S}$ is dense in $W^{m, p}$. 
+
+\noindent Besides, we have known for $1 \leq p \leq \infty$
+\begin{equation*}
+	\mathcal{S}\left(\mathbb{R}^N\right) \subset L^p\left(\mathbb{R}^N\right) \subset \mathcal{S}^{\prime}\left(\mathbb{R}^N\right)
+\end{equation*}
+
+\begin{defn}
+	Let $s \in \R$. Considering a subspace of $\mathcal{S}^\prime(\R^N)$,
+	\begin{equation*}
+		\begin{aligned}
+			H^s(\R^N) &\defeq \bb{u \in \mathcal{S}^\prime(\R^N) \mid \widehat{u} \in \mathbb{\R^N},~(1+\abs{\cdot})^{s/2}\widehat{u} \in L^2(\R^N)} \\
+			&= \bb{\mathcal{F}^{-1}(g) \mid g \in \mathbb{\R^N},~(1+\abs{\cdot})^{s/2}g \in L^2(\R^N)}
+		\end{aligned}
+	\end{equation*}
+\end{defn}
+\begin{rmk}
+	Recall when $u \in \mathcal{S}^\prime$, there is a polynomial growth $f$ ($\abs{f(x)} \leq C(1+\abs{x}^k)$) such that $u = \partial^\alpha f$, and so $\widehat{u} = i^{\abs{\alpha}}(\cdot)^\alpha \widehat{f} \in C^\infty$. So $u \in H^s$ when
+	\begin{equation*}
+		i^{\abs{\alpha}}(\cdot)^\alpha(1+\abs{\cdot})^{s/2} \widehat{f} \in L^2
+	\end{equation*}
+\end{rmk}
+\begin{rmk}
+	\begin{enumerate}[label=(\arabic{*})]
+		\item For $s_1,s_2 \in \R$ with $s_1 \leq s_2$, $H^{s_2}(\R^N) \subset H^{s_1}(\R^N)$.
+		\item For any $s \in \R$, $\mathcal{S}\left(\mathbb{R}^N\right) \subset H^s\left(\mathbb{R}^N\right)$.
+	\end{enumerate}
+\end{rmk}
+\begin{rmk}
+	By the properties of the Fourier transform on $L^2(\R^N)$ (Plancherel's Theorem), we have the following results.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $H^0(\R^N) = L^2(\R^N)$.
+		\item If $s \geq 0$, $H^s(\R^N) \subset L^2(\R^N)$,
+		\begin{equation*}
+			H^s\left(\mathbb{R}^N\right)=\left\{u \in L^2\left(\mathbb{R}^N\right) \mid\left(1+|\cdot|^2\right)^{s / 2} \widehat{u} \in L^2\left(\mathbb{R}^N\right)\right\}
+		\end{equation*}
+	\end{enumerate}
+\end{rmk}
+\begin{rmk}
+	Note that for $s < 0$, $H^s(\R^N)$ contains pure distributions, \emph{i.e.} non-functions on $\R^N$. For example, consider $\delta \in \mathcal{S}^\prime$. Then because $\widehat{\delta} = 1$,
+	\begin{equation*}
+		\left(1+|\cdot|^2\right)^{s / 2} \widehat{\delta}= \left(1+|\cdot|^2\right)^{s / 2} \in L^2
+	\end{equation*}
+	if and only if $s < -\frac{N}{2}$
+\end{rmk}
+
+\noindent Define an inner product on $H^s(\R^N)$ as
+\begin{equation*}
+	\begin{aligned}
+		\inn{u, v}_{H^s\left(\mathbb{R}^N\right)} & :=\left(\left(1+|\cdot|^2\right)^{s / 2} \widehat{u},\left(1+|\cdot|^2\right)^{s / 2} \widehat{v}\right)_{L^2\left(\mathbb{R}^N\right)} \\
+		& =\int_{\mathbb{R}^N}\left(1+|\xi|^2\right)^s \widehat{u}(\xi) \overline{\widehat{v}(\xi)} d \xi
+	\end{aligned}
+\end{equation*}
+which induces a norm
+\begin{equation*}
+	\begin{aligned}
+		\|u\|_{H^s\left(\mathbb{R}^N\right)} & :=\sqrt{\inn{u, u}_{H^s\left(\mathbb{R}^N\right)}}=\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+		& =\left(\int_{\mathbb{R}^N}\left(1+|\xi|^2\right)^s|\widehat{u}(\xi)|^2 d \xi\right)^{1 / 2}
+	\end{aligned}
+\end{equation*}
+\begin{thm}
+	Let $s \in \R$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $\inn{\cdot, \cdot}_{H^s\left(\mathbb{R}^N\right)}$ is an inner product on $H^s\left(\mathbb{R}^N\right)$ and thus $\|\cdot\|_{H^s\left(\mathbb{R}^N\right)}$ is a norm.
+
+		\item $\|\cdot\|_{H^s\left(\mathbb{R}^N\right)}$ with $\inn{\cdot, \cdot}_{H^s\left(\mathbb{R}^N\right)}$ is a Hilbert space.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	Only need to prove the completeness. Let $\bb{u_n}_{n \in \N}$ be a Cauchy sequence in $H^s(\R^N)$, that is
+	\begin{equation*}
+		\left\|u_m-u_n\right\|_{H^s\left(\mathbb{R}^N\right)} = \left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}_m-\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}_n\right\|_{L^2\left(\mathbb{R}^N\right)} \sto 0,\quad m,n \sto \infty
+	\end{equation*}
+	So $\left\{\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}_n\right\}_{n\in \N}$ is Cauchy in $L^2(\R^N)$. There is an $f \in L^2(\R^N)$ such that
+	\begin{equation*}
+		\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}_n-f\right\|_{L^2\left(\mathbb{R}^N\right)} \sto 0
+	\end{equation*}
+	Then let 
+	\begin{equation*}
+		u:=\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{-s / 2} f\right]
+	\end{equation*}
+	First, $f \in L^2(\R^N)$ implies there is $C>0$ and $N \in \N$ such that
+	\begin{equation*}
+	 	\abs{\left(1+|\cdot|^2\right)^{-s / 2} f} \leq C(1+\abs{\cdot})^N
+	\end{equation*}
+	and thus $\left(1+|\cdot|^2\right)^{-s / 2} f \in \mathcal{S}^\prime(\R^N)$. By the bijectivity of $\mathcal{F}$ on $\mathcal{S}^\prime$, $u$ is well-defined and in $\mathcal{S}^\prime$. Moreover, because
+	\begin{equation*}
+		\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}=f \in L^2\left(\mathbb{R}^N\right)
+	\end{equation*}
+	$u \in H^s(\R^N)$ and
+	\begin{equation*}
+		\begin{aligned}
+			\left\|u_n-u\right\|_{H^s\left(\mathbb{R}^N\right)} & =\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}_n-\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& =\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}_n-f\right\|_{L^2\left(\mathbb{R}^N\right)} \rightarrow 0,
+		\end{aligned}
+	\end{equation*}
+	So $H^s(\R^N)$ is complete.
+\end{proof}
+\begin{rmk}
+	For $s_1 \leq s_2$, $u \in H^{s_2}(\R^N) \subset H^{s_1}(\R^N)$ with
+	\begin{equation*}
+		\|u\|_{H^{s_1}\left(\mathbb{R}^N\right)} \leq\|u\|_{H^{s_2}\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	So $H^{s_2}\left(\mathbb{R}^N\right) \hookrightarrow H^{s_1}\left(\mathbb{R}^N\right)$.
+\end{rmk}
+
+\begin{prop}
+	Let $s \in \R$. $\mathcal{S}(\R^N)$ is dense in $H^s(\R^N)$.
+\end{prop}
+\begin{proof}
+	For any $u \in H^s{\R^N}$, $\left(1+|\cdot|^2\right)^{s / 2} \widehat{u} \in L^2\left(\mathbb{R}^N\right)$. Because $\mathcal{S}(\R^N)$ is dense in $L^2(\R^N)$, there is a sequence $\bb{\varphi_n}_{n \in \N}$ in $\mathcal{S}(\R^N)$ SUCH THAT
+	\begin{equation*}
+		\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}-\varphi_n\right\|_{L^2\left(\mathbb{R}^N\right)} \rightarrow 0
+	\end{equation*}
+	Similarly as above
+	\begin{equation*}
+		v_n(x):=\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{-s / 2} \varphi_n\right](x) \in H^s(\R^N)
+	\end{equation*}
+	well-defined and $\varphi_n(\xi)=\left(1+|\xi|^2\right)^{s / 2} \widehat{v}_n(\xi)$. Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			\left\|u-v_n\right\|_{H^s\left(\mathbb{R}^N\right)} & =\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}-\left(1+|\cdot|^2\right)^{s / 2} \widehat{v}_n\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& =\left\|\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}-\varphi_n\right\|_{L^2\left(\mathbb{R}^N\right)} \rightarrow 0,
+		\end{aligned}
+	\end{equation*}
+	So $\mathcal{S}(\R^N)$ is dense in $H^s(\R^N)$.
+\end{proof}
+
+\begin{thm}
+	Let $m \in \N_0$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $W^{m,2}(\R^N) = H^m(\R^N)$.
+		\item There are $C_1,C_2 > 0$ such that for any $u \in H^m(\R^N) = W^{m,2}(\R^N)$,
+		\begin{equation*}
+			C_1\|u\|_{H^m\left(\mathbb{R}^N\right)} \leq\|u\|_{W^{m, 2}\left(\mathbb{R}^N\right)} \leq C_2\|u\|_{H^m\left(\mathbb{R}^N\right)}
+		\end{equation*}
+		which means these two norms are equivalent. In other words, they induce the same topology.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	When $m = 0$, we have $W^{0,2}\left(\mathbb{R}^N\right)=L^2\left(\mathbb{R}^N\right)=H^0\left(\mathbb{R}^N\right)$ and for any $u \in L^2(\R^N)$,
+	\begin{equation*}
+		\|u\|_{W^{0,2}\left(\mathbb{R}^N\right)}=\|u\|_{L^2\left(\mathbb{R}^N\right)}=\|u\|_{H^0\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	So in the following, we assume $m \in \N$.
+	\begin{enumerate}[label=(\Roman{*})]
+		\item \textbf{Check:} There are $C_1,C_2 > 0$ such that for any $\xi \in \R^N$,
+		\begin{equation*}
+			C_1^2\left(1+|\xi|^2\right)^m \leq \sum_{|\alpha| \leq m}\left|\xi^\alpha\right|^2 \leq C_2^2\left(1+|\xi|^2\right)^m
+		\end{equation*}
+		First, consider the inequality in the RHS. Let $\abs{\alpha} \leq m$. If $\abs{\alpha} = 0$, then $\left|\xi^\alpha\right|^2=1 \leq\left(1+|\xi|^2\right)^m$. If $0 < \abs{\alpha} \leq m$, then for any $\xi \in \R^N$,
+		\begin{equation*}
+			\begin{aligned}
+				\left|\xi^\alpha\right|^2 & =\left|\xi_1\right|^{2 \alpha_1} \cdots\left|\xi_N\right|^{2 \alpha_N} \leq|\xi|^{2 \alpha_1} \cdots|\xi|^{2 \alpha_N}=|\xi|^{2\left(\alpha_1+\cdots+\alpha_N\right)} \\
+				& =|\xi|^{2|\alpha|} \leq 1+|\xi|^{2 m} \leq\left(1+|\xi|^2\right)^m
+			\end{aligned}
+		\end{equation*}
+		Therefore there is a $C_2 > 0$ such that
+		\begin{equation*}
+			\sum_{|\alpha| \leq m}\left|\xi^\alpha\right|^2 \leq C_2^2\left(1+|\xi|^2\right)^m
+		\end{equation*}
+		Next, consider the inequality in LHS. Let $\abs{\alpha} \leq m$. There is a $K_\alpha > 0$ such that for any $\xi \in \R^N$,
+		\begin{equation*}
+			\left(1+|\xi|^2\right)^m=\left(1+\xi_1^2+\cdots+\xi_N^2\right)^m \leq \sum_{|\alpha| \leq m} K_\alpha\left|\xi^\alpha\right|^2 \leq\left(\max _{|\alpha| \leq m} K_\alpha\right) \sum_{|\alpha| \leq m}\left|\xi^\alpha\right|^2
+		\end{equation*}
+		Therefore, let $C_1:=\left(\max _{|\alpha| \leq m} K_\alpha\right)^{-1 / 2}$ and we have
+		\begin{equation*}
+			C_1^2\left(1+|\xi|^2\right)^m \leq \sum_{|\alpha| \leq m}\left|\xi^\alpha\right|^2
+		\end{equation*}
+
+		\item \textbf{Check:} For any $\varphi \in \mathcal{S}$ (note that $\mathcal{S} \subset H^m\left(\mathbb{R}^N\right) = W^{m, 2}\left(\mathbb{R}^N\right)$),
+		\begin{equation*}
+			C_1\|\varphi\|_{H^m\left(\mathbb{R}^N\right)} \leq\|\varphi\|_{W^{m, 2}\left(\mathbb{R}^N\right)} \leq C_2\|\varphi\|_{H^m\left(\mathbb{R}^N\right)}
+		\end{equation*}
+		By (\RNum{1}),
+		\begin{equation*}
+			C_1^2\left(1+|\xi|^2\right)^m|\widehat{\varphi}(\xi)|^2 \leq \sum_{|\alpha| \leq m}\left|\xi^\alpha\right|^2|\widehat{\varphi}(\xi)|^2 \leq C_2^2\left(1+|\xi|^2\right)^m|\widehat{\varphi}(\xi)|^2
+		\end{equation*}
+		Because $\left|\xi^\alpha\right|^2|\widehat{\varphi}(\xi)|^2=\left|\xi^\alpha \widehat{\varphi}(\xi)\right|^2=\left|\mathcal{F}\left[\partial_x^\alpha \varphi\right](\xi)\right|^2$,
+		\begin{equation*}
+			C_1^2\left(1+|\xi|^2\right)^m|\widehat{\varphi}(\xi)|^2 \leq \sum_{|\alpha| \leq m}\left|\mathcal{F}\left[\partial_x^\alpha \varphi\right](\xi)\right|^2 \leq C_2^2\left(1+|\xi|^2\right)^m|\widehat{\varphi}(\xi)|^2
+		\end{equation*}
+		Therefore, 
+		\begin{equation*}
+			C_1^2\left\|\left(1+|\cdot|^2\right)^{m / 2} \widehat{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)}^2 \leq \sum_{|\alpha| \leq m}\left\|\mathcal{F}\left[\partial_x^\alpha \varphi\right]\right\|_{L^2\left(\mathbb{R}^N\right)}^2 \leq C_2^2\left\|\left(1+|\cdot|^2\right)^{m / 2} \widehat{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)}^2
+		\end{equation*}
+		Then by Plancherel's Theorem,
+		\begin{equation*}
+			C_1^2\left\|\left(1+|\cdot|^2\right)^{m / 2} \widehat{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)}^2 \leq \sum_{|\alpha| \leq m}\left\|\partial_x^\alpha \varphi\right\|_{L^2\left(\mathbb{R}^N\right)}^2 \leq C_2^2\left\|\left(1+|\cdot|^2\right)^{m / 2} \widehat{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)}^2
+		\end{equation*}
+		and so
+		\begin{equation*}
+			C_1\|\varphi\|_{H^m\left(\mathbb{R}^N\right)} \leq\|\varphi\|_{W^{m, 2}\left(\mathbb{R}^N\right)} \leq C_2\|\varphi\|_{H^m\left(\mathbb{R}^N\right)}
+		\end{equation*}
+
+		\item \textbf{Check:} For any $u \in W^{m,2}(\R^N)$, $u \in H^m(\R^N)$ with
+		\begin{equation*}
+			C_1\|u\|_{H^m\left(\mathbb{R}^N\right)} \leq\|u\|_{W^{m, 2}\left(\mathbb{R}^N\right)}
+		\end{equation*}
+		In particular, $W^{m, 2}\left(\mathbb{R}^N\right) \subset H^m\left(\mathbb{R}^N\right)$.
+
+		\noindent First, because $\mathcal{S}(\R^N)$ is dense in $W^{m,2}(\R^N)$, there is a sequence $\bb{\varphi_n}_{n \in \N}$ such that
+		\begin{equation*}
+			\left\|\varphi_n-u\right\|_{W^{m, 2}\left(\mathbb{R}^N\right)} \sto 0
+		\end{equation*}
+		and in particular, $\left\|\varphi_n-u\right\|_{L^2(\R^N)} \sto 0$. Moreover, by (\RNum{2}),
+		\begin{equation*}
+			C_1\left\|\varphi_n\right\|_{H^m\left(\mathbb{R}^N\right)} \leq\left\|\varphi_n\right\|_{W^{m, 2}\left(\mathbb{R}^N\right)}
+		\end{equation*}
+		Because $\bb{\varphi_n}_{n \in \N}$ is Cauchy in $W^{m, 2}\left(\mathbb{R}^N\right)$ and 
+		\begin{equation*}
+			C_1\left\|\varphi_k-\varphi_l\right\|_{H^m\left(\mathbb{R}^N\right)} \leq\left\|\varphi_k-\varphi_l\right\|_{W^{m, 2}\left(\mathbb{R}^N\right)} s\to 0,\quad \text{as } k,l \sto \infty
+		\end{equation*}
+		$\bb{\varphi_n}_{n \in \N}$ is Cauchy in $H^m\left(\mathbb{R}^N\right)$. So there is a $v \in H^m\left(\mathbb{R}^N\right)$ such that
+		\begin{equation*}
+			\left\|\varphi_n-v\right\|_{H^m\left(\mathbb{R}^N\right)} \sto 0
+		\end{equation*}
+		and in particular, $\left\|\varphi_n-v\right\|_{L^2(\R^N)} \sto 0$ by Plancherel's Theorem. Therefore, $u = v$ in $L^2(\R^N)$. And by $v \in H^m\left(\mathbb{R}^N\right)$, $u \in H^m\left(\mathbb{R}^N\right)$ and $\left\|\varphi_n-u\right\|_{H^m\left(\mathbb{R}^N\right)} \sto 0$. Therefore, as $n \sto \infty$,
+		\begin{equation*}
+			C_1\left\|\varphi_n\right\|_{H^m\left(\mathbb{R}^N\right)} \leq\left\|\varphi_n\right\|_{W^{m, 2}\left(\mathbb{R}^N\right)} ~\Rightarrow~C_1\|u\|_{H^m\left(\mathbb{R}^N\right)} \leq\|u\|_{W^{m, 2}\left(\mathbb{R}^N\right)}
+		\end{equation*}
+
+		\item \textbf{Check:} For any $u \in H^m(\R^N)$, $u \in W^{m,2}(\R^N)$ with
+		\begin{equation*}
+			\|u\|_{W^{m, 2}\left(\mathbb{R}^N\right)} \leq C_2\|u\|_{H^m\left(\mathbb{R}^N\right)}
+		\end{equation*}
+		In particular, $H^m\left(\mathbb{R}^N\right) \subset W^{m, 2}\left(\mathbb{R}^N\right)$.
+
+		\noindent The proof is as similar as the above by the density of $\mathcal{S}(\R^N)$ in $H^m(\R^n)$.
+	\end{enumerate}
+\end{proof}
+
+\begin{thm}
+	Let $s \in \R$. $C_c^\infty(\R^N)$ is dense in $H^2(\R^N)$.
+\end{thm}
+\begin{proof}
+	Let $u \in H^s(\R^N)$ and $\varepsilon > 0$. By the density of $\mathcal{S}(\R^N)$ in $H^s(\R^n)$, there is a $w \in \mathcal{S}(\R^N)$ such that
+	\begin{equation*}
+		\|u-w\|_{H^s\left(\mathbb{R}^N\right)}<\frac{\varepsilon}{2}
+	\end{equation*}
+	Choosing a nonnegative integer $m \geq s$. Then we have known $C_c^\infty(\R^N)$ is dense in $W^{m,2}(\R^N)$ and so dense in $H^m(\R^N)$ by above theorem. There is a $\varphi \in C^\infty_c(\R^N)$ such that
+	\begin{equation*}
+		\|w-\varphi\|_{H^m\left(\mathbb{R}^N\right)}<\frac{\varepsilon}{2}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			\|u-\varphi\|_{H^s\left(\mathbb{R}^N\right)} & \leq\|u-w\|_{H^s\left(\mathbb{R}^N\right)}+\|w-\varphi\|_{H^s\left(\mathbb{R}^N\right)} \\
+			& \leq\|u-w\|_{H^s\left(\mathbb{R}^N\right)}+\|w-\varphi\|_{H^m\left(\mathbb{R}^N\right)}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon
+		\end{aligned}
+	\end{equation*}
+\end{proof}
+
+\noindent Note that for $s \in \R$ and $1 \leq p \leq \infty$, we can also define
+\begin{equation*}
+	H^{s, p}\left(\mathbb{R}^N\right):=\left\{u \in \mathcal{S}^{\prime}\left(\mathbb{R}^N\right) \mid \mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}\right] \in L^p\left(\mathbb{R}^N\right)\right\}
+\end{equation*}
+with the norm defined as
+\begin{equation*}
+	\|u\|_{H^{s, p}\left(\mathbb{R}^N\right)}:=\left\|\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{s / 2} \widehat{u}\right]\right\|_{L^p\left(\mathbb{R}^N\right)}
+\end{equation*}
+\begin{itemize}
+	\item It is not difficult to see $\mathcal{S}(\R^N) \subset H^{s,p}(\R^N)$ for any $s \in \R$ and $1 \leq p \leq \infty$. 
+
+	\item When $p = 2$, by Plancherel's Theorem, $H^s(\R^N) = H^{s,2}(\R^N)$ with $\norm{\cdot}_{H^s(\R^N)} = \norm{\cdot}_{H^{s,2}(\R^N)}$. 
+
+	\item When $s = 0$, $H^{0,p}(\R^N) = L^p(\R^N)$ with $\norm{\cdot}_{H^{0,p}(\R^N)} = \norm{\cdot}_{L^p(\R^N)}$.
+
+	\item For $s_1,s_2$ with $s_1 \leq s_2$, we have
+	\begin{equation*}
+		\|u\|_{H^{s_1, p}\left(\mathbb{R}^N\right)} \leq\|u\|_{H^{s_2, p}\left(\mathbb{R}^N\right)},\quad \forall~u \in H^{s_2, p}\left(\mathbb{R}^N\right)
+	\end{equation*}
+	That is $H^{s_2, p}\left(\mathbb{R}^N\right) \subset H^{s_1, p}\left(\mathbb{R}^N\right)$
+
+	\item For any $s \in \R^N$ and $1 \leq p < \infty$, $\mathcal{S}(\R^N)$ is dense in $H^{s, p}\left(\mathbb{R}^N\right)$.
+\end{itemize}
+
+\section{Sobolev Embedding Theorem}
+
+In this section, let $s > 0$ and consider the relationship between $H^s(\R^N)$ and $L^q(\R^N)$.
+
+\begin{thm}[Sobolev Embedding Theorem \RNum{1}]
+	Let $s > \frac{N}{2}$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $H^s(\R^N) \subset L^\infty(\R^N)$. Moreover, there is a $C > 0$ such that for any $u \in H^s(\R^N)$,
+		\begin{equation*}
+			\|u\|_{L^{\infty}\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+		\end{equation*}
+
+		\item For any $u \in H^s(\R^N)$, there is a bounded and continuous function $f_u$ on $\R^N$ such that $u(x) = f_u(x)$ \emph{a.e.}.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	Let $u \in H^s(\R^N)$. Then by Cauchy-Schwartz Inequality,
+	\begin{equation*}
+		\begin{aligned}
+			& \int_{\mathbb{R}^N}|\widehat{u}(\xi)| d \xi=\int_{\mathbb{R}^N}\left(1+|\xi|^2\right)^{-s / 2}\left\{\left(1+|\xi|^2\right)^{s / 2}|\widehat{u}(\xi)|\right\} d \xi \\
+			& \leq\left(\int_{\mathbb{R}^N}\left(1+|\xi|^2\right)^{-s} d \xi\right)^{1 / 2}\left(\int_{\mathbb{R}^N}\left(1+|\xi|^2\right)^s|\widehat{u}(\xi)|^2 d \xi\right)^{1 / 2}
+		\end{aligned}
+	\end{equation*}
+	Because $s > \frac{N}{2}$,
+	\begin{equation*}
+		C_0^2 \defeq \int_{\mathbb{R}^N}\left(1+|\xi|^2\right)^{-s} d \xi<\infty
+	\end{equation*}
+	So we have $\widehat{u} \in L^1(\R^N)$ with
+	\begin{equation*}
+		\|\widehat{u}\|_{L^1\left(\mathbb{R}^N\right)} \leq C_0\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	Besides, $u \in H^s(\R^N)$ implies $\left(1+|\cdot|^2\right)^{s / 2} \widehat{u} \in L^2(\R^N)$. Because $s > 0$, $\widehat{u} \in L^2(\R^N)$. So $\widehat{u} \in L^1(\R^N)\cap L^2(\R^N)$. Then by the inverse formula
+	\begin{equation*}
+		u(x)=\mathcal{F}^{-1}(\widehat{u})(x), \quad a.e.~x \in \R^N
+	\end{equation*}
+	and $\widehat{u} \in L^1(\R^N)$ implies $\mathcal{F}^{-1}(\widehat{u})$ is continuous and bounded. So $(2)$ is proved and $u = \mathcal{F}^{-1}(\widehat{u}) \in L^\infty(\R^N)$. Besides, by Hausdorff-Young's Inequality,
+	\begin{equation*}
+		\begin{aligned}
+			|u(x)| & =\left|\mathcal{F}^{-1}[\widehat{u}](x)\right| \leq\left\|\mathcal{F}^{-1}[\widehat{u}]\right\|_{L^{\infty}\left(\mathbb{R}^N\right)} \\
+			& \leq(2 \pi)^{-N / 2}\|\widehat{u}\|_{L^1\left(\mathbb{R}^N\right)} \leq(2 \pi)^{-N / 2} C_0\|u\|_{H^s\left(\mathbb{R}^N\right)}
+		\end{aligned}
+	\end{equation*}
+	So let $C:=(2 \pi)^{-N / 2} C_0$.
+	\begin{equation*}
+		\|u\|_{L^{\infty}\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+\end{proof}
+
+\begin{cor}
+	Let $s > \frac{N}{2}$. Then for any $q \in [2,\infty]$, $H^s(\R^N) \subset L^q(\R^N)$ with
+	\begin{equation*}
+		\|u\|_{L^{q}\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	for some $C$.
+\end{cor}
+\begin{proof}
+	First, for $q=2$, by $s > 0$ and Plancherel's Theorem, we have $H^s \subset L^2$ with
+	\begin{equation*}
+		\|u\|_{L^2\left(\mathbb{R}^N\right)} \leq\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	For $q=\infty$, by above theorem, $H^s \subset L^\infty$ with a $C_0 > 0$ such that
+	\begin{equation*}
+		\|u\|_{L^{\infty}\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	Therefore, $H^s \subset L^2 \cap L^\infty$. So for $2 < q < \infty$, $H^s \subset L^2 \cap L^\infty \subset L^q$. Besides, there is a $\theta \in (0,1)$ such that
+	\begin{equation*}
+		\frac{1}{q}=\frac{1-\theta}{2}+\frac{\theta}{\infty}=\frac{1-\theta}{2}
+	\end{equation*}
+	Then for any $u \in H^s \subset L^2 \cap L^\infty \subset L^q$,
+	\begin{equation*}
+		\|u\|_{L^q\left(\mathbb{R}^N\right)} \leq\|u\|_{L^2\left(\mathbb{R}^N\right)}^{1-\theta}\|u\|_{L^{\infty}\left(\mathbb{R}^N\right)}^\theta \leq\|u\|_{H^s\left(\mathbb{R}^N\right)}^{1-\theta}\left(C_0\|u\|_{H^s\left(\mathbb{R}^N\right)}\right)^\theta=C_0^\theta\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	Let $C = C_0^\theta$.
+	\begin{equation*}
+		\|u\|_{L^{q}\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+\end{proof}
+
+\noindent Next, to consider $0 < s < \frac{N}{2}$, let's define the Riesz kernel. For $0 < \alpha < N$, considering $R_\alpha \colon \R^N \sto [0,\infty]$
+\begin{equation*}
+	R_\alpha(x):=|x|^{-(N-\alpha)}
+\end{equation*}
+Note that $R_\alpha \in \mathcal{S}^\prime$.
+\begin{prop}\label{prop:fouriesz}
+	Let $0 < \alpha < N$. Then
+	\begin{equation*}
+		\begin{aligned}
+			\mathcal{F}\left[R_\alpha\right](\xi)&=C_{N, \alpha} R_{N-\alpha}(\xi)=C_{N, \alpha}|\xi|^{-\alpha}, \\
+			\mathcal{F}^{-1}\left[R_{N-\alpha}\right](x)&=C_{N, \alpha}^{-1} R_\alpha(x)=C_{N, \alpha}^{-1}|x|^{-(N-\alpha)},
+		\end{aligned}
+	\end{equation*}
+	where
+	\begin{equation*}
+		C_{N, \alpha}=2^{\alpha-\frac{N}{2}} \frac{\Gamma\left(\frac{\alpha}{2}\right)}{\Gamma\left(\frac{N-\alpha}{2}\right)}
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	For $t > 0$, define $g_t(\xi):=e^{-\frac{|\xi|^2}{2 t}},~\xi \in \mathbb{R}^N$. Then $g_t \in \mathcal{S}(\R^N)$ and so $\widehat{g}_t \in \mathcal{S}(\R^N)$ with
+	\begin{equation*}
+		\widehat{g}_t(x) = t^{\frac{N}{2}}e^{-\frac{t}{2}\abs{x}^2}
+	\end{equation*}
+	For any $\varphi \in \mathcal{S}(\R^N)$, by Plancherel's Theorem ($\mathcal{S} \subset L^2(\R^N)$), 
+	\begin{equation*}
+		\int_{\mathbb{R}^N} \widehat{g}_t(x) \widehat{\varphi}(x) d x=\int_{\mathbb{R}^N} g_t(\xi) \varphi(\xi) d \xi
+	\end{equation*}
+	and therefore, by multiplying $t^{-\frac{\alpha}{2}-1}$ in the both sides
+	\begin{equation*}
+		t^{\frac{N-\alpha}{2}-1} \int_{\mathbb{R}^N} e^{-\frac{t}{2}|x|^2} \widehat{\varphi}(x) d x=t^{-\frac{\alpha}{2}-1} \int_{\mathbb{R}^N} e^{-\frac{|\xi|^2}{2 t}} \varphi(\xi) d \xi
+	\end{equation*}
+	Next, consider the integrals on the both sides. In general, for $p,b> 0$,
+	\begin{equation*}
+		\int_0^{\infty} t^{p-1} e^{-b t} d t=b^{-p} \int_0^{\infty} t^{p-1} e^{-t} d t=b^{-p} \Gamma(p)
+	\end{equation*}
+	So for the LHS, by integrating on $(0,\infty)$,
+	\begin{equation*}
+		\begin{aligned}
+			& \int_0^{\infty} t^{\frac{N-\alpha}{2}-1}\left(\int_{\mathbb{R}^N} e^{-\frac{t}{2}|x|^2}|\widehat{\varphi}(x)| d x\right) d t \\
+			& =\int_{\mathbb{R}^N}\left(\int_0^{\infty} t^{\frac{N-\alpha}{2}-1} e^{-\frac{t}{2}|x|^2} d t\right)|\widehat{\varphi}(x)| d x
+			\end{aligned}
+	\end{equation*}
+	and because for any $x \in \R^N\backslash \bb{0}$,
+	\begin{equation*}
+		\begin{aligned}
+			& \int_0^{\infty} t^{\frac{N-\alpha}{2}-1} e^{-\frac{t}{2}|x|^2} d t=\left(\frac{|x|^2}{2}\right)^{-\frac{N-\alpha}{2}} \Gamma\left(\frac{N-\alpha}{2}\right) \\
+			& =2^{\frac{N-\alpha}{2}} \Gamma\left(\frac{N-\alpha}{2}\right)|x|^{-(N-\alpha)} \quad(<\infty)
+		\end{aligned}
+	\end{equation*}
+	Thus
+	\begin{equation*}
+		\begin{aligned}
+			\text{LHS} = & \int_{\mathbb{R}^N}\left(\int_0^{\infty} t^{\frac{N-\alpha}{2}-1} e^{-\frac{t}{2}|x|^2} d t\right)|\widehat{\varphi}(x)| d x \\
+			& =2^{\frac{N-\alpha}{2}} \Gamma\left(\frac{N-\alpha}{2}\right) \int_{\mathbb{R}^N}|x|^{-(N-\alpha)}|\widehat{\varphi}(x)| d x<\infty
+		\end{aligned}
+	\end{equation*}
+	Similarly, for the RHS,
+	\begin{equation*}
+		\begin{aligned}
+			\text{RHS}=& \int_0^{\infty} t^{-\frac{\alpha}{2}-1}\left(\int_{\mathbb{R}^N} e^{-\frac{|\xi|^2}{2 t}} \varphi(\xi) d \xi\right) d t \\
+			& =\int_{\mathbb{R}^N}\left(\int_0^{\infty} t^{-\frac{\alpha}{2}-1} e^{-\frac{|\xi|^2}{2 t}} d t\right) \varphi(\xi) d \xi \\
+			& =2^{\frac{\alpha}{2}} \Gamma\left(\frac{\alpha}{2}\right) \int_{\mathbb{R}^N}|\xi|^{-\alpha} \varphi(\xi) d \xi
+		\end{aligned}
+	\end{equation*}
+	Therefore, we have
+	\begin{equation*}
+		2^{\frac{N-\alpha}{2}} \Gamma\left(\frac{N-\alpha}{2}\right) \int_{\mathbb{R}^N}|x|^{-(N-\alpha)} \widehat{\varphi}(x) d x=2^{\frac{\alpha}{2}} \Gamma\left(\frac{\alpha}{2}\right) \int_{\mathbb{R}^N}|\xi|^{-\alpha} \varphi(\xi) d \xi
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\int_{\mathbb{R}^N}\left(C_{N, \alpha}|\xi|^{-\alpha}\right) \varphi(\xi) d \xi=\int_{\mathbb{R}^N}|x|^{-(N-\alpha)} \widehat{\varphi}(x) d x
+	\end{equation*}
+	The by the Plancherel's Theorem
+	\begin{equation*}
+		\mathcal{F}\left[R_\alpha\right](\xi)=\mathcal{F}\left[|\cdot|^{-(N-\alpha)}\right](\xi)=C_{N, \alpha}|\xi|^{-\alpha}
+	\end{equation*}
+	and
+	\begin{equation*}
+		\mathcal{F}^{-1}\left[R_{N-\alpha}\right](x)=\mathcal{F}^{-1}\left[|\cdot|^{-\alpha}\right](x)=C_{N, \alpha}^{-1}|x|^{-(N-\alpha)}
+	\end{equation*}
+\end{proof}
+
+\begin{thm}[Sobolev Embedding Theorem \RNum{2}]
+	Let $0 < s < \frac{N}{2}$ and
+	\begin{equation*}
+		\frac{1}{q} = \frac{1}{2} - \frac{s}{N} ~\Rightarrow~q = \frac{2N}{N-2s}
+	\end{equation*}
+	Then $H^s(\R^N) \subset L^q(\R^N)$, and there is a $C > 0$ such that for any $u \in H^s(\R^N)$,
+	\begin{equation*}
+		\|u\|_{L^q\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+\end{thm}
+\begin{proof}
+	Let $q^\prime$ be the conjugate index of $q$,
+	\begin{equation*}
+		\frac{1}{q^{\prime}}=1-\frac{1}{q}=\frac{1}{2}+\frac{s}{N} 
+	\end{equation*}
+	Note that $1 < q^\prime < 2$. In the following, for $f, g \in \mathbb{M}\left(\mathbb{R}^N\right)$,
+	\begin{equation*}
+		\langle f, g\rangle:=\int_{\mathbb{R}^N} f(x) g(x) d x
+	\end{equation*}
+	Let $u \in H^s(\R^N)$ and
+	\begin{equation*}
+		v:=\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{s / 2} \mathcal{F}[u]\right]
+	\end{equation*}
+	Then $v \in L^2(\R^N)$ and
+	\begin{equation*}
+		u=\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{-s / 2} \mathcal{F}[v]\right]
+	\end{equation*}
+	So by the Plancherel's Theorem
+	\begin{equation*}
+		\begin{aligned}
+			\|v\|_{L^2\left(\mathbb{R}^N\right)} & =\left\|\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{s / 2} \mathcal{F}[u]\right]\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& =\left\|\left(1+|\cdot|^2\right)^{s / 2} \mathcal{F}[u]\right\|_{L^2\left(\mathbb{R}^N\right)}=\|u\|_{H^s\left(\mathbb{R}^N\right)}
+		\end{aligned}
+	\end{equation*}
+	For $\varphi \in \mathcal{S}(\R^N)$, note that $u\varphi \in L^1$ ($u,\varphi \in L^2$). Then by $2s < N$, $|\cdot|^{-s} \mathcal{F}[\bar{\varphi}] \in L^2\left(\mathbb{R}^N\right)$. The by above proposition,
+	\begin{equation*}
+		\begin{aligned}
+			|\langle u, \varphi\rangle| & =\left|\left(\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{-s / 2} \mathcal{F}[v]\right], \bar{\varphi}\right)_{L^2\left(\mathbb{R}^N\right)}\right| \\
+			& =\left|\left(v, \mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{-s / 2} \mathcal{F}[\bar{\varphi}]\right]\right)_{L^2\left(\mathbb{R}^N\right)}\right| \\
+			& \leq\|v\|_{L^2\left(\mathbb{R}^N\right)}\left\|\mathcal{F}^{-1}\left[\left(1+|\cdot|^2\right)^{-s / 2} \mathcal{F}[\bar{\varphi}]\right]\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& =\|u\|_{H^s\left(\mathbb{R}^N\right)}\left\|\left(1+|\cdot|^2\right)^{-s / 2} \mathcal{F}[\bar{\varphi}]\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& \leq\|u\|_{H^s\left(\mathbb{R}^N\right)}\left\||\cdot|^{-s} \mathcal{F}[\bar{\varphi}]\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& =\|u\|_{H^s\left(\mathbb{R}^N\right)}\left\|\mathcal{F}^{-1}\left[|\cdot|^{-s} \cdot \mathcal{F}[\bar{\varphi}]\right]\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& =(2 \pi)^{-N / 2} C_{N, s}^{-1}\|u\|_{H^s\left(\mathbb{R}^N\right)}\left\||\cdot|^{-(N-s)} * \bar{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)} .
+		\end{aligned}
+	\end{equation*}
+	To consider $|\cdot|^{-(N-s)} * \bar{\varphi}$, note that
+	\begin{equation*}
+		0<N-s<N, \quad 1<q^{\prime}<2, \quad \frac{1}{2}=\frac{1}{q^{\prime}}-\frac{s}{N}=\frac{1}{q^{\prime}}+\frac{N-s}{N}-1
+	\end{equation*}
+	Then by the Hardy-Littlewood-Sobolev's Inequality, $|\cdot|^{-(N-s)} * \bar{\varphi} \in L^2(\R^N)$ and there is a $C^\prime > 0$ such that
+	\begin{equation*}
+		\left\||\cdot|^{-(N-s)} * \bar{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)} \leq C^{\prime}\|\bar{\varphi}\|_{L^{q^{\prime}}\left(\mathbb{R}^N\right)}=C^{\prime}\|\varphi\|_{L^{q^{\prime}\left(\mathbb{R}^N\right)}}
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			|\langle u, \varphi\rangle| & \leq(2 \pi)^{-N / 2} C_{N, s}^{-1}\|u\|_{H^s\left(\mathbb{R}^N\right)}\left\||\cdot|^{-(N-s)} * \bar{\varphi}\right\|_{L^2\left(\mathbb{R}^N\right)} \\
+			& \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}\|\varphi\|_{L^{q^{\prime}\left(\mathbb{R}^N\right)}}
+		\end{aligned}
+	\end{equation*}
+	for some $C > 0$.
+
+	\noindent Let $g \in S_0(\R^N)$ with $\|g\|_{L_{q^{\prime}}\left(\mathbb{R}^N\right)}=1$. Then clearly $u\cdot g \in L^1(\R^N)$ and $g \in L^2\left(\mathbb{R}^N\right) \cap L^{q^{\prime}}\left(\mathbb{R}^N\right)$ with $1 < q^\prime < 2$. Because $\mathcal{S}(\R^N)$ is dense in $L^2\left(\mathbb{R}^N\right) \cap L^{q^{\prime}}$, there is a sequence in $\mathcal{S}(\R^N)$ such that
+	\begin{equation*}
+		\left\|\varphi_n-g\right\|_{L^2\left(\mathbb{R}^N\right)} \rightarrow 0, \quad\left\|\varphi_n-g\right\|_{L^{q^{\prime}}\left(\mathbb{R}^N\right)} \rightarrow 0
+	\end{equation*}
+	And by above there is a $C> 0$ such that
+	\begin{equation*}
+		\left|\left\langle u, \varphi_n\right\rangle\right| \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}\left\|\varphi_n\right\|_{L^{q^{\prime}}\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	Then by taking $n \sto \infty$ on the both sides,
+	\begin{equation*}
+		|\langle u, g\rangle| \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}\|g\|_{L^{q^{\prime}}\left(\mathbb{R}^N\right)}=C\|u\|_{H^s\left(\mathbb{R}^N\right)}
+	\end{equation*}
+	So by Theorem \ref{thm:mqf},
+	\begin{equation*}
+		\|u\|_{L^q\left(\mathbb{R}^N\right)} \leq C\|u\|_{H^s\left(\mathbb{R}^N\right)}.
+	\end{equation*}
+\end{proof}
+
+\begin{cor}
+	Let $0<s<\frac{N}{2}$ and $q \in \mathbb{R}$ satisfy
+	$$
+	\frac{1}{2}-\frac{2}{N} \leqslant \frac{1}{q} \leqslant \frac{1}{2}
+	$$
+	Then it can get $H^s\left(\mathbb{R}^N\right) \hookrightarrow L^q\left(\mathbb{R}^N\right)$.
+\end{cor}
+\begin{proof}
+	Firstly, let $q_0=\frac{2 N}{N-2 s}$. By the Sobolev Embedding Theorem and the fact $H^s\left(\mathbb{R}^N\right) \hookrightarrow L^2\left(\mathbb{R}^N\right)$ for any $s>0$,
+	$$
+	\begin{aligned}
+	& H^s\left(\mathbb{R}^N\right) \hookrightarrow L^2\left(\mathbb{R}^N\right) \text { and }\|u\|_{L^2} \leqslant\|u\|_{H^s}, \forall u \in H^s\left(\mathbb{R}^N\right) \\
+	& H^s\left(\mathbb{R}^N\right) \hookrightarrow L^{q_0}\left(\mathbb{R}^N\right) \text { and }\|u\|_{L^{q_0}} \leqslant C\|u\|_{H^s}, \forall u \in H^s\left(\mathbb{R}^N\right)
+	\end{aligned}
+	$$
+	Then $H^s\left(\mathbb{R}^N\right) \subset L^2\left(\mathbb{R}^N\right) \cap L^{q_0}\left(\mathbb{R}^N\right) \subset L^q$, for any $2 \leqslant q \leqslant q_0$. Besides, for this $q$, let
+	$$
+	t=\frac{\frac{1}{q}-\frac{1}{2}}{\frac{1}{q_0}-\frac{1}{2}} \in(0,1) \text { i.e. } \frac{1}{q}=\frac{1-t}{2}+\frac{t}{q_0}
+	$$
+	in the Reisz-Thorin Interpolation Theorem. So $H^s\left(\mathbb{R}^N\right) \hookrightarrow L^q\left(\mathbb{R}^N\right)$ and
+	$$
+	\|u\|_{L^q} \leqslant C^t\|u\|_{H^s}
+	$$
+\end{proof}

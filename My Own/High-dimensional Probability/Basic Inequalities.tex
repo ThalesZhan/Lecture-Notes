@@ -1,0 +1,1153 @@
+\chapter{Basic Inequalities}
+
+\section{Introduction}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Motivation problems: 
+	\begin{exam}
+	    \begin{enumerate}[label= (\arabic{*})]
+	    	\item Coupon Collector Problem: Let $X_i$ the color of the $i$-th coupon and $X_i \in [k]$. Let
+			\begin{equation*}
+				f(x_1,\cdots,x_n) \defeq \text{ the number of distinctly } x_1,\dots,x_n
+			\end{equation*}
+			The problem is to find a integer $n$ such that
+			\begin{equation*}
+				\Pb(f(X_1,\cdots,X_n) = k) \text{ is large }~\Leftrightarrow~\Pb(f(X_1,\cdots,X_n) < k) \text{ is small }
+			\end{equation*}
+			\item Given two \emph{i.i.d.} sequences $X_1^n = (X_1,\cdots,X_n)$ and $Y_1^n = (Y_1,\cdots,Y_n)$, what is the length of a longest common subsequence? 
+	    \end{enumerate}
+	\end{exam}
+
+	\item Concentration inequalities: Chernoff type bounds; Tensorization techniques (Martingale, Efron-Stein, Entropy); Isoperimetric inequalities; Transportation methods; Talagrand's convex distance inequalities.
+
+	\item Applications: Johnson-Lindenstrauss lemma; Hypercontractivity; Blowing-up lemma; Problem as above.
+
+\end{enumerate}
+
+
+\section{Cram\'er-Chernoff Method}
+\begin{enumerate}[label=\arabic{*}.]
+	\item The Markov's inequality: For $X \geq 0$ and $\varepsilon > 0$, we have
+	\begin{equation*}
+	    \Pb(X \geq \varepsilon) \leq \frac{\E[X]}{\varepsilon}
+	\end{equation*}
+	which can be extended to any non-negative, non-decreasing function $\phi$,
+	\begin{equation*}
+	    \Pb(X \geq \varepsilon) = \Pb(\phi(X) \geq \phi(\varepsilon)) \leq \frac{\E[\phi(X)]}{\phi(\varepsilon)}
+	\end{equation*}
+
+	\item Chernoff bound: Let $\phi(x) = e^{\lambda x}$ for $\lambda \geq 0$. Then for any $X$ and $t$,
+	\begin{equation*}
+		\Pb(X \geq t) = \Pb(\phi(X) \geq \phi(t)) \leq e^{-\lambda t} \E\bj{e^{\lambda X}} = \exp(-(\lambda t - \psi_X(\lambda)))
+	\end{equation*}
+	where $\psi_X(\lambda) \defeq \log \E\bj{e^{\lambda X}}$. Therefore,
+	\begin{equation*}
+		\begin{aligned}
+			\Pb(X \geq t) &\leq \inf_{\lambda \geq 0} \exp(-(\lambda t - \psi_X(\lambda))) \\
+			&=\exp\bc{-\sup_{\lambda \geq 0}(\lambda t - \psi_X(\lambda))} \\
+			&=\exp\bc{-\psi_X^*(t)}
+		\end{aligned}
+	\end{equation*}
+	where $\psi_X^*(t)\defeq \sup_{\lambda \geq 0}(\lambda t - \psi_X(\lambda))$. In general, the Chernoff bound is
+	\begin{equation*}
+		\Pb(X \geq t) \leq \exp\bc{-\psi_X^*(t)}
+	\end{equation*}
+	\begin{rmk}
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item Equivalently, for $\delta \geq 0$,
+	    	\begin{equation*}
+	    		\Pb(X \geq (\psi_X^*)^{-1}(\log 1/ \delta)) \leq \delta
+	    	\end{equation*}
+
+	    	\item $\psi_X(\lambda) = \log \E\bj{e^{\lambda X}}$ is called the cumulant generating function of $X$ at $\lambda$.
+
+	    	\item $\psi_X^*(t)= \sup_{\lambda \geq 0}(\lambda t - \psi_X(\lambda))$ is called the Cram\'er transform of $X$ at $t$.
+	    \end{enumerate}
+	\end{rmk}
+
+	\item Properties of $\psi_X$ and $\psi_X^*$: Suppose that there is a $\lambda > 0$ such that $\psi_X(\lambda) < \infty$. Let $b > 0$ be the supremum over all such $\lambda$.
+	\begin{enumerate}[label=(\arabic{*})]
+		\item $\psi_X$ is smooth over $(0,b)$.
+		\item $\psi_X$ is convex on $(0,b)$ and strictly convex if $X$ is not a constant random variable, because
+		\begin{equation*}
+			\begin{aligned}
+				\psi_X(\theta \lambda_1 + (1 - \theta) \lambda_2) & = \log \E\bj{e^{\theta \lambda_1X + (1 - \theta) \lambda_2X}} \\
+				&\leq  \log \E\bj{e^{\lambda_1X}}^\theta \E\bj{e^{\lambda_2X}}^{(1 - \theta)} \\
+				&= \theta \psi_X(\lambda_1) +(1 - \theta)\psi_X(\lambda_2)
+			\end{aligned}
+		\end{equation*}
+		by H\"older's inequality (strictly convex by the ``$=$'' condition in H\"older's inequality).
+		\item $\psi_X^*$ is convex on its domain because $\psi_X^*$ is the max of linear functions.
+		\item $\psi_X^*$ is nonnegative because $\psi_X(0) = 0$.
+		\item If $\E[X]$ is finite, then by Jensen's inequality
+		\begin{equation*}
+			\psi_X(\lambda) = \log \E\bj{e^{\lambda X}} \geq \lambda \E[X] ~\Rightarrow~ \lambda \E[X] - \psi_X(\lambda) \leq 0
+		\end{equation*}
+		Therefore, for any $t \ge \E[X]$ and $\lambda \leq 0$,
+		\begin{equation*}
+			\lambda t - \psi_X(\lambda) \leq \lambda \E[X] - \psi_X(\lambda) \leq 0
+		\end{equation*}
+		It follows that for any $t \ge \E[X]$,
+		\begin{equation*}
+			\psi_X^*(t) = \sup_{\lambda \in \R} (\lambda t - \psi_X(\lambda))
+		\end{equation*}
+		the Fenchel dual of $\psi_X$.
+	\end{enumerate}
+	\begin{exam}
+	    Examples of Chernoff method:
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item $X \sim \mathcal{N}(0,\sigma^2)$:
+	    	\begin{equation*}
+	    		\E\bj{e^{\lambda x}} = e^{\frac{\lambda^2\sigma^2}{2}}
+	    	\end{equation*}
+	    	For any $t \geq \E[X] = 0$,
+	    	\begin{equation*}
+	    		\psi_X^*(t) = \sup_{\lambda \in \R} \bc{\lambda t - \frac{\lambda^2\sigma^2}{2}} = \frac{t^2}{2\sigma^2}
+	    	\end{equation*}
+	    	Therefore, for any $t \geq 0$
+	    	\begin{equation*}
+	    		\Pb(X \geq t) \leq e^{-\frac{t^2}{2\sigma^2}}
+	    	\end{equation*}
+
+	    	\item $X \sim \op{Poi}(v)$: Note that $v > 0$.
+	    	\begin{equation*}
+	    		\E\bj{e^{\lambda x}} = e^{-v} \sum_{k=0}^\infty e^{\lambda k}\frac{v^k}{k!} = e^{(e^\lambda -1)v}~\Rightarrow~ \psi_X(\lambda) = (e^\lambda -1)v
+	    	\end{equation*}
+	    	Therefore, 
+	    	\begin{equation*}
+	    		\begin{aligned}
+	    			\psi_X^*(t) &= \sup_{\lambda \geq 0} (\lambda t - ve^\lambda + v)
+	    		\end{aligned}
+	    	\end{equation*}
+	    	For $t < 0$, clearly $\psi_X^*(t) = 0$. For $t \geq 0$, because $\frac{d}{d\lambda}(\lambda t - ve^\lambda + v) = 0$ has solution $\lambda^* = \log(t / v)$. Therefore, for $t \geq v$,
+	    	\begin{equation*}
+	    		\psi_X^*(t) = t\log(t / v) - t + v = vh\bc{\frac{t}{v} - 1},\quad h(x) \defeq (1+x)\log (1+ x) - x
+	    	\end{equation*}
+	    	Therefore, for any $t \geq v$,
+	    	\begin{equation*}
+	    		\Pb(X \geq t) \leq e^{-v}\exp\bc{-t\bc{\log\frac{t}{v} - 1}} \approx \mathcal{O}\bc{e^{-t\log t}}
+	    	\end{equation*}
+	    	\begin{rmk}
+	    	    The RHS $< 1$ if and only if $\log \frac{t}{v} > 1 - \frac{v}{t}$. Then $t > 7.3$. Otherwise, this is not useful. Besides,
+	    	    \begin{equation*}
+	    	         h(x) = (1+x)\log (1+ x) - x \geq \frac{x^2}{2(1+x/3)}
+	    	    \end{equation*}
+	    	    So for $t \geq v$,
+	    	    \begin{equation*}
+	    	    	\psi_X^*(t) \geq \frac{v}{2}\frac{(t/v - 1)^2}{1 + (t /v-1)/3}
+	    	    \end{equation*}
+	    	\end{rmk}
+
+	    	\item $X \sim \op{Ber}(p)$ with $p < \frac{1}{2}$: 
+	    	\begin{equation*}
+	    		\psi_X(\lambda) = \log pe^\lambda + 1 - p
+	    	\end{equation*}
+	    	For $0 < t \leq 1$, we have
+	    	\begin{equation*}
+	    		\psi_X^*(t) = (1-t)\log\frac{1-t}{1-p} + t\log \frac{t}{p} = D\bc{\op{Ber}(t)~ \Vert~ \op{Ber}(p)} = D\bc{t~ \Vert~ p}
+	    	\end{equation*}
+	    	and $t > 1$, $\psi_X^*(t) = \infty$. Then for $0 < t \leq 1$,
+	    	\begin{equation*}
+	    		\Pb(X \geq t) = \exp(-D(t~ \Vert~ p))
+	    	\end{equation*}
+
+
+	    	\item Sum of independent random variables: $Z = X_1 +\cdots +X_n$ implies
+	    	\begin{equation*}
+	    		\psi_Z(\lambda) = \sum_i \psi_{X_i}(\lambda)
+	    	\end{equation*}
+	    	If $X_1,\cdots, X_n$ is \emph{i.i.d.} as $X$, then
+	    	\begin{equation*}
+	    		\psi_Z^*(t) = \sup_{\lambda \geq 0}(t \lambda - n\psi_X(\lambda)) = n\psi^*_X\bc{\frac{t}{n}}
+	    	\end{equation*}
+	    	Therefore,
+	    	\begin{equation*}
+	    		\Pb\bc{\sum_i X_i \geq t} \leq \exp\bc{-n\psi^*_X\bc{\frac{t}{n}}}
+	    	\end{equation*}
+	    	\emph{e.g.} $X_i \sim \op{Ber}(0)$,
+	    	\begin{equation*}
+	    		\begin{aligned}
+	    			&\Pb\bc{\sum_i X_i \geq t} \leq \exp\bc{-nD\bc{\frac{t}{n}~ \Vert~ p}} \\
+	    			&~\Leftrightarrow~ \Pb\bc{\frac{1}{n}\sum_i X_i \geq p+\theta} \leq \exp\bc{-nD(p+\theta~ \Vert~ p)}
+	    		\end{aligned}
+	    	\end{equation*}
+
+
+	    	\item  $\chi^2$-distribution: $X \sim \mathcal{N}(0,\sigma^2)$ and $Y = X^2$.
+	    	\begin{equation*}
+	    	    \E\bj{e^{\lambda Y}} = \frac{1}{\sqrt{1 - 2\lambda \sigma^2}},\quad \lambda < \frac{1}{2\sigma^2}
+	    	\end{equation*}
+	    	otherwise, it is $\infty$. It implies that
+	    	\begin{equation*}
+	    		\psi_Y(\lambda) = \frac{1}{2}\log (1 - 2\sigma^2\lambda),\quad \lambda < \frac{1}{2\sigma^2}
+	    	\end{equation*}
+	    	Let $Z = Y - \E[Y] = X^2 - \sigma^2$.
+	    	\begin{equation*}
+	    		\psi_Z(\lambda) = -\frac{1}{2}\log(1 - 2\sigma^2\lambda) - \lambda \sigma^2,\quad \lambda < \frac{1}{2\sigma^2}
+	    	\end{equation*}
+	    	For $t \geq \E[Z] = 0$,
+	    	\begin{equation*}
+	    		\psi^*_Z(t) = \sup_\lambda \frac{1}{2} \log(1 - 2\sigma^2\lambda) + \lambda(\sigma^2 + t) = \frac{1}{2} \log \bc{\frac{\sigma^2}{\sigma^2 + t}} + \frac{t}{\sigma^2} \eqdef \frac{1}{2}h_1\bc{\frac{t}{\sigma^2}}
+	    	\end{equation*}
+	    	Likewise, for $\lambda > 0$,
+	    	\begin{equation*}
+	    	   \psi_{-Z}(\lambda) = -\frac{1}{2}\log(1 + 2\sigma^2\lambda) + \lambda \sigma^2
+	    	\end{equation*}
+	    	and
+	    	\begin{equation*}
+	    		\psi^*_{-Z}(t) = \frac{1}{2} \log \bc{\frac{\sigma^2}{\sigma^2 - t}} - \frac{t}{\sigma^2} = \frac{1}{2}h_2\bc{\frac{t}{\sigma^2}},\quad 0 \leq t \leq \sigma^2
+	    	\end{equation*}
+	    	Note that
+	    	\begin{equation*}
+	    	    h_1(x) = -\log (1+x) +x ~\Rightarrow~ \frac{1}{2}h_1(x) \geq 1 - \sqrt{1+x} + \frac{x}{2}
+	    	\end{equation*}
+	    	so that
+	    	\begin{equation*}
+	    	    \psi^*_Z(t) \geq 1+\frac{t}{\sigma^2} - \sqrt{1 + \frac{t}{\sigma^2}}
+	    	\end{equation*}
+	    	Similarly,
+	    	\begin{equation*}
+	    		h_2(x) = -\log(1 - x)-x \geq \frac{x^2}{2},\quad x \geq 0
+	    	\end{equation*}
+	    	so that
+	    	\begin{equation*}
+	    	    \psi^*_{-Z}(t) \geq \frac{t^2}{4\sigma^2},\quad t \geq 0
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{exam}
+
+\end{enumerate}
+
+
+\section{Sub-Gaussian: Hoeffding}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Sub-Gaussian random variable:
+	\begin{defn}
+	    A random variable $X$ with $\E X = 0$ is called to be sub-Gaussian if there is a $v > 0$ such that for all $\lambda$
+	    \begin{equation*}
+	    	\psi_X(\lambda) \leq \frac{\lambda^2v}{2}~\Leftrightarrow~ \E e^{\lambda X} \leq e^{\lambda G},~G \sim \mathcal{N}(0,\lambda)
+	    \end{equation*}
+	   	and $X \in \mathcal{G}(v)$.
+	\end{defn}
+	\begin{prop}
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item If $X_i \sim \mathcal{G}(v_i)$ are independent, then
+	    	\begin{equation*}
+	    		\sum_iX_i \sim \mathcal{G}\bc{\sum_iv_i}
+	    	\end{equation*}
+
+	    	\item  If $X \in \mathcal{G}(v)$, then $-X \in \mathcal{G}$(v), and for any $t \geq 0$
+	    	\begin{equation*}
+	    		\Pb(X \geq t) \leq \exp\bc{-\frac{t^2}{2v}},\quad \Pb(-X \geq t) \leq \exp\bc{-\frac{t^2}{2v}}
+	    	\end{equation*}
+
+	    	\item $X \in \mathcal{G}(v)$ implies $\op{Var}(X) \leq v$ by differentiation.
+	    \end{enumerate}
+	\end{prop}
+
+	\begin{thm}
+	    Let $\E X = 0$. Then TFAE for chosen $v,b,C,\alpha$.
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item $X \in \mathcal{G}(v)$.
+	    	\item $\Pb(\abs{X} \geq t) \leq 2e^{-bt^2}$.
+	    	\item For any $q \in \N$, $\E \bj{X^{2q}} \leq C^q q!$.
+	    	\item $\E\bj{e^{\alpha X^2}} \leq 2$.
+	    \end{enumerate}
+	\end{thm}
+	\begin{proof}
+	    $(1)$ implies $(2)$ is by above. For $(2) \Rightarrow (3)$, WTLG, let $b=1$. Then
+	    \begin{equation*}
+	    	\begin{aligned}
+				\E\left[X^{2 q}\right] & =\int_0^{\infty} \Pb\left\{|X|^{2 q}>x\right\} d x \\
+				& =2 q \int_0^{\infty} x^{2 q-1} \Pb\{|X|>x\} d x \\
+				&\leq 4 q \int_0^{\infty} x^{2 q-1} e^{-x^2 / 2} d x\\
+				& = 4 q \int_0^{\infty}(2 t)^{q-1} e^{-t} d t=2^{q+1} q!
+			\end{aligned}
+	    \end{equation*}
+	    where the first equality is by the theory of distribution function and $x = \sqrt{2t}$ for the change of variable in the last $2$ equality. For $(3) \Rightarrow (1)$, consider a copy of $X$ denoted by $X^\prime$.
+	    \begin{equation*}
+	    	\E e^{\lambda X} \E e^{-\lambda X}=\E e^{\lambda\left(X-X^{\prime}\right)}=\sum_{q=0}^{\infty} \frac{\lambda^{2 q} \E\left[\left(X-X^{\prime}\right)^{2 q}\right]}{(2 q)!}
+	    \end{equation*}
+	    By the convexity of $x \mapsto x^{2q}$,
+	    \begin{equation*}
+	    	\left(X-X^{\prime}\right)^{2 q} \leq 2^{2q-1}\bc{X^{2q}+(X^\prime)^{2q}}
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	    	\E\left[\left(X-X^{\prime}\right)^{2 q}\right] \leq 2^{2 q-1}\left(\E\left[X^{2 q}\right]+\E\left[X^{\prime 2 q}\right]\right)=2^{2 q} \E\left[X^{2 q}\right]
+	    \end{equation*}
+	    It follows that
+	    \begin{equation*}
+	    	\E e^{\lambda X} \E e^{-\lambda X}=\sum_{q=0}^{\infty} \frac{\lambda^{2 q} \E\left[\left(X-X^{\prime}\right)^{2 q}\right]}{(2 q)!} \leq \sum_{q=0}^{\infty} \frac{\lambda^{2 q} 2^{2 q} C^q q!}{(2 q)!}
+	    \end{equation*}
+	    Because $q \in \N$,
+	    \begin{equation*}
+	    	\frac{(2 q)!}{q!}=\prod_{j=1}^q(q+j) \geq \prod_{j=1}^q(2 j)=2^q q!
+	    \end{equation*}
+	    Thus
+	    \begin{equation*}
+	    	\E e^{\lambda X} \E e^{-\lambda X} \leq \sum_{q=0}^{\infty} \frac{\lambda^{2 q} 2^q C^q}{q!}=e^{2 \lambda^2 C}~\Rightarrow~\E e^{\lambda X} \leq e^{2 \lambda^2 C}
+	    \end{equation*}
+	    by $\E e^{-\lambda X} \geq 1$ since $\E[X] = 0$. For $(3) \Rightarrow (4)$, by setting $ \alpha = 1 /(2C)$
+	    \begin{equation*}
+	    	\E \exp \left(\alpha X^2\right)=\sum_{q=0}^{\infty} \frac{\alpha^q \E\left[X^{2 q}\right]}{q!} \leq \sum_{q=0}^{\infty} 2^{-q}=2
+	    \end{equation*}
+	    For $(4) \Rightarrow (3)$,
+	    \begin{equation*}
+	    	\E \exp \left(\alpha X^2\right) \leq 2~\Rightarrow~\sum_{q=1}^{\infty} \frac{\alpha^q \E\left[X^{2 q}\right]}{q!} \leq 1
+	    \end{equation*}
+	    It follows that
+	    \begin{equation*}
+	    	\E\left[X^{2 q}\right] \leq \alpha^{-q} q! \qedhere
+	    \end{equation*}
+	\end{proof}
+
+	\item Hoeffding's Inequality:
+	\begin{lem}[Hoeffding's lemma]
+	    Suppose a random variable $X$ takes values in $[a,b]$ and $\E[X] = 0$. Then $X \in \mathcal{G}\bc{\frac{(b-a)^2}{4}}$.
+	\end{lem}
+	\begin{proof}
+	    If $X \in [a,b]$, then $\abs{X-\frac{a+b}{2}} \leq \frac{b-a}{2}$. So
+	    \begin{equation*}
+	    	\op{Var}(X) = \op{Var}\bc{X - \frac{a+b}{2}} \leq \E\bc{X-\frac{a+b}{2}}^2 \leq \frac{(b-a)^2}{4}
+	    \end{equation*}
+	    Besides, for $\psi_X(\lambda) = \log \E[e^{\lambda X}]$, $\psi_X(0) = \psi^\prime(0) = 0$ and
+	    \begin{equation*}
+	    	\psi_X^{\prime\prime}(\lambda) = \frac{\E\bj{X^2e^{\lambda X}}}{\E\bj{e^{\lambda X}}} - \bc{\frac{\E\bj{Xe^{\lambda X}}}{\E\bj{e^{\lambda X}}} }^2
+	    \end{equation*}
+	    Let $\Pb$ be the probability and a new distribution $\mathbb{Q} \ll \Pb$
+	    \begin{equation*}
+	    	\frac{d\mathbb{Q}}{d\Pb} = \frac{e^{\lambda X}}{\psi_X(\lambda)}
+	    \end{equation*}
+	    which also implies that $\abs{X-\frac{a+b}{2}} \leq \frac{b-a}{2}$ in $\mathbb{Q}$. Then
+	    \begin{equation*}
+	    	\E_{\mathbb{Q}}[X^2] = \int X^2 d\mathbb{Q} = \int X^2  \frac{e^{\lambda X}}{\psi_X(\lambda)} d\Pb
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	    	\psi_X^{\prime\prime}(\lambda) = \E_{\mathbb{Q}}[X^2] - \bc{\E_{\mathbb{Q}}[X]}^2 = \op{Var}_{\mathbb{Q}}(X) \leq \frac{(b-a)^2}{4}
+	    \end{equation*}
+	    Then we have for any $\lambda$, by Taylor's theorem,
+	    \begin{equation*}
+	    	\psi_X(\lambda) \leq \frac{(b-a)^2\lambda^2}{8} ~\Rightarrow~X \in \mathcal{G}\bc{\frac{(b-a)^2}{4}} \qedhere
+	    \end{equation*}
+	\end{proof}
+	\begin{rmk}
+	    This lemma is tight.
+	\end{rmk}
+	\begin{cor}[Hoeffding's Inequality]
+	    Consider independent random variables $X_1,\cdots,X_n$ such that $X_i \in [a_i,b_i]$ and $\E[X_i] = 0$. Then
+	    \begin{equation*}
+	    	\Pb\bc{\sum_{i=1}^nX_i \geq t} \leq \exp\bc{\frac{-2t^2}{\sum_{i=1}^n(b_i-a_i)^2}}
+	    \end{equation*}
+	\end{cor}
+
+	\item Bonnett's Inequality:
+	\begin{lem}[Bonnett's Inequality]
+	    Consider independent random variables $X_1,\cdots,X_n$ such that $\abs{X_i} \leq C$ and $\E[X_i] = 0$. Let
+	    \begin{equation*}
+	    	\sigma^2 = \frac{1}{n}\sum_{i=1}^n\op{Var}(X_i)
+	    \end{equation*}
+	    Then we have
+	    \begin{equation*}
+	    	\Pb\bc{\sum_{i=1}^nX_i \geq t} \leq \exp\bc{-\frac{n\sigma^2}{C^2}h\bc{\frac{tC}{\sigma^2n}}}
+	    \end{equation*}
+	    where $h(x) = (1+x)\log(1+x)-x$.
+	\end{lem}
+	\begin{proof}
+	    First,
+	    \begin{equation*}
+	    	\begin{aligned}
+	    		\E\bj{e^{\lambda X_i}} &= 1+\sum_{k=2}^\infty \frac{\lambda^k\E X_i^k}{k!} \\
+	    		&\leq 1+\sum_{k=2}^\infty \frac{\lambda^k}{k!}\E\bj{X_i^2\abs{X_i}^{k-2}} \\
+	    		&\leq 1+\sum_{k=2}^\infty \frac{\lambda^k}{k!}C^{k-2}\op{Var}(X_i) \\
+	    		&\leq 1+\frac{\sigma_i^2}{c^2}\sum_{k=2}^\infty \frac{(c\lambda)^k}{k!} = 1+\frac{\sigma_i^2}{c^2}\bc{e^{\lambda c} - 1 -\lambda c} \\
+	    		&\leq \exp\bc{\frac{\sigma_i^2}{c^2}\bc{e^{\lambda c} - 1 -\lambda c} }
+	    	\end{aligned}
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	    	\psi_{\sum X_i}(\lambda) \leq \frac{n\sigma^2}{c^2}\bc{e^{\lambda c} - 1 -\lambda c}
+	    \end{equation*}
+	    Recall if $X \in \op{Poi}(v)$, then $\psi_{X-v}(\lambda) = v (e^\lambda-1 - \lambda)$ and $\psi^*_{X-v}(t) = vh(t/v)$. Therefore,
+	    \begin{equation*}
+	    	\psi^*_{\sum X_i}(t) \geq \frac{n\sigma^2}{c^2} h\bc{\frac{tc}{n\sigma^2}} \qedhere
+	    \end{equation*}
+	\end{proof}
+	\begin{cor}[Bernstein's Inequality]
+	    In the same settings,
+	    \begin{equation*}
+	    	\Pb\bc{\sum_{i=1}^nX_i \geq t} \leq \exp\bc{-\frac{t^2}{2n\sigma^2+\frac{2}{3}ct}}
+	    \end{equation*}
+	\end{cor}
+	\begin{proof}
+	    It is because $h(x) \geq \frac{x^2}{2+\frac{2}{3}x}$
+	\end{proof}
+	\begin{exam}
+	    Let $X_i \sim \op{Ber}(p)$ and $S_n = \sum_{i=1}^nX_i$. Then Hoeffding's Inequality provides
+	    \begin{equation*}
+	    	\Pb(S_n - np \geq t) \leq \exp\bc{-\frac{2t^2}{n}}~\Rightarrow~\Pb(S_n - np \geq \sqrt{\frac{n}{2}\log \frac{1}{\delta}}) \leq \delta
+	    \end{equation*}
+	    and Bernstein's Inequality provides
+	    \begin{equation*}
+		    \begin{aligned}
+		    	&\Pb(S_n - np \geq t) \leq \exp\bc{\frac{-t^2}{2np(1-p)+\frac{2t}{3}}}\\
+		    	&~\Rightarrow~\Pb\bc{S_n-np \geq \log(1/\delta) + 4\sqrt{np(1-p)\log(1/\delta)}} \leq \delta
+		    \end{aligned}
+	    \end{equation*}
+	\end{exam}
+\end{enumerate}
+
+\section{Azuma and McDiarmid}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Azuma-Hoeffding Inequality: 
+	\begin{defn}
+	    Random variables $X_1,\cdot,X_n$ are said to constitute a multiplicative family if for every distinct $i_1<\cdots < i_k$ with $k \leq n$,
+	    \begin{equation*}
+	    	\E[X_{i_1}\cdots X_{i_k}] = 0
+	    \end{equation*}
+	\end{defn}
+	\begin{exam}
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item Independent $X_1,\cdots,X_n$ with $\E[X_i] = 0$ constitute a multiplicative family.
+	    	\item For a martingale difference sequence $X_1,\cdots,X_n$, \emph{i.e.}
+	    	\begin{equation*}
+	    	    \E X_1 = 0,~\E [X_2 \mid X_1]=0,\cdots,\E[X_n \mid X_1,\cdots,X_{n-1}]=0
+	    	\end{equation*}
+	    	then by the tower property
+	    	\begin{equation*}
+	    		\begin{aligned}
+	    			\E[X_{i_1}\cdots X_{i_k}] &= \E\bj{\E[X_{i_1}\cdots X_{i_k} \mid  X_1,\cdots,X_{i_k-1}]} \\
+	    			&= \E\bj{X_{i_1}\cdots X_{i_{k-1}}\E[X_{i_k} \mid  X_1,\cdots,X_{i_k-1}]} \\
+	    			&= 0
+	    		\end{aligned}
+	    	\end{equation*}
+	    	they constitute a multiplicative family.
+	    \end{enumerate}
+	\end{exam}
+	\begin{lem}[Azuma-Hoeffding Inequality]
+	    For a  multiplicative family $X_1,\cdot,X_n$ with $\abs{X}_i \leq c_i$ and $t > 0$,
+	    \begin{equation*}
+	    	\Pb\bc{\sum_{i=1}^n X_i \geq t} \leq \exp\bc{-\frac{t^2}{2\sum_{i=1}^nc_i^2}}
+	    \end{equation*}
+	\end{lem}
+	\begin{proof}
+	    First, let make an upper bound linear approximation to $e^{\lambda x}$.
+	    \begin{equation*}
+	    	e^{\lambda x} \leq a x + b,\quad \forall~x \in [-c,c]
+	    \end{equation*}
+	    by setting
+	    \begin{equation*}
+	    	a = \frac{e^{\lambda c} - e^{-\lambda c}}{2c},\quad b = \frac{e^{\lambda c} + e^{-\lambda c}}{2}
+	    \end{equation*}
+	    For $\lambda > 0$, 
+	    \begin{equation*}
+	    	\begin{aligned}
+	    		\E \bj{e^{\lambda \sum_{i=1}^n X_i}} &= \E \bj{\Pi_{i=1}^n e^{\lambda X_i}} \\
+	    		&\leq \E \bj{\Pi_{i=1}^n(a_iX_i + b_i) }= \E \bj{\Pi_{i=1}^n b_i} \\
+	    		&= \Pi_{i=1}^n\bc{ \frac{e^{\lambda c_i} + e^{-\lambda c_i}}{2}} \\
+	    		&= \Pi_{i=1}^n \bc{1 + \frac{\lambda^2 c_i^2}{2!} + \frac{\lambda^4 c_i^4}{4!} + \frac{\lambda^6 c_i^6}{6!}\cdots}\\
+	    		&\leq \Pi_{i=1}^n \bc{1 + \frac{\lambda^2 c_i^2}{2} + \frac{\lambda^4 c_i^4 / 4}{2!} + \frac{\lambda^6 c_i^6 /8}{3!}\cdots}\\
+	    		&= \Pi_{i=1}^n \exp\bc{\frac{\lambda^2 c_i^2}{2}}
+	    	\end{aligned}
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	    	\psi_{\sum X_i} \leq \frac{\lambda^2}{2}\sum_{i=1}^nc_i^2 \qedhere
+	    \end{equation*}
+	\end{proof}
+
+	\item Applications: Let $Z_0,Z_1,\cdots,Z_n$ be a martingale. Then we can see
+	\begin{equation*}
+		X_i = Z_i - Z_{i-1}
+	\end{equation*}
+	is a martingale difference sequence because
+	\begin{equation*}
+		\E[X_i \mid X_1,\cdots,X_{i-1}] = \E[Z_i - Z_{i-1} \mid Z_0,\cdots,Z_{i-1}] = Z_{i-1} - Z_{i-1} = 0
+	\end{equation*}
+	And so they constitute a multiplicative family. Assume that $\abs{X_i} \leq c$, then
+	\begin{equation*}
+		\Pb(\max_i(Z_i-Z_0) \geq t) \leq \exp\bc{-\frac{t^2}{2nc^2}}
+	\end{equation*}
+	by Azuma-Hoeffding Inequality. This strengthens the Doob's Inequality. Because $Z_i - Z_0$ is also a martingale, which implies that $e^{\lambda (Z_i - Z_0)}$ is a non-negative submartingale, Doob's Inequality provides
+	\begin{equation*}
+	    \Pb\bc{\max_i (Z_i - Z_0) \geq t} = \Pb\bc{\max_i e^{\lambda (Z_i - Z_0)} \geq e^{\lambda t}} \leq \frac{\E \bj{e^{\lambda (Z_n-Z_0)}}}{e^{\lambda t}}
+	\end{equation*}
+
+	\item  McDiarmid's Inequality:
+	\begin{defn}
+	    Let $S$ be any set. A function $f \colon S^n \sto \R$ satisfies the Bounded Difference Property (BDP) with constants $\bd{c} = (c_1,\cdots,c_n)$ if
+	    \begin{equation*}
+	    	\abs{f(x_1,\cdots,x_{i},\cdots,x_n) - f(x_1,\cdots,x^\prime_{i},\cdots,x_n)} \leq c_i,\quad \forall~x_i,x_i^\prime,~\forall~i
+	    \end{equation*}
+	\end{defn}
+	\begin{rmk}
+	    Consider the Hamming Distance, \emph{i.e.} for $x,y \in S^n$
+	    \begin{equation*}
+	    	d_{\bd{c}}(x,y) \defeq \sum_{i=1}^n c_i \mathds{1}\bb{x_i \neq y_i}
+	    \end{equation*}
+	    Then $f$ satisfies BDP if and only if
+	    \begin{equation*}
+	    	\abs{f(x)-f(y)} \leq d_{\bd{c}}(x,y)
+	    \end{equation*}
+	    \emph{i.e.} $f$ is $1$-Lipschitz continuous.
+	\end{rmk}
+
+	\begin{lem}[McDiarmid's Inequality]
+	    Suppose $f$ satisfies BDP with $\bd{c} = (c_1,\cdots,c_n)$. Then if $Z = f(X_1,\cdots,X_n)$ with independent random variables $X_1,\cdots,X_n$, then
+	    \begin{equation*}
+	    	\Pb\bc{Z - \E Z \geq t} \leq \exp\bc{-\frac{t^2}{2 \sum_i c_i^2}}
+	    \end{equation*}
+	    similarly, because $f$ BDP implies $-f$ BDP, 
+	    \begin{equation*}
+	        \Pb\bc{-Z + \E Z \geq t} \leq \exp\bc{-\frac{t^2}{2 \sum_i c_i^2}}
+	    \end{equation*}
+	\end{lem}
+	\begin{proof}
+	    Let $Y_i = \E[Z \mid X_1,\cdots, X_i] = g(X_1,\cdots,X_i)$ for $i \geq 1$ and $Y_0 = \E[Z]$. Then $Y_i$ is a martingale, because
+	    \begin{equation*}
+	    	\E\bj{ \E[Z \mid \sigma(X_1,\cdots, X_i)] \mid \sigma(X_1,\cdots, X_{i-1})} = \E[Z \mid \sigma(X_1,\cdots, X_{i-1})]
+	    \end{equation*}
+	    can be checked by the definition of conditional expectation (Note that here we do not need the independence). Consider $Y_i - Y_{i-1}$, by the independence and the BDP of $f$, we have
+	    \begin{equation*}
+	    	\begin{aligned}
+	    		(Y_i - Y_{i-1})(x_1,\cdots,x_i) &= \E[Z \mid X_1=x_1,\cdots, X_i=x_i] - \E[Z \mid X_1=x_1,\cdots, X_{i-1}=x_{i-1}] \\
+	    		&= \int f(x_1,\cdots, x_i, w_{i+1},\cdots,w_{n})\frac{p(x^i,w_{i+1}^n)}{p(x^i)} dw_{i+1}^n \\
+	    		&\quad- \int f(x_1,\cdots, x_{i-1}, w_{i},\cdots,w_{n})\frac{p(x^{i-1},w_{i}^n)}{p(x^{i-1})} dw_{i}^n \\
+	    		&= \int f(x_1,\cdots, x_i, w_{i+1},\cdots,w_{n})p(w_{i+1}^n) dw_{i+1}^n \\
+	    		&\quad- \int \int_{w_i}f(x_1,\cdots, x_{i-1}, w_{i},\cdots,w_{n})p(w_i)p(w_{i+1}^n) dw_idw_{i+1}^n \\
+	    		&\leq \int f(x_1,\cdots, x_i, w_{i+1},\cdots,w_{n})p(w_{i+1}^n) dw_{i+1}^n \\
+	    		&\quad- \int \int_{w_i}(f(x_1,\cdots, x_{i}, w_{i+1},\cdots,w_{n})-c_i)p(w_i)p(w_{i+1}^n) dw_idw_{i+1}^n \\
+	    		&= c_i
+	    	\end{aligned}
+	    \end{equation*}
+	    Similarly, $Y_i - Y_{i-1} \geq -c_i$. Then by Azuma's inequality,
+	    \begin{equation*}
+	    	\Pb\bc{Y_n - Y_0 \geq t} = \Pb\bc{Z - \E Z \geq t} \leq \exp\bc{-\frac{t^2}{2 \sum_i c_i^2}}
+	    \end{equation*}
+	    because $Y_n =  \E[Z \mid X_1,\cdots, X_n] = Z$.
+	\end{proof}
+	\begin{rmk}
+	    In fact, if $\sigma$-algebra $\mathcal{H} \subset \mathcal{G}$, then we can see
+	    \begin{equation*}
+	        \E\bj{\E[X \mid \mathcal{G}] \mid \mathcal{H}} = \E[X \mid \mathcal{H}]
+	    \end{equation*}
+	    because for any $A \in \mathcal{H} \subset \mathcal{G}$,
+	    \begin{equation*}
+	        \E\bj{\mathds{1}_A\E[X \mid \mathcal{G}]} = \E\bj{\E[X\mathds{1}_A \mid \mathcal{G}]} = \E[X\mathds{1}_A]
+	    \end{equation*}
+	\end{rmk}
+\end{enumerate}
+
+\section{Efron-Stein Inequality}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Derivation: Let $X_1,\cdots,X_i$ be independent and $Z = f(X_1,\cdots,X_n)$. Let $Z_i = \E[Z \mid X_1,\cdots,X_i]$ and $Z_0 = \E[Z]$ and $\Delta_i = Z_i - Z_{i-1}$. Note that
+	\begin{equation*}
+	    Z - \E[Z] = Z_n - Z_0 = \sum_{i=1}^n\Delta_i
+	\end{equation*}
+	Besides, because $Z_i$ is a martingale, $\Delta_i$ is a martingale of difference so that it is a multiplicative family. It follows that $\E[\Delta_i\Delta_j] = 0$ for $i \neq j$. So
+	\begin{equation*}
+	    \op{Var}(Z) = \op{Var}\bc{\sum_{i=1}^n\Delta_i} = \sum_{i=1}^n\op{Var}\bc{\Delta_i} = \sum_{i=1}^n\E\bj{\Delta_i^2}
+	\end{equation*}
+	\begin{lem}
+	    For independent $A,B,C$ and $Z = f(A,B,C)$, we have
+	    \begin{equation*}
+	        \E\bj{\E[Z \mid AC] \mid AB} = \E[Z \mid A]
+	    \end{equation*}
+	\end{lem}
+	\begin{proof}
+	    Because $\E[Z \mid AC]$ is a function of $A,C$, $B$ is independent with $\sigma(\E[Z \mid AC],A)$,
+	    \begin{equation*}
+	        \E\bj{\E[Z \mid AC] \mid AB} =\E\bj{\E[Z \mid AC] \mid A} =\E[Z \mid A] \qedhere
+	    \end{equation*}
+	\end{proof}
+	This lemma implies that
+	\begin{equation*}
+	    \begin{aligned}
+	    	\Delta_i &= \E[Z \mid X^i] - \E[Z \mid X^{i-1}] \\
+	    	&= \E[Z \mid X^i] - \E\bj{\E[Z \mid X^{(i)}] \mid X^i} \\
+	    	&= \E\bj{\bc{Z - \E[Z \mid X^{(i)}]} \mid X^i} 
+	    \end{aligned}
+	\end{equation*}
+	where $X^i = (X_1,\cdots,X_i)$ and $X^{(i)} = (X_1,\cdots,X_{i-1},X_{i+i},\cdots,X_n)$ for simplicity. It follows that
+	\begin{equation*}
+	    \begin{aligned}
+	    	\E\bj{\Delta_i^2} &= \E\bj{\E\bj{\bc{Z - \E[Z \mid X^{(i)}]} \mid X^i}^2} \\
+	    	&\leq \E\bj{\E\bj{\bc{Z - \E[Z \mid X^{(i)}]}^2 \mid X^i}} \\
+	    	&= \E\bj{\bc{Z - \E[Z \mid X^{(i)}]}^2}
+	    \end{aligned}
+	\end{equation*}
+	by Jensen's Inequality. Therefore, we have
+	\begin{equation*}
+	     \op{Var}(Z) \leq \sum_{i=1}^n \E\bj{\bc{Z - \E[Z \mid X^{(i)}]}^2} =  \sum_{i=1}^n \E\bj{\E\bj{\bc{Z - \E[Z \mid X^{(i)}]}^2  \mid X^{(i)}}} 
+	\end{equation*}
+	Let $\op{Var}_{(i)}(Z) \defeq \E\bj{\bc{Z - \E[Z \mid X^{(i)}]}^2  \mid X^{(i)}}$. Then we have
+	\begin{equation*}
+	    \op{Var}(Z) \leq \sum_{i=1}^n \E\bj{\op{Var}_{(i)}(Z)}
+	\end{equation*}
+	which is called the Efron-Stein Inequality. There are another formulas for the Efron-Stein Inequality.
+	\begin{enumerate}[label=(\roman*)]
+		\item Let
+		\begin{equation*}
+		    Z_i^\prime = f(X_1,\cdots,X_{i-1},X_i^\prime,X_{i+1},X_n)
+		\end{equation*}
+		where $X_i^\prime$ is an independent copy of $X_i$. For \emph{i.i.d.} $X,Y$, 
+		\begin{equation*}
+		    \begin{aligned}
+		    	\frac{1}{2}\E[(X-Y)^2] = \frac{1}{2}(\E[X^2]+\E[Y ^2]-2\E[X]\E[Y]) = \op{Var}(X)
+		    \end{aligned}
+		\end{equation*}
+		By this fact, we have
+		\begin{equation*}
+		    \op{Var}_{(i)}(Z) = \frac{1}{2}\E \bj{(Z_i-Z_i^\prime)^2 \mid X^{(i)}} = \mathcal{E}(f)
+		\end{equation*}
+		which induces 
+		\begin{equation*}
+		    \op{Var}(Z) \leq \frac{1}{2} \sum_{i=1}^n \E\bj{(Z_i-Z_i^\prime)^2}
+		\end{equation*}
+
+		\item Note that
+		\begin{equation*}
+		    \op{Var}(X) = \min \bb{\E(X-X^\prime)^2 \colon X^\prime \text{ independent with }X,~\E\bj{(X^\prime)^2} < \infty}
+		\end{equation*}
+		It is because that 
+		\begin{equation*}
+		    \E(X-X^\prime)^2 = \op{Var}(X) + \E\bj{(X^\prime - \E[X])^2}
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+		    \op{Var}_{(i)}(Z) = \min\bb{\E\bj{(Z-Z_i^\prime)^2 \mid X^{(i)}} \colon Z_i^\prime \independent Z \mid X^{i-1},X_{i+1}^n,~\E\bj{(Z_i^\prime)^2} < \infty}
+		\end{equation*}
+		where the infimum is achieved at $Z_i^\prime = \E\bj{Z \mid X^{(i)}}$, a function of $X^{(i)}$. So we have
+		\begin{equation*}
+		    \op{Var}(Z) \leq \sum_{i=1}^n \min\bb{\E(Z-Z_i^\prime)^2 \colon Z_i^\prime = g_i(X^{(i)}),~\E\bj{(Z_i^\prime)^2} < \infty} 
+		\end{equation*}
+		As a corollary, using
+		\begin{equation*}
+		    g_i(X^{(i)}) = \frac{1}{2}\bc{\inf_{x_i} f(X^i,x_i,X_{i+1}^n)+\sup_{x_i} f(X^i,x_i,X_{i+1}^n)}
+		\end{equation*}
+		It implies that $f$ satisfies the $(c_1,\cdots,c_n)$-BDP, then
+		\begin{equation*}
+		    Z-g_i(X^{(i)}) \leq c_i
+		\end{equation*}
+		Therefore,
+		\begin{equation*}
+		    \op{Var}(Z) \leq \sum_{i=1}^n c_i^2
+		\end{equation*} 
+	\end{enumerate}
+	
+	\item Concentration Bounds: 
+	\begin{thm}
+	    Let $X_1,\cdots,X_n$ be independent. Let $Z = f(X_1,\cdots,X_n)$ and
+	    \begin{equation*}
+	        Z_i^\prime = f(X_1,\cdots,X_{i-1},X_i^\prime,X_{i+1},\cdots,X_n)
+	    \end{equation*}
+	    where $X_i^\prime$ is an independent copy of $X_i$. Suppose that
+	    \begin{equation*}
+	        \sum_{i=1}^n (Z-Z_i^\prime)^2_+ \leq v
+	    \end{equation*}
+	    Then we have
+	    \begin{equation*}
+	        \Pb\bc{Z - \E[Z] > t} \leq 2e^{-\frac{t}{\sqrt{v}}},\quad t \geq 0
+	    \end{equation*}
+	\end{thm}
+	\begin{proof}
+		\begin{enumerate}[label=\Roman*.]
+			\item Consider $Y = e^{\lambda(Z - \E[Z]) /2}$.
+
+		    \noindent\textbf{Claim:} If
+		    \begin{equation*}
+		        \op{Var}(Y)\leq \frac{\lambda^2}{4} v \E\bj{ e^{\lambda(Z - \E[Z])}},\quad \forall~\lambda \geq 0
+		    \end{equation*}
+		    then
+		    \begin{equation*}
+		        \psi_{Z - \E[Z]}(\frac{1}{\sqrt{v}}) \leq \log \frac{16}{9}
+		    \end{equation*}
+		    \begin{proof}[Proof of the Claim]
+		        First,
+		        \begin{equation*}
+			        \begin{aligned}
+			        	\op{Var}(Y) &= \E\bj{ e^{\lambda(Z - \E[Z])}} - \bc{\E\bj{e^{\frac{\lambda(Z - \E[Z])}{2}}}}^2 \\
+			        	&\leq \frac{\lambda^2}{4} v \E\bj{ e^{\lambda(Z - \E[Z])}}
+			        \end{aligned}
+			    \end{equation*}
+			    Then we get
+			    \begin{equation*}
+			        \bc{1- \frac{\lambda^2}{4} v}\E\bj{ e^{\lambda(Z - \E[Z])}} \leq \bc{\E\bj{e^{\frac{\lambda(Z - \E[Z])}{2}}}}^2
+			    \end{equation*}
+			    which is equivalent to
+			    \begin{equation*}
+			        \psi_{Z-\E[Z]}(\lambda) + \log\bc{1- \frac{\lambda^2}{4} v} \leq 2\psi_{Z-\E[Z]}(\frac{\lambda}{2})
+			    \end{equation*}
+			    For simplification, let $g(\lambda) = \psi_{Z-\E[Z]}(\lambda)$. It follows that
+			    \begin{equation*}
+			        g(\lambda) + \log\bc{1- \frac{\lambda^2}{4} v} \leq 2\bc{-\log\bc{1-\frac{\lambda^2}{4^2}} + 2g(\frac{\lambda}{4})}
+			    \end{equation*}
+			    and so on so forth,
+			    \begin{equation*}
+			         g(\lambda) \leq -\sum_{i=0}^k2^i\log \bc{1-\frac{\lambda^2}{2^{2(i+1)}}v} + 2^{k+1}g(\frac{\lambda}{2^{k+1}})
+			    \end{equation*}
+			    Taking $k \sto \infty$, consider the two terms on the RHS. First, for the second term
+			    \begin{equation*}
+			        \lambda \lim_{k \sto \infty} \frac{g(\frac{\lambda}{2^{k+1}})}{\lambda / 2^{k+1}} = \lambda g^\prime(0) = 0
+			    \end{equation*}
+			    Therefore,
+			    \begin{equation*}
+			        \begin{aligned}
+			        	g(\lambda) &\leq -\sum_{i=0}^\infty2^i\log \bc{1-\frac{\lambda^2}{2^{2(i+1)}}v} \\
+			        	&= \sum_{i=0}^\infty2^{-i}\bc{-2^{2i}\log \bc{1-\frac{\lambda^2}{4\cdot 2^{2i}}v}} 
+			        \end{aligned}
+			    \end{equation*}
+			    Consider the function $\log (1 - cx)$ with $c > 0$,
+			    \begin{equation*}
+			        -\frac{\log(1-cx)}{x} \leq -\log (1 - c),\quad x \in [0,1]
+			    \end{equation*}
+			    Therefore,
+			    \begin{equation*}
+			        g(\lambda) \leq -\sum_{i=0}^\infty2^{-i} \log(1- \frac{\lambda^2v}{4})~\Rightarrow~g(\sqrt{v}) \leq \log \frac{16}{9} \qedhere
+			    \end{equation*}
+		    \end{proof}
+		    Under this claim, because
+		    \begin{equation*}
+		        \Pb\bc{Z - \E[Z] > t} \leq e^{ \psi_{Z - \E[Z]}(\lambda)}e^{-\lambda t}
+		    \end{equation*}
+		    by taking $\lambda = \frac{1}{\sqrt{v}}$, we have
+		    \begin{equation*}
+		         \Pb\bc{Z - \E[Z] > t} \leq \frac{16}{9}e^{-\frac{t}{\sqrt{v}}}
+		    \end{equation*}
+		    which is desired result. 
+
+		    \item By the Efron-Stein Inequality,
+		    \begin{equation*}
+		        \op{Var}(Y) \leq \frac{1}{2}\sum_{i=1}^n\E\bj{(Y-Y_i^\prime)^2} = \sum_{i=1}^n\E\bj{(Y-Y_i^\prime)_+^2}
+		    \end{equation*}
+		    where
+		    \begin{equation*}
+		        Y= e^{\frac{\lambda}{2}\bc{Z - \E\bj{Z}}},\quad Y_i^\prime= e^{\frac{\lambda}{2}\bc{Z_i^\prime - \E\bj{Z}}}
+		    \end{equation*}
+		    Note that 
+		    \begin{equation*}
+		        e^{\lambda x} - e^{\lambda y} \leq (x-y)\lambda e^{\lambda y},\quad y \geq x
+		    \end{equation*}
+		    Therefore,
+			\begin{equation*}
+			    (Y-Y_i^\prime)_+^2 \leq (Z-Z_i^\prime)_+^2\cdot\frac{\lambda^2}{4}\cdot Y^2
+			\end{equation*}
+			It follows that
+			\begin{equation*}
+			    \op{Var}(Y) \leq \sum_{i=1}^n\E\bj{(Z-Z_i^\prime)_+^2} \cdot\frac{\lambda^2}{4}\cdot \E\bj{Y^2} \leq \frac{\lambda^2}{4} v \E\bj{ e^{\lambda(Z - \E[Z])}} \qedhere
+			\end{equation*}
+		\end{enumerate}
+	\end{proof}
+	
+\end{enumerate}
+
+\section{Gaussian-Poincar\'e Inequality}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Poincar\'e Inequality: Consider a $C^1$ function $f \colon \R^n \sto \R$, suppose
+	\begin{equation*}
+	    \int_{\R^n} \norm{\nabla f}^2 d\mu < \infty
+	\end{equation*}
+	where $\mu$ is the Lebesgue measure. The Poincar\'e Inequality says
+	\begin{equation*}
+	    \int_{\R^n} f^2(x) d\mu \leq C\int_{\R^n} \norm{\nabla f}^2 d\mu
+	\end{equation*}
+
+	\item Gaussian-Poincar\'e Inequality: Consider a $C^2$ function $f \colon \R^n \sto \R$ such that
+	\begin{equation*}
+	    \sup_x \abs{\frac{\partial^2}{\partial x_i^2}f(x)} = K < \infty
+	\end{equation*}
+	Let $X \sim \mathcal{N}(0,I_n)$. Then we have
+	\begin{equation*}
+	    \op{Var}(f(X)) \leq \E \bj{\norm{\nabla f(X)}^2}
+	\end{equation*}
+	\begin{proof}
+	    \begin{enumerate}[label=\Roman{*}.]
+	    	\item Step $1$(Tensorization argument): Assume it is true for $n=1$. For $Z = f(X) = f(X_1,\cdots,X_n)$, which are independent, we have
+	    	\begin{equation*}
+	    	    \op{Var}_{(i)}(Z) =\op{Var}{f(x^{i-1},X_i,x_{i+1}^n)} \leq \E\bj{(\frac{\partial f}{\partial x_i})^2 \mid X^{-i}}
+	    	\end{equation*}
+	    	Then by Efron-Stein inequality, we get
+	    	\begin{equation*}
+	    	    \begin{aligned}
+	    	    	\op{Var}(Z) &\leq \sum_{i=1}^n\E\bj{\op{Var}_{(i)}(Z)} \\
+	    	    	&= \sum_{i=1}^n \E\bj{\E\bj{(\frac{\partial f}{\partial x_i})^2 \mid X^{-i}}} = \E \bj{\norm{\nabla f(X)}^2}
+	    	    \end{aligned}
+	    	\end{equation*}
+
+	    	\item Step $2$($n=1$): Let $X \sim \mathcal{N}(0,1)$ and $f \in C^2(\R)$ with $\sup_x \abs{f^{\prime\prime}(x)} = K < \infty$. Let $\varepsilon_1,\cdots,\varepsilon_n$ be \emph{i.i.d.} such that
+	    	\begin{equation*}
+	    	    \Pb(\varepsilon_i = 1) = \Pb(\varepsilon_i = -1) = \frac{1}{2}
+	    	\end{equation*}
+	    	Let $S_m = \frac{1}{\sqrt{m}}\sum_{i=1}^m\varepsilon_i$. Then CLT implies that $S_m  \xrightarrow{d} X$. Consider the Efron-Stein Inequality for $\op{Var}(f(S_m))$,
+	    	\begin{equation*}
+	    	    \op{Var}(f(S_m)) \leq \sum_{j=1}^m\E\bj{\op{Var}_{(j)}(f(S_m))}
+	    	\end{equation*}
+	    	Because
+	    	\begin{equation*}
+	    	    \op{Var}(g(\varepsilon_j)) = \E\bj{g(\varepsilon_j)^2} - \E\bj{g(\varepsilon_j)}^2 = \frac{1}{4}(g(1)-g(-1))^2
+	    	\end{equation*}
+	    	we have
+	    	\begin{equation*}
+	    	    \begin{aligned}
+	    	    	\op{Var}_{(j)}(f(S_m)) &= \frac{1}{4}\bc{f\bc{S_m - \frac{\varepsilon_j}{\sqrt{m}} + \frac{1}{\sqrt{m}}} - f\bc{S_m - \frac{\varepsilon_j}{\sqrt{m}} - \frac{1}{\sqrt{m}}}}^2 \\
+	    	    	&= \frac{1}{4}\bc{f^\prime(S_m - \frac{\varepsilon_j}{\sqrt{m}})\frac{2}{\sqrt{m}} + O\bc{\frac{K}{m}}}^2 \\
+	    	    	&= \frac{1}{m}\bc{f^\prime(S_m - \frac{\varepsilon_j}{\sqrt{m}})}^2 + o\bc{\frac{K}{m}}
+	    	    \end{aligned}
+	    	\end{equation*}
+	    	It follows that
+	    	\begin{equation*}
+	    	    \sum_{j=1}^m \op{Var}_{(j)}(f(S_m)) = \bc{f^\prime(S_m - \frac{\varepsilon_j}{\sqrt{m}})}^2 + Ko(1)
+	    	\end{equation*}
+	    	Therefore,
+	    	\begin{equation*}
+	    	    \op{Var}(f(S_m)) \leq \bc{f^\prime(S_m - \frac{\varepsilon_j}{\sqrt{m}})}^2 + Ko(1)
+	    	\end{equation*}
+	    	Because $S_m  \xrightarrow{d} X$, as $m \sto \infty$
+	    	\begin{equation*}
+	    	    \op{Var}(f(X)) \leq  \E\bj{f^\prime(X)^2} \qedhere
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{proof}
+
+\end{enumerate}
+
+\section{Entropy Method}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Entropy: Note that
+	\begin{equation*}
+		\op{Var}(Y) = \E[Y^2] - (\E[Y])^2 = \E[g(Y)] - g(\E[Y])
+	\end{equation*}
+	where $g(x) = x^2$. If we let
+	\begin{equation*}
+		h(x) = x \log x
+	\end{equation*}
+	which is convex, then 
+	\begin{equation*}
+		\op{Ent}(Y) \defeq \E[h(Y)] - h(\E[Y]) \geq 0
+	\end{equation*}
+	\begin{lem}[Herbst's Argument]
+	    For $\lambda \geq 0$, consider $Y \defeq e^{\lambda (Z - \E[Z])}$ for a random variable $Z$. Suppose that
+	    \begin{equation*}
+	    	\op{Ent}(Y) \leq \frac{\lambda^2 v}{2}\E[Y],\quad \forall~ \lambda \geq 0
+	    \end{equation*}
+	    Then, for all $\lambda \geq 0$,
+	    \begin{equation*}
+	    	\psi_{Z-\E[Z]}(\lambda) \leq \frac{\lambda^2}{2}v
+	    \end{equation*}
+	\end{lem}
+	\begin{proof}
+		WTLG, let $\E[Z] = 0$. Let $g(\lambda) = \psi_{Z}(\lambda)$.
+	    \begin{equation*}
+	    	\begin{aligned}
+	    		g^\prime(\lambda) &= \frac{\E\bj{Ze^{\lambda Z}}}{\E\bj{e^{\lambda Z}}} \\
+	    		&= \frac{1}{\lambda}\frac{\E\bj{\bc{\log e^{\lambda Z}} e^{\lambda Z}}}{\E\bj{e^{\lambda Z}}} \\
+	    		&=\frac{1}{\lambda} \frac{\E[Y\log Y]}{\E[Y]}\\
+	    		&= \frac{1}{\lambda} \bc{\frac{\op{Ent}(Y)}{\E[Y]} + g(\lambda)}
+	    	\end{aligned}
+	    \end{equation*}
+	    It follows that
+	    \begin{equation*}
+	    	\lambda g^\prime(\lambda) - g(\lambda)= \frac{\op{Ent}(Y)}{\E[Y]}  \leq \frac{\lambda^2}{2}v
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	    	\frac{d}{\lambda}\bc{\frac{g(\lambda)}{\lambda}} \leq \frac{v}{2}~\Rightarrow~ \frac{g(\lambda)}{\lambda} - \lim_{x \sto 0} \frac{g(x)}{x} \leq \frac{\lambda}{2}v
+	    \end{equation*}
+	    But because $g(0) = $, $\lim_{x \sto 0} \frac{g(x)}{x} = g^\prime(0) = 0$,
+	    \begin{equation*}
+	    	g(\lambda) \leq \frac{\lambda^2}{2}v \qedhere
+	    \end{equation*}
+	\end{proof}
+	\begin{rmk}
+	    The condition
+	    \begin{equation*}
+	    	\op{Ent}(Y) \leq \frac{\lambda^2 v}{2}\E[Y],\quad \forall~ \lambda \geq 0
+	    \end{equation*}
+	    is called the Herbst's condition.
+	\end{rmk}
+
+	\item KL divergence: Consider $\Pb$ and $\mathbb{Q}$ be two probability measures on a $\sigma$-algebra with $\mathbb{Q} \ll \mathbb{P}$. The KL divergence between $\mathbb{Q}$ and $\mathbb{P}$ is
+	\begin{equation*}
+		D(\mathbb{Q} ~\Vert~ \mathbb{P}) \defeq \E_{\Pb}\bj{\frac{d\mathbb{Q}}{d\mathbb{P}}\log \frac{d\mathbb{Q}}{d\mathbb{P}}}
+	\end{equation*}
+	Otherwise, it is defined as $\infty$.
+
+	\begin{lem}
+	    Let $\Pb$ be the product measure for independent random variables $X_1,\cdots,X_n$ and $f \colon \R^n \sto \R$. Consider $\mathbb{Q} \ll \mathbb{P}$ with
+	    \begin{equation*}
+	    	\frac{d\mathbb{Q}}{d\mathbb{P}}(x) = \frac{e^{\lambda f(x)}}{\E_{\Pb}\bj{e^{\lambda f(X)}}}
+	    \end{equation*}
+	    Then
+	    \begin{equation*}
+	    	D(\mathbb{Q} ~\Vert~ \mathbb{P}) = \frac{\op{Ent}\bc{e^{\lambda f(X)}}}{\E_{\Pb}\bj{e^{\lambda f(X)}}}
+	    \end{equation*}
+	\end{lem}
+	
+	\begin{proof}
+	    By definition, let $Z = f(X)$.
+	    \begin{equation*}
+	    	\begin{aligned}
+	    		D(\mathbb{Q} ~\Vert~ \mathbb{P}) &=  \E_{\Pb}\bj{\frac{d\mathbb{Q}}{d\mathbb{P}}\log \frac{d\mathbb{Q}}{d\mathbb{P}}} \\
+	    		&=  \E\bj{\frac{e^{\lambda Z}}{\E\bj{e^{\lambda Z}}}\log \frac{e^{\lambda Z}}{\E\bj{e^{\lambda Z}}}} \\
+	    		&= \frac{1}{\E\bj{e^{\lambda Z}}} \op{Ent}\bc{e^{\lambda Z}} \quad\qedhere
+	    	\end{aligned}
+	    \end{equation*}
+	\end{proof}
+	\begin{rmk}
+	    Such $\mathbb{Q}$ is denoted by $\Pb^{(\lambda f)}$. Therefore, the  Herbst's condition is expressed as
+	    \begin{equation*}
+	    	D(\Pb^{(\lambda f)} ~\Vert~ \mathbb{P}) \leq \frac{\lambda^2}{2}v,\quad \forall~\lambda \geq 0
+	    \end{equation*}
+	    In fact, in the proof of Herbst's argument, we have seen
+	    \begin{equation*}
+	    	D(\Pb^{(\lambda f)} ~\Vert~ \mathbb{P}) = \lambda \psi^\prime_{Z-\E[Z]}(\lambda) - \psi_{Z-\E[Z]}(\lambda) = \lambda^2 \frac{d}{d\lambda} \frac{\psi_{Z-\E[Z]}(\lambda)}{\lambda}
+	    \end{equation*}
+	    It follows that
+	    \begin{equation*}
+	    	\psi_{Z-\E[Z]}(\lambda) = \lambda\int_0^\lambda \frac{D(\Pb^{(t f)} ~\Vert~ \mathbb{P})}{t^2}dt
+	    \end{equation*}
+	    Generally, for $\mathbb{Q}^{(t)} \ll \Pb$ with
+	    \begin{equation*}
+	        \frac{d\mathbb{Q}^{(t)}}{d\mathbb{P}}(x) = \frac{e^{tx}}{\E_{\Pb}\bj{e^{tX}}}
+	    \end{equation*}
+	    we have
+	    \begin{equation*}
+	        \frac{D(\Pb^{(t)} ~\Vert~ \mathbb{P})}{t^2} = \frac{d}{dt}\frac{\psi_X(t)}{t}
+	    \end{equation*}
+	\end{rmk}
+
+	\begin{prop}
+	    There are basic properties for $D$.
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item $D(\mathbb{Q} ~\Vert~ \mathbb{P}) \geq 0$.
+	    	\item (Chain Rule of KL Divergence) Suppose $\Pb_{XY}$ and $\mathbb{Q}_{XY}$ are probability measures on $\mathcal{X} \times \mathcal{Y}$
+	    	\begin{equation*}
+	    	    D(\mathbb{Q}_{XY} ~\Vert~ \mathbb{P}_{XY}) =  D(\mathbb{Q}_{X} ~\Vert~ \mathbb{P}_{X}) + \E_{\mathbb{Q}_{X}}\bj{D(\mathbb{Q}_{Y\mid X} ~\Vert~ \mathbb{P}_{Y\mid X})}
+	    	\end{equation*}
+	    	In particular, if $\Pb_{XY} = \Pb_{X}\Pb_{Y}$ and $\mathbb{Q}_{XY} = \mathbb{Q}_{X}\mathbb{Q}_{Y}$, then
+	    	\begin{equation*}
+	    	    D(\mathbb{Q}_{XY} ~\Vert~ \mathbb{P}_{XY}) = D(\mathbb{Q}_{X} ~\Vert~ \mathbb{P}_{X}) +D(\mathbb{Q}_{Y} ~\Vert~ \mathbb{P}_{Y})
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{prop}
+	\begin{rmk}
+	    We can denote
+	    \begin{equation*}
+	        \E_{\mathbb{Q}_{X}}\bj{D(\mathbb{Q}_{Y\mid X} ~\Vert~ \mathbb{P}_{Y\mid X})} = D(\mathbb{Q}_{Y\mid X} ~\Vert~ \mathbb{P}_{Y\mid X} \mid \mathbb{Q}_{X})
+	    \end{equation*}
+	\end{rmk}
+	\begin{proof}
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item Let $X = \frac{d\mathbb{Q}}{d\mathbb{P}}$ and $f(t) = t\log t$ that is convex.
+	    	\begin{equation*}
+	    	    D(\mathbb{Q} ~\Vert~ \mathbb{P}) = \E[f(X)] \geq f(\E[X]) = f(1) = 0
+	    	\end{equation*}
+	    	\item WTLG, assume $\mathbb{Q}_{XY} \ll \mathbb{P}_{XY}$. By the results of Disintegration Theorem,
+	    	\begin{equation*}
+	    	    \begin{aligned}
+	    	    	D(\mathbb{Q}_{XY} ~\Vert~ \mathbb{P}_{XY}) &= \E_{\mathbb{Q}_{XY}}\bj{\log \frac{d\mathbb{Q}_{XY}}{d\mathbb{P}_{XY}}} \\
+	    	    	&=\E_{\mathbb{Q}_{XY}}\bj{\log \frac{d\mathbb{Q}_{X}}{d\mathbb{P}_{X}} + \log \frac{d\mathbb{Q}_{Y\mid X}}{d\mathbb{P}_{Y \mid X}}} \\
+	    	    	&= \E_{\mathbb{Q}_{X}}\bj{\log \frac{d\mathbb{Q}_{X}}{d\mathbb{P}_{X}}} + \E_{\mathbb{Q}_{X}}\bj{\E_{\mathbb{Q}_{Y\mid X}}\bj{\log \frac{d\mathbb{Q}_{Y\mid X}}{d\mathbb{P}_{Y \mid X}}}} \qedhere
+	    	    \end{aligned}
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{proof}
+
+	\item Tensorization: One dimensional case implies high-dimensional case.
+	\begin{lem}[Entropy Tensorization Lemma]
+	    Consider independent random variables $X_1,\cdots,X_n$ (under $\Pb \defeq \Pb_{X_1\cdots X_n}$). Let $\mathbb{Q} \defeq\mathbb{Q}_{X_1\cdots X_n}$ be any other distribution. Then
+	    \begin{equation*}
+	        D(\mathbb{Q}~\Vert~\mathbb{P}) \leq \E_{\mathbb{Q}_{X^{(i)}}}\bj{D(\mathbb{Q}_{X_i \mid X^{(i)}}~\Vert~\mathbb{P}_{X_i \mid X^{(i)}})}
+	    \end{equation*}
+	    Note that by independence $\mathbb{P}_{X_i \mid X^{(i)}} = \Pb_{X_i}$.
+	\end{lem}
+	\begin{proof}
+	    By the chain rule, we have
+	    \begin{equation*}
+	        D(\mathbb{Q}~\Vert~\mathbb{P}) = \sum_{i=1}^n \E_{\mathbb{Q}_{X^{i-1}}}\bj{D\bc{\mathbb{Q}_{X_i \mid X^{i-1}} ~\Vert~ \mathbb{P}_{X_i \mid X^{i-1}}}}
+	    \end{equation*}
+	    where
+	    \begin{equation*}
+	        \E_{\mathbb{Q}_{X^{0}}}\bj{D\bc{\mathbb{Q}_{X_1 \mid X^{0}} ~\Vert~ \mathbb{P}_{X_1 \mid X^{0}}}} \defeq D\bc{\mathbb{Q}_{X_1} ~\Vert~ \mathbb{P}_{X_1}}
+	    \end{equation*}
+	    And by independence
+	    \begin{equation*}
+	        D(\mathbb{Q}~\Vert~\mathbb{P}) = \sum_{i=1}^n \E_{\mathbb{Q}_{X^{i-1}}}\bj{D\bc{\mathbb{Q}_{X_i \mid X^{i-1}} ~\Vert~ \mathbb{P}_{X_i}}}
+	    \end{equation*}
+	    Consider
+	    \begin{equation*}
+	        \begin{aligned}
+	        	&\E_{\mathbb{Q}_{X^{(i)}}}\bj{D(\mathbb{Q}_{X_i \mid X^{(i)}}~\Vert~\mathbb{P}_{X_i})} - \E_{\mathbb{Q}_{X^{i-1}}}\bj{D\bc{\mathbb{Q}_{X_i \mid X^{i-1}} ~\Vert~ \mathbb{P}_{X_i \mid X^{i-1}}}}\\
+	        	=& \E_{\mathbb{Q}_{X^n}}\bj{\log \frac{d\mathbb{Q}_{X_i \mid X^{(i)}}}{d\mathbb{P}_{X_i}}} -\E_{\mathbb{Q}_{X^{i-1}}}\bj{\log \frac{d\mathbb{Q}_{X_i \mid X^{i-1}}}{d\mathbb{P}_{X_i}}} \bc{= \E_{\mathbb{Q}_{X^{n}}}\bj{\log \frac{d\mathbb{Q}_{X_i \mid X^{i-1}}}{d\mathbb{P}_{X_i}}}}\\
+	        	=& \E_{\mathbb{Q}_{X^n}} \bj{\log \frac{d\mathbb{Q}_{X_i \mid X^{(i)}}}{d\mathbb{Q}_{X_i \mid X^{i-1}}}} = \E_{\mathbb{Q}_{X^{(i)}}}\bj{D(\mathbb{Q}_{X_i \mid X^{(i)}} ~\Vert~\mathbb{Q}_{X_i \mid X^{i-1}})} \geq 0 \qedhere
+	        \end{aligned}
+	    \end{equation*}
+	\end{proof}
+	\begin{rmk}
+	    Let $f(X_1,\dots,X_n) = \frac{d\mathbb{Q}}{d \Pb}$. Then $\E_{\Pb}(f) = 1$. Because
+	    because
+	    \begin{equation*}
+	        \frac{d\mathbb{Q}_{X_i \mid X^{(i)}}}{d\Pb_{X_i}}(x_i \mid x^{(i)}) = \frac{f(x_i \mid x^{(i)})}{\E_{\Pb_{X_i}}\bj{f(x_i \mid x^{(i)})}}
+	    \end{equation*}
+	    we have
+	    \begin{equation*}
+	        \begin{aligned}
+	        	D(\mathbb{Q}~\Vert~\mathbb{P}) = \op{Ent}(f) &\leq \sum_{i=1}^n\E_{\mathbb{Q}_{X^{(i)}}}\bj{D(\mathbb{Q}_{X_i \mid X^{(i)}}~\Vert~\mathbb{P}_{X_i \mid X^{(i)}})} \\
+	        	&= \sum_{i=1}^n\E_{\mathbb{Q}} \bj{\log \frac{d\mathbb{Q}_{X_i \mid X^{(i)}}}{\Pb_{X_i}}} \\
+	        	&= \sum_{i=1}^n\E_{\mathbb{Q}} \bj{\log \frac{f(x_i \mid x^{(i)})}{\E_{\Pb_{X_i}}\bj{f(x_i \mid x^{(i)})}}} \\
+	        	&= \sum_{i=1}^n\E_{\mathbb{P}} \bj{f\log \frac{f(x_i \mid x^{(i)})}{\E_{\Pb_{X_i}}\bj{f(x_i \mid x^{(i)})}}} \\
+	        	&=  \sum_{i=1}^n \E_{\mathbb{P}_{X^{(i)}}}\bj{\op{Ent}_{(i)}\bc{f(x_i \mid x^{(i)})}}
+	        \end{aligned}
+	    \end{equation*}
+	    where
+	    \begin{equation*}
+	        \op{Ent}_{(i)}\bc{f(x_i \mid x^{(i)})} = \E_{\Pb_{X_i}}\bj{h(f(x_i \mid x^{(i)}))} - h\bc{\E_{\Pb_{X_i}}\bj{f(x_i \mid x^{(i)})}}
+	    \end{equation*}
+	    Therefore, we get
+	    \begin{equation*}
+	        \op{Ent}(f) \leq \sum_{i=1}^n \E_{\mathbb{P}_{X^{(i)}}}\bj{\op{Ent}_{(i)}\bc{f(x_i \mid x^{(i)})}}
+	    \end{equation*}
+	    More generally, for any $f \geq 0$, we can construct $\mathbb{Q}$ with
+	    \begin{equation*}
+	        \frac{d\mathbb{Q}}{d \Pb} = \frac{f}{\E_{\Pb}[f]}
+	    \end{equation*}
+	    Because $\op{Ent}(cf) = c \op{Ent}(f)$, we still have
+	    \begin{equation*}
+	        \op{Ent}(f) \leq \sum_{i=1}^n \E_{\mathbb{P}_{X^{(i)}}}\bj{\op{Ent}_{(i)}\bc{f(x_i \mid x^{(i)})}}
+	    \end{equation*}
+	    In particular, let $\Pb$ be the product measure for independent random variables $X_1,\cdots,X_n$, and $f \colon \R^n \sto \R$, and $\mathbb{Q} \ll \mathbb{P}$ with
+	    \begin{equation*}
+	    	\frac{d\mathbb{Q}}{d\mathbb{P}}(x) = \frac{e^{\lambda f(x)}}{\E_{\Pb}\bj{e^{\lambda f(X)}}}
+	    \end{equation*}
+	    Then
+	    \begin{equation*}
+	        D(\mathbb{Q} ~\Vert~ \mathbb{P}) = \frac{\op{Ent}\bc{e^{\lambda f(X)}}}{\E_{\Pb}\bj{e^{\lambda f(X)}}} \leq \sum_{i=1}^n\E\bj{\frac{\op{Ent}_{(i)}\bc{e^{\lambda f(X)}}}{\E_{(i)}\bj{e^{\lambda f(X)}}}}
+	    \end{equation*}
+	\end{rmk}
+	
+\end{enumerate}
+
+\section{Log-Sobolev Inequality}
+\begin{enumerate}[label=\arabic{*}.]
+	\item Binary case: Let
+	\begin{equation*}
+	    X = (X_1,\cdots,X_n) \sim \op{Unim}\bc{\bb{-1,1}^n}
+	\end{equation*}
+	Let $f \colon \bb{-1,1}^n \sto \R$ with
+	\begin{equation*}
+	    \op{Ent}(f) \defeq \E\bj{f\log f} - \E[f]\log \E[f]
+	\end{equation*}
+	The Binary Log-Sobolev Inequality says
+	\begin{equation*}
+	    \op{Ent}(f^2) \leq 2\sum_{i=1}^n\E\bj{\op{Var}_{(i)}(f)} = 2\mathcal{E}(f)
+	\end{equation*}
+	First, let's see how to get the concentration inequality from this. Define
+	\begin{equation*}
+	    g(x) = e^{\frac{\lambda f(x)}{2}}
+	\end{equation*}
+	Then by above inequality, suppose $\sum_{i=1}^n (Z-Z_i^\prime)_+^2 \leq v$, where $Z=f(X)$ and $Z_i^\prime = f(X^{i-1},X_i^\prime,X_{i+1}^n)$,
+	\begin{equation*}
+	    \begin{aligned}
+	    	\op{Ent}(g^2(x)) = \op{Ent}(e^{\lambda f}) &\leq 2\sum_{i=1}^n\E\bj{\op{Var}_{(i)}\bc{e^{\frac{\lambda f}{2}}}} \\
+	    	&\leq \sum_{i=1}^n \frac{\lambda^2}{2}\E\bj{e^{\lambda Z}(Z-Z_i^\prime)_+^2} = \frac{\lambda^2}{2}\E\bj{e^{\lambda Z}\sum_{i=1}^n (Z-Z_i^\prime)_+^2} \\
+	    	&\leq \frac{\lambda^2}{2}v\E\bj{e^{\lambda f}}
+	    \end{aligned}
+	\end{equation*}
+	Therefore, we have
+	\begin{equation*}
+	    D(\mathbb{Q}^{(\lambda f)} ~\Vert~ \Pb) = \frac{\op{Ent}(e^{\lambda f})}{\E\bj{e^{\lambda f}}} \leq \frac{\lambda^2}{2}v
+	\end{equation*}
+	Then by Herbst’s Argument,
+	\begin{equation*}
+	    \psi_{f(X) - \E[f(X)]} \leq \frac{\lambda^2}{2}v
+	\end{equation*}
+	It follows that
+	\begin{equation*}
+	    \Pb(f(X) - \E[f(X)] \geq t) \leq e^{-\frac{t^2}{2v}}
+	\end{equation*}
+
+	\begin{proof}[Proof of Binary Log-Sobolev Inequality]
+	    \begin{enumerate}[label=(\Roman*)]
+	    	\item Assume $n=1$: For $f \colon \bb{-1,1} \sto \R$ with $f(-1) = a$ and $f(1) = b$, we have
+	    	\begin{equation*}
+	    	    \op{Ent}(f^2) = \frac{1}{2}a^2\log a^2 + \frac{1}{2}b^2\log b^2 -\frac{a^2+b^2}{2}\log\frac{a^2+b^2}{2}
+	    	\end{equation*}
+	    	and 
+	    	\begin{equation*}
+	    	    \E[\op{Var}_{(1)}(f)] = \op{Var}(f) = \frac{1}{2}\bc{a-\frac{a+b}{2}}^2 + \frac{1}{2}\bc{b-\frac{a+b}{2}}^2 = \frac{(b-a)^2}{4}
+	    	\end{equation*}
+	    	Therefore, it is sufficient to show
+	    	\begin{equation*}
+	    	    h_b(a) = \frac{1}{2}a^2\log a^2 + \frac{1}{2}b^2\log b^2 -\frac{a^2+b^2}{2}\log\frac{a^2+b^2}{2} - \frac{(b-a)^2}{2},\quad \forall~a \geq b \leq 0
+	    	\end{equation*}
+	    	which is not difficult.
+	    	\item By the Entropy Tensorization Lemma,
+	    	\begin{equation*}
+	    	   	\op{Ent}(f^2) \leq \sum_{i=1}^n \E\bj{\op{Ent}_{(i)}(f^2)} 
+	    	\end{equation*}
+	    	Then since for $n=1$, we already get
+	    	\begin{equation*}
+	    	    \op{Ent}_{(i)}(f^2) \leq \op{Var}_{(i)}(f)
+	    	\end{equation*}
+	    	Therefore,
+	    	\begin{equation*}
+	    	    \op{Ent}(f^2) \leq \sum_{i=1}^n\E\bj{\op{Var}_{(i)}(f)} \qedhere
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{proof}
+
+	\item Gaussian Log-Sobolev Inequality: 
+	\begin{thm}
+	    Let $X=(X_1,\cdots,X_n)$ be a standard normal random variable and $f \colon \R^n \sto \R$ be $C^1$ and with bounded second derivative. Then we have
+	    \begin{equation*}
+	        \op{Ent}(f^2) \leq 2\E[\norm{\nabla f}^2]
+	    \end{equation*}
+	\end{thm}
+	\begin{proof}
+	    \begin{enumerate}[label=\Roman*.]
+	    	\item First, by Entropy Tensorization Lemma, it is sufficient to prove the inequality for $n=1$.
+
+	    	\item For $n =1$, like the proof in the Gaussian-Poincar\'e Inequality, we approximate the standard Gaussian by binary distribution. Consider $\varepsilon_1,\cdots,\varepsilon_n \stackrel{i.i.d.}{\sim} \op{Unif}(\bb{-1,1})$ and let 
+	    	\begin{equation*}
+	    	    g(\varepsilon_1,\cdots,\varepsilon_n) = f\bc{\frac{1}{\sqrt{n}}\sum_{i=1}^n\varepsilon_i}
+	    	\end{equation*}
+	    	For such $g$, consider the Binary Log-Sobolev Inequality 
+	    	\begin{equation*}
+	    	    \op{Ent}(g^2) \leq 2\sum_{i=1}^n\E\bj{\op{Var}_{(i)}(g)}
+	    	\end{equation*}
+	    	Similarly as the proof in the Gaussian-Poincar\'e Inequality,
+	    	\begin{equation*}
+	    	    \E\bj{\op{Var}_{(i)}(g)} \leq \left(f^{\prime}\left(S_n-\frac{\varepsilon_j}{\sqrt{n}}\right)\right)^2+K o(1)
+	    	\end{equation*}
+	    	Then by taking limit we have
+	    	\begin{equation*}
+	    	     \op{Ent}(g^2) \leq 2\E\bj{(g^\prime)^2} \qedhere
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{proof}
+	\begin{cor}
+	    Let $X=(X_1,\cdots,X_n)$ be a standard normal random variable and $f \colon \R^n \sto \R$ be $C^1$ and with bounded second derivative and $\norm{\nabla f} \leq 1$. Then
+	    \begin{equation*}
+	        \Pb(f(X) - \E[f(X)] \geq t) \leq e^{-t^2 / 2}
+	    \end{equation*}
+	\end{cor}
+	\begin{proof}
+	    First, by above inequality we have
+	    \begin{equation*}
+	        \op{Ent}(e^{\lambda f}) \leq 2\E\bj{\norm{\nabla e^{\lambda f /2}}^2} = \frac{\lambda^2}{2} \E\bj{e^{\lambda f}}
+	    \end{equation*}
+	    which implies
+	    \begin{equation*}
+	        \psi_{f(X) - \E[f(X)]} \leq \frac{\lambda^2}{2}
+	    \end{equation*}
+	    by Herbst’s Argument.
+	\end{proof}
+	\begin{rmk}
+	    $\norm{\nabla f} \leq 1$ can be replaced by $1$-Lipschitz continuous.
+	\end{rmk}
+\end{enumerate}
+
+
+
+
+	

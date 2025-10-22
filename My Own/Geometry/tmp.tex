@@ -1,0 +1,56 @@
+\chapter{tmp}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Eigenvalue estimating:}} For $u \in C^\infty(M)$, consider
+	\begin{equation*}
+		\lambda_1(M,g) \defeq \inf_{\int u = 0}\frac{\int \abs{\nabla u}^2}{\int u^2}
+	\end{equation*}
+	which is related to
+	\begin{equation*}
+	    \Delta u = -\lambda_1 u
+	\end{equation*}
+	for the lowest nonzero $\lambda_1$. The question is how to get the lower bound of $\lambda_1$.
+	\begin{thm}
+	    Let $(M,g)$ be a Riemannian manifold of dimension $n$ with $\op{Ric} \geq (n-1)$. Then $\lambda_1 \geq n$.
+	\end{thm}
+	\begin{exam}[Sphere]
+	    Consider $\Sp^n \subset \R^{n+1}$, let $x_k = (0,\cdots,x_k,\cdots,0)$ be the coordinate function. Then we have
+	    \begin{equation*}
+	        \begin{aligned}
+	        	\Delta x_k &= \sum_{i} \inn{\nabla_{e_i}\op{grad}x_k,e_i} \\
+	        	&= \sum_{i} \inn{D_{e_i}\op{grad}x_k,e_i} - \inn{(D_{e_i}\op{grad}x_k)^\perp,e_i}\\
+	        	&= \sum_{i} \inn{D_{e_i}\op{grad}x_k,e_i}\\
+	        	&= -\sum_{i} \inn{D_{e_i}(Dx_k)^\perp,e_i}\\
+	        	&= \sum_{i} \inn{(Dx_k)^\perp,D_{e_i}e_i}\\
+	        	&= \inn{(Dx_k)^\perp,\sum_{i}(D_{e_i}e_i)^\perp}\\
+	        \end{aligned}
+	    \end{equation*}
+	    We know
+	    \begin{equation*}
+	        \nabla_{e_i}e_i = D_{e_i}e_i + \inn{e_i,e_i}\vec{x}~\Rightarrow~\sum_{i}(D_{e_i}e_i)^\perp = \sum_{i}-\inn{e_i,e_i}\vec{x} = - n\vec{x}
+	    \end{equation*}
+	    Therefore,
+	    \begin{equation*}
+	        \Delta x_k = \inn{(Dx_k)^\perp,\sum_{i}(D_{e_i}e_i)^\perp} = -n\inn{Dx_k,\vec{x}} = -n x_k
+	    \end{equation*}
+	        
+	  
+	        
+	  
+	\end{exam}
+	\begin{proof}
+	    
+	\end{proof}
+
+
+
+
+
+
+
+
+\end{enumerate}
+
+
+
+	

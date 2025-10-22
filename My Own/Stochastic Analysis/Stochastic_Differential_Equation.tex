@@ -1,0 +1,362 @@
+\chapter{Stochastic Differential Equation}
+
+Consider a stochastic process satisfying:
+\begin{equation*}
+    dX_t = b(t,X_t,W_t)dt + \sigma(t,X_t,W_t)dW_t \tag{$*$}.
+\end{equation*}
+for two problems:
+\begin{enumerate}[label=(\arabic{*})]
+    \item existence and uniqueness and properties of solutions,
+    \item how to solve for particular cases.
+\end{enumerate}
+
+\section{Examples}
+
+\begin{exam}[Geometric Brownian Motion]
+    Solving
+    \begin{equation*}
+        dX_t = \alpha X_t dt + \sigma X_t dW_t.
+    \end{equation*}
+    where the initial value $X_0$ is given, and $\alpha,\sigma$ are constant.
+
+    \noindent \emph{Solution:} Diving $X_t$ on the both side and integrating,
+    \begin{equation*}
+        \int_0^t \frac{dX_u}{X_u} = \alpha t + \sigma W_t.
+    \end{equation*}
+    Let $f(x) = \log x$. Then by It\^o formula,
+    \begin{align*}
+        d \log X_t &= \frac{1}{X_t}dX_t - \frac{1}{2} \frac{1}{X_t^2} (dX_t)^2 \\
+        &= \frac{1}{X_t}dX_t - \frac{1}{2} \frac{1}{X_t^2} \sigma^2X_t^2 dt\\
+        &= \frac{1}{X_t}dX_t - \frac{1}{2} \sigma^2 dt.
+    \end{align*} 
+    So
+    \begin{equation*}
+        \log X_t - \log X_0 = \int_0^t \frac{dX_u}{X_u} - \frac{1}{2} \sigma^2 t.
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        X_t = X_0\exp\bc{\sigma W_t + \bc{\alpha - \frac{1}{2}\sigma^2}t}.
+    \end{equation*}
+    \begin{rmk}
+        \begin{enumerate}[label=(\arabic{*})]
+            \item If $(W_t)_{t \geq 0}$ is independent of $X_0$, then
+            \begin{align*}
+                \E[X_t] &= \E[X_0]\E\bj{\exp\bc{\sigma W_t + \bc{\alpha - \frac{1}{2}\sigma^2}t}} \\
+                &= e^{\alpha t}\E[X_0]\E\bj{\exp\bc{\sigma W_t - \frac{1}{2}\sigma^2t}} \\
+                &=e^{\alpha t}\E[X_0],
+            \end{align*}
+            because $\exp\bc{\sigma W_t - \frac{1}{2}\sigma^2t}$ is a martingale.
+
+            \item If $\alpha > \frac{1}{2}\sigma^2$, then $X_t \sto \infty$ as $t \sto \infty$. If $\alpha < \frac{1}{2}\sigma^2$, $X_t \sto 0$ as $t \sto \infty$. If $\alpha = \frac{1}{2}\sigma^2$, $X_t$ will fluctuate between arbitrary large and arbitrary small values.
+        \end{enumerate}
+    \end{rmk}
+    \begin{defn}
+        A stochastic process $(X_t)_{t \geq 0}$ of the form
+        \begin{equation*}
+            X_t = X_0\exp(\sigma W_t + \mu t)
+        \end{equation*}
+        is called the geometric Brownian motion.
+    \end{defn}
+\end{exam}
+
+\begin{exam}[Hull-White Interest Rate Model]
+    Consider SDE
+    \begin{equation*}
+        dR_t = (a_t - b_tR_t) + \sigma_t dW_t,\quad R_0 = r,
+    \end{equation*}
+    where $a_t,b_t,\sigma_t$ are deterministic.
+
+    \noindent \emph{Solution:} 
+    \begin{equation*}
+        dR_t + b_tdR_t = a_tdt + \sigma_t dW_t.
+    \end{equation*}
+    Multiplying $e^{\int_0^t b_u du}$,
+    \begin{equation*}
+        e^{\int_0^t b_u du}dR_t + e^{\int_0^t b_u du}b_tdR_t = e^{\int_0^t b_u du}a_tdt + \sigma_te^{\int_0^t b_u du} dW_t.
+    \end{equation*}
+    Because $e^{\int_0^t b_u du}$ is of bounded variation on any interval, by It\^o formula
+    \begin{equation*}
+        d \bc{e^{\int_0^t b_u du}}dR_t = e^{\int_0^t b_u du}a_tdt + \sigma_te^{\int_0^t b_u du} dW_t.
+    \end{equation*}
+    So
+    \begin{equation*}
+        R_t = re^{-\int_0^t b_u du} + r \int_0^t e^{\int_t^s b_u du}a_sds + \int_0^t\sigma_se^{\int_t^s b_u du} dW_s.
+    \end{equation*}
+\end{exam}
+
+\begin{exam}
+    Consider SDE
+    \begin{equation*}
+        dX_t = rX_t(K- X_t)dt + \beta X_t dW_t,\quad X_0 = x > 0.
+    \end{equation*}
+
+    \noindent \emph{Solution:}
+    \begin{equation*}
+        \frac{1}{X_t}dX_t + rX_tdt =rKdt +  \beta dW_t.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \int_0^t\frac{1}{X_t}dX_t + \int_0^t rX_tdt = rKt + \beta W_t.
+    \end{equation*}
+    For the left hand side, first
+    \begin{align*}
+        \int_0^t\frac{1}{X_t}dX_t &= \log X_t -\log X_0 +\frac{1}{2} \int_0^t \frac{1}{X_s^2} (dX_t)^2 \\
+        &= \log X_t -\log X_0 +\frac{1}{2} \int_0^t \frac{1}{X_s^2} \beta^2 X_s^2 ds \\
+        &= \log \frac{X_t}{x} + \frac{1}{2}\beta^2 t.
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        X_t\exp\bc{r\int_0^tX_sds} = x\exp\bc{\beta W_t + \bc{rK - \frac{1}{2}\beta^2}t}.
+    \end{equation*}
+    Integrating w.s.t. $t$,
+    \begin{align*}
+        \int_0^t \exp\bc{r\int_0^tX_sds} d\bc{\int_0^tX_sds} &= \frac{1}{r} \bc{\exp\bc{r\int_0^tX_sds} - 1}\\
+        &= x\int_0^t\exp\bc{\beta W_s + \bc{rK - \frac{1}{2}\beta^2}s}ds.
+    \end{align*}
+    It follows that
+    \begin{equation*}
+        \exp\bc{r\int_0^tX_sds} = 1+ rx\int_0^t\exp\bc{\beta W_s + \bc{rK - \frac{1}{2}\beta^2}s}ds,
+    \end{equation*}
+    and so
+    \begin{equation*}
+        \int_0^tX_sds  = \frac{1}{r}\log \bc{1+ rx\int_0^t\exp\bc{\beta W_s + \bc{rK - \frac{1}{2}\beta^2}s}ds}.
+    \end{equation*}
+    Differentiating w.s.t. $t$,
+    \begin{equation*}
+        X_t = \frac{x\exp\bc{\beta W_t + \bc{rK - \frac{1}{2}\beta^2}t}}{1+ rx\int_0^t\exp\bc{\beta W_s + \bc{rK - \frac{1}{2}\beta^2}s}ds}.
+    \end{equation*}
+\end{exam}
+
+\begin{exam}
+    Consider SDE
+    \begin{equation*}
+        dX_t = \alpha_t dt + b_t X_tdW_t.
+    \end{equation*}
+
+    \noindent \emph{Solution:} Trying to find an integrator $\rho_t$ for
+    \begin{align*}
+        \rho_tdX_t - b_t\rho_t X_tdW_t = \alpha_t\rho_t dt.
+    \end{align*}
+    By It\^o formula, 
+    \begin{equation*}
+       d(\rho_t X_t) = \rho_t dX_t + X_t d\rho_t+ (dX_t)(d\rho_t) 
+    \end{equation*}
+    First, try to find $\rho_t$ such that
+    \begin{equation*}
+        X_t d\rho_t = - b_t\rho_t X_tdW_t~\Rightarrow~ \frac{d\rho_t}{\rho_t} = -b_tdW_t.
+    \end{equation*}
+    Then by above
+    \begin{equation*}
+        \log \frac{\rho_t}{\rho_0} + \frac{1}{2}\int_0^t \frac{1}{\rho_t^2}(d\rho_t)^2 = \log \frac{\rho_t}{\rho_0} + \frac{1}{2}\int_0^tb_u^2du = - \int_0^t b_u dW_u,
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        \rho_t = \exp\bc{- \int_0^t b_u dW_u -  \frac{1}{2}\int_0^tb_u^2du}
+    \end{equation*}
+    by setting $\rho_0 = 1$. Then
+    \begin{align*}
+        d(\rho_t X_t) &= \rho_t dX_t + X_t d\rho_t+ (dX_t)(d\rho_t) \\
+        &= \rho_t dX_t - - b_t\rho_t X_tdW_t - b_t^2\rho_tX_t dt \\
+        &= \alpha_t\rho_t dt - b_t^2\rho_tX_t dt.
+    \end{align*}
+    So
+    \begin{equation*}
+        d(\rho_t X_t) +  b_t^2\rho_tX_t dt = \alpha_t\rho_t dt.
+    \end{equation*}
+    Multiplying $e^{\int_0^t b_u^2 du}$, then we have
+    \begin{equation*}
+        d\bc{e^{\int_0^t b_u^2 du} \rho_t X_t} = e^{\int_0^t b_u^2 du}\alpha_t\rho_t dt.
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \rho_t X_t - X_0 = \int_0^t e^{\int_t^s b_u^2 du}\alpha_s\rho_s ds,
+    \end{equation*}
+    i.e.,
+    \begin{equation*}
+        X_t = X_0 \exp \left(\int_0^t b_s d W_s-\frac{1}{2} \int_0^t b_s^2 d s\right)+\int_0^t \alpha_s \exp \left(\int_s^t b_u d W_u-\frac{1}{2} \int_s^t b_u^2 d u\right) d s.
+    \end{equation*}
+\end{exam}
+
+\begin{exam}
+    Consider SDE
+    \begin{equation*}
+        LX_t^{\prime\prime} + RX_t^\prime + \frac{1}{2}X_t = G_t + \alpha \tilde{W}_t,
+    \end{equation*}
+    where $\tilde{W}_t$ is white noise, i.e., $\tilde{W}_t dt = dW_t$ (in distribution meaning).
+
+    \noindent \emph{Solution:} Introduce
+    \begin{equation*}
+         \bm{X}_t = \bc{
+            \begin{array}{c}
+                X_t \\
+                X_t^\prime
+            \end{array}
+        }
+    \end{equation*}
+    and it follows that
+    \begin{equation*}
+        d\bm{X}_t = A\bm{X}_t dt + \bm{H}_t dt + \bm{K} dW_t,
+    \end{equation*}
+    where
+    \begin{equation*}
+        A=\left(\begin{array}{cc}
+            0 & 1 \\
+            -\frac{1}{C L} & -\frac{R}{L}
+        \end{array}\right),~\bm{H}_t = \bc{
+            \begin{array}{c}
+                0 \\
+                \frac{G_t}{L}
+            \end{array}
+        },\quad \bm{K} = \bc{
+            \begin{array}{c}
+                0 \\
+                \frac{\alpha}{L}
+            \end{array}
+        }.
+    \end{equation*}
+    So
+    \begin{equation*}
+        \bm{X}_t=\exp (A t) \bm{X}_0+\exp (A t) \int_0^t \exp (-A s)\left(\bm{H}_s d s+\bm{K} d W_s\right).
+    \end{equation*}
+\end{exam}
+
+\section{Weak and Strong Solution}
+
+\begin{thm}[Existence and Uniqueness]
+    Fix $T > 0$. Let $b \colon [0,T] \times \R^n \sto \R^n$ and $\sigma \colon [0,T] \times \R^n \sto \R^{n \times m}$ be measurable such that
+    \begin{equation}\label{eq:solcond1}
+        \norm{b(t,x)} + \norm{\sigma(t,x)}_{\op{F}} \leq C(1 + \norm{x}), \quad \forall~x \in \R^n,~t \in [0,t]
+    \end{equation}
+    for some constant $C$, and
+    \begin{equation}\label{eq:solcond2}
+        \norm{b(t,x)-b(t,y)} + \norm{\sigma(t,x)-\sigma(t,y)}_{\op{F}} \leq D\norm{x-y},\quad \forall~x,y \in \R^n,~t \in [0,t]
+    \end{equation}
+    for some constant $D$. Let $\bm{Z}$ be a random variable independent of $\mathcal{F}^W_\infty$ and $\bm{Z} \in L^2$. Then
+    \begin{equation*}
+        d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t,\quad 0\leq t \leq T,~\bm{X}_0 = \bm{Z},
+    \end{equation*}
+    has a unique (strong) solution $\bm{X}=(\bm{X}_t)_{t \in [0,T]}$ that is continuous w.s.t. $t$ with properties
+    \begin{enumerate}[label=(\roman*)]
+        \item $\bm{X}_t$ is measurable w.s.t. $\mathcal{F}^W_t \vee \sigma(\bm{Z})$ for all $t$,
+        \item $\E\bj{\int_0^T\norm{\bm{X}_u}^2du} < \infty$.
+    \end{enumerate}
+\end{thm}
+\begin{rmk}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Condition (\ref{eq:solcond1}) guarantees that the existence of global solution w.s.t. $t$.
+        \item Condition (\ref{eq:solcond2}), as similar as ODE, is to make the uniqueness of the solution.
+    \end{enumerate}
+\end{rmk}
+
+\begin{defn}
+    Given SDE,
+    \begin{equation}\label{eq:sdeweakstrong}
+        d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t.
+    \end{equation}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item A strong solution of (\ref{eq:sdeweakstrong}) on a give probability space $(\Omega,\mathcal{F},\Pb)$ and w.s.t. the fixed Brownian motion $\bm{W}$ and initial value $\bm{Z}$, is a stochastic process $\bm{X}$ with continuous paths and with the following properties:
+        \begin{enumerate}[label=(\roman*)]
+            \item $\bm{X}$ is adapted to $\mathbb{F}^W = (\mathcal{F}^W_t)_{t \geq 0}$,
+            \item $\Pb(\bm{X}_0 = \bm{Z}) = 1$,
+            \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)} ds < \infty} = 1$, for all $i,j$,
+            \item $\bm{X}$ satisfies the integral version
+            \begin{equation*}
+                \bm{X}_t = \bm{X}_0 + \int_0^tb(s,\bm{X}_s)ds+\int_0^t\sigma(s,\bm{X}_s)d\bm{W}_s.
+            \end{equation*}
+        \end{enumerate}
+
+        \item A weak solution of (\ref{eq:sdeweakstrong}) is a triple $\bc{(\bm{X},\bm{W}),(\Omega,\mathcal{F},\mathbb{P}), \mathbb{F}=(\mathcal{F}_t)}$ such that
+        \begin{enumerate}[label=(\roman*)]
+            \item $(\Omega,\mathcal{F},\mathbb{P})$ is a probability space,
+            \item $\mathbb{F}$ is a filtration on $(\Omega,\mathcal{F},\mathbb{P})$ with the usual condition,
+            \item $\bm{X}$ is a continuous $\mathbb{F}$-adapted process,
+            \item $\bm{W} = (\bm{W}_t,\mathcal{F}_t)$ is a Brownian motion,
+            \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)} ds < \infty} = 1$, for all $i,j$,
+            \item $\bm{X}$ satisfies the integral version
+            \begin{equation*}
+                \bm{X}_t = \bm{X}_0 + \int_0^tb(s,\bm{X}_s)ds+\int_0^t\sigma(s,\bm{X}_s)d\bm{W}_s.
+            \end{equation*}
+        \end{enumerate}
+    \end{enumerate}
+\end{defn}
+\begin{rmk}
+    It is obviously that the existence of strong solution implies that the solution is also a weak solution. But the existence of weak solution does not implies the existence of strong solution.
+\end{rmk}
+
+\begin{exam}[Tanaka Equation]
+    Consider the SDE
+    \begin{equation*}\label{eq:tanaka}
+        dX_t = \sgn(X_t)dW_t.
+    \end{equation*}
+    Note that $\sigma(t,x) = \sgn(x)$ does not satisfy the Lipschitz condition.
+
+    \noindent \textbf{Claim:} (\ref{eq:tanaka}) has no strong solution.
+
+    \noindent Suppose (\ref{eq:tanaka}) has a strong solution $X$. Then
+    \begin{equation*}
+        X_t = \int_0^t \sgn(X_s)dW_s~\Rightarrow~ \inn{X}_t = t.
+    \end{equation*}
+    By L\'evy theorem, $X$ is a Brownian motion. On the other hand,
+    \begin{equation*}
+        dW_t = \sgn(X_t)dX_t~\Rightarrow~ W_t = \int_0^t \sgn{X_s}ds,
+    \end{equation*}
+    which means $W$ is a Brownian motion w.s.t. $\mathbb{F}^X$, i.e., $\mathbb{F}^W \subset \mathbb{F}^X$. By the Tanaka equation,
+    \begin{equation*}
+        W_t = \abs{X_t} - L^X_t,
+    \end{equation*}
+    which implies that $\mathcal{F}^W_t \neq \mathcal{F}^X_t$, contradicting to $X$ adapted to $\mathbb{F}^W$.
+
+    \noindent (\ref{eq:tanaka}) has a weak solution. Choose $B = (B_t)_{t \geq 0}$ be a Brownian motion. Define
+    \begin{equation*}
+        \tilde{W}_t = \int_0^t\sgn(B_u)dB_u,
+    \end{equation*}
+    which is a Brownian motion. Then let $X=B$,
+    \begin{equation*}
+        d\tilde{W}_t = \sgn(X_t)dX_t~\Rightarrow~dX_t = \sgn(X_t)d\tilde{W}_t.
+    \end{equation*}
+\end{exam}
+
+\section{Feynman-Kac Formula}
+
+\begin{thm}[Feynman-Kac Formula]
+    Consider SDE
+    \begin{equation*}
+        dX_t = \beta(t,X_t)dt+ \sigma(t,X_t)dW_t.
+    \end{equation*}
+    Let $f$ be a Borel-measurable function. Fix $T > 0$ and $t \in [0,T]$. Define
+    \begin{equation*}
+        g(t,x) = \E\bj{f(X_T) \mid X_t = x} = \E^{t,x}[f(X_T)].
+    \end{equation*}
+    Assume $g(t,x) < \infty$. Then $g(t,x)$ satisfies PDE
+    \begin{equation*}
+        \frac{\partial}{\partial t}g + \beta \frac{\partial}{\partial x} g + \frac{1}{2} \sigma^2 \frac{\partial^2}{\partial x^2}g = 0
+    \end{equation*}
+    with terminal $g(T,x) = f(x)$.
+\end{thm}
+\begin{rmk}
+    Note that $(g(t,X_t))_{0 \leq t \leq T}$ is a martingale, because by It\^o formula
+    \begin{align*}
+        dg(t,X_t) &= g_t(t,X_t)dt + g_x(t,X_t)dX_t + \frac{1}{2}g_{xx}(t,X_t)(dX_t)^2 \\
+        &= g_tdt+g_x(\beta dt + \sigma dW_t) + \frac{1}{2}g_{xx} \sigma^2 dt \\
+        &= g_x \sigma dW_t + \bc{g_t + \beta g_x + \frac{1}{2}\sigma^2 g_{xx}}dt \\
+        &= g_x \sigma dW_t.
+    \end{align*}
+\end{rmk}
+
+\begin{thm}[Discounted Feynman-Kac Formula]
+    Consider SDE
+    \begin{equation*}
+        dX_t = \beta(t,X_t)dt+ \sigma(t,X_t)dW_t.
+    \end{equation*}
+    Let $f$ be a Borel-measurable function and $r$ be a constant. Fix $T > 0$ and $t \in [0,T]$. 
+    Define
+    \begin{equation*}
+        h(t,x) = \E^{t,x}\bj{e^{-r(T-t)}f(X_T)}.
+    \end{equation*}
+    Then $h$ satisfies
+    \begin{equation*}
+        h_t(t,x) + \beta(t,x)h_x(t,x)+ \frac{1}{2}\sigma(t,x)h_{xx}(t,x) = r h(t,x)
+    \end{equation*}
+    with terminal $h(T,x) = f(x)$.
+\end{thm}
+
