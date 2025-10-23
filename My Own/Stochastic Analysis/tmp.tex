@@ -464,14 +464,14 @@ Moreover, it can be extended to a self-adjoint operator $L$ by using Friedrichs 
 
 \end{proof}
 
-For $(3)$ in above proposition, by the ergodic property, as $t \sto \infty$,
+For $(3)$ in above proposition, which is called local Poincar\'e inequality, if $\rho > 0$, by the ergodic property, as $t \sto \infty$,
 \begin{equation*}
 	\int f^2 d \mu-\left(\int f d \mu\right)^2 \leq \frac{1}{\rho} \int \Gamma(f) d \mu,
 \end{equation*}
 which is called a Poincar\'e inequality.
 
 \begin{defn}[Poincar\'e inequality]
-    Let $\mu$ be a probability measure and $\mathcal{E}$ be a Dirichlet form on $L^2(\mu)$. We say that $\mu$ and $\mathcal{E}$ satisfy a Poincar\'e inequality with constant $C$ if
+    Let $\mu$ be a probability measure and $\mathcal{E}$ be a Dirichlet form on $L^2(\mu)$. We say that $\mu$ and $\mathcal{E}$ satisfy a Poincar\'e inequality with constant $C$ ($\op{PI}(C)$) if
     \begin{equation*}
     	\int_E f^2 d\mu - \bc{\int_E fd\mu}^2 \leq C\mathcal{E}(f),
     \end{equation*}
@@ -665,7 +665,377 @@ i.e., $(\R^n,\mu,\Gamma)$ is $\op{CD}(\rho,\infty)$.
     \end{equation*}
 \end{cor}
 
-\section{Strong Gradient Bound}
+
+\section{Log-Sobolev Inequality}
+
+\begin{thm}[Strong Gradient Bound]
+    Let $(E,\mu,\Gamma)$ be a compact Markov triple that satisfies $\op{CD}(\rho,\infty)$. Then for every $f \in \mathcal{A}$ and $t \geq 0$,
+    \begin{equation*}
+        \sqrt{\Gamma(P_tf)} \leq e^{-\rho t}P_t\sqrt{\Gamma(f)}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    First, assume $f > 0$. Fix $t$ and define
+    \begin{equation*}
+        \Lambda(s) = P_s\sqrt{\Gamma(P_{t-s}f)}.
+    \end{equation*}
+    by the chain rule for $L$,
+    \begin{align*}
+        \Lambda^{\prime}(s) & =P_s L \sqrt{\Gamma\left(P_{t-s} f\right)}+P_s \frac{\frac{d}{d s} \Gamma\left(P_{t-s} f\right)}{2 \sqrt{\Gamma\left(P_{t-s} f\right)}} \\
+        & =P_s\left[\frac{L \Gamma\left(P_{t-s} f\right)}{2 \sqrt{\Gamma\left(P_{t-s} f\right)}}-\frac{\Gamma\left(\Gamma\left(P_{t-s} f\right)\right)}{4 \Gamma\left(P_{t-s} f\right)^{3 / 2}}-\frac{\Gamma\left(P_{t-s} f, L P_{t-s} f\right)}{\sqrt{\Gamma\left(P_{t-s} f\right)}}\right] \\
+        & =P_s\left[\frac{\Gamma_2\left(P_{t-s} f\right)}{\sqrt{\Gamma\left(P_{t-s} f\right)}}-\frac{\Gamma\left(\Gamma\left(P_{t-s} f\right)\right)}{4 \Gamma\left(P_{t-s} f\right)^{3 / 2}}\right] .
+    \end{align*}
+    and so
+    \begin{align*}
+        \frac{d}{d s}\left(e^{-\rho s} \Lambda(s)\right) & =e^{-\rho s}\left(\Lambda^{\prime}(s)-\rho \Lambda(s)\right) \\
+        & =e^{-\rho s} P_s\left[\frac{\Gamma_2\left(P_{t-s} f\right) \Gamma\left(P_{t-s} f\right)-\rho \Gamma\left(P_{t-s} f\right)^2-\frac{1}{4} \Gamma\left(\Gamma\left(P_{t-s} f\right)\right)}{4 \Gamma\left(P_{t-s} f\right)^{3 / 2}}\right].
+    \end{align*}
+    Let $g = P_{t-s}f$.
+    \begin{equation*}
+        \frac{d}{d s}\left(e^{-\rho s} \Lambda(s)\right) \geq 0 ~\Leftrightarrow~\Gamma(g)\left(\Gamma_2(g)-\rho \Gamma(g)\right) \geq \frac{1}{4} \Gamma(\Gamma(g)).
+    \end{equation*}
+    Therefore, it suffices to prove above inequality, which is followed by the diffusion property of $\Gamma$ and $\op{CD}(\rho,\infty)$.
+
+    For general $f$, let $\psi(x) = \sqrt{x + \varepsilon}$ and replace $\Lambda(s)$ by
+    \begin{equation*}
+        \Lambda(s)=P_s \psi\left(e^{-2 \rho s} \Gamma\left(P_{t-s} f\right)\right). \qedhere
+    \end{equation*}
+\end{proof}
+
+Let $\mu$ be a probability measure on $E$ and $f \colon E \sto [0,\infty)$ measurable. Define the entropy by
+\begin{equation*}
+    \Ent_\mu(f) \defeq \int_E f\log f d\mu - \int_E fd\mu \log \bc{\int_E f d\mu},
+\end{equation*}
+where we adopt the convention that $ 0 \log 0 =0$. By Jensen's inequality for $\psi(x) = x \log x$, $\Ent_\mu f \geq 0$. Because $\psi$ is strictly convex, $\Ent_\mu f = 0$ if and only if $f$ is constant $\mu$-a.e. Also,
+\begin{equation*}
+    \Ent_\mu(cf) = c\Ent_\mu(f),\quad \forall~c > 0.
+\end{equation*}
+\begin{rmk}
+    Note that if $\nu \ll \mu$ is another probability measure and let $f = \frac{d \nu}{d \mu}$, 
+    \begin{equation*}
+        \Ent_\mu(f) = \int_E f\log f d\mu = \op{KL}(\nu ~\Vert~ \mu).
+    \end{equation*}
+\end{rmk}
+
+\begin{defn}[Log-Sobolev Inequality]
+    If $\mu$ is a probability measure and $\mathcal{E}$ is a Dirichlet form, we say they satisfy a log-Sobolev inequality with constant C ($\op{LSI}(C)$) if for all $f \in \mathcal{D}(\mathcal{E})$,
+    \begin{equation*}
+        \Ent_\mu(f^2) \leq 2C \mathcal{E}(f).
+    \end{equation*}
+    The smallest $C$ for which $\mu$ and $\mathcal{E}$ satisfy a $\op{LSI}(C)$ is called the log-Sobolev constant of $\mu,\mathcal{E}$.
+\end{defn}
+
+Assume $f > \varepsilon >0$, i.e., $f$ is bounded below. Then
+\begin{equation*}
+    \mathcal{E}(\sqrt{f}) = \int_E \Gamma(\sqrt{f})d\mu = \frac{1}{4}\int_E \frac{\Gamma(f)}{f} d\mu.
+\end{equation*}
+Then $\op{LSI}(C)$ is equivalent to
+\begin{equation*}
+    \operatorname{Ent}_\mu(f) \leq 2 C \mathcal{E}(\sqrt{f})=\frac{C}{2} \int_E \frac{\Gamma(f)}{f} d \mu.
+\end{equation*}
+
+\begin{defn}
+    Let $\nu \ll \mu$ be another probability measure and $f = \frac{d \nu}{d \mu}$. The Fisher information of $\nu$ w.s.t. $\mu$ is defined as
+    \begin{equation*}
+        \mathrm{I}(\nu \mid \mu)=\mathrm{I}_\mu(f)=\int_E \frac{\Gamma(f)}{f} d \mu
+    \end{equation*}
+    and the entropy of $\nu$ w.s.t. $\mu$ (i.e., KL divergence) is defined as
+    \begin{equation*}
+        H(\nu \mid \mu) = \Ent_\mu(f).
+    \end{equation*}
+\end{defn}
+
+By $\Ent_\mu(cf) = c\Ent_\mu(f)$, $\mu, \Gamma$ satisfy $\op{LSI}(C)$ if and only if
+\begin{equation*}
+    H(\nu \mid \mu) \leq \frac{C}{2}I(\nu \mid \mu)
+\end{equation*}
+for every probability measure $\nu \ll \mu$, where we allow infinity on the both sides. Moreover, if $\frac{d \nu}{d \mu} \notin \mathcal{D}(\mathcal{E})$, the RHS is $\infty$.
+
+\begin{prop}
+    If $\mu,\mathcal{E}$ satisfy $\op{LSI}(C)$, then they satisfy $\op{PI}(C)$.
+\end{prop}
+\begin{proof}
+    Given $f \in \mathcal{A}$ with mean $0$ and $\varepsilon > 0$. Because $\log(1 + x) = x -\frac{1}{2}x^2 + o(x^2)$,
+    \begin{align*}
+        \Ent_\mu((1 + \epsilon f)^2) &= \int_E(1+\epsilon f)^2\left(\epsilon f-\frac{\epsilon^2}{2} f^2\right) d \mu-\int_E(1+\epsilon f)^2 d \mu \log \int_E(1+\epsilon f)^2 d \mu+o\left(\epsilon^2\right) \\
+        &= 2 \epsilon^2 \int_E f^2 d \mu+o\left(\epsilon^2\right)
+    \end{align*}
+    Moreover,
+    \begin{equation*}
+        \mathcal{E}(1+\epsilon f) = \epsilon^2\mathcal{E}(f)
+    \end{equation*}
+    Apply $\op{LSI}$ to $1 + \epsilon f$.
+    \begin{equation*}
+        \mathcal{E}(1+\epsilon f) \leq 2C \epsilon^2\mathcal{E}(f).
+    \end{equation*}
+    Dividing $\epsilon$ and taking $\epsilon \sto 0$,
+    \begin{equation*}
+        \int_E f^2 d \mu \leq C \mathcal{E}(f). \qedhere
+    \end{equation*}
+\end{proof}
+
+\paragraph{$\op{LSI}$ under $\op{CD}(\rho,\infty)$.}
+
+\begin{prop}\label{prop:cd_lsi}
+    For a compact Markov triple $(E,\mu,\Gamma)$, TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item It satisfies $\op{CD}(\rho,\infty)$ for some $\rho \in \R$.
+        \item For all $f \in \mathcal{A}$,
+        \begin{equation*}
+            \Gamma(f)\bc{\Gamma_2(f) - \rho\Gamma(f)} \geq \frac{1}{4}\Gamma(\Gamma(f)).
+        \end{equation*}
+        \item For every $f \in \mathcal{A}$ and $t \geq 0$,
+        \begin{equation*}
+            \sqrt{\Gamma(P_t f)} \leq e^{-\rho t}P_t \sqrt{\Gamma(f)}.
+        \end{equation*}
+        \item For every positive $f \in \mathcal{A}$ and $t \geq 0$,
+        \begin{equation*}
+            P_t(f \log f) - P_t f \log P_t f \leq \frac{1 - e^{-2\rho t}}{2\rho}P_t \frac{\Gamma(f)}{f}.
+        \end{equation*}
+        \item For every positive $f \in \mathcal{A}$ and $t \geq 0$,
+        \begin{equation*}
+            P_t(f \log f)-P_t f \log P_t f \geq \frac{e^{2 \rho t}-1}{2 \rho} \frac{\Gamma\left(P_t f\right)}{P_t f}.
+        \end{equation*}
+    \end{enumerate}
+\end{prop}
+Note that for $(4)$, it is called a local $\op{LSI}$. As $t \sto \infty$, by ergodicity, it obtains $\op{LSI}(1 / \rho)$.
+\begin{cor}
+   If $(E,\mu,\Gamma)$ is a compact Markov triple satisfies $\op{CD}(\rho,\infty)$ for some $\rho > 0$, then $\mu,\Gamma$ satisfy a $\op{LSI}(1 / \rho)$. 
+\end{cor}
+\begin{proof}[Proof of Proposition \ref{prop:cd_lsi}]
+    $(1) ~\Rightarrow~ (2) ~\Rightarrow~ (3)$ is by the strong gradient bound. $(3)$ together with Jensen's inequality implies that
+    \begin{equation*}
+        \Gamma\left(P_t f\right) \leq e^{-2 \rho t} P_t \Gamma(f),
+    \end{equation*}
+    which follows that $(1)$.
+
+    $(3)~\Rightarrow~(4)$: Fix $t > 0$ and define
+    \begin{equation*}
+        \Lambda(s)=P_s\left[P_{t-s} f \log P_{t-s} f\right] = P_s \psi\left(P_{t-s} f\right),
+    \end{equation*}
+    for $\psi(x) = x \log x$. So by $(3)$,
+    \begin{align*}
+        \Lambda^\prime(s) &=P_s\left[\psi^{\prime \prime}\left(P_{t-s} f\right) \Gamma\left(P_{t-s} f\right)\right] \\
+        &= P_s \frac{\Gamma\left(P_{t-s} f\right)}{P_{t-s} f} \\
+        &\leq e^{-2 \rho(t-s)} P_s \frac{\left(P_{t-s} \sqrt{\Gamma(f)}\right)^2}{P_{t-s} f},
+    \end{align*}
+    Note that by Cauchy-Schwartz inequality,
+    \begin{equation*}
+        \mathbb{E} X=\mathbb{E}\left[\sqrt{Y} \frac{X}{\sqrt{Y}}\right] \leq \sqrt{\mathbb{E} Y \mathbb{E} \frac{X^2}{Y}} ~\Rightarrow~ \frac{(\mathbb{E} X)^2}{\mathbb{E} Y} \leq \mathbb{E} \frac{X^2}{Y}.
+    \end{equation*}
+    By setting $X = \sqrt{\Gamma(f)},Y=f$ and taking expectation w.s.t. $p_{t-s}(x,\cdot)$,
+    \begin{equation*}
+        \Lambda^{\prime}(s) \leq e^{-2 \rho(t-s)} P_s P_{t-s} \frac{\Gamma(f)}{f}=e^{-2 \rho(t-s)} P_t \frac{\Gamma(f)}{f} .
+    \end{equation*}
+    So
+    \begin{equation*}
+        \Lambda(t)-\Lambda(0) \leq P_t \frac{\Gamma(f)}{f} \int_0^t e^{-2 \rho(t-s)} d s=\frac{1-e^{-2 \rho t}}{2 \rho} P_t \frac{\Gamma(f)}{f}.
+    \end{equation*}
+
+    $(3)~\Rightarrow~(5):$ It is similar as $(3)~\Rightarrow~(4)$, except for taking $X=\sqrt{\Gamma\left(P_{t-s} f\right)}, Y=P_{t-s} f$ and the expectation w.s.t. $p_s(x, \cdot)$, which impllies that
+    \begin{equation*}
+        \Lambda^{\prime}(s) \geq \frac{\left(P_s \sqrt{\Gamma\left(P_{t-s} f\right)}\right)^2}{P_t f} \geq e^{2 \rho s} \frac{\Gamma\left(P_t f\right)}{P_t f}.
+    \end{equation*}
+
+    $(4)~\Rightarrow~(1):$ $(4)$ is local $\op{LSI}(\rho)$, which implies local $\op{PI}$ as similar as above proposition. Then it implies $\op{CD}(\rho,\infty)$. $(5)~\Rightarrow~(1)$ is as similar as above.
+\end{proof}
+
+\paragraph{$\op{LSI}$ under $\op{CD}(\rho,n)$.}
+
+\begin{thm}\label{thm:lsi_cdn}
+    If a compact Markov triple $(E,\mu,\Gamma)$ satisfies $\op{CD}(\rho,n)$ for some $\rho > 0$, then $\mu,\Gamma$ satisfy a $\op{LSI}(C)$.
+\end{thm}
+\begin{lem}
+    Suppose that
+    \begin{equation*}
+        \int_E f \Gamma(\log f) d \mu \leq C \int_E f \Gamma_2(\log f) d \mu
+    \end{equation*}
+    for some $C > 0$ and all positive $f \in \mathcal{A}$. Then $\mu,\Gamma$ satisfy a $\op{LSI}(C)$.
+\end{lem}
+\begin{proof}
+    For fix some positive $f \in \mathcal{A}$. Let
+    \begin{equation*}
+        \Lambda(t)=\int_E P_t f \log P_t f d \mu.
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \Lambda^{\prime}(t)=-\int_E \frac{\Gamma\left(P_t f\right)}{P_t f} d \mu=-\int_E P_t f \Gamma\left(\log P_t f\right) d \mu,
+    \end{equation*}
+    and
+    \begin{equation*}
+        \Lambda^{\prime \prime}(t)=\int_E \frac{\Gamma\left(P_t f\right) L P_t f}{\left(P_t f\right)^2}-\frac{2 \Gamma\left(P_t f, L P_t f\right)}{P_t f} d \mu.
+    \end{equation*}
+    Taking $g = P_t f$, by the diffusion property of $L$,
+    \begin{equation*}
+        L \frac{\Gamma(g)}{g}=-\frac{\Gamma(g) L g}{g^2}+\frac{L \Gamma(g)}{g}-\frac{2 \Gamma(g, \Gamma(g))}{g^2}+\frac{2 \Gamma(g)^2}{g^3} .
+    \end{equation*}
+    Since $\int Lh d\mu = 0$,
+    \begin{equation*}
+        \int_E \frac{\Gamma(g) L g}{g^2}=\int_E \frac{L \Gamma(g)}{g}-2 \frac{\Gamma(g, \Gamma(g))}{g^2}+2 \frac{\Gamma(g)^2}{g^3} d \mu .
+    \end{equation*}
+    Note that $L \Gamma(g)-2 \Gamma(g, L g)=2 \Gamma_2(g)$. So
+    \begin{equation*}
+        \Lambda^{\prime \prime}(t)=2 \int_E \frac{\Gamma_2(g)}{g}-\frac{\Gamma(g, \Gamma(g))}{g^2}+\frac{\Gamma(g)^2}{g^3} d \mu = \int_E g \Gamma_2(\log g).
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+        \Lambda^{\prime}(t) & =-\int_E P_t f \Gamma\left(\log P_t f\right) d \mu \\
+        \Lambda^{\prime \prime}(t) & =2 \int_E P_t f \Gamma_2\left(\log P_t f\right) d \mu.
+    \end{align*}
+    By assumption of $-\Lambda^{\prime}(t) \leq \frac{C}{2} \Lambda^{\prime \prime}(t)$, $\Lambda^\prime(t) \geq \Lambda^\prime(0) \exp(-\frac{2t}{C})$, i.e.,
+    \begin{equation*}
+        \int_E \frac{\Gamma\left(P_t f\right)}{P_t f} d \mu \leq e^{-2 t / C} \int_E \frac{\Gamma(f)}{f} d \mu.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \Lambda(0)-\Lambda(t)=-\int_0^t \Lambda^{\prime}(s) d s \leq-\Lambda^{\prime}(0) \int_0^{\infty} e^{-2 s / C} d s=\frac{C\left(1-e^{-2 t / C}\right)}{2} \mathrm{I}_\mu(f),
+    \end{equation*}
+    then it can prove that by taking $t \sto \infty$.
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{thm:lsi_cdn}]
+    It suffices to check the condition of above lemma. By the diffusion property of $\Gamma$,
+    \begin{align*}
+        \Gamma_2\left(e^{a g}\right) & =a^2 e^{2 a g}\left[\Gamma_2(g)+a \Gamma(g, \Gamma(g))+a^2 \Gamma(g)^2\right] \\
+        \Gamma\left(e^{a g}\right) & =a^2 e^{2 a g} \Gamma(g) \\
+        L e^{a g} & =a e^{a g}[L g+a \Gamma(g)] .
+    \end{align*}
+    Therefore, $\op{CD}(\rho,n)$ implies that
+    \begin{align*}
+        \Gamma_2\left(e^{a g}\right) & =a^2 e^{2 a g}\left[\Gamma_2(g)+a \Gamma(g, \Gamma(g))+a^2 \Gamma(g)^2\right] \\
+        \Gamma\left(e^{a g}\right) & =a^2 e^{2 a g} \Gamma(g) \\
+        L e^{a g} & =a e^{a g}[L g+a \Gamma(g)] .
+    \end{align*}
+    So
+    \begin{equation*}
+        \int_E e^g\left[\Gamma_2(g)+a \Gamma(g, \Gamma(g))+a^2 \Gamma(g)^2-\rho \Gamma(g)-\frac{1}{n}[L g+a \Gamma(g)]^2\right] d \mu \geq 0 .
+    \end{equation*}
+    Note that
+    \begin{equation*}
+        4\left(L e^{g / 2}\right)^2=e^g\left[L g+\frac{1}{2} \Gamma(g)\right]^2,~\text{ and }~\int_E(L f)^2 d \mu=\int_E \Gamma_2(f) d \mu.
+    \end{equation*}
+    It implies that
+    \begin{align*}
+        & \int_E[L g+a \Gamma(g)]^2 d \mu \\
+        & =\int_E 4\left(L e^{g / 2}\right)^2+e^g\left[(2 a-1) \Gamma(g) L g+\frac{4 a^2-1}{4} \Gamma(g)^2\right] d \mu \\
+        & =\int_E 4 \Gamma_2\left(e^{g / 2}\right)+e^g\left[(2 a-1) \Gamma(g) L g+\frac{4 a^2-1}{4} \Gamma(g)^2\right] d \mu \\
+        & =\int_E 4 \Gamma_2\left(e^{g / 2}\right)+e^g\left[(2 a-1) \Gamma(g) L g+\frac{4 a^2-1}{4} \Gamma(g)^2\right] d \mu \\
+        & =\int_E e^g\left[\Gamma_2(g)+\frac{1}{2} \Gamma(g, \Gamma(g))+(2 a-1) \Gamma(g) L g+a^2 \Gamma(g)^2\right] d \mu,
+    \end{align*}
+    and so
+    \begin{equation*}
+        \int_E e^g \Gamma(g) L g d \mu=-\int_E \Gamma\left(g, e^g \Gamma(g)\right) d \mu=-\int_E e^g \Gamma(g, \Gamma(g))+e^g \Gamma(g)^2 d \mu.
+    \end{equation*}
+    Then the inequality implies that
+    \begin{equation*}
+        \int_E e^g\left[\frac{n-1}{n} \Gamma_2(g)+b_n \Gamma(g, \Gamma(g))+c_n \Gamma(g)^2-\rho \Gamma(g)\right] d \mu \geq 0
+    \end{equation*}
+    for
+    \begin{equation*}
+        b_n=\frac{2 a n+4 a-3}{2 n},\quad c_n=\frac{n a^2-(a-1)^2}{n} .
+    \end{equation*}
+    By choosing $a = \frac{3}{2n+4}$, it has
+    \begin{equation*}
+        \int_E e^g \Gamma_2(g) d \mu \geq \frac{n \rho}{n-1} \int_E e^g \Gamma(g) d \mu.\qedhere
+    \end{equation*}
+\end{proof}
+   
+\section{Applications with LSI}
+
+\paragraph{Decay of Entropy.}
+
+\begin{prop}
+    The compact Markov triple $(E,\mu,\Gamma)$ satisfies a $\op{LSI}(C)$ if and only if
+    \begin{equation*}
+        \operatorname{Ent}_\mu\left(P_t f\right) \leq e^{-2 t / C} \operatorname{Ent}_\mu(f)
+    \end{equation*}
+    for every $t \geq 0$ and every $f \in L^{\mu}$ with finite entropy.
+\end{prop}
+\begin{proof}
+    It suffices to consider $f \in \mathcal{A}$ with finite entropy. Define
+    \begin{equation*}
+        \Lambda(t)=\operatorname{Ent}_\mu\left(P_t f\right)=\int_E P_t f \log P_t f d \mu-\int_E  f d \mu \log \int_E  f d \mu.
+    \end{equation*}
+
+    $\Rightarrow:$ Note that
+    \begin{equation*}
+        \Lambda^{\prime}(t)=-\int_E \frac{\Gamma\left(P_t f\right)}{P_t f} d \mu=-I_\mu\left(P_t f\right),
+    \end{equation*}
+    so by $\op{LSI}$, $\Lambda^{\prime}(t) \leq-\frac{2}{C} \Lambda(t)$ that implies that $\Lambda(t) \leq e^{-2 t / C} \Lambda(0)$.
+
+    $\Leftarrow:$ By Taylor expansion,
+    \begin{equation*}
+        \Lambda(t)=\Lambda(0)+t \Lambda^{\prime}(0)+o(t)=\Lambda(0)-t I_\mu(f)+o(t).
+    \end{equation*}
+    Because
+    \begin{equation*}
+        \Lambda(t) \leq e^{-2 t / C} \Lambda(0)=\left(1-\frac{2 t}{C}+o(t)\right) \Lambda(0),
+    \end{equation*}
+    as $t \sto 0$, we have
+    \begin{equation*}
+        I_\mu(f) \geq \frac{2}{C} \Lambda(0). \qedhere
+    \end{equation*}
+\end{proof}
+
+If $f = \frac{d\nu_0}{d\mu}$, then for $\nu_t = P_t^*\mu_0$,
+\begin{equation*}
+    d\nu_t = P_t f d\mu.
+\end{equation*}
+Suppose $\mu,\Gamma$ satisfies $\op{LSI}(C)$. Then we have
+\begin{equation*}
+    H(\nu_t \mid \mu) \leq e^{-\frac{2t}{C}}H(\nu_0 \mid \mu).
+\end{equation*}
+Moreover, by the following Pinsker-Csizs\'ar-Kullback inequality,
+\begin{equation*}
+    d_{\op{TV}}(\mu,\nu_t)^2 \leq \frac{1}{2}e^{-\frac{2t}{C}}H(\nu_0 \mid \mu),
+\end{equation*}
+where
+\begin{equation*}
+    d_{\mathrm{TV}}(\mu, \nu)=\sup _{A \in \mathcal{F}}|\mu(A)-\nu(A)| = \frac{1}{2} \int_E\left|1-\frac{d \nu}{d \mu}\right| d \mu.
+\end{equation*}
+Moreover, $\op{PI}$ can also be applied to consider the convergence, becasue
+\begin{equation*}
+    d_{\mathrm{TV}}(\mu, \nu)^2 \leq \frac{1}{4} \operatorname{Var}_\mu\left(\frac{d \nu}{d \mu}\right),
+\end{equation*}
+but it needs $\frac{d \nu}{d \mu} \in L^2(\mu)$.
+
+\begin{prop}[Pinsker-Csizs\'ar-Kullback]
+    For any probability measure $\mu,\nu$ on the same space,
+    \begin{equation*}
+        d_{\mathrm{TV}}(\mu, \nu)^2 \leq \frac{1}{2} H(\nu \mid \mu),
+    \end{equation*}
+    where $H(\nu \mid \mu) = \infty$ if $\nu$ is not absolutely continuous to $\mu$.
+\end{prop}
+\begin{proof}
+    WTLG, assume $f = \frac{d\nu}{d\mu} \in L^1$. Therefore, it suffices to show
+    \begin{equation*}
+        \left(\int_E|1-f| d \mu\right)^2 \leq 2 \operatorname{Ent}_\mu(f).
+    \end{equation*}
+    Define $f_s = 1 + s(f - 1)$ for $s \in [0,1]$ and
+    \begin{equation*}
+        \Lambda(s)=2 \operatorname{Ent}_\mu\left(f_s\right)-\left(\int_E\left|1-f_s\right| d \mu\right)^2=2 \operatorname{Ent}_\mu\left(f_s\right)-s^2\left(\int_E|1-f| d \mu\right)^2.
+    \end{equation*}
+    Since $\int f_s d\mu = 1$ for all $s$, it follows that
+    \begin{equation*}
+        \frac{d}{d s} \operatorname{Ent}_\mu\left(f_s\right)=\int_E(f-1)\left(1+\log f_s\right) d \mu,\quad \frac{d^2}{d s^2} \operatorname{Ent}_\mu\left(f_s\right)=\int_E \frac{(f-1)^2}{f_s} d \mu.
+    \end{equation*}
+    In particular, $\Lambda(0) = \Lambda^\prime(0) =0$ and
+    \begin{equation*}
+        \Lambda^{\prime \prime}(s)=2 \int_E \frac{(f-1)^2}{f_s} d \mu-2\left(\int_E|1-f| d \mu\right)^2 \geq 0,
+    \end{equation*}
+    by Cauchy-Schwartz inequality. Hence, $\Lambda(s) \geq 0$ for all $s \in [0,1]$.
+\end{proof}
+
+\paragraph{Hypercontractivity.} We already shown that if $\mu$ is an invariant measure, then $P_t \colon L^p(\mu) \sto L^p(\mu)$ is contractive.
+
+
+
+
+
+
+
+
+
+
 
 
 
