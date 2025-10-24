@@ -309,7 +309,7 @@ In particular, for $k = 1$,
     \end{enumerate}
 \end{defn}
 \begin{rmk}
-    Note that for any symmetric, non-negative bilinear form $\mathcal{E}$ defined on some dense $D \subset L^2(\mu)$, if $\mathcal{E}$ satisfies that for any $f_n \sto 0$ in $L^2(\mu)$ and $f_n$ Cauchy w.s.t. $\inn{\cdot,\cdot}_{\mathcal{E}}$, $\mathcal{E}(f_n) \sto 0$, then $D$ can be extended to the closure of $D$ w.s.t. $\norm{\cdot}_2+\mathcal{E}(\cdot)$.
+    Note that for any symmetric, non-negative bilinear form $\mathcal{E}$ defined on some dense $D \subset L^2(\mu)$, if $\mathcal{E}$ satisfies that for any $f_n \sto 0$ in $L^2(\mu)$ and $f_n$ Cauchy w.s.t. $\inn{\cdot,\cdot}_{\mathcal{E}}$, $\mathcal{E}(f_n) \sto 0$, then $D$ can be extended to the closure of $D$ w.s.t. $\norm{\cdot}_2+\mathcal{E}(\cdot)$, and such $\mathcal{E}$ is called closable.
 \end{rmk}
 
 If $\Gamma$ is a diffusion carr\'e du champ on an algebra $\mathcal{A} \subset L^2(\mu)$ dense and $\Gamma(f,f) \geq 0$ for all $f \in \mathcal{A}$, then let
@@ -1027,36 +1027,291 @@ but it needs $\frac{d \nu}{d \mu} \in L^2(\mu)$.
 
 \paragraph{Hypercontractivity.} We already shown that if $\mu$ is an invariant measure, then $P_t \colon L^p(\mu) \sto L^p(\mu)$ is contractive.
 
+\begin{thm}
+    For a compact Markov triple with semigroup $P_t$, TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item It satisfies $\op{LSI}(C)$.
+        \item (Hypercontractivity) For some (or every) $1 < p < \infty$, every $t \geq 0$ and $f \in L^p(\mu)$,
+        \begin{equation*}
+            \norm{P_t f}_{q(t)} \leq \norm{f}_p,
+        \end{equation*}
+        where  $q(t)$ satisfies $\frac{q(t)-1}{p-1} = e^{2t / C}$.
+        \item (Reverse hypercontractivity) For some (or every) $- \infty < p < 1$, every $t \geq 0$ and every positive, bounded $f \in \mathcal{A}$,
+        \begin{equation*}
+            \norm{P_t f}_{q(t)} \geq \norm{f}_p,
+        \end{equation*}
+        where $q(t)$ is as above.
+    \end{enumerate}
+\end{thm}
+\begin{rmk}
+    All eigenvectors of $L \colon L^2 \sto L^2$ belong to $L^q$ for all $2 < q <\infty$. If $Lf = -\lambda f$ for $\lambda > 0$ then $P_tf = e^{-\lambda t} f$. By above theorem with $p = 2$ and $t = \frac{C}{2}\log (q - 1)$,
+    \begin{equation*}
+        e^{-\lambda t}\|f\|_q=\left\|P_t f\right\|_q \leq\|f\|_2 ~\Rightarrow~ \|f\|_q \leq(q-1)^{C \lambda / 2}\|f\|_2.
+    \end{equation*}
+\end{rmk}
 
+\section{Riemannian Markov Operator}
 
+Let $(M,g)$ be a compact Riemannian manifold and $W \in C^\infty(M)$. WTLG, assume $\int_M e^{-W} dV = 1$, where $dV$ is the canonical volume form on $M$. Let $M$ be equipped with Borel $\sigma$-algebra and for any Borel set $A$, define
+\begin{equation*}
+    \mu(A) \defeq \int_M \mathbb{I}_Ae^{-W}dV,
+\end{equation*}
+which is a probability measure. Let $\mathcal{A} = C^\infty(M)$ and define $\Gamma \colon \mathcal{A} \times \mathcal{A} \sto \mathcal{A}$ by
+\begin{equation*}
+    \Gamma(f,g) = \inn{\nabla f,\nabla g}.
+\end{equation*}
+Locally, $\Gamma(f,g) = g^{ij}\partial_if \partial_j g$, which obviously a diffusion carr\'e du champ. We can obtain
+\begin{equation*}
+    Lg = \Delta g - \inn{\nabla W,\nabla g},\quad \forall~ g \in C^\infty(M),
+\end{equation*}
+because by the convergence theorem
+\begin{equation*}
+    \int_M f L g d \mu=-\int_M \Gamma(f, g) d \mu.
+\end{equation*}
+Moreover, 
+\begin{equation*}
+   \abs{\mathcal{E}(f,g)} = \abs{\int_M \Gamma(f,g) d\mu} \leq \norm{Lf}_{L^2(\mu)}\norm{g}_{L^2(\mu)},
+\end{equation*}
+which implies that $\mathcal{E}$ is closable. So it is a Dirichlet form.
 
+\begin{thm}[Parabolic regularity theorem]
+    Suppose that $u \colon M \times \R \sto \R$ is a bounded solution to
+    \begin{equation*}
+        \left\{
+            \begin{aligned}
+                \frac{\partial u(x,t)}{\partial t} &= \Delta u - \inn{\nabla W,\nabla u} \\
+                u(x,0) &= f(x),
+            \end{aligned}
+        \right.
+    \end{equation*}
+    where $f,W \in C^\infty(M)$. Then $u(t,\cdot) \in C^\infty(M)$.
+\end{thm}
+Because $u(x,t) = (P_tf)(x)$ satisfies above PDE, $P_tf \in C^\infty(M)$ when $f \in C^\infty(M)$. Therefore, we have $P_t\mathcal{A} \subset \mathcal{A}$. It follows that $(M,\mu,\Gamma)$ is a compact Markov triple.
 
+\begin{lem}
+    Let $(M,g)$ be a Riemannian manifold with the Levi-Civita connection $\nabla$ and $f \in C^\infty(M)$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Let $E_i$ be an orthonormal frame in $TM$. Then 
+        \begin{equation*}
+            \norm{\nabla^2 f}^2 = \sum_i \norm{\nabla_{E_i} (\nabla f)}^2,
+        \end{equation*}
+        where note that $\norm{\nabla^2 f}^2 = g^{kh}g^{lj}f_{;hl}f_{;kj}$.
 
+        \item For any $p \in M$, choosing a normal coordinate centered $p$,
+        \begin{equation*}
+            (\Delta f)(p) = \sum_{i=1}^n (\partial_i^2 f)(p).
+        \end{equation*}
+    \end{enumerate}
+\end{lem}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Locally, let
+        \begin{equation*}
+            E_i = E_i^\ell \frac{\partial}{\partial x^\ell}.
+        \end{equation*}
+        Let
+        \begin{equation*}
+            \nabla_{\frac{\partial}{\partial x^\ell}}dx^k = -\Gamma^k_{\ell h}dx^h,
+        \end{equation*}
+        where $\Gamma^k_{\ell h}$ is the Christoffel symbol. Then
+        \begin{align*}
+            \nabla_{E_i} (\nabla f) &= \nabla_{E_i} \bc{\frac{\partial f}{\partial x^k} dx^k} \\
+            &= E_i^\ell \frac{\partial^2 f}{\partial x^k \partial x^\ell}dx^k - E^\ell_i\frac{\partial f}{\partial x^k}\Gamma^k_{\ell h}dx^h \\
+            &= E_i^\ell \bc{\frac{\partial^2 f}{\partial x^h \partial x^\ell} - \frac{\partial f}{\partial x^k}\Gamma^k_{\ell h}}dx^h \\
+            &= E_i^\ell f_{;h\ell} dx^h.
+        \end{align*}
+        So we have
+        \begin{equation*}
+            \norm{\nabla_{E_i} (\nabla f)}^2 = g^{kh}\bc{E_i^\ell f_{;h \ell}}\bc{E_i^j f_{;k j}},
+        \end{equation*}
+        and
+        \begin{equation*}
+            \sum_i\norm{\nabla_{E_i} (\nabla f)}^2 = g^{kh} \bc{ \sum_i E_i^\ell E_i^j} f_{;h \ell}f_{;k j}.
+        \end{equation*}
+        Because $E_i$ is orthonormal,
+        \begin{align*}
+            \inn{E_i,E_m} &= \inn{E_i^\ell \frac{\partial}{\partial x^\ell},E_m^j \frac{\partial}{\partial x^j}} \\
+            &= E_i^\ell g_{\ell j} E_m^j = \delta_{im},
+        \end{align*}
+        which means that $E^\top gE = I$ for matrix $E = (E^m_j)_{m \times j}$. It follows that
+        \begin{equation*}
+            g^{-1} = EE^\top ~\Rightarrow~ g^{\ell j} = \sum_i E^\ell_iE^j_i.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+             \sum_i\norm{\nabla_{E_i} (\nabla f)}^2 = g^{kh} g^{\ell j} f_{;h \ell}f_{;k j} = \norm{\nabla^2 f}^2.
+        \end{equation*}
 
+        \item Choose a normal coordinate centered at $p$, i.e. $g^{ij}(p) = \delta_{ij}$ and $\Gamma^h_{ij}(p) = 0$. Then
+        \begin{align*}
+            (\Delta f)(p) &= g^{ij}(p)f_{;ij}(p) \\
+            &= g^{i j}(p)\left(\frac{\partial^2 f}{\partial x^i \partial x^j}(p)-\frac{\partial f}{\partial x^h}(p) \Gamma_{i j}^h(p)\right) \\
+            &= \frac{\partial^2 f}{(\partial x^i)^2}(p). \qedhere
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+\begin{rmk}
+    In general, for $\omega_1,\omega_2 \in \Gamma(T^*M)$,
+    \begin{equation*}
+        \inn{\omega_1,\omega_2} \defeq \inn{\sharp \omega_1,\sharp \omega_2} = g(\sharp \omega_1,\sharp \omega_2).
+    \end{equation*}
+    Note that for $\omega_1 = f_i^1 dx^i$ and $\omega_2 = f_j^2 dx^j$,
+    \begin{align*}
+        \inn{\omega_1,\omega_2} &= \inn{g^{\ell i}f_i^1\frac{\partial}{\partial x^\ell},g^{k j}f_j^2\frac{\partial}{\partial x^k}} \\
+        &= f_i^1f_j^2g^{\ell i}g^{k j} g_{ \ell k} \\
+        &= f_i^1f_j^2g^{ji},
+    \end{align*}
+    which means that $\inn{\cdot,\cdot}$ on $T^*M$ with the matrix expression $g^{-1}$. In this notation,
+    \begin{equation*}
+        \inn{\omega,X} \defeq \inn{\sharp \omega, X} = \inn{\omega,\flat X} = \omega(X).
+    \end{equation*}
+    Note that $\inn{X,\op{grad}f} = X(f)$ and by above notation
+    \begin{equation*}
+        \inn{\omega ,\nabla f} = \inn{\omega, \op{grad} f} = \omega(\op{grad} f).
+    \end{equation*}
+    Moreover, for any $\omega \in T^*M$ and $X \in \Gamma(TM)$, because $\nabla$ is Levi-Civita,
+    \begin{equation*}
+        \nabla_X(\sharp \omega) = \sharp (\nabla_X \omega).
+    \end{equation*}
+    It is because for any $Y \in \Gamma(TM)$,
+    \begin{align*}
+        Xg(\sharp \omega,Y) &= g(\nabla_X \sharp \omega, Y) + g(\sharp \omega, \nabla_X Y) \\
+        &= g(\nabla_X \sharp \omega, Y) + \omega(\nabla_X Y).
+    \end{align*}
+    On the other hand,
+    \begin{align*}
+        Xg(\sharp \omega,Y) = X(\omega(Y)) &= (\nabla_X \omega)(Y) + \omega (\nabla_X Y) \\
+        &= g(\sharp (\nabla_X \omega),Y) + \omega (\nabla_X Y).
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        g(\sharp (\nabla_X \omega),Y) = g(\nabla_X \sharp \omega, Y)~\Rightarrow~ \nabla_X(\sharp \omega) = \sharp (\nabla_X \omega).
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \inn{\nabla_X (\sharp \omega_1), \sharp \omega_2} = \inn{\nabla_X \omega_1,\omega_2},
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        \nabla_X \inn{\omega_1,\omega_2} = \inn{\nabla_X \omega_1,\omega_2} + \inn{\omega_1, \nabla_X \omega_2}.
+    \end{equation*}
+\end{rmk}
 
+\begin{lem}
+    Choose a orthonormal basis $\bb{E_i}$ and let
+    \begin{equation*}
+        H_{ij} = \nabla^2f(E_i,E_j).
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \norm{\nabla^2 f}^2 = \sum_{i,j}H_{ij}^2,\quad \Delta f = \sum_j H_{ii},
+    \end{equation*}
+    i.e, $\norm{\nabla^2 f}^2 = \norm{H}_{\op{F}}^2$ and $\Delta f = \tr H$, which induces
+    \begin{equation*}
+        (\Delta f)^2 \leq n \norm{\nabla^2 f}^2
+    \end{equation*}
+    if $\dim M = n$.
+\end{lem}
+\begin{proof}
+    First, for any $\omega \in \Gamma(T^*M)$,
+    \begin{align*}
+        \sum_j \omega(E_j)^2 &= \sum_j \bc{\sum_i \omega_i E^i_j}\bc{\sum_\ell \omega_\ell E^\ell_j} \\
+        &= \sum_{i,\ell}  \omega_i \omega_\ell \bc{\sum_jE^i_jE^\ell_j} \\
+        &= \sum_{i,\ell}  \omega_i \omega_\ell g^{i\ell} = \norm{\omega}^2.
+    \end{align*}
+    By above lemma,
+    \begin{equation*}
+        \norm{\nabla^2 f} = \sum_{i,j} \bc{\nabla^2 f (E_i,E_j)}^2.
+    \end{equation*}
+    And $\Delta f = \tr H$ is just by definition.
+\end{proof}
 
+\begin{defn}[Weighted Ricci Curvature]
+    Given $W \in C^\infty(M)$, the weighted Ricci curvature is a $(2,0)$-tensor $\op{Ric}_W$ defined by
+    \begin{equation*}
+        \op{Ric}_W(X,Y) \defeq \op{Ric}(X,Y) + (\nabla^2 W)(X,Y).
+    \end{equation*}
+\end{defn}
 
+\begin{prop}
+    Let $(M,g)$ be a compact Riemannian manifold and $W \in C^\infty(M)$. Define
+    \begin{align*}
+        Lf &= \Delta f - \inn{\nabla W, \nabla f} \\
+        \Gamma(f,g) &= \inn{\nabla f, \nabla g} \\
+        \Gamma_2(f) &= \frac{1}{2}L\Gamma(f) - \Gamma(f,Lf).
+    \end{align*}
+    Then
+    \begin{equation*}
+        \Gamma_2(f) = \op{Ric}_W(\op{grad} f,\op{grad} f) + \norm{\nabla^2 f}^2.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    By Bochner’s formula, we have
+    \begin{equation*}
+        \frac{1}{2} \Delta \norm{\nabla f}^2 = \op{Ric}(\op{grad}f,\op{grad}f) + \inn{\nabla f, \nabla (\Delta f)} + \norm{\nabla^2 f}^2.
+    \end{equation*}
+    By definition,
+    \begin{align*}
+        \Gamma_2(f) &= \frac{1}{2} L (\norm{\nabla f}^2) - \inn{\nabla f, \nabla Lf} \\
+        &= \frac{1}{2} \Delta (\norm{\nabla f}^2) - \frac{1}{2}\inn{\nabla W, \nabla (\norm{\nabla f}^2)} - \inn{\nabla f, \nabla (\Delta f)} + \inn{\nabla f, \nabla \inn{\nabla W, \nabla f}} \\
+        &= \op{Ric}(\op{grad}f,\op{grad}f) + \norm{\nabla^2 f}^2  -  \frac{1}{2}\inn{\nabla W, \nabla (\norm{\nabla f}^2)} + \inn{\nabla f, \nabla \inn{\nabla W, \nabla f}}.
+    \end{align*}
+    Moreover,
+    \begin{align*}
+        \frac{1}{2}\inn{\nabla W, \nabla (\norm{\nabla f}^2)} &= \frac{1}{2}\nabla_{\op{grad} W} \inn{\nabla f, \nabla f} \\
+        &= \inn{\nabla_{\op{grad} W}\nabla f, \nabla f}.
+    \end{align*}
+    On the other hand,
+    \begin{align*}
+        \inn{\nabla f, \nabla \inn{\nabla W, \nabla f}} &= \nabla_{\op{grad} f} \inn{\nabla W, \nabla f} \\
+        &= \inn{\nabla_{\op{grad} f}\nabla W, \nabla f} + \inn{\nabla W, \nabla_{\op{grad} f}\nabla f} \\
+        &= (\nabla^2 W)(\op{grad} f,\op{grad} f) + \inn{\nabla W, \nabla_{\op{grad} f}\nabla f},
+    \end{align*}
+    because
+    \begin{equation*}
+        (\nabla^2 W)(\op{grad} f,\op{grad} f) = (\nabla_{\op{grad} f} \nabla W)(\op{grad} f) = \inn{\nabla_{\op{grad} f} \nabla W, \nabla f}
+    \end{equation*}
+    Moreover,
+    \begin{equation*}
+        \inn{\nabla_{\op{grad} W}\nabla f, \nabla f} = \nabla^2f(\op{grad}f,\op{grad}W)
+    \end{equation*}
+    and
+    \begin{equation*}
+        \inn{\nabla W, \nabla_{\op{grad} f}\nabla f} = \nabla^2f(\op{grad}W,\op{grad} f),
+    \end{equation*}
+    they are same by the symmetry of $\nabla^2 f$. Therefore,
+    \begin{align*}
+        \Gamma_2(f) &= \op{Ric}(\op{grad}f,\op{grad}f) + \norm{\nabla^2 f}^2 + (\nabla^2 W)(\op{grad} f,\op{grad} f) \\
+        &=\op{Ric}_W(\op{grad}f,\op{grad}f) + \norm{\nabla^2 f}^2. \qedhere
+    \end{align*}
+\end{proof}
 
+\begin{cor}
+    Consider a compact Markov triple $(M,\mu,\Gamma)$ defined as above, where $M$ has dimension $n$.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item If $W \equiv c$ and $\op{Ric} \geq \rho g$, then $(M,\mu,\Gamma)$ satisfies $\op{CD}(\rho,n)$.
+        \item If $\op{Ric}_W \geq \rho g$, then $(M,\mu,\Gamma)$ satisfies $\op{CD}(\rho,\infty)$.
+        \item If $\op{Ric}_W \geq \rho g$ and $m > n$ such that
+        \begin{equation*}
+            \op{Ric}_W \geq \rho g + \frac{1}{m - n} \nabla W \otimes \nabla W,
+        \end{equation*}
+        then $(M,\mu,\Gamma)$ satisfies $\op{CD}(\rho,m)$.
+    \end{enumerate}
+\end{cor}
+\begin{proof}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item It is directly obtained by
+        \begin{equation*}
+            (\Delta f)^2 \leq n \norm{\nabla f}^2.
+        \end{equation*}
 
+        \item It is obvious.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        \item Similarly,
+        \begin{align*}
+            \Gamma_2(f) &\geq \rho \Gamma(f)+\frac{1}{m-n}\langle\nabla W, \nabla f\rangle^2+\frac{1}{n}(\Delta f)^2 \\
+            &\geq \rho \Gamma(f)+\frac{1}{m}\bc{\Delta f - \langle\nabla W, \nabla f\rangle},
+        \end{align*}
+        where the last inequality is because $\frac{a^2}{m}+\frac{b^2}{m-n} \geq \frac{1}{m}(a+b)^2$. \qedhere
+    \end{enumerate}
+\end{proof}
