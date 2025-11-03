@@ -318,40 +318,329 @@
 
 \section{Riemannian Submanifold}
 
+Let $(M,g,\nabla)$ be a Riemannian (embedded) submanifold of $(\widetilde{M},\widetilde{g},\widetilde{\nabla})$, i.e., $ \iota^*g = \widetilde{g}$ for $\iota: M \hookrightarrow \widetilde{M}$. Define
+\begin{align*}
+	\pi^\top &\colon T\widetilde{M}|_M \sto TM, \\
+	\pi^\perp &\colon T\widetilde{M}|_M \sto NM,
+\end{align*}
+be the tangential and normal projection. Denote $X^\top = \pi^\top(X)$, $X^\perp = \pi^{\perp}(X)$ for any $X \in T\widetilde{M}$. Also, for any $X,Y \in \Gamma(TM)$, they can be extended to vector fields on an open set of $\widetilde{M}$, and also denoted by $X,Y$. Then
+\begin{equation*}
+    \widetilde{\nabla}_XY = (\widetilde{\nabla}_XY)^\top +(\widetilde{\nabla}_XY)^\perp
+\end{equation*}
 
+\begin{defn}[Second Fundamental Form]
+    Using notations as above, the second fundamental form on $M$ is a map
+    \begin{equation*}
+        \mathrm{II} \colon \Gamma(TM) \times \Gamma(TM )\sto \Gamma(NM)
+    \end{equation*}
+    defined as
+    \begin{equation*}
+        \mathrm{II}(X, Y)=\left(\widetilde{\nabla}_X Y\right)^{\perp}.
+    \end{equation*}
+\end{defn}
 
+\begin{prop}
+    Using same notations as above.
+    \begin{enumerate}[label=(\arabic{*})]
+    	\item $\mathrm{II}(X,Y)$ is independent of the extensions of $X,Y$ to an open subset of $\widetilde{M}$.
+    	\item $\mathrm{II}(X,Y)$ is bilinear over $C^\infty(M)$ in $X$ and $Y$.
+    	\item $\mathrm{II}(X,Y)$ is symmetric.
+    	\item $\mathrm{II}(X,Y)_p$ only dependents on $X_p$ and $Y_p$ for any $p \in M$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    For the symmetry, first,
+    \begin{equation*}
+        \mathrm{II}(X, Y)-\mathrm{II}(Y, X)=\left(\widetilde{\nabla}_X Y-\widetilde{\nabla}_Y X\right)^{\perp}=[X, Y]^{\perp}.
+    \end{equation*}
+    Because $X,Y \in \Gamma(TM)$, $[X,Y] \in \Gamma(TM)$ and so $[X,Y]^\perp = 0$. For the bilinearity over $C^\infty(M)$, it is because any $f \in C^\infty(M)$ can be extended to $\widetilde{f} \in C^\infty(\widetilde{M})$ and by the symmetry. All independence is because of the properties of connection.
+\end{proof}
+\begin{rmk}
+    By the independence, it can safely define $\mathrm{II}(v,w)$ for $v,w \in T_pM$.
+\end{rmk}
 
+\begin{thm}[Gauss Formula]
+    Using notations as above, for $X,Y \in \Gamma(TM)$ and extended on an open set on $\widetilde{M}$, then on $M$, we have
+    \begin{equation*}
+        \widetilde{\nabla}_XY = \nabla_XY + \mathrm{II}(X,Y),
+    \end{equation*}
+    i.e., $\nabla_XY = (\widetilde{\nabla}_XY)^\top$.
+\end{thm}
+\begin{proof}
+    Define $\nabla^\top \colon \Gamma(TM) \times \Gamma(TM) \sto \Gamma(TM)$ as
+    \begin{equation*}
+        \nabla^\top_XY = (\widetilde{\nabla}_XY)^\top.
+    \end{equation*}
+    It suffices to show $\nabla^\top$ is a Levi-Civita connection.
 
+    First, because $\widetilde{\nabla}$ is an affine connection and $\pi^\top$ is linear, $\nabla^\top$ is obviously an affine connection on $M$. For the consistency with metric,
+    \begin{align*}
+		\nabla_X^{\top}\langle Y, Z\rangle & =X\langle Y, Z\rangle= X \langle Y ,  Z \rangle \\
+		& =\widetilde{\nabla}_{ X }\langle Y ,  Z \rangle \\
+		& =\left\langle\widetilde{\nabla}_{ X }  Y ,  Z \right\rangle+\left\langle Y , \widetilde{\nabla}_{ X }  Z \right\rangle \\
+		& =\left\langle\pi^{\top}\left(\widetilde{\nabla}_{ X }  Y \right),  Z \right\rangle+\left\langle Y , \pi^{\top}\left(\widetilde{\nabla}_{ X }  Z \right)\right\rangle \\
+		& =\left\langle\nabla_X^{\top} Y, Z\right\rangle+\left\langle Y, \nabla_X^{\top} Z\right\rangle.
+    \end{align*}
+    For the torsion free,
+    \begin{align*}
+		\nabla_X^{\top} Y-\nabla_Y^{\top} X & =\pi^{\top}\left(\left.\widetilde{\nabla}_{ X }  Y \right|_M-\left.\widetilde{\nabla}_{ Y }  X \right|_M\right) \\
+		& =\pi^{\top}\left(\left.[ X ,  Y ]\right|_M\right) \\
+		& =\left.[ X ,  Y ]\right|_M \\
+		& =[X, Y]. \qedhere
+    \end{align*}
+\end{proof}
 
+For each normal vector field $N \in \Gamma(NM)$, define
+\begin{equation*}
+    \mathrm{II}_N \colon \Gamma(TM) \times \Gamma(TM) \sto C^\infty(M)
+\end{equation*}
+as
+\begin{equation*}
+    \mathrm{II}_N(X,Y) = \inn{N,\mathrm{II}(X,Y)}.
+\end{equation*}
+So $\mathrm{II}_N \in \Gamma(\otimes^{0,2}TM)$ and is symmetric. Let $W_N \colon \Gamma(TM) \sto \Gamma(TM)$ be a self-adjoint linear operator defined as
+\begin{equation*}
+    \inn{W_N(X),Y} = \mathrm{II}_N(X,Y) = \inn{N,\mathrm{II}(X,Y)}.
+\end{equation*}
+Then $W_N$ is called the Weingarten map in the direction of $N$. Because $\mathrm{II}$ is bilinear over $C^\infty(M)$, $W_N$ is $C^\infty(M)$-linear, which implies that $W_N \colon TM \sto TM$.
 
+\begin{prop}[Weingarten Equation]
+    Using notations as above, for any $X \in \Gamma(TM)$ and $N \in \Gamma(NM)$,
+    \begin{equation*}
+        (\widetilde{\nabla}_XN)^\top = - W_N(X),
+    \end{equation*}
+    where $N$ is extended arbitrarily to an open subset of $\widetilde{M}$.
+\end{prop}
+\begin{proof}
+    Let $Y \in \Gamma(TM)$ and be extended arbitrarily on an open set of $\widetilde{M}$. Because $\inn{N,Y} = 0$ on $M$,
+    \begin{align*}
+    	0&=X\inn{N,Y} \\
+    	&=\inn{\widetilde{\nabla}_XN,Y} + \inn{N,\widetilde{\nabla}_XY} \\
+    	&= \inn{\widetilde{\nabla}_XN,Y} + \inn{N,\nabla_XY+\mathrm{II}(X,Y)} \\
+    	&=\inn{\widetilde{\nabla}_XN,Y} + \inn{N,\mathrm{II}(X,Y)} \\
+    	&=\inn{\widetilde{\nabla}_XN,Y} + \inn{W_N(X),Y} \\
+    	&= \inn{(\widetilde{\nabla}_XN)^\top + W_N(X),Y}. \qedhere
+    \end{align*}
+\end{proof}
 
+\begin{thm}[Gauss Equation]
+    Let $R$ and $\widetilde{R}$ be the corresponding Riemannian curvature of $M$ and $\widetilde{M}$ respectively. For any $X,Y,Z,W \in \Gamma(TM)$,
+    \begin{equation*}
+        \widetilde{R}(Z,Y,W,X) = R(Z,Y,W,X) - \inn{\mathrm{II}(W,Z),\mathrm{II}(X,Y)} + \inn{\mathrm{II}(W,Y),\mathrm{II}(X,Z)}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    By definition,
+    \begin{align*}
+    	\widetilde{R}(Z,Y,W,X) &= \inn{\widetilde{\nabla}_W \widetilde{\nabla}_X Y-\widetilde{\nabla}_X \widetilde{\nabla}_W Y-\widetilde{\nabla}_{[W, X]} Y, Z} \\
+    	&=\inn{\widetilde{\nabla}_W (\nabla_XY+\mathrm{II}(X,Y))-\widetilde{\nabla}_X (\nabla_WY+\mathrm{II}(W,Y))-\widetilde{\nabla}_{[W, X]} Y, Z}.
+    \end{align*}
+    Note that because $\mathrm{II} \in \Gamma(NM)$, by Weingarten equation,
+    \begin{equation*}
+        (\widetilde{\nabla}_W\mathrm{II}(X,Y))^\top = W_{\mathrm{II}(X,Y)}(W),\quad (\widetilde{\nabla}_X\mathrm{II}(W,Y))^\top = W_{\mathrm{II}(W,Y)}(X).
+    \end{equation*}
+    Therefore, by $Z \in \Gamma(TM)$,
+    \begin{align*}
+    	\widetilde{R}(Z,Y,W,X) &= \left\langle\widetilde{\nabla}_W \nabla_X Y, Z\right\rangle-\langle\mathrm{II}(X, Y), \mathrm{II}(W, Z)\rangle \\
+		& -\left\langle\widetilde{\nabla}_X \nabla_W Y, Z\right\rangle+\langle\mathrm{II}(W, Y), \mathrm{II}(X, Z)\rangle-\left\langle\widetilde{\nabla}_{[W, X]} Y, Z\right\rangle \\
+		&=\left\langle{\nabla}_W \nabla_X Y, Z\right\rangle-\langle\mathrm{II}(X, Y), \mathrm{II}(W, Z)\rangle \\
+		& -\left\langle{\nabla}_X \nabla_W Y, Z\right\rangle+\langle\mathrm{II}(W, Y), \mathrm{II}(X, Z)\rangle-\left\langle{\nabla}_{[W, X]} Y, Z\right\rangle \\
+		&=R(Z,Y,W,X) - \inn{\mathrm{II}(W,Z),\mathrm{II}(X,Y)} + \inn{\mathrm{II}(W,Y),\mathrm{II}(X,Z)}. \qedhere
+    \end{align*}
+\end{proof}
 
+Similarly, it can define the normal connection,
+\begin{equation*}
+    \nabla^\perp \colon \Gamma(TM) \times \Gamma(NM) \sto \Gamma(NM)
+\end{equation*}
+is defined as
+\begin{equation*}
+    \nabla^\perp_XN = (\widetilde{\nabla}_XN)^\perp.
+\end{equation*}
+Then $\nabla^\perp$ is a well-defined affine connection defined on the normal bundle $NM$, which coincides with the metric, i.e.,
+\begin{equation*}
+    X\left\langle N_1, N_2\right\rangle=\left\langle\nabla_X^{\perp} N_1, N_2\right\rangle+\left\langle N_1, \nabla_X^{\perp} N_2\right\rangle .
+\end{equation*}
 
+More generally, let $\pi \colon F \sto M$ be a vector bundle whose fiber
+\begin{equation*}
+    F_p = \bb{ B_p \colon T_pM \times T_pM \sto N_pM \colon B_p \text{ is bilinear.} },
+\end{equation*}
+i.e., $F = T^*M \otimes T^*M \otimes NM$. Note any section $B \in \Gamma(F)$ is
+\begin{equation*}
+    B \colon \Gamma(TM) \times \Gamma(TM) \sto \Gamma(NM)
+\end{equation*}
+that is bilinear over $C^\infty(M)$. Define a connection $\nabla^F$ on $F$
+\begin{equation*}
+    \nabla^F \colon \Gamma(TM) \times \Gamma(F) \sto \Gamma(F),
+\end{equation*}
+as
+\begin{equation*}
+    (\nabla^F_XB)(Y,Z) = \nabla^\perp_X(B(Y,Z)) - B(\nabla_XY,Z) - B(Y,\nabla_XZ).
+\end{equation*}
+Note that $\nabla^F_XB$ is true symmetric and $\nabla^F$ is an affine connection.
 
+\begin{thm}[Codazzi Equation]
+    Let $(M,g) \subset (\widetilde{M},\widetilde{g})$ be an embedded Riemannian manifold. For all $W,X,Y \in \Gamma(TM)$,
+    \begin{equation*}
+        (\widetilde{R}(W,X)Y)^\perp = (\nabla^F_W \mathrm{II})(X,Y) - (\nabla^F_X\mathrm{II})(W,Y).
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    It suffices to prove that for any $N \in \Gamma(NM)$,
+    \begin{equation*}
+        \langle\tilde{R}(W, X) Y, N\rangle=\left\langle\left(\nabla_W^F \mathrm{II}\right)(X, Y), N\right\rangle-\left\langle\left(\nabla_X^F \mathrm{II}\right)(W, Y), N\right\rangle.
+    \end{equation*}
+    For the LHS,
+    \begin{equation*}
+    	\tilde{R}(N,Y,W,X) = \inn{\widetilde{\nabla}_W\left(\nabla_X Y+\mathrm{II}(X, Y)\right)-\widetilde{\nabla}_X\left(\nabla_W Y+\mathrm{II}(W, Y)\right) -\tilde{\nabla}_{[W, X]} Y, N}.
+    \end{equation*}
+    Note that
+    \begin{align*}
+        (\widetilde{\nabla}_W\mathrm{II}(X, Y))^\perp &= \nabla^\perp_W \mathrm{II}(X, Y) \\
+        &= (\nabla^F_W \mathrm{II})(X, Y) + \mathrm{II}(\nabla_WX, Y) + \mathrm{II}(X, \nabla_WY),\\
+        (\widetilde{\nabla}_X\mathrm{II}(W, Y))^\perp &= \nabla^\perp_X \mathrm{II}(W, Y) \\
+        &= (\nabla^F_X \mathrm{II})(W, Y) + \mathrm{II}(\nabla_XW, Y) + \mathrm{II}(W, \nabla_XY),
+    \end{align*}
+    and
+    \begin{align*}
+        (\widetilde{\nabla}_W\nabla_X Y)^\perp &= \mathrm{II}(\nabla_X Y,W).\\
+        (\widetilde{\nabla}_X\nabla_W Y)^\perp &= \mathrm{II}(\nabla_W Y,X),\\
+        (\tilde{\nabla}_{[W, X]} Y)^\perp &= \mathrm{II}([W,X],Y).
+    \end{align*}
+    Therefore,
+    \begin{align*}
+    	\tilde{R}(N,Y,W,X) &= \left\langle\mathrm{II}\left(W, \nabla_X Y\right)+\left(\nabla_W^F \mathrm{II}\right)(X, Y)+\mathrm{II}\left(\nabla_W X, Y\right)+\mathrm{II}\left(X, \nabla_W Y\right), N\right\rangle \\
+		& -\left\langle\mathrm{II}\left(X, \nabla_W Y\right)+\left(\nabla_X^F \mathrm{II}\right)(W, Y)+\mathrm{II}\left(\nabla_X W, Y\right)+\mathrm{II}\left(W, \nabla_X Y\right), N\right\rangle \\
+		& -\langle\mathrm{II}([W, X], Y), N\rangle\\
+		&= \left\langle\left(\nabla_W^F \mathrm{II}\right)(X, Y), N\right\rangle-\left\langle\left(\nabla_X^F \mathrm{II}\right)(W, Y), N\right\rangle.\qedhere
+    \end{align*}
+\end{proof}
 
+\begin{exam}
+    Let $\gamma \colon I \sto M$ be a normal curve. The geodesic curvature of $\gamma$ in $M$
+    \begin{equation*}
+        \kappa(t) = \abs{\frac{D}{dt}\dot{\gamma}(t)}
+    \end{equation*}
+    If $(M,g) \subset (\widetilde{M},\widetilde{g})$ is an embedded Riemannian manifold, then
+    \begin{equation*}
+        \frac{\widetilde{D}}{dt}\dot{\gamma}(t) = \frac{D}{dt}\dot{\gamma}(t) + \mathrm{II}(\dot{\gamma}(t),\dot{\gamma}(t)).
+    \end{equation*}
+    Therefore, for any $v \in T_pM$, $\abs{\mathrm{II}(v,v)}$ is the geodesic curvature of the normal geodesic $\gamma$ in $M$ with $\dot{\gamma}(0) = v$.
+\end{exam}
 
+\section{Hypersurface}
 
+Let $M \subset \widetilde{M}$ be a Riemannian hypersurface with $\dim M = n$ and $\dim \widetilde{M} = n+1$. In such case, at each point, there exactly two unit normal vectors of $M$. Moreover, we assume a smooth unit normal field $N$ exists on an enough big neighborhood.
 
+Consider the scalar second fundamental form $h \in \Gamma(\otimes^{(0,2)}TM)$, defined as
+\begin{equation*}
+    h(X,Y) = \mathrm{II}_N(X,Y) = \inn{N,\mathrm{II}(X,Y)} = \inn{N,\widetilde{\nabla}_XY}.
+\end{equation*}
+Because $N$ is the unit vector spanning $NM$,
+\begin{equation*}
+    \mathrm{II}(X,Y) = h(X,Y)N.
+\end{equation*}
+We use notation $s = W_N \colon \Gamma(TM) \sto \Gamma(TM)$ a Weingarten map, called the shape operator of $M$, so
+\begin{equation*}
+    \inn{sX,Y} = h(X,Y),\quad X,Y \in \Gamma(TM).
+\end{equation*}
+Moreover, the symmetry of $h$ implies that
+\begin{equation*}
+    \inn{sX,Y} = \inn{X,sY},\quad X,Y \in \Gamma(TM),
+\end{equation*}
+so $s$ is self-adjoint, which implies that $s$ is diagonalizable by orthonormal basis $b_1,\cdots,b_n$ that are eigenvectors w.s.t. eigenvalues $\kappa_1,\cdots,\kappa_n$. Then $\kappa_i$ are called principal curvatures with corresponding principal directions $b_i$. The Gaussian curvature is
+\begin{equation*}
+    K = \det(s) = \kappa_1\kappa_2\cdots \kappa_n.
+\end{equation*}
+So the mean curvature
+\begin{equation*}
+    H = \frac{1}{n}\tr(s) = \frac{1}{n}\tr_g(h) = \frac{1}{n}(\kappa_1+\kappa_2+\cdots+\kappa_n).
+\end{equation*}
 
+Give two notations:
+\begin{enumerate}[label=\Roman{*}.]
+	\item For two symmetric $(0,2)$-tensors $h,k$,
+	\begin{align*}
+	    h \odot k(w, x, y, z) &=h(w, z) k(x, y)+h(x, y) k(w, z) \\
+	    &\quad -h(w, y) k(x, z)-h(x, z) k(w, y).
+	\end{align*}
 
+	\item For a smooth $(0,2)$-tensor field $T$ is
+	\begin{equation*}
+	    (DT)(x,y,z) = -(\nabla T)(x,y,z) + (\nabla T)(x,z,y).
+	\end{equation*}
+\end{enumerate}
+\begin{thm}
+    Let $M \subset \widetilde{M}$ be a Riemannian hypersurface and $N$ be a smooth unit normal vector field along $M$.
+    \begin{enumerate}[label=(\arabic{*})]
+    	\item Gauss formula: for $X,Y \in \Gamma(TM)$, then
+    	\begin{equation*}
+    	    \widetilde{\nabla}_XY = \nabla_XY + h(X,Y)N.
+    	\end{equation*}
 
+    	\item Gauss equation: for all $W,X,Y,Z \in \Gamma(TM)$,
+    	\begin{equation*}
+    	    \widetilde{R}(Z, Y, W, X)=R(Z, Y, W, X) - \frac{1}{2}h \odot h(W,X,Y,Z).
+    	\end{equation*}
 
+    	\item Weingarten equation: for $X \in \Gamma(TM)$, $\widetilde{\nabla}_XN \in \Gamma(TM)$ and
+    	\begin{equation*}
+    	    \widetilde{\nabla}_XN = -sX.
+    	\end{equation*}
 
+    	\item Codazzi equation: $W,X,Y,Z \in \Gamma(TM)$,
+    	\begin{equation*}
+    	    \widetilde{R}(N, Y, W, X) = (Dh)(Y,W,X)
+    	\end{equation*}
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    $(1)$ and $(2)$ are obviously by above. For $(3)$, because
+    \begin{equation*}
+        \left\langle\widetilde{\nabla}_X N, N\right\rangle=\frac{1}{2} X\left(|N|^2\right)=0,
+    \end{equation*}
+    and $N$ span $NM$, $\widetilde{\nabla}_XN \in \Gamma(TM)$.
 
+    For $(4)$, by above, $\nabla^\perp_XN = (\widetilde{\nabla}_X N)^\perp = 0$. So
+    \begin{align*}
+		\left(\nabla_W^F \mathrm{II}\right)(X, Y) & =\nabla_W^{\perp}(\mathrm{II}(X, Y))-\mathrm{II}\left(\nabla_W X, Y\right)-\mathrm{II}\left(X, \nabla_W Y\right) \\
+		& =\nabla_W^{\perp}(h(X, Y) N)-\mathrm{II}\left(\nabla_W X, Y\right)-\mathrm{II}\left(X, \nabla_W Y\right) \\
+		& =\left(W(h(X, Y))-h\left(\nabla_W X, Y\right)-h\left(X, \nabla_W Y\right)\right) N \\
+		& =\nabla_W(h)(X, Y) N = (\nabla h)(Y,X,W)N.
+    \end{align*}
+    Then by above theorem,
+    \begin{equation*}
+        \widetilde{R}(N, Y, W, X) = (Dh)(Y,W,X). \qedhere
+    \end{equation*}
+\end{proof}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
+\paragraph{Calculation.} By using the tubular neighborhood of $M$ in $\widetilde{M}$, choose Fermi coordinate system
+\begin{equation*}
+    (U,x^1,x^2,\cdots,x^n,v),
+\end{equation*}
+which is called semigeodesic coordinates in the sense that
+\begin{equation*}
+    \gamma \colon t \mapsto (x^1,\cdots,x^{n-1},t)
+\end{equation*}
+is a normal geodesic and $\dot{\gamma}(t_0)$ is orthogonal to the level set $r(M) = t_0$ for the distance function $r \colon U \sto [0,\infty)$ of $M$ defined by $r(x^1,x^2,\cdots,x^n,v) = \abs{v}$. Using this coordinates, we have
+\begin{equation*}
+    \widetilde{g} = dv \otimes dv + g_{ij}(x^1,\cdots,x^n,v) dx^i \otimes dx^j,
+\end{equation*}
+by the fact that
+\begin{equation*}
+    \inn{\frac{\partial}{\partial v},\frac{\partial}{\partial v}} =1,\quad \inn{\frac{\partial}{\partial v},\frac{\partial}{\partial x^i}} = 0.
+\end{equation*}
+Moreover,
+\begin{align*}
+\widetilde{\Gamma}_{v v}^v&=\widetilde{\Gamma}_{v v}^i=\widetilde{\Gamma}_{i v}^v=\widetilde{\Gamma}_{v i}^v=0, \\
+\widetilde{\Gamma}_{ij}^v&=-\frac{1}{2} \frac{\partial}{\partial v} g_{ij}, \\
+\widetilde{\Gamma}_{vi}^j&=\widetilde{\Gamma}_{i v}^j=\frac{1}{2} g^{j k} \frac{\partial}{\partial v} g_{ki}, \\
+\widetilde{\Gamma}_{ij}^k&=\Gamma_{ij}^k,
+\end{align*}
+Using this coordinate system, by choosing $N = \frac{\partial}{\partial v}$, consider the hypersurface $M_a = r^{-1}(a)$, the scalar second fundamental $h_a$, the shape operator $s_a$, and the mean curvature can be expressed as
+\begin{align*}
+	(h_a)_{ij} &= -\frac{1}{2} \lv{\frac{\partial}{\partial v}}_{v=a} g_{ij},\\
+	(s_a)^i_j &= -\frac{1}{2}g^{ik}\lv{\frac{\partial}{\partial v}}_{v=a}g_{kj},\\
+	H_a &= -\frac{1}{2n}g^{ij}\lv{\frac{\partial}{\partial v}}_{v=a}g_{ji}.
+\end{align*}

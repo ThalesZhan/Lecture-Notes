@@ -1,0 +1,254 @@
+\ProvidesPackage{Mydef}
+
+\usepackage{stmaryrd}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{arydshln}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{
+  graphs,
+  graphs.standard
+}
+\usepackage{dsfont}
+\usepackage{bbm}
+\usetikzlibrary{trees}
+\usepackage[ruled]{algorithm2e}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\hypersetup
+{
+	colorlinks = true,
+	linkcolor = blue,
+  citecolor = blue,
+	urlcolor = blue,
+	linktoc = all
+}
+\usepackage{graphicx}
+\usepackage{comment}
+
+\makeatletter
+\DeclareRobustCommand\widecheck[1]{{\mathpalette\@widecheck{#1}}}
+\def\@widecheck#1#2{%
+    \setbox\z@\hbox{\m@th$#1#2$}%
+    \setbox\tw@\hbox{\m@th$#1%
+       \widehat{%
+          \vrule\@width\z@\@height\ht\z@
+          \vrule\@height\z@\@width\wd\z@}$}%
+    \dp\tw@-\ht\z@
+    \@tempdima\ht\z@ \advance\@tempdima2\ht\tw@ \divide\@tempdima\thr@@
+    \setbox\tw@\hbox{%
+       \raise\@tempdima\hbox{\scalebox{1}[-1]{\lower\@tempdima\box
+\tw@}}}%
+    {\ooalign{\box\tw@ \cr \box\z@}}}
+\makeatother
+
+\makeatletter
+\newcommand\mymaketitle{%
+  \begin{titlepage}
+    \null\vfil\vskip 40\p@
+    \begin{center}
+      {\LARGE \@title \par}
+      \vskip 2.5em
+      {\large \lineskip .75em \@author \par}
+      \vskip 1.5em
+      {\large \@date \par}
+    \end{center}\par
+    \@thanks
+    \vfil\null
+  \end{titlepage}
+}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}{Problem}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{assum}{Assumption}
+
+\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+
+
+
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\theenumi.}
+
+\renewcommand{\theenumii}{\arabic{enumii}}
+\renewcommand{\labelenumii}{(\theenumii)}
+
+\newcommand{\bracenom}{\genfrac{\lbrace}{\rbrace}{0pt}{}}
+\newcommand{\field}[1]{\mathbb{#1}}
+\newcommand{\R}{\field{R}}
+\newcommand{\Pb}{\field{P}}
+\newcommand{\Q}{\field{Q}}
+\newcommand{\Z}{\field{Z}}
+\newcommand{\N}{\field{N}}
+\newcommand{\Hyp}{\field{H}}
+\newcommand{\C}{\field{C}}
+\newcommand{\Sp}{\field{S}}
+\newcommand{\E}{\field{E}}
+\newcommand{\F}{\field{F}}
+\newcommand{\T}{\field{T}}
+\newcommand{\ud}{\,\mathrm{d}}
+
+\newcommand{\op}[1]{\operatorname{#1}}
+\newcommand{\alg}[1]{\mathfrak{#1}}
+\newcommand{\fml}[1]{\mathscr{#1}}
+\newcommand{\mnf}[1]{\mathcal{#1}}
+\newcommand{\ob}[1]{\mathcal{#1}}
+\newcommand{\oper}{\mathscr{B(H)}}
+\newcommand{\coper}{\mathscr{B}_{0}\fml{(H)}}
+\newcommand{\toper}{\mathscr{B}_{1}\fml{(H)}}
+\newcommand{\hoper}{\mathscr{B}_{2}\fml{(H)}}
+\newcommand{\foper}{\mathscr{B}_{00}\fml{(H)}}
+\newcommand{\operr}[2]{\mathscr{B}(\mathscr{#1},\mathscr{#2})}
+
+\newcommand{\sto}{\rightarrow}
+\newcommand{\abs}[1]{\left\lvert#1\right\lvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\lVert}
+\newcommand{\iso}[2]{#1\cong#2}
+\newcommand{\subiso}[3]{#1\cong_{#3}#2}
+\newcommand{\niso}[2]{#1\ncong#2}
+\newcommand{\equ}[2]{#1\sim#2}
+\newcommand{\subequ}[3]{#1\sim_{#3}#2}
+\newcommand{\clo}[1]{\overline{#1}}
+\newcommand{\inte}[1]{\mathring{#1}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\co}[1]{\operatorname{co}(#1)}
+\newcommand{\cloco}[1]{\overline{\operatorname{co}(#1)}}
+\newcommand{\id}[1]{\operatorname{id}_{#1}}
+\newcommand{\lfs}[1]{L^{#1}}
+\newcommand{\M}{\fml{M}}
+\newcommand{\cran}[1]{\overline{ran(#1)}}
+\newcommand{\st}[1]{#1^{*}}
+\newcommand{\Cs}{$C^{*}$-algebra }
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\Ac}{{\mathfrak{A}}^{'}}
+\newcommand{\Acc}{{\mathfrak{A}}^{''}}
+\newcommand{\B}{\mathfrak{B}}
+\newcommand{\I}{\mathfrak{I}}
+\newcommand{\Cg}[1]{C^{*}(#1)}
+\newcommand{\Hs}{\fml{H}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\rnum}[1]{\lowercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\vv}[1]{\overrightarrow{#1}}
+\newcommand{\Sb}[1]{\left(#1\right)}
+\newcommand{\bb}[1]{\left\{#1\right\}}
+\newcommand{\lv}[1]{\left.#1\right\lvert}
+\newcommand{\bc}[1]{\left(#1\right)}
+\newcommand{\bj}[1]{\left[#1\right]}
+\newcommand{\inn}[1]{\left\langle #1 \right\rangle}
+\newcommand{\defeq}{\vcentcolon=}
+\newcommand{\eqdef}{=\vcentcolon}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bd}[1]{\boldsymbol{#1}}
+
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\essran}{essran}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\cov}{conv}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\ind}{ind}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\esssup}{ess\:sup}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\inff}{inf}
+\DeclareMathOperator{\Rea}{Re}
+\DeclareMathOperator{\hol}{Hol}
+\DeclareMathOperator{\Lat}{Lat}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\crank}{crank}
+\DeclareMathOperator{\ncrank}{ncrank}
+\DeclareMathOperator{\nul}{null}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\sgn}{sign}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\cp}{cap}
+\DeclareMathOperator{\sym}{Sym}
+\DeclareMathOperator{\reg}{reg}
+\DeclareMathOperator{\per}{per}
+\DeclareMathOperator{\ds}{ds}
+\DeclareMathOperator{\V}{Vect}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Diff}{Diff}
+\DeclareMathOperator{\Herm}{Herm}
+\DeclareMathOperator{\Divg}{div}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\Crit}{Crit}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\Fr}{F}
+\DeclareMathOperator{\Hess}{Hess}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Attn}{Attn}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\Ent}{Ent}
+
+
+\SetKwInput{Input}{Input}
+\SetKwInput{Output}{Output}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+
+
+
+\newcommand{\langC}{\begin{picture}(9,7)
+\put(3.0,0){$($}
+\put(1.1,2.5){\rotatebox{30}{\line(1,0){8.0}}}
+\put(1.1,2.5){\rotatebox{330}{\line(1,0){8.0}}}
+\end{picture}}
+\newcommand{\rangC}{\begin{picture}(9,7)
+\put(2.0,0){$)$}
+\put(.8,2.5){\rotatebox{150}{\line(1,0){8.0}}}
+\put(.8,2.5){\rotatebox{210}{\line(1,0){8.0}}}
+\end{picture}}

@@ -1,0 +1,999 @@
+\chapter{Stochastic Differential Geometry}
+
+\section{Horizontal Lift}
+
+Let $M$ be $d$-dimensional smooth manifold equipped with an affine connection $\nabla$. Let $\Gamma^k_{ij}$ be the corresponding Christoffel symbol, i.e,
+\begin{equation*}
+    \nabla_{X_i}X_j = \Gamma^k_{ij}X_k,
+\end{equation*}
+where $X_i = \frac{\partial}{\partial x^i}$. $\nabla$ can induce concepts, such as, parallel moving ($\nabla_{\dot{c}(t)}V = 0$) and geodesic ($\nabla_{\dot{c}(t)}\dot{c}(t) = 0$).
+
+For $x \in M$, a frame at $x$ is a $\R$-linear isomorphism $u \colon \R^d \sto T_xM$. Let $F(M)_x$ be the set of all frameworks at $x$. $GL(d,\R)$ acts on $F(M)_x$ as $u \mapsto ug = u \circ g$. Let $F(M) = \bigcup_{x\in M} F(M)_x$, called the frame bundle of dimension $d + d^2$, with the canonical projection $\pi \colon F(M) \sto M$. Note that each $F(M)_x \cong GL(d,\R)$. In fact, $(F(M),M,GL(d,\R))$ is a principal bundle $M \cong F(M) / GL(d,\R)$. Let
+\begin{equation*}
+    F(M) \times_{GL(d,\R)} \R^d \defeq F(M) \times \R^d / \sim,
+\end{equation*}
+where $(ug,v) \sim (u,gv)$. Then define
+\begin{equation*}
+    \Phi \colon F(M) \times_{GL(d,\R)} \R^d \sto TM
+\end{equation*}
+by
+\begin{equation*}
+    \Phi([u,v]) = u(v) \in T_{\pi(u)}M.
+\end{equation*}
+$\Phi$ is a linear isomorphism and so $F(M) \times_{GL(d,\R)} \R^d \cong TM$.
+
+Consider the canonical projection $\pi \colon F(M) \sto M$, because it is a smooth submersion and $\pi^{-1}({x}) = F(M)_x \cong GL(d,\R)$, for
+\begin{equation*}
+    d\pi_u \colon T_uF(M) \sto T_{\pi(u)}M,
+\end{equation*}
+the vertical space
+\begin{equation*}
+    V_uF(M) \defeq \ker(d\pi_u) = T_u F(M)_{\pi(u)} \cong \alg{g}(d,\R).
+\end{equation*}
+
+Let $M$ be equipped with an affine connection $\nabla$. Let $c(t)$ be a smooth curve on $M$ and $u(t)$ be a lift of $c(t)$ on $F(M)$, i.e., $\pi(u(t)) = c(t)$. Because $u(t) \in F(M)_{c(t)}$, for any $e \in \R^d$, $u_e(t) = u(t)e \in T_{c(t)}M$, which means $u_e \in \Gamma(TM)$ is a vector field along $c(t)$. We say $u(t)$ is a horizontal lift if for any $e \in \R^d$, $u_e$ is parallel along $c$, i.e.,
+\begin{equation*}
+    \nabla_{\dot{c}(t)}u_e(t) \equiv 0.
+\end{equation*}
+
+\begin{lem}
+    For any smooth curve $c \colon (-\varepsilon,\varepsilon) \sto M$, let $u_0 \in F(M)_{c(0)}$. Then there exists a unique $u \colon (-\varepsilon,\varepsilon) \sto F(M)$ such that
+    \begin{equation*}
+        \pi \circ u = c,\quad u(0) = u_0,\quad \nabla_{\dot{c}(t)}\dot{u}_a(t) = 0, ~\forall~a \in \R^d.
+    \end{equation*}
+    Moreover, $u$ dependents smoothly on $(c,u_0)$, and if $u_1 = u_0g$, the $t \mapsto u(t)g$ is the unique horizontal lift starting from $u_1$.
+\end{lem}
+\begin{proof}
+    WTLG, assume $c((-\varepsilon,\varepsilon))$ is contained in a chart $(U;x^1,\cdots, x^d)$ and let $\Gamma^k_{ij}$ be the corresponding Christoffel symbol for $\nabla$. Let $e_1,\cdots,e_d$ be the canonical basis of $\R^d$
+
+    Then a vector field $V(t) = V^i(t) \lv{\frac{\partial}{\partial x^i}}_{c(t)}$ along $c(t)$ is parallel to $c(t)$ if and only if $V(t)$ satisfies
+    \begin{equation*}
+        \dot{V}^i(t) + A^i_k(t)V^k(t) = 0,\quad \forall~i,
+    \end{equation*}
+    where $A^i_k(t) = \Gamma^i_{jk}(c(t))\dot{c}^j(t)$. For each $e_j$, above equation has a unique solution 
+    \begin{equation*}
+        V_{e_j}(t) = V^i_j(t)\lv{\frac{\partial}{\partial x^i}}_{c(t)}
+    \end{equation*}
+    with initial value $V_{e_j}(0) = u_0{e_j} = u_{0,j}^i \lv{\frac{\partial}{\partial x^i}}_{c(0)}$. So the matrix $U(t) = (V^i_j(t))$ is the unique solution of ODE
+    \begin{equation*}
+        \dot{U}(t) + A(t)U(t) = 0,\quad U(0) = U_0 \defeq (u^i_{0,j}).
+    \end{equation*}
+    Moreover, because
+    \begin{equation*}
+        \frac{d}{d t} \operatorname{det} U(t)=\operatorname{tr}\left(U(t)^{-1} \dot{U}(t)\right) \operatorname{det} U(t)=-\operatorname{tr}(A(t)) \operatorname{det} U(t),
+    \end{equation*}
+    and $u_0 \in F(M)_{c(0)}$ (i.e., $\det u_0 \neq 0$),
+    \begin{equation*}
+        \operatorname{det} U(t)=\operatorname{det} U_0 \cdot \exp \left(-\int_{t_0}^t \operatorname{tr}(A(s)) d s\right) \neq 0,
+    \end{equation*}
+    it means $U(t) \in GL(d,\R)$ for all $t$. Let
+    \begin{equation*}
+        u(t)a \defeq V^i_j(t)a^j \lv{\frac{\partial}{\partial x^i}}_{c(t)}
+    \end{equation*}
+    for any $a = (a^j) \in \R^d$. Then $u(t) \in F(M)_{c(t)}$ and satisfies $u(0) = u_0$ and the parallel condition. The uniqueness of $u(t)$ is directly obtained by the uniqueness of solution of the ODE, which also implies that $t \mapsto u(t)g$ is the unique lift starting from $u_1$. Also, the smoothness on initial values is also by the theory of ODE. \qedhere
+\end{proof}
+\begin{rmk}
+    Moreover, give a curve $c(t)$ on $M$, let $u(t),v(t)$ be its horizontal lifts starting from $u_0,v_0$ respectively, because $u_0 = v_0(v_0^{-1}u_0)$, by above
+    \begin{equation*}
+        u(t) = v(t)(v_0^{-1}u_0).
+    \end{equation*} 
+    Moreover, for any $t_0,t_1$, it is obvious that
+    \begin{equation*}
+        \mathcal{P}_{c,t_0,t_1} = u_{t_1}u_{t_0}^{-1} \colon T_{c(t_0)}M \sto T_{c(t_1)}M
+    \end{equation*}
+    is the parallel moving along $c(t)$ by considering $V(t) = u_t(u_{t_0}^{-1}(X))$ and the uniqueness of parallel moving. 
+\end{rmk}
+\begin{rmk}
+    Moreover, if $\dot{c}(0) = X = X^i\lv{\frac{\partial}{\partial x^i}}_{c(0)}$, then we can see
+    \begin{equation*}
+        \dot{u}(0) = -\Gamma^i_{\ell k}(c(0))X^\ell u^k_{0,j} \lv{\frac{\partial}{\partial v_j^i}}_{u_0} + X^i \lv{\frac{\partial}{\partial x^i}}_{u_0}
+    \end{equation*}
+    which implies $c(0)$, $\dot{c}(0)$, and $u_0$ uniquely determined $\dot{u}(0) \in T_{u_0}F(M)$.
+\end{rmk}
+
+For a given $X \in T_xM$, let $c$ be a smooth curve in $M$ with $c(0) = x$ and $\dot{c}(0) = X$. Let $u \in F(M)_{x}$. Let $u(t)$ be the unique horizontal lift of $c$ starting from $u$. Then define
+\begin{equation*}
+    X^H_u = \dot{u}(0) \in T_u F(M),
+\end{equation*}
+which is well-defined because it is independent of the choice of $c$, called a horizontal vector. Let
+\begin{equation*}
+    H_uF(M) \defeq \bb{X^H_u \colon X \in T_xM} \subset T_uF(M),
+\end{equation*}
+called the horizontal space.
+
+\begin{lem}
+    For the canonical projection $\pi \colon F(M) \sto M$ and any $u \in F(M)$ with $x = \pi(u)$,
+    \begin{equation*}
+        d\pi_u \colon H_uF(M) \sto T_xM
+    \end{equation*}
+    is an isomorphism. Therefore,
+    \begin{equation*}
+        T_uF(M) = V_uF(M) \oplus H_uF(M).
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    For any $X^H_u \in H_uF(M)$, $X^H_u = \dot{u}(0)$ for some $u(t)$ which is a horizontal lift of $c(t)$ with $c(0) =x$ and $\dot{c}(0) =X$ and starting from $u$ with $\pi(u) = x$. Then
+    \begin{equation*}
+        d\pi_u(X^H_u) = \lv{\frac{d}{dt}}_{t = 0}\pi(u(t)) = \lv{\frac{d}{dt}}_{t = 0}c(t) = X.
+    \end{equation*}
+    And from the construction, we have seen $X \neq 0$ implies that $X^H_u \neq 0$.
+\end{proof}
+
+For any $e \in \R^d$ and $u \in F(M)$, $ue \in T_{\pi(u)}M$ and so we can consider 
+\begin{equation*}
+    H_e(u) \defeq (ue)^H_u = \dot{u}(0) \in H_uF(M),
+\end{equation*}
+where $u(t)$ is the horizontal lift of $c(t)$ for $c(0) = \pi(u)$ and $\dot{c}(0) = ue$ starting from $u$. By above, we know
+\begin{equation*}
+    dg_u H_e(u) = H_{g^{-1}e}(ug)
+\end{equation*}
+where $g \colon F(M) \sto F(M)$ is $g(u) = u \circ g = ug$, because
+\begin{equation*}
+    dg_u H_e(u) = \lv{\frac{d}{dt}}_{t = 0} u(t)g.
+\end{equation*}
+\begin{rmk}
+    Note that because
+    \begin{equation*}
+        (d\pi_u)^{-1}\colon X \mapsto X^H_u
+    \end{equation*}
+    is $\R$-linear,
+    \begin{equation*}
+        H_{\lambda e + \mu e^\prime}(u) = \lambda H_e(u) + \mu H_{e^\prime}(u),\quad \forall~e,e^\prime \in \R^d,~u \in F(M),~\lambda,\mu \in \R.
+    \end{equation*}
+    Let $e_1,\cdots,e_d$ be the canonical basis of $\R^d$. Then
+    \begin{equation*}
+        H_j(u) = H_{e_j}(u) \in H_uF(M)
+    \end{equation*}
+    forms a basis of $H_uF(M)$ for $j=1,\cdots,d$, because for any $v = (v^i) \in \R^d$, i.e., $v = v^ie_i$, then
+    \begin{equation*}
+        H_v(u) = \sum_{i=1}^d v^iH_i(u).
+    \end{equation*}
+    $\bb{H_i}_{i=1}^d$ are called the fundamental horizontal vector fields.
+\end{rmk}
+
+\begin{rmk}
+    For any $X \in \Gamma(TM)$, its unique horizontal lift vector field $X^H \in \Gamma(TF(M))$ is defined as
+    \begin{equation*}
+        X^H(u) \defeq (X(\pi(u)))_u^H \in T_uF(M),\quad\forall~u\in F(M).
+    \end{equation*}
+    Moreover, by definition, $d\pi_u (X^H(u)) = X(\pi(u))$, i.e,
+    \begin{equation*}
+        \pi_* X^H = X.
+    \end{equation*}
+    This is the reason why $X^H$ is called a lift.
+\end{rmk}
+
+Let $c(t)$ be a smooth curve on $M$ and $u(t)$ be the horizontal lift of it starting from $u_0$. Then we can consider a curve $w(t)$ on $\R^d$, called the anti-development of $c(t)$ w.s.t. $u_0$, defined as
+\begin{equation*}
+    w_{u_0}(t) = \int_0^t u(s)^{-1}\dot{c}(s)ds,
+\end{equation*}
+which is because $\dot{c}(t) \in T_{c(t)}M$ and $u(t)^{-1} \colon T_{c(t)}M \sto \R^d$. But note that $w_{u_0}(t)$ dependents on the choice of $u_0$. Let $v(t)$ be the horizontal lift of $c(t)$ starting from $v_0$. If $u_0 = v_0g$, i.e., $v_0 = u_0 g^{-1}$, then $v(t) = u(t)g^{-1}$ and thus
+\begin{equation*}
+    w_{v_0}(t) = \int_0^t v(s)^{-1}\dot{c}(s)ds = g\int_0^t u(s)^{-1}\dot{c}(s)ds = g w_{u_0}(t).
+\end{equation*}
+Fix $u_0$ and let $w(t) = w_{u_0}(t)$. Because $\dot{w}(t) = u(t)^{-1}\dot{c}(t)$, i.e, $u(t) \dot{w}(t) = \dot{c}(t)$,
+\begin{equation*}
+    H_{\dot{w}(t)}(u(t)) = \bc{u(t) \dot{w}(t)}^H_{u(t)} = \bc{\dot{c}(t)}^H_{u(t)} = \dot{u}(t),
+\end{equation*}
+i.e.
+\begin{equation*}
+    \dot{u}(t) = \dot{w}^i(t)H_i(u(t)).
+\end{equation*}
+Note that from the definition of $H_i(u(t))$ this is linear in $u(t)$, when given $w(t)$ and $u_0$, this ODE has a unique solution $u(t)$ called the development of $w(t)$ in $F(M)$ and its projection $c(t) = \pi(u(t))$ is called the development of $w(t)$ in $M$.
+
+\section{Tensor Fields Scalarization}
+
+Let $\theta$ be a $(r,s)$-tensor field on $M$. For any $u \in F(M)$, let
+\begin{equation*}
+    X_i = ue_i \in T_{\pi(u)}M
+\end{equation*}
+for $i = 1,\cdot,d$, where $\bb{e_i}$ is the canonical basis of $\R^d$. Then $\bb{X_i}$ is a basis of $T_{\pi(u)}M$. Choose $\bb{X^i}$ be the its dual basis of $T^*_{\pi(u)}M$. Then under these basis, we have
+\begin{equation*}
+    \theta(\pi(u)) = \theta^{i_1\cdots i_r}_{j_1\cdots j_s}X_{i_1} \otimes \cdots \otimes X_{i_r} \otimes X^{j_1} \otimes \cdots \otimes X^{j_s}.
+\end{equation*}
+and we define the scalarization
+\begin{equation*}
+    \widetilde{\theta} \colon F(M) \sto (\R^d)^{\otimes r} \otimes (\R^d)^{*\otimes s} \eqdef \otimes^{(r,s)} \R^d,
+\end{equation*}
+as
+\begin{equation*}
+    \widetilde{\theta}(u) = \theta^{i_1\cdots i_r}_{j_1\cdots j_s}e_{i_1} \otimes \cdots \otimes e_{i_r} \otimes e^{j_1} \otimes \cdots \otimes e^{j_s},
+\end{equation*}
+where $\bb{e^i}$ is the dual basis of $\bb{e_i}$ in $(\R^d)^*$. Note that $\widetilde{\theta}$ is $GL(d,\R)$-equivariant, i.e.,
+\begin{equation*}
+    \widetilde{\theta}(ug) = g \tilde{\theta}(u).
+\end{equation*}
+If $\theta$ is $(0,0)$-tensor, i.e., $\theta = f \colon M \sto \R$,
+\begin{equation*}
+    \widetilde{f} = f \circ \pi \colon F(M) \sto  \R.
+\end{equation*}
+Therefore, $\widetilde{\theta}$ can be considering as a lift of $\theta$ on $F(M)$.
+
+\begin{rmk}
+    For a finite dimensional vector space $V$, let $\bb{v_i}$ be a basis of $V$ and $\bb{v_i^*}$ be its dual basis in $V^*$. If
+    \begin{equation*}
+        w_j = g_j^i v_i
+    \end{equation*}
+    and $\bb{w_j}$ is another basis, i.e., $G = (g^i_j)_{i\times j} \in GL$, then for $w_\ell^* = \sum_k h^\ell_k (v_k)^*$, we have the matrix
+    \begin{equation*}
+        H = (h^\ell_k)_{\ell \times k} = G^{-1}.
+    \end{equation*}
+\end{rmk}
+Moreover, for $u\in F(M)$, $u^{-1} \colon T_{\pi(u)}M \sto \R^d$ and so we can consider $u^* \colon T_{\pi(u)}^*M \sto (\R^d)^*$, which follows that we can defined $u^{-1} \colon \otimes^{(r,s)}T_{\pi(u)}M \sto \otimes^{(r,s)} \R^d$ as
+\begin{equation*}
+    u^{-1} = \underbrace{u^{-1} \otimes \cdots \otimes u^{-1}}_r \times \underbrace{u^* \otimes \cdots \otimes u^*}_s.
+\end{equation*}
+Then it is obvious that for $\theta \in \Gamma(\otimes^{(r,s)}TM)$
+\begin{equation*}
+    \widetilde{\theta}(u) = u^{-1} \theta(\pi(u)).
+\end{equation*}
+On the other hand, for $u \colon \R^d \sto T_xM$, consider $(u^{-1})^* \colon (\R^d)^* \sto T_{\pi(u)}^*M$. Then it can extend $u$ to be defined on $\otimes^{(r,s)} (\R^d)^* \sto \otimes^{(r,s)}T^*_{\pi(u)}M$ as
+\begin{equation*}
+    u = \underbrace{(u^{-1})^* \otimes \cdots \otimes (u^{-1})^*}_r \otimes \underbrace{u \otimes \cdots \otimes u}_s,
+\end{equation*}
+where $\otimes^{(r,s)} (\R^d)^* = \otimes^r (\R^d)^* \otimes \otimes^s \R^d$ and $\otimes^{(r,s)} T_{\pi(u)}^*M = \otimes^r T_{\pi(u)}^*M \otimes \otimes^s T_{\pi(u)}M$. Then for any $\theta \in \Gamma(\otimes^{(r,s)}TM)$,
+\begin{equation*}
+    \theta_{\pi(u)} \colon \otimes^{(r,s)} T_{\pi(u)}^*M \sto \R,\quad \widetilde{\theta}_u \colon \otimes^{(r,s)} (\R^d)^* \sto \R,
+\end{equation*}
+they have
+\begin{equation*}
+    \theta_{\pi(u)} \circ u = \widetilde{\theta}(u),
+\end{equation*}
+because $\bb{ (u^{-1})^* e^j}$ is the dual basis of $\bb{ue_i}$ in $T^*_{\pi(u)}M$. For $f \in C^{\infty}(M)$, clearly $f_{\pi(u)} = \widetilde{f}(u)$. And so
+\begin{equation*}
+    \nabla_X f(\pi(u)) = \widetilde{\nabla_X f}(u).
+\end{equation*}
+
+\begin{prop}
+    Let $X \in \Gamma(TM)$ and $\theta \in \Gamma(\otimes^{(r,s)}TM)$. Then
+    \begin{equation*}
+       \widetilde{\nabla_X \theta} = X^H \widetilde{\theta},
+    \end{equation*}
+    i.e., $\widetilde{\nabla_X \theta}(u) = X^H_u \widetilde{\theta}$ for all $u \in F(M)$, where $X^H_u \widetilde{\theta}$ acts on each component since $X^H_u \in T_uF(M)$.
+\end{prop}
+\begin{proof}
+    Fix $u \in F(M)$. Let $c(t)$ be a curve in $M$ with $c(0) = \pi(u)$ and $\dot{c}(0) = X_{\pi(u)}$. Let $u(t)$ be the unique horizontal lift of $c(t)$ starting from $u(0) = u$. Then as we know, $\tau_t = u(t)u^{-1}$ is the parallel moving along $c(t)$. So we have
+    \begin{equation*}
+        \lv{\frac{d}{dt}}_{t = 0} \tau_t^{-1}\theta(c(t)) = \nabla_X \theta(\pi(u)).
+    \end{equation*}
+    On the other hand, because $\pi(u(t)) = c(t)$, we have
+    \begin{equation*}
+        \widetilde{\theta}(u(t)) = u(t)^{-1}\theta(c(t)).
+    \end{equation*}
+    Moreover, because $X^H_u = \dot{u}(0)$,
+    \begin{align*}
+        X^H_u \widetilde{\theta} &= \lv{\frac{d}{dt}}_{t = 0} \widetilde{\theta}(u(t)) \\
+        &= \lv{\frac{d}{dt}}_{t = 0} u(t)^{-1}\theta(c(t)) \\
+        &= u^{-1}\lv{\frac{d}{dt}}_{t = 0} \tau_t^{-1}\theta(c(t)) \\
+        &= u^{-1} (\nabla_X \theta)(\pi(u)) = \widetilde{\nabla_X \theta}(u),
+    \end{align*}
+    where the first equality is because $\widetilde{\theta}$ is a tensor field on $\R^d$, i.e. the coordinate does not change along time. \qedhere
+\end{proof}
+\begin{rmk}
+    By the definition of $X^H_u \widetilde{\theta}$, because it is a tensor field on $\R^d$, 
+    \begin{equation*}
+        (X^H_u \widetilde{\theta})(v^1,\cdots,v^r,w_1,\cdots,w_s) = X^H_u \bc{\widetilde{\theta}(u)(v^1,\cdots,v^r,w_1,\cdots,w_s)}
+    \end{equation*}
+    for any $v^i \in (\R^d)^*$ and $w_j \in \R^d$.
+\end{rmk}
+\begin{rmk}
+    Above is also true for $f \in C^\infty(M)$.
+    \begin{align*}
+        X^H_u \widetilde{f} &= \lv{\frac{d}{dt}}_{t = 0} \widetilde{f}(u(t)) \\
+        &=  \lv{\frac{d}{dt}}_{t = 0} f(\pi(u(t))) = \lv{\frac{d}{dt}}_{t = 0} f(c(t)) \\
+        &= \nabla_X f(c(0)) =  \nabla_X f(\pi(u)) = \widetilde{\nabla_X f}(u).
+    \end{align*}
+\end{rmk}
+
+\begin{exam}[Hessian]
+    For any $f \in C^\infty(M)$, consider the Hessian $\nabla^2 f \in \Gamma(\otimes^{0,2}TM)$,
+    \begin{align*}
+        \nabla^2 f_{\pi(u)}(ue_i,ue_j) &= (\nabla_{ue_j} \nabla f)_{\pi(u)}(ue_i) = (\widetilde{\nabla_{ue_j} \nabla f})(u) (e_i) \\
+        &= \bc{(ue_j)_u^H \widetilde{\nabla f}} (e_i) = H_j \bc{\widetilde{\nabla f}(u)(e_i)} \\
+        &= H_j \bc{\nabla f_{\pi(u)}(ue_i)} =  H_j \bc{(\nabla_{ue_i} f)_{\pi(u)}}\\
+        &= H_j\bc{\widetilde{\nabla_{ue_i} f}(u)} = H_jH_i \widetilde{f}
+    \end{align*}
+    where $\widetilde{f} = f \circ \pi$.
+\end{exam}
+
+\section{Stochastic Horizontal Lift}
+
+Given a SDE on $F(M)$:
+\begin{equation}\label{eq:horizontal_sde}
+    dU_t = H(U_t) \circ dW_t = \sum_{i=1}^d H_i(U_t) \circ dW^i_t,
+\end{equation}
+where $W$ is an $\R^d$-valued semimartingale and $\bb{H_i}_{i=1}^d$ are the fundamental horizontal vector fields on $F(M)$.
+
+\begin{defn}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item An $F(M)$-valued semimartingale is said to be horizontal if there exists an $\R^d$-valued semimartingale $W$ with $W_0 = 0$ such that SDE (\ref{eq:horizontal_sde}) holds. Then $W$ is called the anti-development of $U$ (or of its projection $X = \pi(U)$).
+
+        \item Let $W$ be an $\R^d$-valued semimartingale with $W_0 = 0$ and $U_0$ is an $F(M)$-valued, $\mathcal{F}_0$-measurable random variable. The solution of SDE (\ref{eq:horizontal_sde}) with initial condition $U_0$ is called a stochastic development of $W$ in $F(M)$, so is its projection $X=\pi(U)$.
+
+        \item Let $X$ be an $M$-valued semimartingale. An $F(M)$-valued horizontal semimartingale $U$ such that $\pi(U) = X$ is called a stochastic horizontal lift of $X$.
+    \end{enumerate}
+\end{defn} 
+Note that $W \mapsto U$ is by considering the solution of SDE (\ref{eq:horizontal_sde}), and $U \mapsto X$ is just by projection, but we need $X \mapsto U$ and $U \mapsto W$.
+
+Assume $M \subset \R^N$ is a submanifold that is closed. Let $f = (f^\alpha) \colon M \sto \R^N$ be the coordinate function and let lift it to
+\begin{equation*}
+    \widetilde{f} \colon F(M) \sto M \subset \R^N
+\end{equation*}
+as $\widetilde{f} = f \circ \pi$, i.e. $\widetilde{f}(u) = f(\pi(u)) = \pi(u)$ as in $\R^N$. 
+
+For any $M$-valued semimartingale, we regard $X = (X^\alpha)_{\alpha = 1}^N = (f^\alpha(X))_{\alpha = 1}^N \in \R^N$ as an $\R^N$-valued semimartingale. 
+
+For any $x \in M$, let $P(x) \colon \R^N \sto T_xM$ be the orthogonal projection by viewing $T_xM \subset \R^N$. Let $P_\alpha(x) = P(x)e_\alpha \in T_xM$ and so $P_\alpha \in \Gamma(TM)$. Define $P^H_\alpha \in \Gamma(TF(M))$ as
+\begin{equation*}
+    P^H_\alpha(u) = (P_\alpha(\pi(u)))_u^H \in T_uF(M),\quad \forall~ u \in F(M).
+\end{equation*}
+By using the fundamental horizontal lifts,
+\begin{equation*}
+    P^H_\alpha(u) = \bc{u (u^{-1}P_\alpha(\pi(u)))}_u^H = (u^{-1}P_\alpha(\pi(u)))^{i}H_i(u).
+\end{equation*}
+
+\begin{lem}
+    For notations as above, when viewing $T_xM \subset \R^N$, we have
+    \begin{equation*}
+        P^H_\alpha(u)\widetilde{f}=P_\alpha(\pi(u)),\quad P_\alpha(\pi(u))H_i(u)\widetilde{f^\alpha} = ue_i.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Let $u(t)$ be the horizontal lift from $u(0) = u$ of a curve $c(t)$ on $M$ with $c(0) = \pi(u)$ and $\dot{c}(0) = \widetilde{f}(u) = P_\alpha(\pi(u))$. It follows that $P^H_\alpha(u) = \dot{u}(0)$. Because $\widetilde{f} \colon F(M) \sto \R^N$ and $P^H_\alpha(u) \in T_uF(M)$,
+    \begin{equation*}
+        P^H_\alpha(u)\widetilde{f} = \lv{\frac{d}{dt}}_{t = 0} \widetilde{f}(u(t)) =  \lv{\frac{d}{dt}}_{t = 0} \pi(u(t)) =  \lv{\frac{d}{dt}}_{t = 0} c(t) = P_\alpha(\pi(u)).
+    \end{equation*}
+    Next, let $v(t)$ be the horizontal lift start from $v(0) = u$ of curve $x(t)$ with $x(0) = \pi(u)$ and $\dot{x}(0) = ue_i$. So
+    \begin{equation*}
+        H_i(u) \widetilde{f} = \lv{\frac{d}{dt}}_{t = 0} \widetilde{f}(v(t)) = \lv{\frac{d}{dt}}_{t = 0} \pi(v(t)) = \lv{\frac{d}{dt}}_{t = 0} x(t) = ue_i,
+    \end{equation*}
+    which implies that $H_i(u) \widetilde{f} \in T_{\pi(u)}M$ and so
+    \begin{equation*}
+        P(\pi(u)) H_i(u) \widetilde{f} = H_i(u) \widetilde{f}~\Rightarrow~P_\alpha(\pi(u))H_i(u)\widetilde{f^\alpha} = H_i(u) \widetilde{f} = ue_i. \qedhere
+    \end{equation*}
+\end{proof}
+\begin{rmk}
+    For a vector field $H \in \Gamma(TF(M))$, we usually denote $Hg(u) \defeq H(u)g$ for any $u \in F(M)$ and $g \colon F(M) \sto \R^n$. Under this notation,
+    \begin{equation*}
+        P_\alpha^H \widetilde{f}(u)=P_\alpha(\pi(u)),\quad P_\alpha(\pi(u)) H_i \widetilde{f}^\alpha(u)=u e_i.
+    \end{equation*}
+\end{rmk}
+\begin{rmk}
+    Note that above two identities view $P_\alpha(\pi(u))$ as a vector in $\R^N$. More precisely, for any $g \in C^\infty(M)$, $g \circ \pi \in C^\infty(F(M))$. We similarly have
+    \begin{equation*}
+        H_i(u)(g \circ \pi) = \lv{\frac{d}{dt}}_{t = 0}g(c(t)) = (ue_i)g.
+    \end{equation*}
+    and
+    \begin{equation*}
+        P_\alpha^H(u) (g \circ \pi) = P_\alpha(\pi(u))g
+    \end{equation*}
+    or in other words,
+    \begin{equation*}
+        d\pi_u (P_\alpha^H(u)) = P_\alpha(\pi(u)),
+    \end{equation*}
+    which is the definition of horizontal lift.
+\end{rmk}
+
+\begin{lem}
+    Assume $M \subset \R^N$ is a submanifold that is closed. If $X$ is an $M$-valued semimartingale, then
+    \begin{equation*}
+        X_t = X_0 + \int_0^t P(X_s) \circ dX_s = X_0 + \int_0^t P_\alpha(X_s) \circ dX^\alpha_s.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Let $Q_\alpha(x) = e_\alpha - P_\alpha(x)$, i.e., $Q_\alpha(x)$ normal to $T_xM$ and $Q_\alpha \in \Gamma(NM)$. Let
+    \begin{equation*}
+        Y_t = X_0 + \int_0^t P_\alpha(X_s) \circ dX^\alpha_t
+    \end{equation*}
+    By the closedness of $M$, there exists $f \in C^\infty(\R^n)$ such that $f(x) \geq 0$ and $f^{-1}(0) = M$. Then by It\^o formula,
+    \begin{equation*}
+        f\left(Y_t\right)=f\left(X_0\right)+\int_0^t P_\alpha f\left(X_t\right) \circ d X_t^\alpha.
+    \end{equation*}
+    Because $P_\alpha \in \Gamma(TM)$ and $f|_M = 0$, $P_\alpha f(x) = 0$ for all $x \in M$. Since $X$ is $M$-valued, $f(Y_t) = 0$, i.e., $Y \in f^{-1}(0) = M$, and $Y$ is an $M$-valued semimartingale.
+
+    Next, consider a tubular neighborhood $U$ of $M$ and defined the natural projection $\tilde{h} \colon U \sto M$, which can be extended a smooth $h \colon \R^N \sto M$. Because $Q_\alpha \in \Gamma(NM)$, by choosing Fermi coordinates, we have
+    \begin{equation*}
+        Q_\alpha h(x) = 0~\Rightarrow~ P_\alpha h(x) = \frac{\partial h}{\partial x^\alpha}.
+    \end{equation*}
+    So
+    \begin{align*}
+        Y_t = h(Y_t) &= h(X_0) + \int_0^t P_\alpha h(X_s) \circ dX_s^\alpha\\
+        &= X_0 + \int_0^t \frac{\partial h}{\partial x^\alpha} \circ dX_s^\alpha\\
+        &= h(X_t) = X_t. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    A horizontal semimartingale $U$ on $F(M)$ has a unique anti-development $W$. In fact,
+    \begin{equation*}
+        W_t = \int_0^t U_s^{-1}P_\alpha(X_s) \circ dX^\alpha_s,
+    \end{equation*}
+    for $X = \pi(U)$.
+\end{thm}
+\begin{proof}
+    By definition, $W$ should be
+    \begin{equation*}
+        dU_t = H_i(U_t) \circ dW^i_t.
+    \end{equation*}
+    Let $\widetilde{f}$ be defined as above. Then
+    \begin{equation*}
+        \widetilde{f}(U_t) = f(\pi(U_t)) = f(X_t) = X_t \in M \subset \R^N.
+    \end{equation*}
+    Then $X_t$ should satisfy
+    \begin{equation*}
+        dX^\alpha_t = H_i \widetilde{f^\alpha}(U_t) \circ dW^i_t.
+    \end{equation*}
+    Therefore, by above formulas, we have
+    \begin{equation*}
+        U_t^{-1} P_\alpha\left(X_t\right) \circ d X_t^\alpha=U_t^{-1} P_\alpha\left(X_t\right) H_i \widetilde{f}^\alpha\left(U_t\right) \circ d W_t^i=e_i d W_t^i =dW_t
+    \end{equation*}
+    By the uniqueness of SDE, $W_t$ uniquely exists and
+    \begin{equation*}
+        W_t = \int_0^t U_s^{-1}P_\alpha(X_s) \circ dX^\alpha_s. \qedhere
+    \end{equation*}
+\end{proof}
+\begin{rmk}
+    Note that if $U^1_t$ and $U^2_t$ are two horizontal lifts of $X$ starting from $U_0^1$ and $U_0^2 = U_0^1g$, then by above, we obviously have
+    \begin{equation*}
+        W^1_t = g^{-1}W_t^2.
+    \end{equation*}
+\end{rmk}
+\begin{rmk}
+    On the other hand,
+    \begin{align*}
+        P_\alpha\left(X_t\right) \circ dX^\alpha_t &= P_\alpha\left(X_t\right)H_i \widetilde{f^\alpha}(U_t) \circ dW^i_t \\
+        &= U_te_i \circ dW_t^i = U_t \circ (e_i \circ dW^i_t) \\
+        &= U_t \circ dW_t.
+    \end{align*}
+    Then by above,
+    \begin{equation*}
+        X_t = X_0 + \int_0^s U_s \circ dW_s.
+    \end{equation*}
+    and clearly this formula is independent of the choice of $U$.
+\end{rmk}
+
+\begin{thm}
+    Suppose $X$ is an $M$-valued semimartingale (up to a stopping time $\tau$), and $U_0$ is an $F(M)$-valued $\mathcal{F}_0$-random variable such that $\pi(U_0) = X_0$. Then there exists a unique horizontal lift $U$ (up to $\tau$) of $X$ starting from $U_0$.
+\end{thm}
+\begin{proof}
+    Consider a SDE defined as
+    \begin{equation*}
+        dU_t = P^H_\alpha(U_t) \circ dX^\alpha_t.
+    \end{equation*}
+    Let $U_t$ be its unique solution, so $U_t$ is clearly a horizontal lift since $P^H_\alpha \in \Gamma{HM}$. It suffices to show $\pi(U_t)= X_t$. Let
+    \begin{equation*}
+        Y_t = \widetilde{f}(U_t) = f(\pi(U_t)) = \pi(U_t) \in M \subset \R^N.
+    \end{equation*}
+    By above, we have
+    \begin{equation*}
+        dY_t = P^H_\alpha \widetilde{f}(U_t) \circ dX^\alpha_t = P_\alpha (Y_t) \circ dX^\alpha_t.
+    \end{equation*}
+    By above lemma, we know $dX_t = P_\alpha (X_t) \circ dX^\alpha_t$. By the uniqueness of SDE, $X = Y$.
+
+    Next, assume there exists another horizontal lift $\Pi_t$ of $X_t$. Then there exists a semimartingale $W$ such that 
+    \begin{equation*}
+        d\Pi_t = H_i(\Pi_t) \circ dW^i_t.
+    \end{equation*}
+    and by above theorem
+    \begin{equation*}
+        dW_t = \Pi_t^{-1}P_\alpha(X_t) \circ dX^\alpha_t.
+    \end{equation*}
+    So
+    \begin{align*}
+        d\Pi_t &= \bc{\Pi_t^{-1}P_\alpha(X_t)}^i H_i(\Pi_t) \circ dX^\alpha_t \\
+        &= P^H_\alpha(\Pi_t) \circ dX^\alpha_t.
+    \end{align*}
+    So $\Pi = U$ by the uniqueness of solution of SDE. \qedhere
+\end{proof}
+\begin{rmk}
+    When considering explosion time, there is a fact, if $X$ on $M$ is a semimartingale up to $\tau$, then its horizontal lift $H$ on $F(M)$ is also defined up to $\tau$.
+\end{rmk}
+
+Similarly as the deterministic case, given a semimartingale $X$ on $M$, the horizontal lift $U_t$ provide the stochastic parallel moving along $X_t$,
+\begin{equation*}
+    \tau^X_{t_1t_2} = U_{t_2}U_{t_1}^{-1} \colon T_{X_{t_1}}M \sto T_{X_{t_2}}M.
+\end{equation*}
+
+\begin{prop}
+    Let a semimartingale $X$ on a manifold $M$ be the solution of $\op{SDE}(V_1,\cdots,V_N;Z,X_0)$ and $V_\alpha^H$ be the horizontal lift of $V_\alpha$. Then the horizontal lift $U$ of X starting from $U_0$ satisfy $\op{SDE}(V^H_1,\cdots,V^H_N;Z,U_0)$, and the anti-development of $X$ is given by
+    \begin{equation*}
+        W_t = \int_0^t U_s^{-1}V_\alpha(X_s) \circ dZ^\alpha_s.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Assume $M \subset \R^N$ that is closed and use above notations. First, we similar have
+    \begin{equation*}
+        V_\alpha^H \widetilde{f}(u) = V_\alpha(\pi(u)).
+    \end{equation*}
+    Let $\Pi$ be the solution of $\op{SDE}(V^H_1,\cdots,V^H_N;Z,U_0)$ and $Y_t = \widetilde{f}(\Pi_t) = \pi(\Pi_t)$. 
+    \begin{equation*}
+        dY_t = V^H_\alpha\widetilde{f}(\Pi_t) \circ dZ^\alpha_t = V_\alpha(Y_t) \circ dZ^\alpha_t,
+    \end{equation*}
+    which implies that $Y=X$ by the uniqueness of solution of $\op{SDE}(V_1,\cdots,V_N;Z,X_0)$. And by the uniqueness of horizontal lift, $U = \Pi$.
+
+    Next, the anti-development of $X$ is given by
+    \begin{equation*}
+        dW_t = U_t^{-1}P_\beta(X_t) \circ dX_t^\beta.
+    \end{equation*}
+    Because $dX_t = V_\alpha(X_t) \circ dZ^\alpha_t$, i.e., $dX^\beta_t = V^\beta_\alpha(X_t) \circ dZ^\alpha_t$,
+    \begin{equation*}
+        dW_t = U_t^{-1}P_\beta(X_t)V^\beta_\alpha(X_t) \circ dZ^\alpha_t.
+    \end{equation*}
+    Because $V_\alpha(X_t) \in T_{X_t}M$,
+    \begin{equation*}
+        P_\beta(X_t)V^\beta_\alpha(X_t) = P(X_t)V_\alpha(X_t) = V_\alpha(X_t).
+    \end{equation*}
+    So
+    \begin{equation*}
+        dW_t = U_t^{-1}V_\alpha(X_t)\circ dZ^\alpha_t. \qedhere
+    \end{equation*}
+\end{proof}
+
+\section{Stochastic Line Integral}
+
+\paragraph{Line Integral.} For any $1$-form $\omega = f(t)dt$ on $[a,b]$ of $\R$, define
+\begin{equation*}
+    \int_{[a,b]}\omega = \int_a^b f(t)dt.
+\end{equation*}
+Let $M$ be a smooth manifold and $\omega \in \Gamma(T^*M)$. Let $\gamma \colon [a,b] \sto M$ smooth. Define the line integral of $\omega$ along $\gamma$ as
+\begin{equation*}
+    \int_\gamma \omega = \int_{[a,b]}\gamma^*\omega.
+\end{equation*}
+Clearly, it satisfies the linearity in $\omega$ and additivity w.s.t. $\gamma$. Moreover, for any smooth $F \colon M \sto N$ and $\eta \in \Gamma(T^*N)$ and $\gamma$ in $M$,
+\begin{equation*}
+    \int_\gamma F^*\eta = \int_{F \circ \gamma} \eta.
+\end{equation*}
+\begin{prop}
+    Let $\omega \in \Gamma(T^*M)$ and $\gamma \colon [a,b] \sto M$ smooth.
+    \begin{equation*}
+        \int_\gamma \omega = \int_a^b \omega_{\gamma(t)}(\dot{\gamma}(t))dt
+    \end{equation*}
+    In particular, if $\omega = df$ for some $f \in C^\infty(M)$,
+    \begin{equation*}
+        \int_\gamma df = \int_a^b (f \circ \gamma)^\prime(t)dt = f(\gamma(b)) - f(\gamma(a)).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Let $\gamma(t) = (\gamma^1(t),\cdots, \gamma^d(t))$ and $\omega = \omega_i dx^i$ be the coordinate expression. Then
+    \begin{equation*}
+        (\gamma^* \omega)_t = \omega_i(\gamma(t)) d x^i(\gamma(t)) = \omega_i(\gamma(t)) d \gamma^i(t) = \omega_i(\gamma(t))(\gamma^i)^\prime(t)dt
+    \end{equation*}
+    On the other hand,
+    \begin{equation*}
+        \omega_{\gamma(t)}(\dot{\gamma}(t)) = \omega_i(\gamma(t)) d x^i \bc{(\gamma^j)^\prime(t) \frac{\partial}{\partial x^j}} = \omega_i(\gamma(t))(\gamma^i)^\prime(t).
+    \end{equation*}
+    Therefore, we get the desired result.
+\end{proof}
+
+\paragraph{Stochastic Line Integral.} Let $x \colon [0,t] \sto M$ and $u(t)$ be its horizontal lift on $F(M)$ starting from $u_0$. Let $w(t)$ be the anti-development of $x(t)$, i.e., $\dot{w}_t = u_t^{-1}\dot{x}_t$ and $w_0 = 0$. Let $\bb{e_i}$ be the canonical basis of $\R^d$ and so $\bb{u_te_i}$ is a basis of $T_{x_t}M$. Let
+\begin{equation*}
+    w_t = w^i_te_i~\Rightarrow~\dot{x}_t = \dot{w}^i_t\bc{u_te_i}.
+\end{equation*}
+Let $\theta \in \Gamma(t^*M)$. Then
+\begin{equation*}
+    \int_x \theta = \int_0^t \theta_{x_s}(\dot{x}_s)ds = \int_0^t \dot{w}^i_s\theta_{x_s}(u_se_i)ds.
+\end{equation*}
+
+\begin{defn}
+    Let $\theta \in \Gamma(t^*M)$ and $X$ be an $M$-valued semimartingale. Let $U$ be a horizontal lift of $X$ and $W$ be its anti-development. The stochastic line integral of $\theta$ along $X$ is defined by
+    \begin{equation*}
+        \int_{X_{[0,t]}} \theta = \int_0^t \theta_{X_s}(U_se_i) \circ dW^i_s.
+    \end{equation*}
+\end{defn}
+\begin{rmk}
+    For such $\theta$, let $\widetilde{\theta}$ be the scalarization of $1$-form $\theta$. Then by the definition, $\widetilde{\theta} \colon F(M) \sto \R^d$ by viewing $(\R^d)^* = \R^d$ and 
+    \begin{equation*}
+        \widetilde{\theta}(u) =  \bc{\theta_{\pi(u)}(ue_1),\cdots,\theta_{\pi(u)}(ue_d)}^\top \in \R^d.
+    \end{equation*}
+    So
+    \begin{equation*}
+        \int_{X_{[0,t]}} \theta = \int_0^t \widetilde{\theta}(U_s)_i \circ dW^i_s = \int_0^t \widetilde{\theta}(U_s)^\top \circ dW_s.
+    \end{equation*}
+\end{rmk}
+
+Note that $\int_{X_{[0,t]}} \theta$ seems depend on the choice of horizontal lift, and so the connection on $M$. Actually, it is independent of the above choices by the following proposition and the fact that any semimartingale on $M$ is a solution of some SDE shown in above section.
+\begin{prop}
+    Let $\theta \in \Gamma(T^*M)$ and $X$ be the solution of $dX_t = V_\alpha(X_t) \circ dZ_t^\alpha$. Then
+    \begin{equation*}
+        \int_{X_{[0,t]}} \theta = \int_0^t \theta(V_\alpha)(X_s) \circ dZ^\alpha_s.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Choose a horizontal lift $U$ and corresponding anti-development $W$ of $X$. Then
+    \begin{equation*}
+        dW_t = U_t^{-1}V_\alpha(X_t) \circ dZ_t^\alpha.
+    \end{equation*} 
+    Therefore,
+    \begin{align*}
+        \widetilde{\theta}(U_s)_i \circ dW^i_s &= \widetilde{\theta}(U_s)_i(U_t^{-1}V_\alpha(X_s))^i \circ dZ_s^\alpha \\
+        &= \theta_{X_s}(U_se_i)(U_t^{-1}V_\alpha(X_s))^i \circ dZ_s^\alpha \\
+        &= \theta_{X_s}\bc{U_s \bc{e_i(U_t^{-1}V_\alpha(X_s))^i}}\circ dZ_s^\alpha \\
+        &= \theta_{X_s}(V_\alpha(X_s))\circ dZ_s^\alpha.
+    \end{align*}
+    Therefore, we have
+    \begin{equation*}
+        \int_{X_{[0,t]}} \theta = \int_0^t \theta(V_\alpha)(X_s) \circ dZ^\alpha_s. \qedhere
+    \end{equation*}
+\end{proof}
+\begin{rmk}
+    Note that the stochastic line integral of $1$-form $\theta$ along a given $M$-valued semimartingale $X$ is independent of the choice of horizontal lift and also the connection. Symbolically,
+    \begin{equation*}
+        \int_{X_{[0,t]}} \theta = \int_0^t \theta \circ dX_t
+    \end{equation*}
+\end{rmk}
+
+\begin{exam}
+    \begin{enumerate}[label=(\arabic{*})]
+        \item  For all $f \in C^\infty(M)$, assume $dX_t = V_\alpha(X_t) \circ dZ_t^\alpha$.
+        \begin{equation*}
+            \int_{X_{[0,t]}} df = \int_0^t V_\alpha f(X_s) \circ dZ^\alpha_s = f(X_t) - f(X_0)
+        \end{equation*}
+        
+        \item Let $(U,x^1,\cdots,x^d)$ be a local chart of $M$. Let $\theta = \theta_i dx^i$. For any $X$ a semimartingale on $M$, let $X^i = x^i(X)$ that is a semimartingale on $\R$.
+        \begin{equation*}
+            dX_t = V_i(X_t) \circ dX^i_t,\quad V_i = \frac{\partial}{\partial x^i},
+        \end{equation*}
+        because $df(X_t) = \frac{\partial f}{\partial x^i}(X_t) \circ dX^i_t$. Then
+        \begin{equation*}
+            \int_{X_{[0,t]}} \theta = \int_0^t \theta(V_i(X_s)) \circ dX^i_s = \int_0^t \theta_i(X_s)\circ dX^i_s,
+        \end{equation*}
+        which is the local expression of stochastic line integral.
+    \end{enumerate}  
+\end{exam}
+
+\begin{defn}
+    Let $\theta \colon \Gamma(TF(M)) \sto C^\infty(F(M),\R^d)$, i.e., a $\R^d$-valued $1$-form on $F(M)$. Define
+    \begin{equation*}
+        \theta(Z)(u) = \theta_u(Z_u) \defeq u^{-1}(d\pi_u (Z_u)),
+    \end{equation*}
+    for any $Z \in \Gamma(TF(M))$ and $u \in F(M)$, where $\pi \colon F(M) \sto M$ is the natural projection. Then $\theta$ is called the solder form.
+\end{defn}
+
+\begin{prop}
+    Let $U$ be a horizontal semimartingale on $F(M)$. Then its the corresponding anti-development is given by
+    \begin{equation*}
+        W_t = \int_{U_{[0,t]}} \theta,
+    \end{equation*}
+    where $\theta$ is the solder form.
+\end{prop}
+\begin{proof}
+    Let $X_t = \pi(U_t)$. Then we have
+    \begin{equation*}
+        dU_t = P^H_\alpha(U_t) \circ dX^\alpha_t.
+    \end{equation*}
+    Note that $\pi_* P^H_\alpha = P_\alpha$. So we get
+    \begin{align*}
+        \int_{U_{[0,t]}} \theta &= \int_0^t \theta(P^H_\alpha)(U_s) \circ dX^\alpha_s \\
+        &= \int_0^t U_s^{-1}d\pi_{U_s}(P_\alpha^H(U_s)) \circ dX^\alpha_s \\
+        &= \int_0^t U_s^{-1}P_\alpha(\pi(U_s)) \circ dX^\alpha_s = W_t. \qedhere
+    \end{align*}
+\end{proof}
+
+\paragraph{Quadratic Variation.} Let $h \in \Gamma(\otimes^{(0,2)}TM)$ and $\widetilde{h}$ be its scalarization. So
+\begin{equation*}
+    \widetilde{h}(u)(e,e^\prime) = h_{\pi(u)}(ue,ue^\prime),\quad \forall~ e,e^\prime \in \R^d,~u\in F(M).
+\end{equation*}
+Let
+\begin{equation*}
+    h^{\op{sym}}(e,e^\prime) = \frac{h(e,e^\prime) + h(e^\prime,e)}{2}.
+\end{equation*}
+
+\begin{defn}
+    Let $h \in \Gamma(\otimes^{(0,2)}TM)$ and $X$ be an $M$-valued semimartingale. Let $U$ be a horizontal lift of $X$ and $W$ be its anti-development. Note that
+    \begin{equation*}
+        dX_t = U_te_i \circ dW^i_t,
+    \end{equation*}
+    Then the $h$-quadratic variation of $X$ is defined as
+    \begin{align*}
+        \int_0^t h(dX_s,dX_s) &\defeq \int_0^t h_{X_s}(U_se_i,U_se_j) d\inn{W^i,W^j}_s\\
+        &=\int_0^t \widetilde{h}(U_s)(e_i,e_j)d\inn{W^i,W^j}_s.
+    \end{align*}
+\end{defn}
+By viewing $dW^i_sdW^j_s = d\inn{W^i,W^j}_s$, then
+\begin{equation*}
+    \int_0^t h(dX_s,dX_s) = \int_0^t \widetilde{h}(U_s)(dW_s,dW_s).
+\end{equation*}
+Obviously,
+\begin{equation*}
+    \int_0^t h(dX_s,dX_s) = \int_0^t h^{\op{sym}}(dX_s,dX_s)
+\end{equation*}
+and if $h$ is anti-symmetric, $\int_0^t h(dX_s,dX_s) = 0$.
+\begin{rmk}
+    Note that this definition is independent the choice of $U$, i.e., the choice of $U_0$, because the anti-development of $U_tg$ is $g^{-1}W_t$ and
+    \begin{align*}
+        h(U_tge_i,U_tge_j)d\inn{(g^{-1}W)^i,(g^{-1}W)^j}_t &= \widetilde{h}(U_t)(ge_i,ge_j) d\inn{(g^{-1}W)^i,(g^{-1}W)^j}_t\\
+        &= g^{\alpha}_ig^{\beta}_j\widetilde{h}(U_t)(e_\alpha,e_\beta)\tilde{g}^i_k\tilde{g}^j_\ell d\inn{W^k,W^\ell}_t \\
+        &=\widetilde{h}(U_t)(e_k,e_\ell) d\inn{W^k,W^\ell}_t,
+    \end{align*}
+    where $ge_i = g^j_i$ and $(\tilde{g}^j_i) = (g^j_i)^{-1}$. So $h$-quadratic variation is well-defined.
+\end{rmk}
+
+\begin{prop}
+    Let $h \in \Gamma(\otimes^{(0,2)}TM)$ and $X$ be the solution of $\op{SDE}(V_1,\cdots,V_N;Z,X_0)$. Then
+    \begin{equation*}
+        \int_0^th(dX_s,dX_s) = \int_0^th(V_\alpha,V_\beta)(X_s)d\inn{Z^\alpha,Z^\beta}_s.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Note that
+    \begin{equation*}
+        dX_t = V_\alpha(X_t) \circ dZ^\alpha_t
+    \end{equation*}
+    Let $U$ be a horizontal lift of $X$ and $W$ be its anti-development. Then
+    \begin{equation*}
+        dW_t = U_t^{-1}V_{\alpha}(X_t) \circ dZ^\alpha_t.
+    \end{equation*}
+    and so
+    \begin{equation*}
+        d\inn{W^i,W^j}_t = \bc{U_t^{-1}V_{\alpha}(X_t)}^i\bc{U_t^{-1}V_{\beta}(X_t)}^jd\inn{Z^\alpha,Z^\beta}_t.
+    \end{equation*}
+    It implies that
+    \begin{align*}
+        h(U_te_i,U_te_j) d\inn{W^i,W^j}_t &= h(U_te_i,U_te_j)\bc{U_t^{-1}V_{\alpha}(X_t)}^i\bc{U_t^{-1}V_{\beta}(X_t)}^jd\inn{Z^\alpha,Z^\beta}_t \\
+        &= h(V_\alpha,V_\beta)(X_t)d\inn{Z^\alpha,Z^\beta}_t. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{exam}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $(U,x^1,\cdots,x^d)$ be a coordinate and $h \in \Gamma(\otimes^{(0,2)}TM)$ locally written as
+        \begin{equation*}
+            h = h_{ij} dx^i \otimes dx^j.
+        \end{equation*}
+        For $X = (X^i)$ on $M$,
+        \begin{equation*}
+            \int_0^t h(dX_s,dX_s) = \int_0^t h_{ij}(X_s)d\inn{X^i,X^j}_s,
+        \end{equation*}
+        by $dX_t = \frac{\partial}{\partial x^i}(X_t) \circ dX^i_t$.
+
+        \item For $f \in C^\infty(M)$, $\nabla^2 f \in \Gamma(\otimes^{(0,2)}TM)$ and so
+        \begin{align*}
+            \int_0^t \nabla^2 f(dX_s,dX_s) &= \int_0^t \nabla^2f_{X_s}(U_se_i,U_se_j)d\inn{W^i,W^j}_s \\
+            &= \int_0^tH_jH_i\widetilde{f}(U_s)d\inn{W^i,W^j}_s.
+        \end{align*}
+
+        \item If $f,g \in C^\infty(M)$,
+        \begin{equation*}
+            \int_0^t(df \otimes dg)(dX_s,dX_s) = \inn{f(X),g(X)}_t.
+        \end{equation*}
+        \begin{proof}
+            For $X$ an $M$-valued semimartingale, WTLG assume $dX_t = V_\alpha(X_t) \circ dZ^\alpha_t$. Then
+            \begin{equation*}
+                \int_0^t(df \otimes dg)(dX_s,dX_s) = \int_0^t V_\alpha f(X_s) V_\beta f(X_s) d\inn{Z^\alpha,Z^\beta}_s.
+            \end{equation*}
+            On the other hand, because
+            \begin{equation*}
+                df(X_t) = V_\alpha f(X_t) \circ dZ^\alpha_t,\quad dg(X_t) = V_\beta g(X_t) \circ dZ^\beta_t,
+            \end{equation*}
+            we have
+            \begin{equation*}
+                \inn{f(X),g(X)}_t = \int_0^tV_\alpha f(X_s) V_\beta f(X_s) d\inn{Z^\alpha,Z^\beta}_s. \qedhere
+            \end{equation*}
+
+        \end{proof}
+    \end{enumerate}
+\end{exam}
+
+\begin{prop}
+    If $\theta \in \Gamma(\otimes^{(0,2)}TM)$ is positive semi-definite, then the $\theta$-quadratic variation of a semimartingale $X$ is nondecreasing.
+\end{prop}
+\begin{proof}
+    First,
+    \begin{equation*}
+        \int_0^t h\left(d X_s, d X_s\right)=\int_0^t h\left(U_s e_i, U_s e_j\right) d\left\langle W^i, W^j\right\rangle_s.
+    \end{equation*}
+    Because $h$ is positive semi-positive, the matrix $\left(h\left(U_s e_i, U_s e_j\right)\right)$ is positive semi-definite and let $(m_i^k(s))$ be its squared root matrix. Let
+    \begin{equation*}
+        J_t^k=\int_0^t m_i^k(s) d W_s^i.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \int_0^t h\left(d X_s, d X_s\right)= \sum_k \int_0^t m_i^k(s) m_j^k(s) d\left\langle W^i, W^j\right\rangle_s=\sum_k\left\langle J^k, J^k\right\rangle_t.\qedhere
+    \end{equation*}
+\end{proof}
+
+\section{Martingale on Manifold}
+
+\begin{defn}
+    Suppose $M$ is a $C^\infty$ manifold with a connection $\nabla$. An $M$-valued semimartingale $X$ is called a $\nabla$-martingale if its anti-development $W$ w.s.t $\nabla$ is an $\R^d$-valued local martingale.
+\end{defn}
+\begin{rmk}
+    It is well defined because if $W$ and $W^\prime$ are two anti-development of $X$, then there exists a $g \in GL(d,\R)$ such that $W^\prime = g W$.
+\end{rmk}
+\begin{rmk}
+    Note that when $M = \R^N$ is equipped with the canonical connection. Then for any $c(t)$ on $M$, its horizontal lift starting from $u_0$ is
+    \begin{equation*}
+        u(t)a = (u_0)^i_j a^j \lv{\frac{\partial}{\partial x^i}}_{c(t)}.
+    \end{equation*}
+    When viewing $T_xM \subset \R^N$, $u(t)a \equiv u_0a$. Define $f \colon F(M) \sto \R^N$ as $f(u) = ue_i$. Then
+    \begin{equation*}
+        P_\alpha^H(u)f = \lv{\frac{d}{dt}}_{t = 0} f(u_t) = \lv{\frac{d}{dt}}_{t = 0} u_te_i = 0.
+    \end{equation*}
+    Let $X$ be an $M$-valued semimartingale. Because $dU_t = P_\alpha^H(U_t) \circ dX^\alpha_t$,
+    \begin{equation*}
+        df(U_t) = P_\alpha^Hf(U_t) \circ dX^\alpha_t = 0~\Rightarrow~ f(U_t) = U_te_i = U_0e_i.
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+        X_t &= X_0 + \int_0^t U_se_i \circ dW^i_s \\
+        &= X_0 + \int_0^t U_0e_i dW^i_s \\
+        &= X_0 + U_0 W_t.
+    \end{align*}
+    It follows that when $M=\R^N$, if $X$ is an $M$-martingale, then it is a local martingale in the usual sense.
+\end{rmk}
+
+\begin{prop}
+    An $M$-valued semimartingale $X$ is a $\nabla$-martingale if an only if 
+    \begin{equation*}
+        N^f(X)_t \defeq f(X_t) - f(X_0) - \frac{1}{2}\int_0^t \nabla^2f(dX_s,dX_s),
+    \end{equation*}
+    is an $\R$-valued local martingale for every $f \in C^\infty(M)$.
+\end{prop}
+\begin{rmk}
+    For Euclidean case, a continuous semimartingale $X$ is a local martingale if and only if $N^f(X)$ is a local martingale for all $f \in C^\infty$ (or $f \in C_c^\infty$) by It\^o formula.
+\end{rmk}
+\begin{proof}
+    $\Rightarrow:$ Let $U$ be a horizontal lift of $X$ and $W$ be its anti-development. Then
+    \begin{equation*}
+        dU_t = H_i(U_t) \circ dW^i_t.
+    \end{equation*}
+    For $f \in C^\infty(M)$, let $\widetilde{f} = f \circ \pi \in C^\infty(F(M))$. So
+    \begin{align*}
+        f(X_t) - f(X_0) &= \widetilde{f}(U_t) - \widetilde{f}(U_0) \\
+        &= \int_0^t H_i\widetilde{f}(U_s) \circ dW^i_s \\
+        &= \int_0^tH_i\widetilde{f}(U_s) dW^i_s + \frac{1}{2}\inn{H_i \widetilde{f}(U),W^i}_t.
+    \end{align*}
+    Note that
+    \begin{align*}
+        d H_i \widetilde{f}(U_t) = H_jH_i\widetilde{f}(U_t) \circ dW^j_t,
+    \end{align*}
+    which implies that
+    \begin{align*}
+        \inn{H_i \widetilde{f}(U),W^i}_t &= \int_0^tH_jH_i\widetilde{f}(U_s) d\inn{W^i,W^j}_s \\
+        &= \int_0^t \nabla^2 f(dX_s,dX_s).
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        N^f(X)_t = \int_0^tH_i\widetilde{f}(U_t) dW^i_t.
+    \end{equation*}
+    When $X$ is an $M$-local semimartingale, i.e., $W$ is an $\R^d$-local martingale, then $N^f(X)$ is obviously a local martingale.
+
+    $\Leftarrow:$ Assume $M \subset \R^N$ properly embedded. Let $f \colon M \sto \R^N$ be the coordinate function $f(x) = x$ and $\widetilde{f} = f \circ \pi$ be its lift on $F(M)$. When viewing $T_xM \subset \R^N$, we already have $H_i\widetilde{f}(u) = ue_i$. So similarly as above calculation,
+    \begin{align*}
+        N^f(X)_t &\defeq N^{f^\alpha}(X)_te_\alpha \\
+        &= e_\alpha\int_0^tH_i\widetilde{f^\alpha}(U_s) dW^i_s \\
+        &= e_\alpha\int_0^t(U_se_i)^\alpha dW^i_t  \\
+        &= \int_0^t U_se_i dW^i_t = \int_0^t U_sdW_s,
+    \end{align*}
+    by viewing $U_s \colon \R^d \sto \R^N$ where $U_s \colon \R^d \sto T_xM$ is an isomorphism. Define $V_s \colon \R^N = T_xM \oplus N_xM \sto \R^d$ as
+    \begin{equation*}
+        V_s \xi = \begin{cases}
+            U_s^{-1} \xi,& \xi \in T_{X_s}M,\\
+            0,&\xi \perp T_{X_s}M
+        \end{cases}
+    \end{equation*}
+    Then $V_sU_se = e$ for all $\R^d$. Therefore,
+    \begin{equation*}
+        \int_0^t V_s dN^f(X)_s = \int_0^tV_sU_s dW_s = W_t.
+    \end{equation*}
+    Because $N^f(X)$ is a local martingale, $W_t$ is a local martingale. It follows that $X$ is an $M$-martingale.
+\end{proof}
+\begin{rmk}
+    From the proof, we can see that when viewing $M \subset \R^N$ and let $f = (f^1,\cdots,f^\alpha) \colon M \sto \R^N$ be the coordinate function, if $N^{f^{\alpha}}$ for $\alpha = 1,\cdots,N$ are local martingales, then $X$ is an $M$-local martingale.
+\end{rmk}
+
+\begin{prop}
+    Suppose $(U,x^1,\cdots,x^d)$ is a local chart on $M$ and $X = (X^i)$, i.e. $X^i = x^i(X)$, a semimartingale on $M$. Then $X$ is an $M$-martingale if and only if
+    \begin{equation*}
+        N_t^i = X_t^i - X_0^i + \frac{1}{2}\int_0^t \Gamma^i_{jk}(X_s)d\inn{X^j,X^k}_s
+    \end{equation*}
+    is a local martingale.
+\end{prop}
+\begin{proof}
+    $\Rightarrow:$ Locally, we know
+    \begin{equation*}
+        \nabla^2 x^i = -\Gamma^i_{jk} dx^j \otimes dx^k,
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        \int_0^t \nabla^2x^i (dX_s,dX_s) = - \int_0^t\Gamma^i_{jk}(X_s) d\inn{X^j,X^k}_s. 
+    \end{equation*}
+    Therefore, this direction can be directly obtained by applying above theorem to each $f = x^i$.
+
+    $\Leftarrow:$ Choose a local coordinate for $F(M)$ as $(\tilde{x}^i,e^i_j)$, where
+    \begin{equation*}
+        \tilde{x}^i(u) = x^i(\pi(u)),\quad e^i_j(u)~\text{for }ue_j = e^i_j(u) \lv{\frac{\partial}{\partial x^j}}_{\pi(u)}. 
+    \end{equation*}
+    Let $U$ be a horizontal lift with the anti-development $W$ of $X$. Then
+    \begin{equation*}
+        dU_t = H_j(U_t) \circ dW^j_t.
+    \end{equation*}
+    Because $X_t = \pi(U_t)$ and $U_te_j = e^i_j(t) \lv{\frac{\partial}{\partial x^j}}_{X_t}$, where $e^i_j(t) = e^i_j(U_t)$, we have
+    \begin{align*}
+        dX^i_t = d \tilde{x}^i(U_t) &= H_j\tilde{x}^i(U_t) \circ dW^j_t \\
+        &= (U_te_j)(x^i) \circ dW^j_t \\
+        &= e^i_j(t) \circ dW^j_t.
+    \end{align*}
+    Moreover, we also know
+    \begin{equation*}
+        dU_t = P^H_k(U_t) \circ dX^k_t.
+    \end{equation*}
+    Note that in the local chart, $M$ can be viewed as $\R^d$ and so $P(x) \colon \R^d \sto T_xM$ the orthogonal projection is the identity, which implies that
+    \begin{equation*}
+        P_k(X_t) = P(X_t) e_k = e_k = \delta^{\ell}_k\lv{\frac{\partial}{\partial x^\ell}}_{X_t}.
+    \end{equation*}
+    Let $v(s)$ be the horizontal lift starting from $U_t$ of a curve $c(s)$ with $c(0) = U_t$ and $\dot{c}(0) = P_k(X_t) =\delta^{m}_k\lv{\frac{\partial}{\partial x^m}}_{X_t}$. Then by using the coordinates, we have
+    \begin{equation*}
+        \dot{v}(0)= P^H_k(U_t) = - \Gamma^i_{m\ell}(X_t) \delta^{m}_k e^\ell_j(t) \lv{\frac{\partial}{\partial e^i_j}}_{U_t} + \delta^m_k \lv{\frac{\partial}{\partial \tilde{x}^m}}_{U_t}.
+    \end{equation*}
+    So
+    \begin{equation*}
+        P^H_ke^i_j(U_t) = - \Gamma^i_{k \ell}(X_t) e^\ell_j(t).
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        de^i_j(t) = - \Gamma^i_{k\ell}(X_t)e^\ell_j(t) \circ dX^k_t.
+    \end{equation*}
+    Let $(f^i_j) = (e^j_j)^{-1}$. Then we get
+    \begin{equation*}
+        d W_t^j=f_k^j(t) \circ d X_t^k.
+    \end{equation*}
+    So
+    \begin{align*}
+        d X_t^i & =e_j^i(t) d W_t^i+\frac{1}{2} d\left\langle e_j^i, W^j\right\rangle_t \\
+        & =e_j^i(t) d W_t^i-\frac{1}{2} \Gamma_{k \ell}^i\left(X_t\right) e_j^\ell(t) f_m^j(t) d\left\langle X^k, X^m\right\rangle_t \\
+        & =e_j^i(t) d W_t^i-\frac{1}{2} \Gamma_{k \ell}^i\left(X_t\right) d\left\langle X^k, X^\ell\right\rangle,
+    \end{align*}
+    which implies that
+    \begin{equation*}
+        dN^i_t = e_j^i(t) d W_t^i ~\Rightarrow~d W_t^i=f_j^i(t) d N_t^i.
+    \end{equation*}
+    Therefore, if $N_t^i$ are all local martingales, so is $W_t$ and $X$ is an $M$-valued martingale.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
