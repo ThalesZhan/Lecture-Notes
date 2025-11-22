@@ -1,0 +1,554 @@
+\chapter{tmp}
+
+\section{Markov Process and Semigroups}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \emph{\textbf{Markov Process:}} Let $E$ be a Polish space that is a separable complete metric space and let $E$ be equipped with the Borel $\sigma$-field $\mathcal{F}$. Then the \emph{measure decomposition theorem} implies that for any probability measure $\mu$ on the product $\sigma$-field $\mathcal{F} \otimes \mathcal{F}$ on $E \times E$ with $\mu_1 = \pi_1^{\#}\mu$, the first projection, then
+	\begin{equation*}
+	    \mu (dx,dy) = k(x,dy)\mu_1(dx)
+	\end{equation*}
+	for some probability transition kernel $k \colon E \times \mathcal{F} \sto [0,1]$. Let $(\Omega,\Sigma,\Pb)$ be a probability space.
+	\begin{rmk}
+	    Moreover, because of the existence of kernels, by Ionescu–Tulcea theorem, for any probability measure $\mu$ on $E^n$, there are kernels $k_i$ from $E^{i-1}$ to $E$ such that
+	    \begin{equation*}
+	    	\mu(dx_1,dx_2,\cdots,dx_n) = \mu_1(dx_1)k_2(x_1,dx_2)k_3(x_1,x_2,dx_3)\cdots k_n(x_1,\cdots,x_{n-1},dx_n).
+	    \end{equation*}
+	\end{rmk}
+
+	\noindent Let $(X_t^x)_{t \geq 0}$ be a $E$-valued Markov process with $X^x_0 = x \in E$, or denoted by $(X_t)_{t \geq 0}$. Let $\mathcal{F}_t = \sigma(X_u;u\leq t)$ be the natural filtration of $(X_t)_{t \geq 0}$. So the \emph{Markov Property} implies that
+	\begin{equation*}
+	    \E[X_t \mid \mathcal{F}_s] = \E[X_t \mid X_s],\quad \forall~t > s
+	\end{equation*}
+	Moreover, here we consider the \emph{Time-Homogeneous Markov Process}, that is
+	\begin{equation*}
+	    \E[X_t \mid X_s] = \E[X_{t-s} \mid X_0]
+	\end{equation*}
+	For any $X_t$, consider the pair $(X_t,X_0)$, let $p_t(x,dy)$ be the corresponding transition probability kernel. Note that if $X_0=x$, then $p_t(x,dy)$ is also the distribution. Because of the time-homogeneity, for any pair $(X_{t_1},X_{t_2})$ with $t_1 \leq t_2$, the transition probability measure 
+	\begin{equation*}
+	    p_{t_1 \rightarrow t_2}(y_1,dy_2) = p_{0 \rightarrow t_2-t_1}(y_1,dy_2) = p_{t_2-t_1}(y_1,dy_2)
+	\end{equation*}
+	Therefore, for $X_0 = x$, the distribution of $(X_{t_1},X_{t_2})$ is
+	\begin{equation*}
+	    p_{t_1}(x,dy_1)p_{t_2-t_1}(y_1,dy_2)
+	\end{equation*}
+	More generally, for $0 < t_1\leq \cdots \leq t_k$, the distribution of $(X_{t_1},\cdots,X_{t_k})$ given that $X_0 = x$,
+	\begin{equation*}
+	    p_{t_1}(x,dy_1)p_{t_2-t_1}(y_1,dy_2)\cdots p_{t_k-t_{k-1}}(y_{k-1},dy_k)
+	\end{equation*}
+	\begin{rmk}
+	    For $(X_{t_1},\cdots,X_{t_k})$, its distribution $p^x_{1\cdots k}$ of $X_0 = x$ has the decomposition
+	    \begin{equation*}
+	    	p^x_{1\cdots k}(dy_1,\cdots,dy_k) = p^x_1(dy_1)k_2(y_1,dy_2)k_3(y_1,y_2,dy_3)\cdots k_k(y_1,\cdots,y_{k-1},dy_k)
+	    \end{equation*}
+	    by Ionescu–Tulcea theorem. First, $p^x_1(dy_1) = p_{t_1}(x,dy_1)$. $\E[X_t \mid \mathcal{F}_s] = \E[X_t \mid X_s]$ implies that
+	    \begin{equation*}
+	    	k_i(y_1,\cdots,y_{i-1},dy_i) = p_{t_{i-1} \rightarrow t_i}(y_{i-1},dy_i) = p_{t_i-t_{i-1}}(y_{i-1},dy_i).
+	    \end{equation*}
+	\end{rmk}
+	Moreover, the Markov process is uniquely determined by the finite-dimensional distributions of $X_t$, so the transition probability kernels $\bb{p_t(x,dy)}_{t > 0}$ uniquely determine the Markov process. Or equivalently, we define the associated Markov semigroup $(P_t)_{t \geq 0}$, that is for a suitable measurable function $f \colon E \sto \R$,
+	\begin{equation*}
+	    P_tf(x) \defeq \E[f(X_t^x)] = \E[f(X_t) \mid X_0 =x] = \int_E f(y)p_t(x,dy)
+	\end{equation*}
+	and $P_0f=f$. It is a true semigroup, because for any $t,s \geq 0$,
+	\begin{equation*}
+	    \begin{aligned}
+	    	P_{t+s}f(x) = \E[f(X_{t+s}^x)] &= \E\bj{\E[f(X_{t+s}^x) \mid \mathcal{F}_t]} \\
+	    	&= \E\bj{\E[f(X_{t+s}^x) \mid X_t^x]}\\
+	    	&= \E\bj{P_sf(X_t^x)} = P_t(P_sf)(x)
+	    \end{aligned}
+	\end{equation*}
+	where the first equality in the third line is because the time-homogeneity
+	\begin{equation*}
+	    \begin{aligned}
+	    	\E\bj{f(X_{t+s}) \mid X_t = x_t} &= \int_E f(y)p_{t \sto t+s}(x_t,dy) \\
+	    	&= \int_E f(y)p_s(x_t,dy) \\
+	    	&= (P_sf)(x_t)
+	    \end{aligned}
+	\end{equation*}
+	Therefore, $P_{t+s} = P_t \circ P_s$. $(P_t)_{t \geq 0}$ acting on measurable functions induces the dual semigroup $(P_t^*)_{t \geq 0}$ acting on measures on $E$, that is
+	\begin{equation*}
+	    \int_E f d(P_t^*\nu) \defeq \int_E P_tf d\nu
+	\end{equation*}
+	Or more directly, for any $A \in \mathcal{F}$,
+	\begin{equation*}
+	    P_t^*\nu(A) = \int_E p_t(x,A)d\nu(x),
+	\end{equation*}
+	i.e., $(P_t^*\nu)(dx) = \int_E p_t(y,dx)\nu(dy)$. On the other words, if $X_0 \sim \nu$, then $X_t \sim P_t^*\nu$.
+
+	\item \emph{\textbf{Semigroups:}} Consider a family $\mathbf{P} = (P_t)_{t \geq 0}$ of operators acting on some set of real-values measurable functions on $(E,\mathcal{F})$, $\mathbf{P}$ satisfies the following properties:
+	\begin{enumerate}[label=(\roman*)]
+		\item $P_t \colon B(E,\mathcal{F}) \sto B(E,\mathcal{F})$ is linear and transforms bounded measurable functions to bounded measurable functions;
+		\item (\emph{Initial condition}) $P_0 = Id$;
+		\item (\emph{Mass conversation}) $P_t\mathds{1} = \mathds{1}$ for constant function $\mathds{1}(x) \equiv 1$;
+		\item (Positivity preserving) for $f \geq 0$, $P_tf \geq 0$
+		\item (Semigroup property) for every $t,s \geq 0$, $P_t \circ P_s = P_{t+s}$
+	\end{enumerate}
+	\begin{cor}[Jensen's inequality]
+	    For any convex $\phi \colon \R \sto \R$ and any $f \in B(E,\mathcal{F})$,
+	    \begin{equation*}
+	        P_t(\phi(f)) \geq \phi(P_tf)
+	    \end{equation*}
+	\end{cor}
+	\begin{proof}
+	    Because $\phi$ is convex, for any $b \in \R$, there is $a = a(b)$ such that
+	    \begin{equation*}
+	        \phi(c) \geq \phi(b) + a(b)(c - b),\quad \forall~c \in \R
+	    \end{equation*}
+	    For any $x \in E$, let $c = f(x)$. We have
+	    \begin{equation*}
+	        \phi(f(x)) \geq \phi(b) + a(b)(f(x) - b)\quad \Rightarrow \quad \phi(f) \geq \phi(b) + a(b)(f - b)
+	    \end{equation*}
+	    By the positivity and mass properties of $P_t$, we have
+	    \begin{equation*}
+	        P_t(\phi(f)) \geq \phi(b) + a(b)(P_tf - b)
+	    \end{equation*}
+	    So for any $x \in E$,
+	    \begin{equation*}
+	         P_t(\phi(f))(x) \geq \phi(b) + a(b)(P_tf(x) - b)
+	    \end{equation*}
+	    Then let $b = P_tf(x)$, we get
+	    \begin{equation*}
+	        P_t(\phi(f))(x) \geq \phi(P_tf(x))
+	    \end{equation*}
+	    which is true for any $x \in E$.
+	\end{proof}
+	In particular, for $\phi(r) = \abs{r}^p(1 \leq p < \infty)$, we have $P_t(\abs{f}^p) \geq \abs{P_tf}^p$.
+
+	\begin{defn}
+	    Given a family $\mathbf{P} = (P_t)_{t \geq 0}$ on a measurable space $(E,\mathcal{F})$, a (positive) $\sigma$-finite measure $\mu$ in $(E,\mathcal{F})$ is said to be invariant for $\mathbf{P}$ if for any bounded positive function $f \colon E \sto \R$ and every $t \geq 0$,
+	    \begin{equation*}
+	    	\int_E P_tf d\mu = \int_E f d\mu.
+	    \end{equation*}
+	    In other words, $P_t^*\mu = \mu$ for any $t \geq 0$, i.e., $\int_E p_t(y,dx)\mu(dy) = \mu(dx)$.
+	\end{defn}
+	\begin{rmk}
+	    By the Jensen's Inequality, if $\mu$ is invariant for $\mathbf{P}$ if for any $t \geq 0$, $P_t$ is a contraction on the bounded functions in $L^p(\mu)$ for any $1 \leq p < \infty$. Therefore, $P_t$ can be extended to be defined on $L^p(\mu)$ because the space of bounded functions is dense in $L^p$. In particular, the definition of invariance can be extended to for $f \in L^1(\mu)$.
+	\end{rmk}
+
+	Therefore, we further require $\mathbf{P} = (P_t)_{t \geq 0}$ satisfying:
+
+	(\rnum{6}) Let $\mu$ be a $\sigma$-finite invariant measure for $\mathbf{P} = (P_t)_{t \geq 0}$. For every $f \in L^2(\mu)$, $P_tf \sto f$ in $L^2(\mu)$ as $t \sto 0$.
+
+	\begin{defn}[Markov Semigroup]
+	    A family of operators $\mathbf{P} = (P_t)_{t \geq 0}$ defined on a state space $(E,\mathcal{F})$ with a $\sigma$-finite invariant measure $\mu$ satisfying (\rnum{1})-(\rnum{6}) is called a Markov semigroup of operators.
+	\end{defn}
+
+	\item \textbf{\emph{Kernel for Markov semigroup:}}
+	\begin{prop}[Kernel Representation]
+	    Given a good measure space $(E,\mathcal{F},\mu)$ (for example a Polish space) with $\mu$ $\sigma$-finite, let $P$ be a linear operator sending positive measure functions to positive measurable functions. Then, if $P(\mathds{1}) = \mathds{1}$ and $P$ is bounded on $L^1(\mu)$, then there is a probability kernel $p(x,A)$ such that for every bounded or positive measurable function $f$ on $E$ and ($\mu$-almost) every $x \in E$,
+	    \begin{equation*}
+	    	Pf(x) = \int_E f(y)p(x,dy).
+	    \end{equation*}
+	\end{prop}
+	
+	\begin{defn}[Density Kernel]
+	    A Markov semigroup $\mathbf{P} = (P_t)_{t \geq 0}$ on $(E,\mathcal{F})$ is said to admits density kernels with respect to a reference $\sigma$-finite measure $m$ on $\mathcal{F}$ if there exits for $t > 0$ a positive measurable function $p_t(x,y)$ defined on $E \times E$ such that for every bounded and measurable function $f$ and $m$-almost every $x \in E$,
+	    \begin{equation*}
+	    	P_t f(x) = \int_E f(y)p_t(x,y)dm(y).
+	    \end{equation*}
+	\end{defn}
+	It can further require $p_t(x,\cdot) \in L^2(\mu)$ and such $\mathbf{P}$ admits $L^2$ density kernel.
+
+
+	\begin{prop}
+	    Given a good measure space $(E,\mathcal{F},m)$ (for example a Polish space) with $m$ $\sigma$-finite, let $P \colon L^1(m) \sto L^\infty(m)$ be linear with $\norm{P}_{1,\infty} \leq M$. Then, there exists a measurable $p(x,y)$ defined on $E \times E$ with $\norm{p}_{\infty} \leq M$ such that for any $f \in L^1(m)$ and $m$-almost every $x \in E$,
+	    \begin{equation*}
+	     	Pf(x) = \int_E f(y)p(x,y)dm(y).
+	     \end{equation*} 
+	\end{prop}
+
+	\begin{lem}
+	    Let $(E,\mathcal{F},m)$ be a probability space. Let $\mathcal{G} \subset \mathcal{F}$ be a sub-$\sigma$-algebra. For $f \in L^1(m)$, let $f_G = \mathbb{E}[f \mid \mathcal{G}]$. If $\mathcal{G}$ is generated by a partition $A_1,\cdots,A_n$, whether 
+		$$
+			f_G(x) = \sum_{j=1}^n \alpha_j \chi_{A_j}(x),
+		$$
+		where
+		$$
+			\alpha_j = \frac{1}{m(A_j)} \int_{A_j}f(x)dm(x).
+		$$
+	\end{lem}
+	\begin{proof}
+	    By the uniqueness of conditional expectation, it is sufficient to check:
+	    \begin{enumerate}[label=(\roman*)]
+	    	\item $\mathcal{G}$-measurability: it is clear, because each $\chi_{A_j}$ is $\mathcal{G}$-measure.
+	    	\item Consistency: For any $G \in \mathcal{G}$,
+	    	\begin{equation*}
+	    		\int_G\sum_{j=1}^n \alpha_j \chi_{A_j}(x) dm(x) = \sum_{j=1}^n \alpha_j m(A_j \cap G) = \sum_{j=1}^n \int_{A_j \cap G}f(x)dm(x) = \int_G f(x)dm(x).
+	    	\end{equation*}
+	    \end{enumerate}
+	\end{proof}
+
+	\item \textbf{\emph{Chapman-Kolmogorov Equations:}} Let $\mathbf{P} = (P_t)_{t \geq 0}$ be a Markov semigroup on $L^2(\mu)$ with an invariant measure $\mu$ and it admits kernels $p_t(x,dy)$. By $P_t \circ P_s = P_{t+s}$,
+	\begin{equation*}
+		p_t(x,dy) = \int_{z \in E} p_t(z,dy)p_s(x,dz),
+	\end{equation*}
+	which is called a Chapman-Kolmogorov equation. Then we can construct the process $(X_t)_{t \geq 0}$ with $X_0 \sim \nu$ with the law of $(X_0,X_{t_1},\cdots,X_{t_k})$ given by
+	\begin{equation*}
+		\E\bj{f(X_0,X_{t_1},\cdots,X_{t_k})} = \int_{E^{k+1}} f(y_0,\cdots,y_{t_k})p_{t_k-t_{k-1}}(y_{k-1},dy_k) \cdots p_{t_1}(y_0,dy_1)\nu(dy_0)
+	\end{equation*}
+	With extra works such that $(X_t)_{t \geq 0}$ has continuous paths, $(X_t)_{t \geq 0}$ is a corresponding Markov process.
+\end{enumerate}
+
+\section{Markov Generator}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \textbf{\emph{Infinitesimal Generator:}} In general, let $\mathcal{B}$ be a Banach space and $(P_t)_{t \geq 0}$ be linear operators $P_t \colon \mathcal{B} \sto \mathcal{B}$ such that:
+	\begin{enumerate}[label=(\roman*)]
+		\item $\norm{P_tx} \leq \norm{x}$.
+		\item $P_t \circ P_s = P_{t+s}$.
+		\item $\lim_{t \sto 0} P_tx = x = P_0x$.
+	\end{enumerate}
+	These also implies that $t \mapsto P_tx$ is continuous. For any bounded measure $\nu$ on $\R_+$,
+	\begin{equation*}
+		P_\nu = \int_0^\infty P_t d\nu(t).
+	\end{equation*}
+	It follows that
+	\begin{equation*}
+		P_\nu P_{\nu^{\prime}}=P_{\nu^{\prime}} P_\nu=\int_0^{\infty} \int_0^{\infty} P_{t+s} d \nu(t) d \nu^{\prime}(s).
+	\end{equation*}
+	For any $\lambda > 0$, the resolvent operator
+	\begin{equation*}
+		R_\lambda \defeq \int_0^\infty P_t e^{-\lambda t}dt.
+	\end{equation*}
+	So
+	\begin{equation*}
+		R_\lambda P_tx = P_t R_\lambda x = e^{\lambda t} \int_t^{\infty} P_s x e^{-\lambda s} d s.
+	\end{equation*}
+	Furthermore,
+	\begin{equation*}
+		R_\lambda-R_{\lambda^{\prime}}=\left(\lambda^{\prime}-\lambda\right) R_\lambda R_{\lambda^{\prime}}=\left(\lambda^{\prime}-\lambda\right) R_{\lambda^{\prime}} R_\lambda,
+	\end{equation*}
+	i.e.,
+	\begin{equation*}
+		R_\lambda=R_{\lambda^{\prime}}\left(\operatorname{Id}+\left(\lambda^{\prime}-\lambda\right) R_\lambda\right).
+	\end{equation*}
+	which implies that $\Img R_\lambda \subset \Img R_{\lambda^\prime}$ and so $\Img R_\lambda = \Img R_{\lambda^\prime} \eqdef \mathcal{D}$. Because $\lambda R_\lambda x=\int_0^{\infty} P_{s / \lambda} x e^{-s} d s$ and $P_tx \sto x$ as $t \sto 0$, we have
+	\begin{equation*}
+		\lim _{\lambda \rightarrow \infty} \lambda R_\lambda x=x ,
+	\end{equation*}
+	which means that $\mathcal{D} = \Img R$ is dense in $\mathcal{B}$. Fix $\lambda > 0$, let $\mathrm{L}$ defined on $\mathcal{D}$ by, for any $x = R_{\lambda}y$,
+	\begin{equation*}
+		\mathrm{L}x \defeq \lambda x - y.
+	\end{equation*}
+	By the formula of $R_\lambda P_t y$, we get
+	\begin{equation*}
+		\lv{\frac{d}{dt}}_{t=0}P_t R_\lambda y = \lambda R_{\lambda} y - y
+	\end{equation*}
+	i.e., $\partial|_{t=0} P_t x = \mathrm{L}x$ for any $x \in \mathcal{D}$. For any $t \geq 0$,
+	\begin{equation*}
+		\partial_t P_t x=\mathrm{L} P_t x=P_t \mathrm{L} x
+	\end{equation*}
+	$\mathrm{L}$ is called the infinitesimal generator of $\mathbf{P}$ with domain $\mathcal{D}(\mathrm{L}) = \mathcal{D}$.
+
+	\begin{defn}[Markov Generator]
+	    Let $\mathbf{P} = (P_t)_{t \geq 0}$ be a Markov semigroup on $(E,\mathcal{F})$ with invariant measure $\mu$. The infinitesimal generator $\mathrm{L}$ of $\mathbf{P}$ on $\mathcal{B} = L^2(\mu)$ is called the Markov generator of $\mathbf{P}$.
+	\end{defn}
+
+	Consider a Markov semigroup $\mathbf{P}=(P_t)_{t \geq 0}$ and its infinitesimal generator $\mathrm{L}$ with $L^2(\mu)$-domain $\mathcal{D}(\mathrm{L})$. Let $\mathcal{A} \subset \mathcal{D}(\mathrm{L})$ be a vector subspace such that for each $f,g \in \mathcal{A}$, $fg \in \mathcal{D}(L)$.
+
+	\begin{defn}[Carr\'e du Champ Operator]
+	    Define a bilinear map $\Gamma \colon \mathcal{A} \times \mathcal{A} \sto L^2(\mu)$ as
+	    \begin{equation*}
+	    	\Gamma(f,g) = \frac{1}{2}\bc{\mathrm{L}(fg) - f\mathrm{L}g - g\mathrm{L}f},
+	    \end{equation*}
+	    which is called the carr\'e du champ operator of the Markov operator $\mathrm{L}$.
+	\end{defn}
+
+	Because $P_t(f^2) \geq (P_tf)^2$, in the limit as $t \sto 0$, $\mathrm{L}(f^2) \geq 2f\mathrm{L}f$, which implies $\Gamma(f,f) \geq 0$. Let $\Gamma(f) \defeq \Gamma(f,f)$ for $f \in \mathcal{A}$. Then, by the bi-linearity and the positivity, the Cauchy-Schwarz inequality implies
+	\begin{equation*}
+		\Gamma(f,g)^2 \leq \Gamma(f)\Gamma(g),\quad \forall~f,g \in \mathcal{A}.
+	\end{equation*}
+
+	For convex function $\phi$ such that $\phi(f) \in \mathcal{D}(\mathrm{L})$ when $f \in \mathcal{D}(\mathrm{L})$, Jensen's Inequality implies
+	\begin{equation*}
+		\mathrm{L}\phi(f) \geq \phi^\prime(f)\mathrm{L}f.
+	\end{equation*}
+
+	Let $(X_t)_{t \geq 0}$ (with $X_0 = x$) be the corresponding Markov process such that $t \mapsto f(X_t)$ is right-continuous and 
+	\begin{equation*}
+		M^f_t = f(X_t) - \int_0^t \mathrm{L}f(X_s)ds,\quad t \geq 0,
+	\end{equation*}
+	is a local martingale. If it is a true martingale, then $\E\bj{M^f_t} = \E\bj{M^f_0}$ implies that
+	\begin{equation*}
+		P_t f(x)=f(x)+\int_0^t P_s \mathrm{L} f(x) d s,
+	\end{equation*}
+	which, from the abstract semigroup view, 
+	\begin{equation*}
+		P_t=\mathrm{Id}+\int_0^t P_s \mathrm{L} d s.
+	\end{equation*}
+	Consider the Riesz functional calculus of $\mathrm{L}$,
+	\begin{equation*}
+		Q_t f=e^{t \mathrm{L}} f=\sum_{k =0}^\infty \frac{t^k}{k!} \mathrm{L}^k f
+	\end{equation*}
+	then $\partial_t Q_t = \mathrm{L} Q_t$. Therefore,
+	\begin{equation*}
+		P_t=Q_t=e^{t \mathrm{L}}.
+	\end{equation*}
+
+	\item \textbf{\emph{Fokker-Planck Equations:}} Let $\mathbf{P} = (P_t)_{t \geq 0}$ be a Markov semigroup that admits kernels $p_t(x,y)$ with respect to reference measure $m$ and let $\mathrm{L}$ be its generator. By $\partial_t P_t f=\mathrm{L} P_t f$,
+	\begin{equation*}
+		\partial_t p_t(x, y)=\mathrm{L}_x p_t(x, y), \quad p_0(x, y) d m(y)=\delta_x.
+	\end{equation*}
+	Furthermore, because $\mathrm{L}$ is defined on $L^2(m)$, we can consider the its adjoint $\mathrm{L}^*$ also defined on $L^2(m)$ given by
+	\begin{equation*}
+		\int_E f\mathrm{L}^* gdm = \int gLf dm.
+	\end{equation*}
+	Therefore,
+	\begin{equation*}
+		\partial_t p_t(x, y)=\mathrm{L}_y^* p_t(x, y),
+	\end{equation*}
+	which is called the Fokker-Planck equation (Kolmogorov forward equation).
+
+	\item \textbf{\emph{Symmetric Markov Semigroup:}} Let $\mathbf{P} = (P_t)_{t \geq 0}$ be a Markov semigroup on $(E,\mathcal{F})$ with invariant measure $\mu$ and $\mathrm{L}$ be the Markov operator. Let $(X_t)_{t \geq 0}$ (with $X_0 = x$) be the corresponding Markov process. 
+
+	\begin{defn}[Symmetric Markov Semigroup]
+	    The Markov semigroup $\mathbf{P} = (P_t)_{t \geq 0}$ is said symmetric  with respect to the invariant measure $\mu$ if for any $f,g \in L^2(\mu)$,
+	    \begin{equation*}
+	    	\int_E f P_t g d \mu=\int_E g P_t f d \mu
+	    \end{equation*}
+	    In such case, $\mu$ is called reversible for $\mathbf{P}$.
+	\end{defn}
+
+	\begin{rmk}
+	    \begin{enumerate}[label=(\arabic{*})]
+	    	\item In terms of kernel $p_t(x,dy)$, $\mu$-reversibility is
+	    	\begin{equation*}
+	    	    p_t(x,dy)\mu(dx) = p_t(y,dx)\mu(dy),
+	    	\end{equation*}
+	    	which directly implies that for any $0 \leq t \leq T$, the law of $(X_t,X_T)$ is the same as that of $(X_{T-t},X_0)$, because for $(X_t=x,X_T=y)$, its law is
+	    	\begin{equation*}
+	    	    \int_{x_0}\mu(dx_0)p_t(x_0,dx)p_{T-t}(x,dy) = \mu(dx)p_{T-t}(x,dy),
+	    	\end{equation*}
+	    	by the invariance of $\mu$, and for $(X_{T-t}=x,X_0=y)$, its law is $\mu(dy)p_{T-t}(y,dx)$. Furthermore, for any $0 \leq t_1 \leq \cdots \leq t_k \leq t$, the law of $(X_{t_1},\cdots,X_{t_k},X_t)$ is as the same as that of $(X_{t-t_1},\cdots,X_{t-t_k},X_0)$, which means the distribution of $(X_s)_{0\leq s \leq t}$ is as the same as that of $(X_{t-s})_{0\leq s \leq t}$.
+	    	
+	    	\item In terms of $\mathrm{L}$,
+	    	\begin{equation*}
+	    	    \int_E f \mathrm{L} g d \mu=\int_E g \mathrm{L} f d \mu
+	    	\end{equation*}
+	    	for $f,g \in \mathcal{D}(\mathrm{L})$. So $\mathrm{L}$ is self-adjoint on $\mathcal{D}(\mathrm{L}) \subset L^2(\mu)$.	
+	    \end{enumerate}
+	\end{rmk}
+
+	\begin{lem}[Rota's Lemma]
+	    Let $\mathbf{P} = (P_t)_{t \geq 0}$ be a Markov semigroup on $(E,\mathcal{F})$ symmetric with respect to invariant measure $\mu$. Then, for any $1 < p < \infty$, there exists a $C_p > 0$ such that for any measurable function $f \colon E \sto \R$,
+	    \begin{equation*}
+	        \norm*{\sup_{s \geq 0}P_sf}_p \leq C_p\norm*{f}_p.
+	    \end{equation*}
+	\end{lem}
+	\begin{proof}
+		Let $f$ be a bounded measurable function and $M_t \defeq P_{T-t}f(X_t)$ for $t \in [0,T]$. Then for $0 \leq s \leq t \leq T$,
+		\begin{equation*}
+		    \begin{aligned}
+		    	\E\bj{M_t \mid \mathcal{F}_s} &= \E\bj{ \E\bj{ X_T \mid X_t} \mid \mathcal{F}_s} \\
+		    	&= \E\bj{X_T \mid \mathcal{F}_s} \\
+		    	&= P_{T-s}f(X_s) = M_s
+		    \end{aligned}
+		\end{equation*}
+		So $M_t$ is a martingale. Assume $\mu$ is a probability measure. By Doob's maximal inequality,
+		\begin{equation*}
+		    \E\bj{\sup_{t \in [0,T]} M_t^p} \leq C_p^p \E\bj{M_T^p}
+		\end{equation*}
+		Because $X_0 \sim \mu$ and $\mu$ is invariant, $X_T \sim \mu$. Therefore, $M_T = f(X_T)$ and so
+		\begin{equation*}
+		    \E\bj{M_T^p} = \norm*{f}_p^p.
+		\end{equation*}
+		Furthermore, by the Jensen's Inequality,
+		\begin{equation*}
+		    \E\bj{\E\bj{\sup_{t \in [0,T]} M_t \mid X_T}^p} \leq \E\bj{\sup_{t \in [0,T]} M_t^p} \leq \norm*{f}_p^p.
+		\end{equation*}
+		By the reversibility, the law of $(X_t,X_T)$ is the same as that of $(X_{T-t},X_0)$, so
+		\begin{equation*}
+		    \begin{aligned}
+		    	\E\bj{M_t \mid X_T = x} &= \E \bj{ P_{T-t}(f)(X_t) \mid X_T = x} \\
+		    	&= \E \bj{P_{T-t}(f)(X_{T-t}) \mid X_0 = x} \\
+		    	&= P_{T-t}\bc{P_{T-t}(f)}(x) = P_{2(T-t)}(f)(x),
+		    \end{aligned}
+		\end{equation*}
+		i.e., $\E\bj{M_t \mid X_T} = P_{2(T-t)}f(X_T)$. Therefore,
+		\begin{equation*}
+		    \E\bj{\sup_{t \in [0,T]} M_t \mid X_T} \geq \sup_{t \in [0,T]}\E\bj{ M_t \mid X_T} = \sup_{t \in [0,T]} P_{2(T-t)}f(X_T).
+		\end{equation*}
+		It follows that
+		\begin{equation*}
+		    \norm*{\sup_{t \in [0,2T]} P_{t}f}_p \leq C_p\norm{f}_p. \qedhere
+		\end{equation*}
+	\end{proof}
+
+	When $\mu$ is symmetric, $\mathrm{L} = \mathrm{L}^*$ implies that
+	\begin{equation*}
+	    \partial_t p_t(x, y)=\mathrm{L}_x p_t(x, y)=\mathrm{L}_y p_t(x, y),
+	\end{equation*}
+
+	\item \textbf{\emph{Dirichlet Form:}} Let $\mathbf{P} = (P_t)_{t \geq 0}$ be a Markov semigroup on $(E,\mathcal{F})$ with reversible measure $\mu$ and $\mathrm{L}$ be the Markov operator. Let $\Gamma$ be the carr'e du champ operator on $\mathcal{A}$. Define
+	\begin{equation*}
+	    \mathcal{E}(f, g)=\int_E \Gamma(f, g) d \mu, \quad(f, g) \in \mathcal{A} \times \mathcal{A}
+	\end{equation*}
+	Then by the invariance and reversibility of $\mu$,
+	\begin{equation*}
+	    \mathcal{E}(f, g)=\int_E \Gamma(f, g) d \mu=-\int_E f \mathrm{L} g d \mu.
+	\end{equation*}
+	It also implies that
+	\begin{equation*}
+	     \mathcal{E}(f,f) = -\int_E f \mathrm{L} f d \mu \geq 0,
+	\end{equation*}
+	which means that $-\mathrm{L}$ is positive.
+
+	To extend the domain of $\mathcal{E}$, first, $\mathcal{E}(f) \defeq \mathcal{E}(f,f)$ can defined on $\mathcal{D}(\mathrm{L})$. Moreover, for any $f \in \mathcal{D}(\mathrm{L})$,
+	\begin{equation*}
+	    \partial_t \int_E(P_tf)^2 d\mu = 2 \int_E P_tf\mathrm{L}P_tf d\mu = -2\mathcal{E}(P_tf),
+	\end{equation*}
+	and
+	\begin{equation*}
+	    \begin{aligned}
+			\partial_t \mathcal{E}\left(P_t f\right) & =-\partial_t \int_E P_t f \mathrm{L} P_t f d \mu \\
+			& =-\int_E\left(\mathrm{L} P_t\right)^2 d \mu-\int_E P_t f \mathrm{L}^2 P_t f d \mu \\
+			& =-2 \int_E\left(\mathrm{L} P_t f\right)^2 d \mu.
+		\end{aligned}
+	\end{equation*}
+	So $\mathcal{E}(P_tf)$ is decreasing in $t$ and
+	\begin{equation*}
+	    \int_E f^2 d \mu-\int_E\left(P_t f\right)^2 d \mu=2 \int_0^t \mathcal{E}\left(P_s f\right) d s \geq 2 t \mathcal{E}\left(P_t f\right)
+	\end{equation*}
+	Therefore, by changing $t$ into $\frac{t}{2}$,
+	\begin{equation*}
+	    \mathcal{E}(P_tf) \leq \frac{1}{t}\left[\int_E f^2 d \mu-\int_E\left(P_{t / 2} f\right)^2 d \mu\right] \leq \mathcal{E}(f)
+	\end{equation*}
+	Therefore, for $f \in \mathcal{D}(\mathrm{L})$, the middle term converges to $\mathcal{E}(f)$, as $t \sto 0$. To consider a wider class, defining $\mathcal{D}(\mathcal{E})$ be the class of functions in $L^2(\mu)$ for which 
+	\begin{equation*}
+	    \frac{1}{t}\left[\int_E f^2 d \mu-\int_E\left(P_{t / 2} f\right)^2 d \mu\right]=\frac{1}{t} \int_E f\left(f-P_t f\right) d \mu
+	\end{equation*}
+	has a finite limit as $t \sto 0$, which is defined as $\mathcal{E}(f)$.
+
+	\begin{defn}[Dirichlet Form]
+	    For a symmetric Markov semigroup $\mathbf{P} = (P_t)_{t \geq 0}$ with reversible measure $\mu$, 
+	    \begin{equation*}
+	        \mathcal{E}(f) \defeq \lim_{t \sto 0}\frac{1}{t} \int_E f\left(f-P_t f\right) d \mu
+	    \end{equation*}
+	    for all $f \in L^2(\mu)$ for which this limit exists, and denoted by $\mathcal{D}(\mathcal{E})$. For $f,g \in \mathcal{D}(\mathcal{E})$, $\mathcal{E}(f,g)$ is defined by polarization.
+	\end{defn}
+	\begin{rmk}
+	    By above, we can see, if $f,g \in \mathcal{D}(\mathrm{L})$,
+		\begin{equation*}
+		    \mathcal{E}(f, g)=\int_E f(-\mathrm{L} g) d \mu=\int_E g(-\mathrm{L} f) d \mu,
+		\end{equation*}
+		while if $f,g\in \mathcal{A}$ on which $\Gamma$ is defined,
+		\begin{equation*}
+		    \mathcal{E}(f, g)=\int_E \Gamma(f, g) d \mu.
+		\end{equation*}
+		Hence $\mathcal{A} \subset \mathcal{D}(\mathrm{L}) \subset \mathcal{D}(\mathcal{E}) \subset L^2(\mu)$.
+	\end{rmk}
+
+	Because $-\mathrm{L}$ is self-adjoint and positive, it has the spectral decomposition
+	\begin{equation*}
+	    -\mathrm{L} = \int_0^\infty \lambda dE(\lambda),
+	\end{equation*}
+	for some spectral measure $E(\lambda)$. In particular, if $P_t$ is compact, then there exists a a Hilbert basis $(e_k)_{k \in \N}$ of $L^2(\mu)$ such that
+	\begin{equation*}
+	    -\mathrm{L} e_k=\lambda_k e_k, \quad k \in \mathbb{N},
+	\end{equation*}
+	so that
+	\begin{equation*}
+	    \mathcal{E}\left(e_k\right)=\int_E \Gamma\left(e_k, e_k\right) d \mu=-\int_E e_k \mathrm{L} e_k d \mu=\lambda_k \int_E e_k^2 d \mu=\lambda_k
+	\end{equation*}
+	By the functional calculus, since $P_t = e^{t\mathrm{L}}$,
+	\begin{equation*}
+	    P_tf = \sum_{k \in \N} e^{-\lambda_k t}f_k e_k,
+	\end{equation*}
+	for any $f = \sum_k f_k e_k \in L^2(\mu)$. Therefore, 
+	\begin{equation*}
+	    p_t(x,y) = \sum_{k \in \mathbb{N}} e^{-\lambda_k t} e_k(x) e_k(y).
+	\end{equation*}
+
+	\item \textbf{\emph{Finite State Spaces:}} Let $E$ be a finite set with $\sigma$-algebra $\mathcal{F} = \mathcal{P}(E)$ and $N = \abs{E}$. Consider a Markov generator $\mathrm{L}$ acting on the space of all real-valued function on $E$, i.e., $\R^N$. For the basis of $(\mathds{1}_x)_{x \in E}$, $\mathrm{L}$ can be expressed as a matrix $(\mathrm{L}(x,y))_{(x,y) \in E \times E}$.
+	\begin{enumerate}[label=(\roman*)]
+		\item By $\mathrm{L} \mathds{1} = 0$, $\sum_{y \in E} \mathrm{L}(x,y) = 0$ for any $x\in E$.
+		\item The carr\'e du champ operator is given by
+		\begin{equation*}
+		    \Gamma(f, g)(x)=\frac{1}{2} \sum_{y \in E} L(x, y)(f(y)-f(x))(g(y)-g(x)).
+		\end{equation*}
+		Because $\Gamma(f) \geq 0$, $\mathrm{L}(x,y) \geq 0$ for any $x \neq y$.
+	\end{enumerate}
+	Conversely, any square matrix $\mathrm{L} \in \R^{E \times E}$ with $\mathrm{L} \mathds{1} = 0$ and $\mathrm{L}(x,y) \geq 0$ for any $x \neq y$ is called a Markov generator on $E$.
+
+	Let $P_t = e^{t\mathrm{L}}$. Then $(P_t)_{t \geq 0}$ is the corresponding Markov semigroup, whose kernel can also be viewed as matrix $(p_t(x,y))_{(x,y) \in E \times E}$, i.e.,
+	\begin{equation*}
+		P_t f(x)=\sum_{y \in E} f(y) p_t(x, y).
+	\end{equation*}
+	The heat equation reads
+	\begin{equation*}
+		\partial_t p_t(x, y)=\sum_{y \in E} \mathrm{~L}(x, y) p_t(x, y), \quad p_0(x, y)=\delta_x(y).
+	\end{equation*}
+
+	A finite measure $\mu$ is invariant with respect to $\mathrm{L}$ if and only if for all $y \in E$,
+	\begin{equation*}
+	    \sum_{x \in E}\mu(x)\mathrm{L}(x,y) = 0.
+	\end{equation*}
+	So it is an eigenvector of $\mathrm{L}^\top$ with respect to eigenvalue $0$ and it always exists because $\mathrm{L}$ is not invertible. So such invariant probability measure $\mu$ is unique if and only if $\ker \mathrm{L}^\top = 1$. Moreover, if $\mathrm{L}$ is irreducible, that is, for any $(x,y) \in E \times E$, there exists a path $(x_0=x,x_1,\cdots,x_\ell=y)$, such that $\mathrm{L}(x_i,x_{i+1}) > 0$, then such $\mu$ is also unique, because $\dim \ker \mathrm{L}^\top = $ the number of closed communicating classes.
+
+	Furthermore, if $\mu$ is reversible, then
+	\begin{equation*}
+	    \mu(x) \mathrm{L}(x, y)=\mu(y) \mathrm{L}(y, x).
+	\end{equation*}
+	Therefore, by defining $\mu(x_0) = 1$ for some $x_0 \in E$, let
+	\begin{equation*}
+	    \mu(x) = \frac{\mathrm{L}(x_0,x)}{\mathrm{L}(x,x_0)},\quad \forall~x\in E.
+	\end{equation*}
+	Then the invariant measure can be obtained by normalizing $\mu$. Furthermore, when $\mathrm{L}$ is irreducible, $\mu(x) > 0$ for $x \in E$, and
+	\begin{equation*}
+		R(x, y)=\sqrt{\mu(x)} \mathrm{L}(x, y) \frac{1}{\sqrt{\mu(y)}}
+	\end{equation*}
+	is a symmetric matrix (so is $\mathrm{L}$).
+\end{enumerate}
+
+\section{SDE and Diffusion Process}
+
+\begin{enumerate}[label=\arabic{*}.]
+	\item \textbf{\emph{Diffusion Process:}} Consider SDE
+	\begin{equation*}
+		d X_t^x=\sigma\left(X_t^x\right) d B_t+b\left(X_t^x\right) d t, \quad X_0^x=x,
+	\end{equation*}
+	on $\R^n$, where $\sigma$ and $b$ are smooth with bounded derivatives. Then a process $\mathbf{X}=\left\{X_t^x ; t \geq 0, x \in \mathbb{R}^n\right\}$ which is a solution of above is called a diffusion process. Then by the It\^o's formula, for $f \in C^2(\R^n)$,
+	\begin{equation*}
+		df(X^x_t) =d M_t^f+\mathrm{L} f\left(X_t^x\right) d t, \quad X_0^x=x
+	\end{equation*}
+	where
+	\begin{equation*}
+		dM_t^f = \sum_{i, j=1}^n \sigma_i^j\left(X_t^x\right) \partial_j f\left(X_t^x\right) d B_t^i,
+	\end{equation*}
+	and
+	\begin{equation*}
+		\mathrm{L} f=\frac{1}{2} \sum_{i, j=1}^n g^{ij} \partial_{i j}^2 f+\sum_{i=1}^n b^i \partial_i f
+	\end{equation*}
+	for $g^{ij} =\sum_k \sigma_k^i \sigma_k^j$, i.e., $\mathfrak{g}=(g^{ij}) = \sigma \sigma^\top$. Furthermore, such $\mathrm{L}$ is the corresponding Markov generator of $\mathbf{X}$, which can be proved by the Dynkin’s formula. Note that $(M_t^f)_{t \geq 0}$ is a local martingale. When $f$ and $\mathrm{L}f$ is bounded, it is a true martingale and then
+	\begin{equation*}
+		\mathbb{E}\left(f\left(X_t^x\right)\right)=f(x)+\int_0^t \mathbb{E}\left(\mathrm{L} f\left(X_s^x\right)\right) d s.
+	\end{equation*}
+	Furthermore, 
+	\begin{equation*}
+		\Gamma(f,g) = \sum_{i,j=1}^n g^{ij}\partial_i f\partial_jg.
+	\end{equation*}
+
+	\item \textbf{\emph{Diffusion Operator:}} An operator $\mathrm{L}$, with carr\'e du champ operator $\Gamma$, is said to be a diffusion operator or generator if
+	\begin{equation*}
+		\mathrm{L} \psi(f)=\psi^{\prime}(f) \mathrm{L} f+\psi^{\prime \prime}(f) \Gamma(f)
+	\end{equation*}
+	for $\psi \in C^2(\R)$ and suitably smooth function $f$.
+
+	Equivalently,
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

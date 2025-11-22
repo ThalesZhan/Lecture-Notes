@@ -1,0 +1,1096 @@
+\chapter{Brownian Motion on Manifolds}
+
+\section{Laplace-Beltrami operator}
+
+Let $(M,g)$ be a Riemannian manifold equipped with the Levi-Civita connection $\nabla$ and the standard Riemannian volume measure $m$. For $f,g \in C_c(M)$,
+\begin{equation*}
+    (f,g) \defeq \int_M f(x)g(x)m(dx)
+\end{equation*}
+and for $X,Y \in \Gamma_c(TM)$, i.e., vector fields with compact support,
+\begin{equation*}
+    (X,Y) = \int_M \inn{X,Y}_x m(dx),
+\end{equation*}
+and for $\theta,\psi \in \Gamma_c(T^*M)$, i,e, $1$-forms with compact support,
+\begin{equation*}
+    (\theta,\psi) = \int_M \inn{\theta,\psi}_x m(dx).
+\end{equation*}
+
+Let $\Delta_M$ be the Laplace-Beltrami operator. Because locally
+\begin{equation*}
+    \Delta_Mf = \tr_g(\nabla^2 f) = g^{ij}\frac{\partial^2}{\partial x^i\partial x^j}f - g^{k \ell}\Gamma^i_{k\ell}\frac{\partial}{\partial x^i}f,
+\end{equation*}
+$\Delta_M$ is a nondegenerate second order elliptic operator. Moreover, by the local expression, for $L = \frac{1}{2}\Delta_M$, the corresponding
+\begin{equation*}
+    \Gamma(f,g) = g^{ij}\frac{\partial f}{\partial x^i}\frac{\partial g}{\partial x^j} = \inn{\nabla f, \nabla g}.
+\end{equation*}
+
+Let $\pi \colon O(M) \sto M$ be the orthogonal frame bundle. Define a second order differential operator on $O(M)$ as
+\begin{equation*}
+    \Delta_{O(M)} \defeq \sum_{i=1}^d H_i^2,
+\end{equation*}
+called Bochner's horizontal Laplacian.
+
+\begin{prop}
+    For any $f \in C^\infty(M)$, let $\widetilde{f} = f \circ \pi \in C^\infty(O(M))$. Then for any $u \in O(M)$,
+    \begin{equation*}
+        \Delta_M f(x) = \Delta_{O(M)} \widetilde{f}(u),
+    \end{equation*}
+    where $x  = \pi(u)$.
+\end{prop}
+\begin{proof}
+    Fix a $f \in C^\infty(M)$. Note that for any $1$-form, when viewing $(\R^d)^* = \R^d$, the scalarization $\widetilde{\theta} \colon O(M) \sto \R^d$ satisfies
+    \begin{equation*}
+        \widetilde{\theta}(u) = \bc{\theta(ue_1),\cdots,\theta(ue_d)}^\top \in \R^d.
+    \end{equation*}
+    Therefore, 
+    \begin{equation*}
+        (\widetilde{df})_i = df(ue_i) = ue_i(f) = H_i\widetilde{f}(u),
+    \end{equation*}
+    and
+    \begin{equation*}
+        \widetilde{df} = \bc{H_1\widetilde{f},H_2\widetilde{f},\cdots,H_d\widetilde{f}}^\top.
+    \end{equation*}
+    Because $\bc{ue_i}$ is a normal basis in $T_{\pi(u)}M$, we have
+    \begin{equation*}
+        \sharp(ue_i)^* = ue_i.
+    \end{equation*}
+    It follows that, first
+    \begin{equation*}
+        \widetilde{\op{grad}f} = \bc{H_1\widetilde{f},H_2\widetilde{f},\cdots,H_d\widetilde{f}}^\top.
+    \end{equation*}
+    because $\op{grad} f((ue_i)^*) = \inn{\op{grad} f, \sharp(ue_i)^*} = \inn{\op{grad} f,ue_i} = df(ue_i)$. Second, for any $X \in \Gamma(TM)$,
+    \begin{equation*}
+        \Divg X(\pi(u)) = \sum_i \nabla X((ue_i)^*,ue_i) = \sum_i \inn{\nabla_{ue_i}X,\sharp (ue_i)^*} = \sum_i \inn{\nabla_{ue_i}X, ue_i}.
+    \end{equation*}
+    Moreover, since $u \in O(M)$, orthogonal map,
+    \begin{align*}
+        \Divg X\bc{\pi(u)} &= \sum_i \inn{u^{-1}\nabla_{ue_i}X(\pi(u)), e_i} \\
+        &= \sum_i \inn{\widetilde{\nabla_{ue_i}X}(u),e_i} \\
+        &= \sum_i \inn{H_i\widetilde{X}(u),e_i} = \sum_i \bc{H_i\widetilde{X}}^i(u).
+    \end{align*}
+    It follows that
+    \begin{equation*}
+        \Delta_M f(\pi(u)) = \Divg \bc{\op{grad}f}(\pi(u)) = \sum_i \bc{H_i(\widetilde{\op{grad} f})}^i(u) = \sum_iH_i(H_i \widetilde{f}) = \Delta_{O(M)} \widetilde{f}(u). \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}[Nash's Embedding Theorem]
+    Every Riemannian manifold can be isometrically embedded in some Euclidean space with the standard metric. 
+\end{thm}
+\begin{rmk}
+    Note that if the Riemannian manifold is complete, then we can find an Euclidean space such that the image is closed, i.e., a complete Riemannian manifold can be viewed as a Riemannian submanifold of an Euclidean space, which is also a closed subset.
+\end{rmk}
+
+In the following, we assume a $M \subset \R^N$ be a Riemannian submanifold that is closed. So all above theories can be applied to such $M$. Similarly as above, let $P(x) \colon \R^N \sto T_xM$ be the orthogonal projection and $P_\alpha = P e_\alpha \in \Gamma(TM)$. Note that if $X \in T_xM$, we have
+\begin{align*}
+    X &= P(x)X = P(x) \sum_{\alpha = 1}^N \inn{X,e_\alpha}_{\R^N}e_\alpha = \sum_{\alpha = 1}^N \inn{X,e_\alpha}_{\R^N}P_\alpha(x)\\
+    &= \sum_{\alpha = 1}^N \inn{P(x)X,e_\alpha}_{\R^N}P_\alpha(x)= \sum_{\alpha = 1}^N \inn{X,P(x)e_\alpha}_{\R^N}P_\alpha(x)\\
+    &= \sum_{\alpha = 1}^N \inn{X,P_\alpha(x)}_{T_xM}P_\alpha(x).
+\end{align*}
+Let $\widetilde{\nabla}$ be the standard Euclidean connection. The induced Levi-Civita connection on $M$ is
+\begin{equation*}
+    \nabla_XY = (\widetilde{\nabla}_XY)^\top = P(\widetilde{\nabla}_XY),\quad X,Y \in \Gamma(TM).
+\end{equation*}
+Moreover, for any $X \in \Gamma(TM)$ and any $f \in C^\infty(M)$,
+\begin{equation*}
+    X(f) = \inn{\op{grad}f,X}_{TM} = \inn{\clo{\op{grad}f},X}_{\R^N},~\Rightarrow~\op{grad}f = P\clo{\op{grad}f},
+\end{equation*}
+where $\clo{\op{grad}f}$ is the usual gradient on $\R^N$.
+
+
+\begin{thm}
+    Using notations as above,
+    \begin{equation*}
+        \Delta_M = \sum_{\alpha = 1}^N P_\alpha^2.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    Let $f \in C^\infty(M)$.
+    \begin{equation*}
+        \op{grad}f = \sum_{\alpha=1}^N \inn{\op{grad}f,P_\alpha}P_\alpha = \sum_{\alpha=1}^N P_\alpha(f)P_\alpha.
+    \end{equation*}
+    Note that for any $X \in \Gamma(TM)$ and $h \in C^\infty(M)$, it is not difficult such that
+    \begin{equation*}
+        \Divg (hX) = X(h) + h\Divg (X).
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \Delta_M f = \sum_{\alpha=1}^N P_\alpha^2(f) + \sum_{\alpha=1}^N P_\alpha(f)\Divg(P_\alpha).
+    \end{equation*}
+    For the second term, fix $x \in M$. First,
+    \begin{equation*}
+        \Divg(P_\alpha)(x) = \sum_{i=1}^d \inn{\nabla_{\frac{\partial}{\partial x^i}}P_\alpha(x),\lv{\frac{\partial}{\partial x^i}}_{x}},
+    \end{equation*}
+    where $(x^1,\cdots,x^d)$ is a normal coordinate at $x$, because $\bb{\lv{\frac{\partial}{\partial x^i}}_{x}}$ is an orthonormal basis of $T_xM$. Moreover, because $\Gamma^k_{ij}(x) = 0$,
+    \begin{equation*}
+        \nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i} (x) = 0.
+    \end{equation*}
+    So
+    \begin{align*}
+        \inn{\nabla_{\frac{\partial}{\partial x^i}}P_\alpha(x),\lv{\frac{\partial}{\partial x^i}}_{x}}_{T_xM} &= \frac{\partial}{\partial x^i}\inn{P_\alpha, \frac{\partial}{\partial x^i}}_{TM} (x) = \frac{\partial}{\partial x^i}\inn{Pe_\alpha, \frac{\partial}{\partial x^i}}_{TM} (x) \\
+        &= \frac{\partial}{\partial x^i}\inn{e_\alpha, P\frac{\partial}{\partial x^i}}_{\R^N} (x) = \frac{\partial}{\partial x^i}\inn{e_\alpha, \frac{\partial}{\partial x^i}}_{\R^N} (x) \\
+        &= \inn{\widetilde{\nabla}_{\frac{\partial}{\partial x^i}}e_\alpha(x), \frac{\partial}{\partial x^i}}_{\R^N} + \inn{e_\alpha(x), \widetilde{\nabla}_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x)}_{\R^N} \\
+        &=\inn{e_\alpha, \widetilde{\nabla}_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x)}_{\R^N}.
+    \end{align*}
+    It follows that
+    \begin{align*}
+        \sum_{\alpha=1}^N\Divg(P_\alpha)(x)P_{\alpha}(x) &= \sum_{\alpha=1}^N \sum_{i=1}^d \inn{e_\alpha, \widetilde{\nabla}_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x)}_{\R^N} P_{\alpha}(x) \\
+        &= \sum_{\alpha=1}^N\sum_{i=1}^d \inn{e_\alpha, \widetilde{\nabla}_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x)}_{\R^N} P(x)e_{\alpha} \\
+        &= \sum_{i=1}^dP(x) \sum_{\alpha=1}^N \inn{e_\alpha, \widetilde{\nabla}_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x)}_{\R^N} e_\alpha \\
+        &= \sum_{i=1}^d P(x)\widetilde{\nabla}_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x)=\sum_{i=1}^d\nabla_{\frac{\partial}{\partial x^i}}\frac{\partial}{\partial x^i}(x) = 0.
+    \end{align*}
+    Therefore, $\sum_{\alpha=1}^N P_\alpha(f)\Divg(P_\alpha) = 0$ for any $f \in C^\infty(M)$. Then
+    \begin{equation*}
+        \Delta_M f = \sum_\alpha P_\alpha^2(f). \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{prop}
+    Using same notations as above,
+    \begin{equation*}
+        \Delta_Mf = \sum_\alpha \nabla^2f(P_\alpha,P_\alpha).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Fix $x \in M$. Let $\bb{X_i}$ be an orthonormal basis of $T_xM$ and consider decomposition
+    \begin{equation*}
+        X_i = \sum_{\alpha = 1}^N\inn{X_i,P_\alpha(x)}P_\alpha(x).
+    \end{equation*}
+    Then
+    \begin{align*}
+        \Delta_M f(x) &= \sum_{i=1}^d \nabla^2f(x)(X_i,X_i)  \\
+        &= \sum_{i=1}^d\sum_{\alpha,\beta = 1}^N\nabla^2f(P_\alpha,P_\beta)(x)\inn{X_i,P_\alpha(x)}\inn{X_i,P_\beta(x)} \\
+        &= \sum_{\alpha = 1}^N\nabla^2f\bc{P_\alpha, \sum_{i=1}^d\sum_{\beta=1}^N\inn{X_i,P_\alpha}\inn{X_i,P_\beta}P_\beta}(x).
+    \end{align*}
+    On the other hand,
+    \begin{align*}
+        \sum_{i=1}^d\sum_{\beta=1}^N\inn{X_i,P_\alpha}\inn{X_i,P_\beta}P_\beta &= \sum_{\beta=1}^N\inn{\sum_{i=1}^d\inn{X_i,P_\beta}X_i,P_\alpha}P_\beta \\
+        &= \sum_{\beta=1}^N\inn{P_\beta,P_\alpha}P_\beta = PP_\alpha = P_\alpha.\qedhere
+    \end{align*}
+\end{proof}
+
+\section{Brownian Motion on Manifolds}
+
+\begin{thm}
+    Let $X \colon \Omega \sto W(M)$ be a measurable map defined on a filtered probability space $(\Omega,\mathcal{F},\Pb)$. Let $\mu = (X_0)_{\#}\Pb$ be the initial distribution on $M$. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $X$ is a $\frac{1}{2}\Delta_M$-diffusion process w.s.t. $\mathbb{F}^X$, i.e., $X$ is a $\mathbb{F}^X$-semimartingale, and
+        \begin{equation*}
+            M^f(X)_t = f(X_t) - f(X_0) - \frac{1}{2}\int_0^t \Delta_Mf(X_s)ds,\quad 0\leq t < e(X),
+        \end{equation*}
+        is an $\mathbb{F}^X$-local martingale for all $f \in C^\infty(M)$.
+
+        \item $X$ is a $\mathbb{F}^X$-semimartingale on $M$ whose anti-development is a standard Euclidean $\mathbb{F}^X$-Brownian motion.
+    \end{enumerate}
+\end{thm}
+\begin{rmk}
+    An $M$-valued process $X$ satisfies above condition is called a Riemannian Brownian motion on $M$. Moreover, $\Pb_\mu = X_{\#}\Pb$ is called a Wiener measure on $W(M)$. Note that a Wiener measure is uniquely determined by $\Delta_M / 2$ and an initial measure $\mu$.
+\end{rmk}
+\begin{proof}
+    $\Leftarrow:$ Let $U$ be a horizontal lift of $X$ and $W$ is its anti-development. Then we have
+    \begin{equation*}
+        dU_t = H_i(U_t) \circ dW_t.
+    \end{equation*}
+    For any $f \in C^\infty(M)$, let $\widetilde{f} = f \circ \pi$ be its lift on $O(M)$. Then by above mention,
+    \begin{equation*}
+        f\left(X_t\right)=f\left(X_0\right)+\int_0^t H_i \widetilde{f}\left(U_s\right) d W_s^i+\frac{1}{2} \int_0^t H_i H_j \widetilde{f}\left(U_s\right) d\left\langle W^i, W^j\right\rangle_s.
+    \end{equation*}
+    Because $W$ is a Brownian motion, $\left\langle W^i, W^j\right\rangle_t = \delta^{ij}t$. Then
+    \begin{align*}
+        \int_0^t H_i H_j \widetilde{f}\left(U_s\right) d\left\langle W^i, W^j\right\rangle_s &=  \int_0^t\sum_i H_i^2 \widetilde{f}(U_s)ds \\
+        &= \int_0^t \Delta_{O(M)}\widetilde{f}(U_s)ds \\
+        &= \int_0^t \Delta_Mf(X_s)ds.
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        M^f(X)_t = \int_0^t H_i \widetilde{f}(U_s)dW^i_s,
+    \end{equation*}
+    which is clearly a $\mathbb{F}^X$-local martingale.
+
+    $\Rightarrow:$ Let $f = (f^\alpha) \colon M \sto \R^N$ be the coordinate function $f(x) = x$. Let $\widehat{f^\alpha} = f^\alpha \circ \pi$ be the lift on $O(M)$. By assumption, for $X^\alpha_t = f^\alpha(X)_t$,
+    \begin{equation*}
+        X^\alpha_t = X_0^\alpha + M_t^\alpha + \frac{1}{2}\int_0^t\Delta_Mf^\alpha(X_s)ds,
+    \end{equation*}
+    where $M^\alpha_t$ is a local martingale, $\alpha=1,2,\cdots,N$. On the other hand, let $H$ be the horizontal lift of $X$ and $W$ be its anti-development. Then
+    \begin{equation*}
+        X_t^\alpha = X_0^\alpha + \int_0^t H_i\widetilde{f^\alpha}(U_s)dW^i_s + \frac{1}{2}\int_0^t \nabla^2f^\alpha(dX_s,dX_s).
+    \end{equation*}
+
+    \textbf{Claim:} For any $f \in C^\infty(M)$, we can have
+    \begin{equation*}
+        \int_0^t \nabla^2f(dX_s,dX_s)= \int_0^t \Delta_Mf(X_s)ds.
+    \end{equation*}
+    First, we know $dX_t = P_\alpha(X_t) \circ dX^\alpha_t$. Then we get
+    \begin{equation*}
+        \int_0^t \nabla^2 f\left(d X_s, d X_s\right)=\int_0^t \nabla^2 f\left(P_\alpha, P_\beta\right)(X_s) d\left\langle X^\alpha, X^\beta\right\rangle_s.
+    \end{equation*}
+    By the assumption, because $X$ is a $\Delta_M / 2$-diffusion process,
+    \begin{equation*}
+        d\inn{X^\alpha,X^\beta}_s = d\inn{M^\alpha,M^\beta}_s = \Gamma(f^\alpha,f^\beta)(X_s)ds,
+    \end{equation*}
+    where
+    \begin{equation*}
+        \Gamma(f^\alpha,f^\beta) = \inn{\nabla f^\alpha,\nabla f^\beta}.
+    \end{equation*}
+    Because
+    \begin{equation*}
+        \op{grad} f^\alpha = P(\clo{\op{grad}} f^\alpha) = Pe_\alpha = P_\alpha,
+    \end{equation*}
+    we have
+    \begin{equation*}
+        \Gamma(f^\alpha,f^\beta) = \inn{\op{grad} f^\alpha,\op{grad} f^\beta} = \inn{P_\alpha,P_\beta}.
+    \end{equation*}
+    Moreover,
+    \begin{equation*}
+        \sum_{\alpha,\beta}\nabla^2f(P_\alpha,P_\beta)\inn{P_\alpha,P_\beta} = \sum_{\alpha}\nabla^2f(P_\alpha,\sum_\beta\inn{P_\alpha,P_\beta} P_\beta) = \sum_\alpha\nabla^2f(P_\alpha,P_\alpha) = \Delta_Mf
+    \end{equation*}
+    Then
+    \begin{align*}
+        \int_0^t \nabla^2 f\left(d X_s, d X_s\right) &= \int_0^t \nabla^2 f\left(P_\alpha, P_\beta\right)(X_s)\Gamma(f^\alpha,f^\beta)(X_s)ds \\
+        &=\int_0^t  \sum_{\alpha,\beta} \nabla^2f\left(P_\alpha, P_\beta\right)(X_s)\inn{P_\alpha,P_\beta} ds \\
+        &=\int_0^t\Delta_Mf(X_s)ds.
+    \end{align*}
+    So the claim has been proved.
+
+    Then we have
+    \begin{equation*}
+        M^\alpha_t = \int_0^t H_i\widetilde{f^\alpha}(U_s)dW^i_s.
+    \end{equation*}
+    Next, we will use the L\'evy's theorem to check $W$ is a Brownian motion. First, because $\widetilde{f^\alpha} = f^\alpha \circ \pi$,
+    \begin{align*}
+        H_i\widetilde{f^\alpha}(u) &= (ue_i)(f^\alpha) \\
+        &= \inn{ue_i,\op{grad}f^\alpha}_{TM} \\
+        &= \inn{ue_i,Pe_\alpha}_{TM} =  \inn{ue_i,Pe_\alpha}_{\R^N}\\
+        &= \inn{Pue_i,e_\alpha}_{\R^N} = \inn{ue_i,e_\alpha}_{\R^N}
+    \end{align*}
+    Moreover,
+    \begin{align*}
+        \sum_{\alpha = 1}^N\inn{ue_i,e_\alpha}\inn{ue_j,e_\alpha} &= \inn{ue_i,\sum_{\alpha = 1}^N\inn{ue_j,e_\alpha}e_\alpha} \\
+        &=\inn{ue_i,ue_j} = \inn{e_i,e_j} = \delta_{ij}.
+    \end{align*}
+    Therefore, we have
+    \begin{equation*}
+        dW^j_t = \inn{e_\alpha,U_te_j}dM^\alpha_t,
+    \end{equation*}
+    which implies that $W$ is a continuous $\mathbb{F}^X$-local martingale since $M^\alpha$ are $\mathbb{F}^X$-local martingales.
+
+    Again, because
+    \begin{equation*}
+        d\inn{M^\alpha,M^\beta}_s = \inn{P_\alpha,P_\beta}ds,
+    \end{equation*}
+    we have
+    \begin{align*}
+        \inn{W^i_t,W^j_t} &= \sum_{\alpha,\beta} \int_0^t\inn{e_\alpha,U_se_j}\inn{e_\beta,U_se_j} \inn{P_\alpha,P_\beta}ds \\
+        &=  \sum_{\alpha}\int_0^t\inn{e_\alpha,U_se_j} \inn{\sum_\beta\inn{P_\alpha,P_\beta}e_\beta,U_se_j} ds \\
+        &= \sum_{\alpha}\int_0^t\inn{e_\alpha,U_se_j} \inn{\sum_\beta\inn{PP_\alpha,e_\beta}e_\beta,U_se_j} ds \\
+        &= \sum_{\alpha}\int_0^t\inn{e_\alpha,U_se_j} \inn{P_\alpha,U_se_j} ds \\
+        &= \int_0^t\sum_{\alpha}\inn{e_\alpha,U_se_j} \inn{e_\alpha,U_se_j} ds =\delta^{ij}t.
+    \end{align*}
+    Therefore, by the L\'evy's theorem, $W$ is a $\mathbb{F}^X$-Brownian motion.
+\end{proof}
+\begin{rmk}
+    We can make $\mathbb{F}^X$ larger. $X$ is called a $\mathbb{F}$-Brownian motion if it is defined as above w.s.t. $\mathbb{F}$ and it is a strong Markov process w.s.t. $\mathbb{F}$.
+\end{rmk}
+
+If $X$ be a Brownian motion on $M$, then its horizontal lift $U$ is called a horizontal Brownian motion. Since
+\begin{equation*}
+    dU_t = H_i(U_t) \circ dW^i_t,
+\end{equation*}
+where $W$ is a Brownian motion, then $U$ is a diffusion process generated by the operator
+\begin{equation*}
+    L = \frac{1}{2} \sum_i H_i^2 = \frac{1}{2}\Delta_{O(M)}.
+\end{equation*}
+
+\begin{prop}
+    Let $U \colon \Omega \sto W(O(M))$ be a measurable map defined on a probability space $(\Omega,\mathcal{F},\mathbb{P})$. TFAE.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item $U$ is a horizontal $\mathbb{F}^U$-semimartingale whose projection $X = \pi(U)$ is a Brownian motion on $M$.
+        \item $U$ is a horizontal $\mathbb{F}^U$-semimartingale whose anti-development is a standard Euclidean Brownian motion.
+        \item $U$ is a $\Delta_{O(M)} / 2$-diffusion w.s.t. $\mathbb{F}^U$.
+    \end{enumerate}
+\end{prop}
+\begin{rmk}
+    An $O(M)$-valued process $U$ satisfies any of above is called a horizontal Brownian motion on $O(M)$.
+\end{rmk}
+\begin{proof}
+    $(1)~\Rightarrow~(2):$ Since $X$ is a Brownian motion, by above its anti-development $W$ is a standard Euclidean Brownian motion. 
+
+    $(2)~\Rightarrow~(3):$ Then by
+    \begin{equation*}
+         dU_t = H_i(U_t) \circ dW^i_t,
+    \end{equation*}
+    it is a diffusion process of $\Delta_{O(M)} / 2$.
+
+    $(3)~\Rightarrow~(1):$ For any $f \in C^\infty(M)$, let $\widetilde{f} = f \circ \pi \in C^\infty(O(M))$. Because
+    \begin{equation*}
+        \Delta_M f(\pi(u)) = \Delta_{O(M)} \widetilde{f}(u),
+    \end{equation*}
+    we have
+    \begin{equation*}
+        f(X_t) - f(X_0) - \frac{1}{2}\int_0^t\Delta_Mf(X_s)ds = \widetilde{f}(U_t) - \widetilde{f}(U_0) - \frac{1}{2}\int_0^t\Delta_{O(M)}\widetilde{f}(U_s)ds.
+    \end{equation*}
+    The RHS is a $\mathbb{F}^U$-local martingale, which means that the LHS is also a $\mathbb{F}^U$-local martingale. Moreover, $X = \pi(U)$ implies $\mathbb{F}^X \subset \mathbb{F}^U$, so the LHS is a $\mathbb{F}^X$-local martingale.
+\end{proof}
+\begin{rmk}
+    Note that let $M \subset \R^N$ and $B$ is a Brownian motion on $\R^N$. Then if 
+    \begin{equation*}
+        dX_t = P_\alpha(X_t) \circ dB^\alpha_t,
+    \end{equation*}
+    then $X_t$ is a diffusion process generated by
+    \begin{equation*}
+        L = \frac{1}{2}\sum_\alpha P_\alpha^2 = \frac{1}{2} \Delta_M.
+    \end{equation*}
+    Therefore, $X$ is a Brownian motion on $M$.
+\end{rmk}
+
+\section{Examples of Brownian Motion}
+
+\paragraph{Riemannian Structure of Sphere.} First, consider the standard Riemannian structure on $\Sp^d$.
+\begin{enumerate}[label=\arabic{*}.]
+    \item $d = 1:$ Choosing a chart $(0,2\pi) \sto \mathbb{S}^1$ and consider the embedding
+    \begin{equation*}
+        \iota \colon \mathbb{S}^1 \hookrightarrow \R^2
+    \end{equation*}
+    given by $\theta \mapsto (x,y)$, where $x = \cos \theta$ and $y = \sin \theta$. Note that any $V_{(x,y)} \in T_{(x,y)}\R^2$ is equivalent to $V_{(x,y)} \in \R^2$ by setting
+    \begin{equation*}
+        V_{(x,y)} = a(x,y) \frac{\partial}{\partial x} + b(x,y) \frac{\partial}{\partial y} = (a(x,y),b(x,y))^\top.
+    \end{equation*}
+    and for any $f(x,y) \in C^\infty(\R^2)$,
+    \begin{equation*}
+        V_{(x,y)}f = a(x,y)\frac{\partial f}{\partial x}(x,y) + b(x,y)\frac{\partial f}{\partial y}(x,y).
+    \end{equation*}
+    So for $\iota_* \colon T\mathbb{S}^1 \sto \R^2$, at $\theta_0$
+    \begin{equation*}
+        \iota_{*,\theta_0}\bc{\lv{\frac{d}{d \theta}}_{\theta_0}} = -\sin \theta_0 \frac{\partial}{\partial x} + \cos \theta_0 \frac{\partial}{\partial y}.
+    \end{equation*}
+    which is because for any $f(x,y) \in C^\infty(M)$,
+    \begin{equation*}
+        \iota_{*,\theta_0}\bc{\lv{\frac{d}{d \theta}}_{\theta_0}}f = \lv{\frac{d}{d \theta}}_{\theta_0} f \circ \iota = \lv{\frac{d}{d \theta}}_{\theta_0} f(\cos \theta,\sin \theta) = -\sin \theta_0 \frac{\partial f}{ \partial x}(\theta_0) + \cos \theta_0 \frac{\partial f}{ \partial y}(\theta_0).
+    \end{equation*}
+    And note that $\iota_*$ is $C^\infty(\mathbb{S}^1)$-linear. Then the induce metric on $\mathbb{S}^1$ is given by
+    \begin{equation*}
+        g_{\theta \theta}(\theta_0) = \inn{\lv{\frac{d}{d \theta}}_{\theta_0},\lv{\frac{d}{d \theta}}_{\theta_0}} = \inn{\iota_{*,\theta_0}\lv{\frac{d}{d \theta}}_{\theta_0},\iota_{*,\theta_0}\lv{\frac{d}{d \theta}}_{\theta_0}} = \inn{(-\sin \theta_0,\cos \theta_0),(-\sin \theta_0,\cos \theta_0)} = 1
+    \end{equation*}
+    Therefore, $g = d\theta \otimes d\theta$, which implies that the corresponding Christoffel coefficients
+    \begin{equation*}
+        \Gamma^\theta_{\theta \theta} = \frac{1}{2}g^{\theta \theta} \frac{d}{d \theta} g_{\theta \theta} = 0,
+    \end{equation*}
+    It follows that that for any $X = a(\theta)\frac{d}{d \theta}, Y = b(\theta)\frac{d}{d \theta}$, we have
+    \begin{equation*}
+        \nabla_XY = a(\theta)\dot{b}(\theta)\frac{d}{d \theta},
+    \end{equation*}
+    because $\nabla_{\frac{d}{d \theta}}\frac{d}{d \theta} = 0$. Moreover, we also have
+    \begin{equation*}
+        \Delta_{\mathbb{S}^1} h(\theta) = \frac{d^2}{d\theta^2}h~\Rightarrow~\Delta_{\mathbb{S}^1} = \frac{d^2}{d\theta^2}.
+    \end{equation*}
+
+    On the other hand, consider $\mathbb{S}^1 \subset \R^2$ embedded, let $T = \iota_*(d/d\theta)$. Then
+    \begin{equation*}
+        \widetilde{X} = \iota_*(X) = a(\theta)T,\quad \widetilde{Y} = \iota_*(Y) = b(\theta)T.
+    \end{equation*}
+    Moreover, they can be extended to vector fields on $\R^2$. Let $\widetilde{T} = (-y,x)$, i.e., $T = \widetilde{T}|_{\mathbb{S}^1}$. Then
+    \begin{equation*}
+        \widetilde{X}(x,y) = \widetilde{a}(x,y)\widetilde{T},\quad \widetilde{Y}(x,y) = \widetilde{b}(x,y)\widetilde{T},
+    \end{equation*}
+    where $\widetilde{a}(\cos \theta,\sin \theta) = a(\theta)$ and $\widetilde{b}(\cos \theta,\sin \theta) = b(\theta)$. Note that
+    \begin{align*}
+        \widetilde{T}(\widetilde{a})|_{\mathbb{S}^1}(\theta) &= -y\frac{\partial \widetilde{a}}{\partial x} + x\frac{\partial \widetilde{a}}{\partial y} = \dot{a}(\theta) \\
+        \widetilde{T}(\widetilde{b})|_{\mathbb{S}^1}(\theta) &= -y\frac{\partial \widetilde{b}}{\partial x} + x\frac{\partial \widetilde{b}}{\partial y} = \dot{b}(\theta)
+    \end{align*}
+    and so we have
+    \begin{equation*}
+        \widetilde{\nabla}_{\widetilde{T}}\widetilde{T}|_{\mathbb{S}^1}(\theta) = -\widetilde{T}(y) \frac{\partial}{\partial x} + \widetilde{T}(x) \frac{\partial}{\partial y} = -\cos \theta \frac{\partial}{\partial x}  - \sin \theta \frac{\partial}{\partial y},
+    \end{equation*}
+    which mean that $\widetilde{\nabla}_{\widetilde{T}}\widetilde{T}|_{\mathbb{S}^1} = -\vec{n} \in N_\theta\mathbb{S}^1$. So
+    \begin{equation*}
+        \nabla_TT = (\widetilde{\nabla}_{\widetilde{T}}\widetilde{T})^\top = 0,
+    \end{equation*}
+    and by viewing $T = d / d\theta$, $\Gamma^\theta_{\theta \theta} = 0$ as same calculation as above. Moreover,
+    \begin{equation*}
+        \widetilde{\nabla}_{\widetilde{X}}\widetilde{Y}|_{\mathbb{S}^1}(\theta) = a(\theta)\bc{\widetilde{T}(\widetilde{b})\widetilde{T} + \widetilde{b}\widetilde{\nabla}_{\widetilde{T}}\widetilde{T}} = a(\theta)\dot{b}(\theta)T - a(\theta)b(\theta)\vec{n}(\theta).
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \nabla_XY(\theta) = (\widetilde{\nabla}_{\widetilde{X}}\widetilde{Y})^\top = a(\theta)\dot{b}(\theta)\frac{d}{d \theta},
+    \end{equation*}
+    and
+    \begin{equation*}
+        \mathrm{II}(X,Y) = (\widetilde{\nabla}_{\widetilde{X}}\widetilde{Y})^\perp = - a(\theta)b(\theta)\vec{n}(\theta) = -\inn{X,Y}\vec{n}.
+    \end{equation*}
+
+    \item In general case, by embedding $\mathbb{S}^d \subset \R^{d+1}$, 
+    \begin{equation*}
+        \nabla_XY = \widetilde{\nabla}_XY + \inn{X,Y}\vec{n}
+    \end{equation*}
+    where $\vec{n} \in \Gamma(N\mathbb{S}^d)$ is the outer unit normal vector. Then let $\bb{X_i}_{i=1}^d$ be an orthonormal frame of $T\mathbb{S}^d$ and so $\bb{X_i,\vec{n}}$ is an orthonormal frame of $\R^{d+1}$. For any $f \in C^\infty(\mathbb{S}^d)$, let $F \in C^\infty(\R^{d+1})$ be an extension of $f$. As we know $\op{grad} f = (\clo{\op{grad}} f)^\top$, $\widetilde{\nabla}_{X_i}\vec{n} = X_i$, and
+    \begin{equation*}
+        \Delta_{\R^{d+1}} F = \sum_{i=1}^d \widetilde{\nabla}^2F(X_i,X_i) + \widetilde{\nabla}^2F(\vec{n},\vec{n}),
+    \end{equation*}
+    we have
+    \begin{align*}
+        \Delta_{\mathbb{S}^d}f &= \sum_{i=1}^d \nabla^2f(X_i,X_i) = \sum_{i=1}^d \inn{\nabla_{X_i} \op{grad}f,X_i} \\
+        &=  \sum_{i=1}^d \inn{\widetilde{\nabla}_{X_i} \op{grad}F + \inn{\op{grad}F,X_i}\vec{n},X_i} =\sum_{i=1}^d \inn{\widetilde{\nabla}_{X_i} \op{grad}F,X_i} \\
+        &= \sum_{i=1}^d \inn{\widetilde{\nabla}_{X_i}(\clo{\op{grad}}F)^\top,X_i} = \sum_{i=1}^d \inn{\widetilde{\nabla}_{X_i}(\clo{\op{grad}}F - \inn{\clo{\op{grad}}F,\vec{n}}\vec{n}),X_i} \\
+        &= \sum_{i=1}^d \inn{\widetilde{\nabla}_{X_i}\clo{\op{grad}}F,X_i} - d \inn{\clo{\op{grad}}F, \vec n} = \sum_{i=1}^d \widetilde{\nabla}^2 F(X_i,X_i) - d \widetilde{\nabla}_{\vec{n}}F \\
+        &= \Delta_{\R^{d+1}} F - \widetilde{\nabla}^2F(\vec{n},\vec{n}) - d \widetilde{\nabla}_{\vec{n}}F
+    \end{align*}
+
+    On the other hand, choose a polar coordinate chart for $\R^{d+1} \backslash \{0\}$, $(r,\theta=(\theta^1,\cdots,\theta^d))$. Then for Euclidean coordinate $(x^1,\cdots,x^{d+1})$,
+    \begin{equation*}
+        x^i = r \iota^i(\theta),
+    \end{equation*}
+    where $\iota \colon \mathbb{S}^d \hookrightarrow \R^{d+1}$ is the inclusion. Then we have
+    \begin{equation*}
+        \frac{\partial}{\partial r} = \frac{\partial x^i}{\partial r}\frac{\partial}{\partial x^i} = \iota^i\frac{\partial}{\partial x^i}
+    \end{equation*}
+    and 
+    \begin{equation*}
+        \frac{\partial}{\partial \theta^\alpha} = \frac{\partial x^i}{\partial \theta^\alpha}\frac{\partial}{\partial x^i} = r\frac{\partial \iota^i}{\partial \theta^\alpha} \frac{\partial}{\partial x^i}
+    \end{equation*}
+    Then we have, first
+    \begin{equation*}
+        g_{rr} = \inn{\frac{\partial}{\partial r},\frac{\partial}{\partial r}} = \delta_{ij}\iota^i\iota^j = 1,
+    \end{equation*}
+    which also implies that
+    \begin{equation*}
+        0 = \frac{\partial}{\partial \theta^\alpha} \delta_{ij}\iota^i\iota^j = 2 \delta_{ij}\iota^i\frac{\partial \iota_j}{\partial \theta^\alpha} = 0.
+    \end{equation*}
+    So, second
+    \begin{equation*}
+        g_{\alpha r} = \inn{\frac{\partial}{\partial \theta^\alpha}, \frac{\partial}{\partial r}} = r\delta_{ij}\iota^i\frac{\partial \iota^i}{\partial \theta^\alpha} = 0.
+    \end{equation*}
+    Finally,
+    \begin{equation*}
+        g_{\alpha \beta} = \inn{\frac{\partial}{\partial \theta^\alpha},\frac{\partial}{\partial \theta^\beta}} = r^2\delta_{ij}\frac{\partial \iota^i}{\partial \theta^\alpha} \frac{\partial \iota^i}{\partial \theta^\beta}.
+    \end{equation*}
+    For $g_{\alpha \beta}$, note that $\iota$ is the isometric inclusion, so
+    \begin{equation*}
+        g_{\mathbb{S}^d}\bc{\lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^d},\lv{\frac{\partial}{\partial \theta^\beta}}_{\mathbb{S}^d}} = g\bc{\iota_*\lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^d},\iota_*\lv{\frac{\partial}{\partial \theta^\beta}}_{\mathbb{S}^d}} = \delta_{ij}\frac{\partial \iota^i}{\partial \theta^\alpha} \frac{\partial \iota^i}{\partial \theta^\beta},
+    \end{equation*} 
+    because
+    \begin{equation*}
+        \iota_*\lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^d} = \frac{\partial \iota^i}{\partial \theta^\alpha} \frac{\partial}{\partial x^i}.
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        g_{\alpha \beta} = r^2h_{\alpha \beta},\quad h_{\alpha \beta} \defeq g_{\mathbb{S}^d}\bc{\lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^d},\lv{\frac{\partial}{\partial \theta^\beta}}_{\mathbb{S}^d}}.
+    \end{equation*}
+    So we have
+    \begin{equation*}
+        g = dr \otimes dr + r^2h_{\alpha \beta} d\theta^\alpha \otimes d\theta^\beta.
+    \end{equation*}
+    It also implies that $(r,\theta)$ is a semi-geodesic coordinate of $\R^{d+1}$ w.s.t. $\Sp^d$ and distance function $r$. Moreover, based on this coordinate system, we have
+    \begin{equation*}
+        g = (g_{ij}) = \bc{
+            \begin{array}{cc}
+                1 & 0 \\
+                0 & r^2h_{\alpha\beta}
+            \end{array}
+        },\quad g^{-1} = (g^{ij}) = \bc{
+            \begin{array}{cc}
+                1 & 0 \\
+                0 & r^{-2}h^{\alpha\beta}
+            \end{array}
+        },
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        \sqrt{\abs{g}} = r^d\sqrt{\abs{h}}.
+    \end{equation*}
+    Let $(y^1,\cdots y^{d+1}) = (r,\theta^1,\cdots,\theta^d)$. For any $F = F(r,\theta) \in C^\infty(\R^{d+1})$,  note that
+    \begin{equation*}
+        g^{ij}\frac{\partial F}{\partial y^j} = \begin{cases}
+            \frac{\partial F}{ \partial r },\quad i = 1 \\
+            \frac{h^{i \beta}}{r^2}\frac{\partial F}{\partial \theta^\beta},\quad i \neq 1
+        \end{cases}
+    \end{equation*}
+
+    Then by the definition of Laplace-Beltrami operator,  
+    \begin{align*}
+        \Delta_{\R^{d+1}}F &= \frac{1}{\abs{g}} \frac{\partial}{\partial y^i}\bc{\sqrt{\abs{g}}g^{ij}\frac{\partial F}{\partial y^j}}\\
+        &=\frac{1}{\abs{g}} \frac{\partial}{\partial r}\bc{\sqrt{\abs{g}}\frac{\partial F}{\partial r}} + \frac{1}{\abs{g}} \frac{\partial}{\partial \theta^\alpha}\bc{\sqrt{\abs{g}}\frac{h^{\alpha \beta}}{r^2}\frac{\partial F}{\partial \theta^\beta}} = \mathrm{I} + \mathrm{II}.
+    \end{align*}
+    For $\mathrm{I}$,
+    \begin{align*}
+        \mathrm{I}&=\frac{1}{\abs{g}} \frac{\partial}{\partial r}\bc{\sqrt{\abs{g}}\frac{\partial F}{\partial r}}  = \frac{1}{r^d\sqrt{\abs{h}}} \frac{\partial}{\partial r}\bc{r^d\sqrt{\abs{h}}\frac{\partial F}{\partial r}} \\
+        &= \frac{d}{r} \frac{\partial F}{\partial r} + \frac{\partial^2 F}{\partial r^2}.
+    \end{align*}
+    For $\mathrm{II}$,
+    \begin{align*}
+        \mathrm{II}&= \frac{1}{\abs{g}} \frac{\partial}{\partial \theta^\alpha}\bc{\sqrt{\abs{g}}\frac{h^{\alpha \beta}}{r^2}\frac{\partial F}{\partial \theta^\beta}}  \\
+        &= \frac{1}{r^d\sqrt{\abs{h}}}\frac{\partial}{\partial \theta^\alpha}\bc{r^{d-2}\sqrt{\abs{h}}h^{\alpha \beta}\frac{\partial F}{\partial \theta^\beta}} \\
+        &= \frac{1}{r^2\sqrt{\abs{h}}}\frac{\partial}{\partial \theta^\alpha}\bc{\sqrt{\abs{h}}h^{\alpha \beta}\frac{\partial F}{\partial \theta^\beta}} \\
+        &= \frac{1}{r^2} \Delta_{\Sp^d}\hat{F}_r,
+    \end{align*}
+    where $\hat{F}_r(\theta) = F(r,\theta) \in C^\infty(\Sp^d)$. So we have
+    \begin{equation*}
+        \Delta_{\R^{d+1}}F = \frac{d}{r} \frac{\partial F}{\partial r} + \frac{\partial^2 F}{\partial r^2} + \frac{1}{r^2} \Delta_{\Sp^d}\hat{F}_r.
+    \end{equation*}
+    Then on $\mathbb{S}^d$, i.e., $r = 1$, for any $f \in C^\infty(\mathbb{S}^d)$, choose any extension $F$, then
+    \begin{equation*}
+        \Delta_{\Sp^d} f = \bc{\Delta_{\R^{d+1}} - d\frac{\partial}{\partial r} - \frac{\partial^2}{\partial r^2}}F|_{r=1}.
+    \end{equation*}
+    In particular, if we choose $F(r,\theta) = f(\theta)$ for any $r$, then
+    \begin{equation*}
+        \Delta_{\Sp^d} f = \Delta_{\R^{d+1}}F.
+    \end{equation*}
+
+    \begin{rmk}
+        If we embedded $\iota \colon \mathbb{S}^d \hookrightarrow \R^{d+1}$ by
+        \begin{align*}
+            x_1 & =\cos \theta_1 \\
+            x_2 & =\sin \theta_1 \cos \theta_2 \\
+            x_3 & =\sin \theta_1 \sin \theta_2 \cos \theta_3 \\
+            & \vdots \\
+            x_d & =\sin \theta_1 \cdots \sin \theta_{d-1} \cos \theta_d \\
+            x_{d+1} & =\sin \theta_1 \cdots \sin \theta_{d-1} \sin \theta_d
+        \end{align*}
+        then the induced metric metric is given by
+        \begin{equation*}
+            g_{\mathbb{S}^d}=d \theta_1\otimes d\theta_1 +\sin ^2 \theta_1 d \theta_2\otimes d\theta_2+\sin ^2 \theta_1 \sin ^2 \theta_2 d \theta_3\otimes d\theta_3+\cdots+\left(\prod_{i=1}^{d-1} \sin ^2 \theta_i\right) d \theta_d\otimes d\theta_d.
+        \end{equation*}
+        Note that it implies that $\bb{\frac{\partial}{\partial \theta^\alpha}}$ is a orthogonal frame of $\mathbb{S}^d$ but not normal.
+    \end{rmk}
+\end{enumerate}
+
+\paragraph{Radially Symmetric Space.} For a Riemannian manifold $(M,g)$ of dimension $d$, consider a normal coordinate system, i.e., $\exp_p \colon U \sto M$, and using the polar coordinate $(r,\theta) \in (0,\infty) \times \Sp^{d-1}$, then we have
+\begin{equation*}
+    g = dr \otimes dr + g_{\alpha \beta}(r,\theta)d\theta^\alpha \otimes d\theta^\beta.
+\end{equation*}
+\begin{defn}
+    A Riemannian manifold $(M,g)$ is called radially symmetric if on any normal polar chart, for 
+    \begin{equation*}
+        g = dr \otimes dr + g_{\alpha \beta}(r,\theta)d\theta^\alpha \otimes d\theta^\beta,
+    \end{equation*}
+    it has
+    \begin{equation*}
+        g_{\alpha \beta}(r,\theta) = G(r)^2h_{\alpha \beta}(\theta),
+    \end{equation*}
+    where
+    \begin{equation*}
+        G(0) = 0,\quad G^\prime(0) = 1,
+    \end{equation*}
+    and $h_{\alpha \beta}d\theta^\alpha \otimes d\theta^\beta$ is the canonical Riemannian metric on $\mathbb{S}^{d-1}$.
+\end{defn}
+\begin{prop}
+    Let $(M,g)$ be a Riemannian manifold with constant sectional curvature $\kappa$. Then $M$ is radially symmetric, i.e.,
+    \begin{equation*}
+        g = dr \otimes dr + G(r)^2h_{\alpha \beta}(\theta)d\theta^\alpha \otimes d\theta^\beta,
+    \end{equation*}
+    where $ G(0) = 0,\quad G^\prime(0) = 1$. Moreover,
+    \begin{equation*}
+        G^{\prime\prime}(r) + \kappa G(r) = 0.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Fix $p \in M$, and on $T_pM$, choosing an orthonormal basis such that $T_pM = \R^d$. For the  $\Phi \colon (0, \delta) \times \mathbb{S}^{d-1} \sto M$, $\Phi(r,\theta)= \exp_p(r\theta)$ is a geodesic, which also provides the normal polar coordination $(r, \theta)$. Fix a $\theta_0 \in \mathbb{S}^{d-1}$. Consider a normal radial geodesic $\gamma(r)$ with $\gamma(0) = p$ and $\dot{\gamma}(0) = \theta_0 \in \mathbb{S}^{d-1}$. Let $\theta_\alpha \colon (-\varepsilon,\varepsilon) \sto \mathbb{S}^{d-1}$ be a smooth map with $\theta(0) = \theta_0$ and $\dot{\theta}(0) = \frac{\partial}{\partial \theta^\alpha}|_{\mathbb{S}^{d-1},\theta_0}$. Note that:
+    \begin{enumerate}[label=(\roman{*})]
+        \item $W_\alpha = \frac{\partial}{\partial \theta^\alpha}|_{\mathbb{S}^{d-1},\theta_0} = \iota_*\frac{\partial}{\partial \theta^\alpha}|_{\mathbb{S}^{d-1},\theta_0} \in \R^d$, i.e., an vector in $T_pM$,
+        \item because $\abs{\theta(s)} \equiv 1$, $W_\alpha \perp \theta_0$.
+    \end{enumerate}
+    Consider the radial variation
+    \begin{equation*}
+        F_\alpha(s,r) = \exp_p(r\theta_\alpha(s))
+    \end{equation*}
+    and its two vector fields
+    \begin{equation*}
+        V_\alpha(r) = \frac{\partial F_\alpha}{\partial s}(r,0) = (d\exp_p)_{r\theta_0}(rW_\alpha),\quad T(r) = \frac{\partial F_\alpha}{\partial r}(r,0) = \dot{\gamma}(r).
+    \end{equation*}
+    Then $V_\alpha(r)$ is a Jacobian field. Moreover, we have
+    \begin{equation*}
+        V_\alpha(0) = 0,\quad \nabla_TV_\alpha(0) = W_\alpha.
+    \end{equation*}
+    Because $W_\alpha \perp T(0) = \theta_0$ and $V_\alpha(0) \perp T(0)$, $V_\alpha \perp T$. It implies that
+    \begin{equation*}
+        R(V_\alpha,T)T = \kappa V_\alpha,
+    \end{equation*}
+    since $M$ has constant curvature, i.e.
+    \begin{equation*}
+        \inn{R(V_\alpha,T)T,V_\alpha} = \kappa \bc{\abs{V_\alpha}^2\abs{T}^2 - \inn{V_\alpha, T}^2} = \kappa \abs{V_\alpha}^2.
+    \end{equation*}
+    So the Jacobian equation is
+    \begin{equation*}
+        \frac{D^2}{dt^2}V_\alpha(t) + \kappa V_\alpha = 0.
+    \end{equation*}
+    So when choosing an orthogonal frame $\bb{E_i(r)}$ with $E_1(r) = T(r)$ along $\gamma(r)$ and $E_\alpha(r)$ are obtained by parallel moving $W_\alpha$ along $\gamma(r)$, which are orthogonal because $\inn{W_\alpha,W_\beta} = 0$. Using similar result, because
+    \begin{equation*}
+        \inn{V_\alpha(0),E_\beta(0)} = \inn{\nabla_TV_\alpha(0),E_\beta(0)} = \inn{W_\alpha,W_\beta} = 0,~\forall~\beta \neq \alpha,
+    \end{equation*}
+    $V_\alpha \perp E_\beta$. So
+    \begin{equation*}
+        V_\alpha(r) = G_\alpha(r)E_\alpha(r)
+    \end{equation*}
+    and $G_\alpha(r)$ should satisfy
+    \begin{equation*}
+        f^{\prime\prime}(r) + \kappa f(r) = 0,\quad f(0) = 0,~f^\prime(0)=1
+    \end{equation*}
+    By the uniqueness of ODE, for all $\alpha$
+    \begin{equation*}
+        G(r) = G_\alpha(r) = \begin{cases}\frac{1}{\sqrt{\kappa}} \sin (\sqrt{\kappa} r), & \kappa>0, \\ r, & \kappa=0, \\ \frac{1}{\sqrt{-\kappa}} \sinh (\sqrt{-\kappa} r), & \kappa<0,\end{cases}
+    \end{equation*}
+
+    Next, the the coordinate tangent vectors on $M$ are given by
+    \begin{equation*}
+        \lv{\frac{\partial}{\partial \theta^\alpha}}_M = \Phi_*\bc{\lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^{d-1}}}
+    \end{equation*}
+    So by definition
+    \begin{equation*}
+        d\Phi_{(r,\theta_0)} \lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^{d-1},\theta_0} = \lv{\frac{d}{ds}}_{s = 0} \Phi(r,\theta_\alpha(s)) = \lv{\frac{d}{ds}}_{s = 0}\exp_p(r\theta_\alpha(s)) = V_\alpha(r),
+    \end{equation*}
+    i.e.,
+    \begin{equation*}
+        \lv{\frac{\partial}{\partial \theta^\alpha}}_{M,(r,\theta_0)} = V_{\alpha}(r).
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        g_{\alpha\beta}(r,\theta_0) = \inn{V_{\alpha}(r),V_{\beta}(r)} = G(r)^2\inn{E_\alpha(r),E_\beta(r)} = G(r)^2\inn{E_\alpha(0),E_\beta(0)} = G(r)^2\inn{W_\alpha,W_\beta}
+    \end{equation*}
+    because $E_\alpha(r)$ are obtained by parallel moving. Let
+    \begin{equation*}
+        h_{\alpha\beta}(\theta_0) = \inn{W_\alpha,W_\beta} = \inn{\lv{\frac{\partial}{\partial \theta^\alpha}}_{\mathbb{S}^{d-1},\theta_0} ,\lv{\frac{\partial}{\partial \theta^\beta}}_{\mathbb{S}^{d-1},\theta_0} },
+    \end{equation*}
+    i.e., $h_{\alpha \beta}d\theta^\alpha \otimes d\theta^\beta$ is the canonical Riemannian metric on $\mathbb{S}^{d-1}$. So we have
+    \begin{equation*}
+        g = dr \otimes dr + G(r)^2h_{\alpha \beta}(\theta)d\theta^\alpha \otimes d\theta^\beta. \qedhere
+    \end{equation*}
+\end{proof}
+
+For a radially symmetric space $(M,g)$, using similar calculation as $\mathbb{S}^d$, we have
+\begin{equation*}
+    \Delta_{M} = L_r + \frac{1}{G(r)^2}\Delta_{\mathbb{S}^{d-1}},
+\end{equation*}
+where
+\begin{equation*}
+    L_r = \frac{\partial^2}{\partial r^2}+ (d-1)\frac{G^\prime(r)}{G(r)}\frac{\partial}{\partial r},
+\end{equation*}
+is called the radial Laplacian.
+
+
+\paragraph{Examples.}
+
+\begin{exam}[Circle]
+    Consider
+    \begin{equation*}
+        \mathbb{S}^1 = \bb{e^{i\theta} \colon 0 \leq \theta < 2\pi} \subset \R^2.
+    \end{equation*}
+    Let $B$ be a Brownian motion. Define
+    \begin{equation*}
+        X_t = e^{iB_t} = (\cos B_t, \sin B_t).
+    \end{equation*}
+    Then $X$ is a Brownian motion on $\mathbb{S}^1$.
+    \begin{proof}[Proof by Laplacian Operator]
+        First, When viewing $\mathbb{S}^1 \subset \R^2$, $X_t = (\cos B_t, \sin B_t)$, by It\^o formula,
+        \begin{equation*}
+            dX_t = (-\sin B_t,\cos B_t) \circ dB_t = \iota_*\frac{d}{d\theta}(B_t) \circ dB_t.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            V = \iota_*\frac{d}{d\theta} = \frac{d}{d \theta}.
+        \end{equation*}
+        Then $X_t$ is a diffusion process with
+        \begin{equation*}
+            L = \frac{1}{2}\frac{d^2}{d \theta^2} = \frac{1}{2}\Delta_{\mathbb{S}^1}.
+        \end{equation*}
+        So $X$ is a Brownian motion on $\mathbb{S}^1$. \qedhere
+    \end{proof}
+        
+    \begin{proof}[Proof by Anti-development]
+        First, note that at any $\theta \in \mathbb{S^1}$, $O(\mathbb{S}^1)_\theta = \bb{-1,1}$ and so the orthonormal frame bundle $O(M) = \bigcup_{\theta \in \mathbb{S}^1}\bb{-1,1}$. By $\Gamma^\theta_{\theta \theta} = 0$, any horizontal vector $\dot{u}(0)$ vanishes on the vertical part. Then by $dU_t = P^H_\alpha \circ dX_t^\alpha$, the horizontal lift of $X$ starting from $U_0 = 1$, $U_t \equiv  1$. 
+
+        On the other hand, consider $P(\theta) \colon \R^2 \sto T_\theta \mathbb{S}^1$. Note that $n = (-\sin \theta,\cos \theta) \in N_\theta\mathbb{S}^1$. So
+        \begin{equation*}
+            P(\theta) = \bc{
+                \begin{array}{cc}
+                    \sin^2\theta & -\sin \theta \cos \theta \\
+                    -\sin \theta \cos \theta & \cos \theta^2
+                \end{array}
+            }.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            P_1(\theta) &= (\sin^2\theta, -\sin \theta \cos \theta)^\top = \iota_* \bc{-\sin \theta \frac{d}{d\theta}} \\
+            P_2(\theta) &= (-\sin \theta \cos \theta, \cos^2\theta )^\top = \iota_* \bc{\cos \theta \frac{d}{d\theta}}.
+        \end{align*}
+        Then by $dW^t = U_t^{-1}P_\alpha(X_t) \circ dX_t^\alpha$,
+        \begin{align*}
+            dW_t &= -\sin B_t \circ dX_t^1 + \cos B_t \circ dX^2_t \\
+            &= \sin^2 B_t \circ dB_t + \cos^2 B_t\circ dB_t \\
+            &= dB_t,
+        \end{align*}
+        and $W_0 = 0$, so $W_t = B_t$. \qedhere
+    \end{proof}
+\end{exam}
+
+\begin{exam}[Sphere]
+    Consider $\mathbb{S}^d \subset \R^{d+1}$. Let $\vec{n}$ be the outer unit normal vector. Then the orthogonal projection
+    \begin{equation*}
+        P(\theta) \colon \R^{d+1} \sto T_{\theta}\mathbb{S}^d
+    \end{equation*}
+    is given by $P(\theta)(x) = x - \inn{x,\vec{n}(\theta)}\vec{n}(\theta)$. The matrix expression of $P(\theta)$ is
+    \begin{equation*}
+        P(\theta)_{ij} = \delta_{ij} - n(\theta)_in(\theta)_j
+    \end{equation*}
+    Or when embedding $\mathbb{S}^d \hookrightarrow \R^{d+1}$, $P(x)_{ij} = \delta_{ij} - x^ix^j$. Therefore, by $\Delta_M = \sum_\alpha P_\alpha^2$, $X$ is a Brownian motion on $\mathbb{S}^d$, when it satisfies
+    \begin{equation*}
+        X^i_t = X^i_0 + \sum_{j=1}^{d+1} \int_0^t (\delta_{ij} -X_s^iX^j_s) \circ dW_t^j,
+    \end{equation*}
+    where $W$ is a standard Brownian motion on $\R^{d+1}$.
+\end{exam}
+
+
+\begin{exam}[Radially Symmetric Space]
+    Let $(M,g)$ be a radially symmetric space and $X_t = (r_t,\theta_t)$ be a Brownian motion on $M$ expressed as polar coordinate. Consider its radial process and angular process separately.
+    \begin{enumerate}[label=(\arabic{*})]
+        \item Radial process: Choose $f(r,\theta) = r$ to the martingale problem,
+        \begin{align*}
+            \beta_t &= r_t - r_0 -\frac{1}{2}\int_0^t\Delta_Mf(X_s)ds \\
+            &= r_t - r_0 - \frac{d-1}{2} \int_0^t \frac{G^\prime(r_s)}{G(r_s)}ds
+        \end{align*}
+        is a local martingale. Moreover, the quadratic variation is given by
+        \begin{equation*}
+            \inn{\beta,\beta}_t = \int_0^t\Gamma(r,r)(X_s)ds,
+        \end{equation*}
+        where we have
+        \begin{equation*}
+            \Gamma(r,r) = \inn{\nabla r,\nabla r} =g^{ij}\frac{\partial r}{\partial x^i}\frac{\partial r}{\partial x^j} = \abs{\nabla r}^2 = 1.
+        \end{equation*}
+        So
+        \begin{equation*}
+            \inn{\beta,\beta}_t = t,
+        \end{equation*}
+        which implies that $\beta$ is a $1$-dimensional Brownian motion. On the other hand, we can see the radial process $r_t$ is generated by the radial operator $L_r$.
+
+        \item Angular process: Let $f \in C^\infty(\mathbb{S}^{d-1})$, which can be extended to $f(r,\theta) = f(\theta) \in C^\infty(M)$. Then
+        \begin{equation*}
+            f(X_t) = f(\theta_t),\quad \Delta_M f(r,\theta) = \frac{1}{G(r)^2}\Delta_{\mathbb{S}^{d-1}}.
+        \end{equation*}
+        It implies that
+        \begin{equation*}
+            M^f_t = f(\theta_t) - f(\theta_0) - \frac{1}{2}\int_0^t \frac{1}{G(r_s)^2}\Delta_{\mathbb{S}^{d-1}}f(\theta_s) ds
+        \end{equation*}
+        Let
+        \begin{equation*}
+            T_{t^\prime} = \int_0^{t^\prime} \frac{1}{G(r_s)^2}ds,
+        \end{equation*}
+        which is a nondecreasing process. So we can consider
+        \begin{equation*}
+            \tau_t = \inf\bb{t^\prime \geq 0 \colon T_{t^\prime} \geq t} =T^{-1}(t),
+        \end{equation*}
+        where the final equality is because $T$ is strictly increasing in $t$. Then by considering the time-change, let $z_t = \theta_{\tau_t}$, we have
+        \begin{equation*}
+            M^f_{\tau_t} = f(z_t) - f(z_0) - \frac{1}{2}\int_0^t \Delta_{\mathbb{S}^{d-1}}f(z_s) ds.
+        \end{equation*}
+        Since $M_t$ is a local martingale, $t \mapsto M^f_{\tau_t}$ is also a local martingale w.s.t. $\mathcal{F}_{\tau_t}$. Therefore, $t \mapsto z_t = \theta_{\tau_t}$ is a Brownian motion on $\mathbb{S}^{d-1}$
+    \end{enumerate}
+
+    \textbf{Claim:} $r$ and $z$ are independent.
+    \begin{proof}
+        \begin{enumerate}[label=\Roman*.]
+            \item First, we embed $\mathbb{S}^{d-1} \hookrightarrow \R^d$ with $\theta \mapsto y = (y^\alpha)$ and choose $f(\theta) = f(y) = f^\alpha(y) = y^\alpha$, the coordinate function on $\R^\alpha$. Let $U_t$ be a horizontal lift of $\theta_t = Y_t \in \R^d$ and $W_t$ be its anti-development. Then
+            \begin{equation*}
+                W_t = \int_0^t U_s^{-1}P_\alpha(Y_s) \circ dY^\alpha_s.
+            \end{equation*}
+            Because $\tau_t$ is continuous, for any continuous semimartingales $H,K$,
+            \begin{equation*}
+                \int_0^{\tau_t} H_sdK_s = \int_0^t H_{\tau_s} dK_{\tau_s},\quad \inn{H \circ \tau,K \circ \tau}_t = \inn{H,K}_{\tau_t}.
+            \end{equation*}
+            So $U_{\tau_t}$ is a horizontal lift of $\theta_{\tau_t}$ and $W_{\tau_t}$ is the anti-development of $\theta_{\tau_t}$. Because $\theta_{\tau_t}$ is a Brownian motion on $\mathbb{S}^{d-1}$, $\bb{W_{\tau_t}}_{t \geq 0}$ is an Euclidean Brownian motion.
+
+            \item Next, we need to check
+            \begin{equation*}
+                \inn{W \circ \tau,\beta} = 0
+            \end{equation*}
+            For any $f \in C^\infty(\mathbb{S}^{d-1})$,
+            \begin{equation*}
+                \inn{M^f,\beta}_t = \int_0^t \Gamma(f,r)(X_s)ds = \int_0^t \inn{\nabla f,\nabla r}(X_s)ds.
+            \end{equation*}
+            Note that $f$ is viewing as $f(r,\theta) = f(\theta) \in C^\infty(M)$. By
+            \begin{equation*}
+                \inn{\nabla f^\alpha,\nabla r} = g^{ij}\frac{\partial f^\alpha}{\partial x^i}\frac{\partial r}{\partial x^j} = 0,
+            \end{equation*}
+            we have 
+            \begin{equation*}
+                \inn{M^{f^\alpha},\beta} = \inn{Y^\alpha,\beta} \equiv 0,\quad \forall~\alpha = 1,2,\cdots,d,
+            \end{equation*}
+            which implies that
+            \begin{equation*}
+                \inn{W, \beta}_t = \int_0^t U_s^{-1}P_\alpha(Y_s) d\inn{Y^\alpha,\beta} = 0
+            \end{equation*}
+            By the following lemma, we have
+            \begin{equation*}
+                \inn{W \circ \tau,\beta}_t = 0.
+            \end{equation*}
+
+            \item Because $\bb{W_{\tau_t}}_{t \geq 0}$ and $\bb{\beta_t}_{t \geq 0}$ are two Brownian motions, they are independent. Moreover, since
+            \begin{equation*}
+                d\theta_{\tau_t} = U_{\tau_t}^{-1}e_i \circ dW^i_{\tau_t}
+            \end{equation*}
+            and 
+            \begin{equation*}
+                dr_t = d\beta_t + \frac{d-1}{2}\frac{G^\prime(r_t)}{G(r_t)}dt,
+            \end{equation*}
+            $r_t$ and $z_t = \theta_{\tau_t}$ are independent. \qedhere
+        \end{enumerate}
+    \end{proof}
+\end{exam}
+
+\begin{lem}
+    Let $W$ and $M$ be two continuous local martingale and $\tau$ be a continuous time-change. If $\inn{W,M} \equiv 0$, then $\inn{W \circ \tau, M} \equiv 0$.
+\end{lem}
+
+
+\begin{exam}[In Local Coordinates]
+    Let $(x^1,\cdots, x^d)$ be a local chart of $M$ and $(x^i,i=1,\cdots,d;e^i_j,1\leq i \leq j \leq d)$ be a chart of $O(M)$. The equation of a horizontal Brownian motion is
+    \begin{equation*}
+        dU_t = H_i(U_t) \circ dW^i_t,
+    \end{equation*}
+    where $W$ is a $d$-dimensional Brownian motion. We have already shown that
+    \begin{equation*}
+        H_i(u) = e^i_j\frac{\partial}{\partial x^j} - e^j_ie^\ell_m\Gamma^k_{j\ell}(x)\frac{\partial}{\partial e^k_m}.
+    \end{equation*}
+    So for $U_t = (X_t^i,e^i_j(t))$,
+    \begin{align*}
+        dX^i_t &= e^i_j(t) \circ dW^j_t, \\
+        de^i_j(t) &= - \Gamma^i_{k\ell}(X_t) e^\ell_j(t)e^k_m(t) \circ dW^m_t.
+    \end{align*}
+    For the first equation,
+    \begin{equation*}
+        d X_t^t=e_j^i(t) d W_t^j+\frac{1}{2} d\left\langle e_j^i, d W^j\right\rangle_t.
+    \end{equation*}
+    Let
+    \begin{equation*}
+        dM^i_t = e^i_j(t)dW^j_t~\Rightarrow~d\left\langle M^i, M^j\right\rangle_t=\sum_{k=1}^d e_k^i(t) e_k^j(t) d t.
+    \end{equation*}
+    Note that because $u \in O(M)$ and $ue_\ell = e^i_\ell \frac{\partial}{\partial x^i}$,
+    \begin{equation*}
+        \delta_{\ell m}=\left\langle u e_\ell, u e_m\right\rangle=e_\ell^i g_{i j} e_m^j,
+    \end{equation*}
+    i.e., $ege^\top =I$ for $e = (e^i_j)$. Moreover, because $e$ is invertible,
+    \begin{equation*}
+        e^\top = g^{-1},\quad i.e.~ \sum_{k=1}^de^i_ke^j_k = g^{ij}.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        d\left\langle M^i, M^j\right\rangle_t=g^{i j}\left(X_t\right) d t .
+    \end{equation*}
+    Then let $\sigma = g^{\frac{1}{2}}$ and define
+    \begin{equation*}
+        B_t=\int_0^t \sigma\left(X_s\right)^{-1} d M_s,
+    \end{equation*}
+    Because
+    \begin{equation*}
+        d\inn{B^i,B^j}_t = \delta^{ij}dt,
+    \end{equation*}
+    $B$ is an Euclidean Brownian motion. Also,
+    \begin{equation*}
+        dM_t = \sigma(X_t)dB_t.
+    \end{equation*}
+    On the other hand, by the second equation,
+    \begin{equation*}
+        d\left\langle e_j^i, d W^j\right\rangle_t=-\Gamma_{k\ell}^i\left(X_t\right) e_m^\ell(t) e_m^k(t)=-g^{\ell k}\left(X_t\right) \Gamma_{k\ell}^i\left(X_t\right) .
+    \end{equation*}
+    Therefore, $X_t$ satisfies
+    \begin{equation*}
+        d X_t^i=\sigma_j^i\left(X_t\right) d B_t^j-\frac{1}{2} g^{\ell k}\left(X_t\right) \Gamma_{k \ell}^i\left(X_t\right) d t,
+    \end{equation*}
+    where $B$ is a $d$-dimensional Brownian motion. Note that $X_t$ is a diffusion process generated by
+    \begin{equation*}
+        L = -\frac{1}{2} g^{\ell k} \Gamma_{k \ell}^i\frac{\partial f}{\partial x^i} + \frac{1}{2} g^{ij}\frac{\partial^2 f}{\partial x^i \partial x^j}.
+    \end{equation*}
+    Also, because
+    \begin{equation*}
+        \Delta_M f = g^{ij}\frac{\partial^2 f}{\partial x^i \partial x^j} - g^{k\ell} \Gamma^i_{k\ell}\frac{\partial f}{\partial x^i} = 2L,
+    \end{equation*}
+    $X$ is a $\Delta_M / 2$-diffusion process, and so $X$ is a Brownian motion on $M$.
+\end{exam}
+
+\section{Radial Process}
+
+Let $(M,g)$ be a complete Riemannian manifold of dimension $d$. Fix $o \in M$ and let $C_o$ be the cut locus and $E_o = M \backslash C_o$. Let
+\begin{equation*}
+    r(x) = d(x,o).
+\end{equation*}
+Then $r$ is smooth on $M \backslash C_o \cup \bb{o}$ and $\abs{\nabla r} \equiv 1$.
+
+Let $X$ be a Brownian motion on $M$ starting within $E_o$. Before it hitting $C_o$, i.e., $t < T_{C_o}$, where $T_{C_o}$ is the hitting time of $C_o$, 
+\begin{equation*}
+    \beta_t = r(X_t) - r(X_0) - \frac{1}{2}\int_0^t \Delta_Mr(X_s)ds.
+\end{equation*}
+is a local martingale. Moreover, because
+\begin{equation*}
+    \inn{r,r}_t = \inn{\beta,\beta}_t = \int_0^t \Gamma\bc{r,r}(X_s)ds = \int_0^t \abs{\nabla r (X_s)}^2 ds = t,
+\end{equation*}
+$r(X)$ is a Brownian motion on $\R$.
+
+
+\paragraph{Model Manifolds.} Choose the polar coordinate $(r,\theta)$ of $\R^n$, then equip $\R^n$ with Riemannian metric
+\begin{equation*}
+    g = dr \otimes dr + G(r)^2g_{\mathbb{S}^{n-1}}.
+\end{equation*}
+where $G \colon [0,\infty) \sto [0,\infty)$ is smooth with $G(0) = 0$, $G^\prime(0) = 1$, and $G(r) > 0$ for $r \neq 0$. Then any Riemannian manifold $(\mathbb{M},g)$ isometric to $(\R^n,g)$ is called a model manifold, and denote $0 \in \mathbb{M}$ be a fixed point corresponding to $0 \in \R^n$. For the Levi-Civita connection $\nabla$, we have the Koszul formula
+\begin{align*}
+    2\inn{\nabla_UV,W} &= U\inn{V,W} + V\inn{W,U} - W\inn{U,V} \\
+    &\quad + \inn{[U,V],W} - \inn{[V,W],U} - \inn{[U,W],V}.
+\end{align*}
+So, let $X_r = \frac{\partial}{\partial r}$ and $Y,Z \in \Gamma(T\mathbb{S}^{n-1})$, because 
+\begin{equation*}
+    \inn{X_r,X_r} = 1,\quad \inn{Y,Z} = G(r)^2\inn{Y,Z}_{\Sp^{n-1}},\quad [X_r,Y] = [X_r,Z] = 0,
+\end{equation*}
+we have the following calculations.
+\begin{enumerate}[label=(\arabic{*})]
+    \item First, because $\inn{X_r,X_r} = 1$,
+    \begin{equation*}
+        0 = X_r\inn{X_r,X_r} = 2\inn{\nabla_{X_r}X_r,X_r} = 0.
+    \end{equation*}
+    So $\nabla_{X_r}X_r \in \Gamma(T\mathbb{S}^{n-1})$. On the other hand, because $Y \perp X_r$, by Koszul formula,
+    \begin{equation*}
+        2\inn{\nabla_{X_r}X_r,Y} = - Y\inn{X_r,X_r} = 0.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \nabla_{X_r}X_r = 0.
+    \end{equation*}
+
+    \item  By Koszul formula, $\inn{\nabla_{X_r}Y,X_r} = 0$, which implies that $\nabla_{X_r}Y \in \Gamma(T\mathbb{S}^{n-1})$. Similarly,
+    \begin{equation*}
+        2\inn{\nabla_{X_r}Y,Z} = X_r\bc{\inn{Y,Z}} = 2G(r)G^\prime(r)\inn{Y,Z}_{\Sp^{n-1}} = 2\frac{G^\prime(r)}{G(r)}\bc{\inn{Y,Z}}.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \nabla_{X_r}Y = \frac{G^\prime(r)}{G(r)}Y.
+    \end{equation*}
+    By torsion-free,
+    \begin{equation*}
+        \nabla_{Y}X_r = [X_r,Y]+\nabla_{X_r}Y = \nabla_{X_r}Y = \frac{G^\prime(r)}{G(r)}Y.
+    \end{equation*}
+
+    \item Also, by Koszul formula,
+    \begin{equation*}
+        \inn{\nabla_{Y}Z,X_r} = -\frac{G^\prime(r)}{G(r)}\inn{Y,Z}.
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \nabla_{Y}Z = \nabla^{\mathbb{S}^{n-1}}_{Y}Z - \frac{G^\prime(r)}{G(r)}\inn{Y,Z}X_r,
+    \end{equation*}
+    where $\nabla^{\mathbb{S}^{n-1}}$ is the induced Levi-Civita connection.
+\end{enumerate}
+The radical curvature $\kappa_{\op{rad}}$ is defined as the sectional curvature restricted to radical section, that is a $\Pi_x \subset T_xM$, where $\Pi_x = \op{span}\bb{X_r,Y}$ for some unit $Y \in \Gamma(T\mathbb{S}^{n-1})$. To calculate the radical curvature, by above, we have
+\begin{equation*}
+    \nabla_{Y}Y = \nabla^{\mathbb{S}^{n-1}}_{Y}Y - \frac{G^\prime(r)}{G(r)}X_r,
+\end{equation*}
+which implies that
+\begin{equation*}
+    \nabla_{X_r}\nabla_{Y}Y = \frac{G^\prime}{G}\nabla^{\mathbb{S}^{n-1}}_{Y}Y - \frac{G^{\prime\prime}G - (G^\prime)^2}{G^2}X_r,
+\end{equation*}
+and
+\begin{align*}
+    \nabla_{Y}\nabla_{X_r}Y &= \nabla_{Y}\bc{\frac{G^\prime}{G}Y} = \frac{G^\prime}{G}\nabla_{Y}Y \\
+    &= \frac{G^\prime}{G}\nabla^{\mathbb{S}^{n-1}}_{Y}Y  - \bc{\frac{G^\prime}{G}}^2X_r.
+\end{align*}
+Therefore,
+\begin{align*}
+    R(X_r,Y)Y &= \nabla_{X_r}\nabla_{Y}Y - \nabla_{Y}\nabla_{X_r}Y - \nabla_{[X_r,Y]}Y \\
+    &= \nabla_{X_r}\nabla_{Y}Y - \nabla_{Y}\nabla_{X_r}Y \\
+    &= -\frac{G^{\prime\prime}}{G}X_r.
+\end{align*}
+It follows that
+\begin{equation*}
+    K(\Pi_x) = \frac{\inn{R(X_r,Y)Y,X_r}}{\abs{X_r}^2\abs{Y}^2 - \inn{X_r,Y}^2} = -\frac{G^{\prime\prime}(r)}{G(r)},
+\end{equation*}
+where $r = d(0,x)$. Note that the radial curvature is independent of the choice of $Y$, i.e.
+\begin{equation*}
+    \kappa_{\op{rad}}(r) = -\frac{G^{\prime\prime}(r)}{G(r)}.
+\end{equation*}
+i.e., $G$ is the unique solution of ODE
+\begin{equation*}
+    G^{\prime\prime}(r) + \kappa_{\op{rad}}(r)G(r) = 0,\quad G(0) = 0,~G^\prime(0) = 1.
+\end{equation*}
+Moreover,
+\begin{equation*}
+    \op{Ric}(X_r,X_r) = -(n-1)\frac{G^{\prime\prime}(r)}{G(r)}
+\end{equation*}
+Then let $\gamma(t) = (t,\theta_0)$ be a normal radial geodesic with $\dot{\gamma}(t) = X_r(t)$. Let $E_1 = X_r,E_2,\cdots,E_n$ be a orthonormal frame along $\gamma$. If
+\begin{equation*}
+    J(t) = f(t)E(t)
+\end{equation*}
+is an orthogonal Jacobian field, then $f$ satisfies
+\begin{equation*}
+    f^{\prime\prime}(t) + \kappa_{\op{rad}}(t) f(t) = 0.
+\end{equation*}
+Therefore, for any $X \in T_{\gamma(t_0)}\mathbb{S}^{n-1}$, let $J(t)$ be the orthogonal Jacobian field with $J(0) = 0$ and $J(t_0) = X$. Note that for such $J(t) = f(t)E(t)$,
+\begin{equation*}
+    f^{\prime\prime}(t) + \kappa_{\op{rad}}(t) f(t) = 0,\quad f(0) = 0,
+\end{equation*}
+which implies that $f(t) = cG(t)$ for some constant $c$. Then
+\begin{equation*}
+    \nabla^2r(X,X) = \inn{\nabla_{X_r}J(t_0),J(t_0)} = \frac{f^{\prime}\left(t_0\right)}{f\left(t_0\right)}|X|^2 = \frac{G^{\prime}\left(t_0\right)}{G\left(t_0\right)}|X|^2.
+\end{equation*}
+Therefore,
+\begin{equation*}
+    \Delta r(t) = \sum_{i=2}^\infty \nabla^2r(E_i,E_i) = (n-1)\frac{G^{\prime}\left(t_0\right)}{G\left(t_0\right)}.
+\end{equation*}
+
+\paragraph{Generalize Comparison Theorem.} Let
+\begin{align*}
+    K_M(x) &= \bb{K(\Pi) \colon \Pi \subset T_xM ~2\text{-dimensional section}}, \\
+    \op{Ric}_M(x) &= \bb{\op{Ric}(X,X) \colon X \in T_xM,~\abs{X} = 1}.
+\end{align*}
+Assume there are two model manifolds with radial curvature $\kappa_1$ and $\kappa_2$ such that
+\begin{align*}
+    \kappa_1(r) &\geq \sup\bb{K_M(x) \colon r(x) = r} \\
+    \kappa_2(r) &\leq \inf\bb{\op{Ric}_M(x) \colon r(x) = r}(d-1)^{-1}.
+\end{align*}
+Then by replacing the space form with the model manifold $(\mathbb{M},g)$ in the proof of Hessian comparison theorem and Laplacian comparison theorem, we have the following comparison,
+\begin{equation*}
+    (d-1) \frac{G_1^{\prime}(r)}{G_1(r)} \leq \Delta_M r \leq(d-1) \frac{G_2^{\prime}(r)}{G_2(r)},
+\end{equation*}
+where
+\begin{equation*}
+    G^{\prime \prime}(r)+\kappa(r) G(r)=0, \quad G(0)=0, \quad G^{\prime}(0)=1.
+\end{equation*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
