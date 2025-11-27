@@ -220,33 +220,344 @@ for two problems:
     \end{equation*}
 \end{exam}
 
-\section{Weak and Strong Solution}
+\section{Existence and Uniqueness of Solution}
 
 \begin{thm}[Existence and Uniqueness]
-    Fix $T > 0$. Let $b \colon [0,T] \times \R^n \sto \R^n$ and $\sigma \colon [0,T] \times \R^n \sto \R^{n \times m}$ be measurable such that
+    Fix $T > 0$ ($T$ could be $\infty$). Let $b \colon [0,T] \times \R^n \sto \R^n$ and $\sigma \colon [0,T] \times \R^n \sto \R^{n \times m}$ be measurable such that
     \begin{equation}\label{eq:solcond1}
-        \norm{b(t,x)} + \norm{\sigma(t,x)}_{\op{F}} \leq C(1 + \norm{x}), \quad \forall~x \in \R^n,~t \in [0,t]
+        \norm{b(t,x)} + \norm{\sigma(t,x)}_{\op{F}} \leq K(1 + \norm{x}), \quad \forall~x \in \R^n,~t \in [0,T]
     \end{equation}
-    for some constant $C$, and
+    and
     \begin{equation}\label{eq:solcond2}
-        \norm{b(t,x)-b(t,y)} + \norm{\sigma(t,x)-\sigma(t,y)}_{\op{F}} \leq D\norm{x-y},\quad \forall~x,y \in \R^n,~t \in [0,t]
+        \norm{b(t,x)-b(t,y)} + \norm{\sigma(t,x)-\sigma(t,y)}_{\op{F}} \leq K\norm{x-y},\quad \forall~x,y \in \R^n,~t \in [0,T]
     \end{equation}
-    for some constant $D$. Let $\bm{Z}$ be a random variable independent of $\mathcal{F}^W_\infty$ and $\bm{Z} \in L^2$. Then
+    for some constant $K$. Let $\bm{Z}$ be a random variable independent of $\mathcal{F}^W_\infty$ and $\bm{Z} \in L^2$. Then
     \begin{equation*}
         d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t,\quad 0\leq t \leq T,~\bm{X}_0 = \bm{Z},
     \end{equation*}
     has a unique (strong) solution $\bm{X}=(\bm{X}_t)_{t \in [0,T]}$ that is continuous w.s.t. $t$ with properties
     \begin{enumerate}[label=(\roman*)]
         \item $\bm{X}_t$ is measurable w.s.t. $\mathcal{F}^W_t \vee \sigma(\bm{Z})$ for all $t$,
-        \item $\E\bj{\int_0^T\norm{\bm{X}_u}^2du} < \infty$.
+        \item $\E\bj{\sup_{0 \leq s \leq T} \norm{\bm{X}_s}^2} < \infty$.
     \end{enumerate}
 \end{thm}
 \begin{rmk}
-    \begin{enumerate}[label=(\arabic{*})]
-        \item Condition (\ref{eq:solcond1}) guarantees that the existence of global solution w.s.t. $t$.
-        \item Condition (\ref{eq:solcond2}), as similar as ODE, is to make the uniqueness of the solution.
-    \end{enumerate}
+    Note that condition (\ref{eq:solcond2}) implies condition (\ref{eq:solcond1}). For the uniqueness, it means that indistinguishable.
 \end{rmk}
+\begin{proof}
+    First, let $\mathcal{E}_T$ be the set of all continuous and $\mathbb{F}^W$-adapted process $\bm{X}$ such that 
+    \begin{equation*}
+        \E\bj{\sup_{0 \leq s \leq T} \norm{\bm{X}_s}^2} < \infty.
+    \end{equation*}
+    Then define a norm on $\mathcal{E}_T$ as
+    \begin{equation*}
+        \norm{\bm{X}}_E^2 \defeq \E\bj{\sup_{0 \leq s \leq T} \norm{\bm{X}_s}^2}.
+    \end{equation*}
+    It is not hard to see $(\mathcal{E}_T,\norm{\cdot}_E)$ is a Banach space. Note $\bm{X} = \bm{Y}$ in $\mathcal{E}_T$ means that they are equal a.e. in the sense of 
+    \begin{equation*}
+        \bm{X},\bm{Y} \colon \Omega \sto C([0,T],\R^n).
+    \end{equation*}
+    Therefore, $\bm{X} = \bm{Y}$ in $\mathcal{E}_T$ is equivalent to
+    \begin{equation*}
+        \Pb(\bm{X}_t(\omega) = \bm{Y}_t(\omega),~t \in [0,T]) = 1,
+    \end{equation*}
+    in other words, process $\bm{X}$ and $\bm{Y}$ are indistinguishable.
+    \begin{itemize}
+        \item \textbf{Check:} If $\bm{X}$ is a solution, then for any $T > 0$, $\bm{X} \in \mathcal{E}_T$.
+
+        Fix $T > 0$. Define a stopping time
+        \begin{equation*}
+            \tau_n = \inf\bb{t \geq 0 \colon \norm{\bm{X}_t} > n}.
+        \end{equation*}
+        and consider $\bm{X}_{t \wedge \tau_n}$ for $ t \leq T$, i.e.,
+        \begin{equation*}
+            \bm{X}_{t\wedge \tau_n} = \bm{X}_0 + \int_0^{t \wedge \tau_n}b(s,\bm{X}_s)ds + \int_0^{t \wedge \tau_n} \sigma(s,\bm{X}_s)d\bm{W}_s.
+        \end{equation*}
+        Because $\norm{\bm{a} + \bm{b} + \bm{c}}^2 \leq 3(\norm{\bm{a}}^2 + \norm{\bm{b}}^2 + \norm{\bm{c}}^2)$,
+        \begin{equation*}
+            \norm{\bm{X}_{t\wedge \tau_n}}^2 \leq 3\bc{\norm{\bm{X}_0}^2+\norm{\int_0^{t \wedge \tau_n}b(s,\bm{X}_s)ds}^2 + \norm{\int_0^{t \wedge \tau_n} \sigma(s,\bm{X}_s)d\bm{W}_s}^2}.
+        \end{equation*}
+        It follows that
+        \begin{align*}
+            \E\bj{\sup_{0\leq u \leq t \wedge \tau_n}\norm{\bm{X}_{u}}^2} &\leq 3\left(\E\bj{\norm{\bm{X}_0}^2}+\E\bj{\sup_{0\leq u \leq t \wedge \tau_n}\norm{\int_0^{u}b(s,\bm{X}_s)ds}^2} \right. \\
+            &\quad \left.+ \E\bj{\sup_{0\leq u \leq t \wedge \tau_n}\norm{\int_0^{u} \sigma(s,\bm{X}_s)d\bm{W}_s}^2}\right).
+        \end{align*}
+        First, by condition (\ref{eq:solcond1}),
+        \begin{align*}
+            \E\bj{\sup_{0\leq u \leq t \wedge \tau_n}\norm{\int_0^{u}b(s,\bm{X}_s)ds}^2} &\leq K^2\E\bj{\bc{\int_0^{t \wedge \tau_n}\bc{1+\norm{\bm{X}_s}}ds}^2} \\
+            &\leq K^2(t \wedge \tau_n) \E\bj{\int_0^{t}\bc{1+\norm{\bm{X}_{s \wedge \tau_n}}}^2ds} \\
+            &\leq 2K^2 T \int_0^{t} \bc{1 + \E\bj{\norm{\bm{X}_{s \wedge \tau_n}}^2}}ds \\
+            &\leq  2K^2 T \int_0^{t} \bc{1 + \E\bj{\sup_{0\leq u \leq s \wedge \tau_n}\norm{\bm{X}_{u}}^2}}ds,
+        \end{align*}
+        where the second inequality is by
+        \begin{equation*}
+            \int^{t \wedge \tau_n}_0 g(X_s) ds \leq \int_0^t g(X_{s \wedge \tau_n})ds
+        \end{equation*}
+        for any positive $g$. Because
+        \begin{equation*}
+            \int_0^{t \wedge \tau_n} \sigma(s,\bm{X}_s)d\bm{W}_s
+        \end{equation*}
+        is a martingale, by Doob's maximal inequality,
+        \begin{align*}
+            \E\bj{\sup_{0\leq u \leq t}\norm{\int_0^{u  \wedge \tau_n} \sigma(s,\bm{X}_s)d\bm{W}_s}^2} &\leq 4\E\bj{\norm{\int_0^{t  \wedge \tau_n} \sigma(s,\bm{X}_s)d\bm{W}_s}^2} \\
+            &= 4 \E\bj{\int_0^{t  \wedge \tau_n} \norm{\sigma(s,\bm{X}_s)}_{\op{F}}^2 ds} \\
+            &\leq 4K^2 \E\bj{\int_0^{t  \wedge \tau_n} (1 + \norm{\bm{X}_s})^2 ds}\\
+            &\leq 8K^2 \int_0^{t} \bc{1 + \E\bj{\sup_{0\leq u \leq s \wedge \tau_n}\norm{\bm{X}_{u}}^2}}ds.
+        \end{align*}
+        Therefore, we have
+        \begin{equation*}
+            \E\bj{\sup_{0\leq u \leq t \wedge \tau_n}\norm{\bm{X}_{u}}^2} \leq 3\left(
+                \E\bj{\norm{\bm{X}_0}^2}+ 2\left(K^2 T+4 K^2\right)\int_0^{t} \bc{1 + \E\bj{\sup_{0\leq u \leq s \wedge \tau_n}\norm{\bm{X}_{u}}^2}}ds
+            \right).
+        \end{equation*}
+        Note that $\bm{X}_0 = \bm{Z} \in L^2$, so $\E\bj{\norm{\bm{X}_0}^2} < \infty$. By applying Gr\"onwall's lemma to
+        \begin{equation*}
+            t \mapsto \E\bj{\sup_{0\leq u \leq t \wedge \tau_n}\norm{\bm{X}_{u}}^2},
+        \end{equation*}
+        we have
+        \begin{equation*}
+            \E\bj{\sup_{0\leq u \leq T \wedge \tau_n}\norm{\bm{X}_{u}}^2} < C,
+        \end{equation*}
+        for some $C$. As $n \sto \infty$, by Fatou's lemma,
+        \begin{equation*}
+            \E\bj{\sup_{0\leq u \leq T}\norm{\bm{X}_{u}}^2} < C,
+        \end{equation*}
+        and so $\bm{X} \in \mathcal{E}_t$.
+
+        \item Fix $T = \delta$, for a small $\delta$. Let $\bm{X} \in \mathcal{E}_T$. Define
+        \begin{equation*}
+            \Phi(\bm{X})_t = \bm{Z} + \int_0^tb(s,\bm{X}_s)ds + \int_0^t \sigma(s,\bm{X}_s)d\bm{W}_s.
+        \end{equation*}
+        Note that it is obviously $\Phi(\bm{X})_t$ is $\mathcal{F}^W_t \vee \sigma(\bm{Z})$-measurable. In particular, by above we have
+        \begin{equation*}
+            \bm{\Phi(X)} \leq 3\bc{\E[\bm{Z}^2] + 2\left(K^2 T^2+4 K^2T\right)(1 + \norm{X}_E^2)} < \infty,
+        \end{equation*}
+        i.e., $\Phi \colon \mathcal{E}_T \sto \mathcal{E}_T$. Moreover, by applying condition (\ref{eq:solcond2}) and similarly reasoning as above, we have
+        \begin{equation*}
+            \|\Phi(\bm{X})-\Phi(\bm{Y})\|^2 \leq 2\left(K^2 T^2+4 K^2 T\right)\|\bm{X}-\bm{Y}\|^2.
+        \end{equation*}
+        When $T = \delta$ small enough, $\Phi$ is a contraction. So by Banach fixed point theorem, there exists a unique fixed point
+        \begin{equation*}
+            \bm{X}_t = \bm{Z} + \int_0^tb(s,\bm{X}_s)ds + \int_0^t \sigma(s,\bm{X}_s)d\bm{W}_s,
+        \end{equation*}
+        which provides a desired solution locally.
+
+       \item In order to get a solution on $[0,\infty)$, we can apply previous step to get a solution on $[T_n,T_{n+1}]$, for $T_{n+1} - T_n$ sufficiently small. Then as $T_n \sto \infty$, we get the solution. Moreover, the uniqueness is because of the uniqueness of each interval $[T_n,T_{n+1}]$. \qedhere
+    \end{itemize}
+\end{proof}
+\begin{rmk}
+    In the proof, the truncation by $\tau_n$ is important, because in order to apply Doob's maximal inequality, we need the $L^2$-integrability. 
+\end{rmk}
+\begin{rmk}
+    In fact, if $\bm{Z} \in L^p$, then we can get
+    \begin{equation*}
+        \E\bj{\sup_{0 \leq s \leq T}\norm{\bm{X}_s}^p} <\infty,
+    \end{equation*}
+    for all $p \geq 1$, by using by replacing Doob's inequality with Burkholder–Davis–Gundy (BDG) inequality on $\bm{M}_{t \wedge \tau_n} = \int_0^{t \wedge \tau_n} \sigma(s,\bm{X}_s)d\bm{W}_s$, which gets that
+    \begin{equation*}
+        \E\bj{\sup_{0 \leq u \leq t \wedge \tau_n} \norm{\int_0^{u} \sigma(s,\bm{X}_s)d\bm{W}_s}^p} \leq C_p\E\bj{\bc{\int_0^{t  \wedge \tau_n} \norm{\sigma(s,\bm{X}_s)}_{\op{F}}^2 ds}^{p/2}}.
+    \end{equation*}
+\end{rmk}
+
+\begin{thm}[Burkholder-Davis-Gundy]
+    Let $M$ be a continuous local martingale with $M_0 = 0$ and $\tau$ is a stopping time. Then for any $1\leq p < \infty$, there exists $c_p$ and $C_p$ such that
+    \begin{equation*}
+        c_p\E\bj{\inn{M}_\tau^{p/2}} \leq \E\bj{(M^*_\tau)^p} \leq C_p\E\bj{\inn{M}_\tau^{p/2}},
+    \end{equation*}
+    where $M^*_t = \sup_{0\leq s\leq t}\abs{M}_s$.
+\end{thm}
+
+If we only have the local Lipschitz continuity, then the solution also uniquely exists up to a stopping time.
+\begin{defn}
+    Consider a SDE
+    \begin{equation*}
+        d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t,\quad 0\leq t \leq T,~\bm{X}_0 = \bm{Z}.
+    \end{equation*}
+    Let $\tau$ be a $\mathbb{F}^W$-stopping time. $X$ is a solution up to $\tau$ if
+    \begin{itemize}
+        \item $\bm{X}_t$ defined on $\bb{t \leq \tau}$ is continuous and $\mathcal{F}^W_t \vee \sigma(\bm{Z})$-measurable.
+
+        \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)}^2 ds < \infty} = 1$.
+
+        \item $\bm{X}_{t} = \bm{Z} + \int_0^{t}b(s,\bm{X}_s)ds+\int_0^{t}\sigma(s,\bm{X}_s)d\bm{W}_s$ on $\bb{t < \tau}$ a.e..
+    \end{itemize}
+\end{defn}
+\begin{rmk}
+    Simply, we denote $\bm{X} = (\bm{X}_t)_{t < \tau}$. Also, we have another expression
+    \begin{equation*}
+        \bm{X}_{t \wedge \tau} = \bm{Z} + \int_0^{t \wedge \tau}b(s,\bm{X}_s)ds+\int_0^{t \wedge \tau}\sigma(s,\bm{X}_s)d\bm{W}_s.
+    \end{equation*}
+    Note that these two are actually equivalent. It seems the second one is stronger, because first for $\omega \in \bb{t < \omega}$, it has the above expression
+    \begin{equation*}
+        \bm{X}_{t}(\omega) = \bm{Z}(\omega) + \int_0^{t}b(s,\bm{X}_s(\omega))ds+\int_0^{t}\sigma(s,\bm{X}_s(\omega))d\bm{W}_s
+    \end{equation*}
+    but for $\omega \in \bb{t \geq \tau}$, it further requires
+    \begin{equation*}
+        \bm{X}_{\tau(\omega)}(\omega) = \bm{Z}(\omega) + \int_0^{\tau(\omega)}b(s,\bm{X}_s(\omega))ds+\int_0^{\tau(\omega)}\sigma(s,\bm{X}_s(\omega))d\bm{W}_s.
+    \end{equation*}
+    In fact, the first expression also has this formula by continuity.
+\end{rmk}
+
+
+\begin{thm}
+    Fix $T > 0$ ($T$ could be $\infty$). Let $b \colon [0,T] \times \R^n \sto \R^n$ and $\sigma \colon [0,T] \times \R^n \sto \R^{n \times m}$ be locally Lipschitz, i.e., for every $N \geq 0$, there exists $C_N > 0$ such that
+    \begin{equation*}
+        \norm{b(t,x)-b(t,y)} + \norm{\sigma(t,x)-\sigma(t,y)}_{\op{F}} \leq C_N\norm{x-y},\quad \forall~B(\bm{0},N),~t \in [0,T].
+    \end{equation*}
+    Then for any $\bm{Z} \in L^2$, there exists a stopping time $\tau > 0$ a.e., and a solution $\bm{X}=(\bm{X}_t)_{t <\tau}$ up to $\tau$ for SDE
+    \begin{equation*}
+        \bm{X}_{t} = \bm{Z} + \int_0^{t}b(s,\bm{X}_s)ds+\int_0^{t}\sigma(s,\bm{X}_s)d\bm{W}_s,\quad t < \tau
+    \end{equation*}
+    This solution unique in the sense that if there exist another stopping time $\tau^\prime$ and a continuous process $\bm{X}^\prime$ such that
+    \begin{equation*}
+        \bm{X}^\prime_{t} = \bm{Z} + \int_0^{t}b(s,\bm{X}^\prime_s)ds+\int_0^{t}\sigma(s,\bm{X}^\prime_s)d\bm{W}_s,,\quad t < \tau^\prime,
+    \end{equation*}
+    then $\tau^\prime \leq \tau$ and 
+    \begin{equation*}
+        \bm{X}^\prime_t\mathbb{I}_{\bb{t < \tau^\prime}} = \bm{X}_t\mathbb{I}_{\bb{t < \tau^\prime}}.
+    \end{equation*}
+    Then $\tau = \tau(\bm{Z})$ is called the explosion time.
+\end{thm}
+\begin{proof}
+    \begin{itemize}
+        \item Fix $N > 0$. Define
+        \begin{equation*}
+            \pi_N(\bm{x}):= \begin{cases}\bm{x}, & \|\bm{x}\| \leq N \\ \frac{N}{\|\bm{x}\|} \bm{x}, & \|\bm{x}\|>N\end{cases}
+        \end{equation*}
+        and let
+        \begin{equation*}
+            b_N(t, \bm{x}):=b\left(t, \pi_N(\bm{x})\right), \quad \sigma_N(t, \bm{x}):=\sigma\left(t, \pi_N(\bm{x})\right) .
+        \end{equation*}
+        Then we have
+        \begin{equation*}
+            \left\|b_N(t, \bm{x})-b_N(t, \bm{y})\right\|=\left\|b\left(t, \pi_N(\bm{x})\right)-b\left(t, \pi_N(\bm{y})\right)\right\| \leq C_N\left\|\pi_N(\bm{x})-\pi_N(\bm{y})\right\| \leq C_N\|\bm{x}-\bm{y}\|
+        \end{equation*}
+        for any $t \in [0,T]$ and $\bm{x},\bm{y} \in \R^n$. Similarly, $\left\|\sigma_N(t, \bm{x})-\sigma_N(t, \bm{y})\right\| \leq C_N\|\bm{x}-\bm{y}\|$. Then by above theorem, there exists a unique solution $\bm{X}^N$ such that
+        \begin{equation*}
+            \bm{X}_t^N=\bm{Z}+\int_0^t b_N\left(s, \bm{X}_s^N\right) d s+\int_0^t \sigma_N\left(s, \bm{X}_s^N\right) d W_s, \quad t \in[0, T].
+        \end{equation*}
+        Now define
+        \begin{equation*}
+            \tau_N:=\inf \left\{t \geq 0:\left\|\bm{X}_t^N\right\| \geq N\right\} \wedge T .
+        \end{equation*}
+        Then on $\bb{t < \tau_N}$, because $\left\|\bm{X}_t^N\right\| < N$,
+        \begin{equation*}
+            b_N\left(t, \bm{X}_t^N\right)=b\left(t, \bm{X}_t^N\right), \quad \sigma_N\left(t, \bm{X}_t^N\right)=\sigma\left(t, \bm{X}_t^N\right) .
+        \end{equation*}
+        which implies that $\bm{X}^N$ is a solution of original SDE on $\bb{t < \tau_N}$.
+
+        \item For $M > N$, we can have $\tau_M$ and $\bm{X}^M$. First, for all $\norm{\bm{x}} \leq N < M$, $\pi_N(\bm{x}) = \pi_M(\bm{x})$, hence
+        \begin{equation*}
+            b_N(t, x)=b_M(t, x)=b(t, x), \quad \sigma_N(t, x)=\sigma_M(t, x)=\sigma(t, x) .
+        \end{equation*}
+        Let
+        \begin{equation*}
+            \tau_N^M:=\inf \left\{t \geq 0:\left\|X_t^M\right\| \geq N\right\} \wedge T
+        \end{equation*}
+        On $t < \tau_M^N \wedge \tau_N$, because $\bm{X}^M,\bm{X}^N \in B(\bm{0},N)$, they solve the same SDE, So
+        \begin{equation*}
+            X_t^N=X_t^M, \quad \forall~ 0 \leq t \leq \tau_N \wedge \tau_N^M,
+        \end{equation*}
+        which implies that $\tau_N = \tau_N^M$. Moreover, it obvious that $\tau_N^M \leq \tau_M$. So $\bb{\tau_N}_N$ is an increasing sequence of stopping times. Let
+        \begin{equation*}
+            \tau = \lim_{N \sto \infty}\tau_N \in [0,\infty].
+        \end{equation*}
+        $\tau > 0$ because we can choose $N > \norm{\bm{Z}} + 1$.
+
+        \item On $\omega \in \bb{t < \tau}$, choose $N$ such that $t < \tau_N(\omega)$, define
+        \begin{equation*}
+            \bm{X}_t(\omega) \defeq \bm{X}^N_t(\omega),
+        \end{equation*} 
+        which is well-defined because for $t < \tau_N \leq \tau_M$, $\bm{X}^N_t = \bm{X}^M_t$. Clearly, $\bm{X}_0 = \bm{Z}$ and on $\bb{t < \tau_N}$,
+        \begin{equation*}
+            \bm{X}_{t} = \bm{Z} + \int_0^{t}b(s,\bm{X}_s)ds+\int_0^{t}\sigma(s,\bm{X}_s)d\bm{W}_s,
+        \end{equation*}
+        i.e.,
+        \begin{equation*}
+            \bm{X}_{t \wedge \tau_N} = \bm{Z} + \int_0^{t \wedge \tau_N}b(s,\bm{X}_s)ds+\int_0^{t \wedge \tau_N}\sigma(s,\bm{X}_s)d\bm{W}_s.
+        \end{equation*}
+        As $N \sto \infty$,
+        \begin{equation*}
+            \bm{X}_{t \wedge \tau} = \bm{Z} + \int_0^{t \wedge \tau}b(s,\bm{X}_s)ds+\int_0^{t \wedge \tau}\sigma(s,\bm{X}_s)d\bm{W}_s.
+        \end{equation*}
+
+        \item Uniqueness: If we have $\bm{X}^\prime$ and $\tau^\prime$ such that
+        \begin{equation*}
+            \bm{X}_{t \wedge \tau^{\prime}}^{\prime}=Z+\int_0^{t \wedge \tau^{\prime}} b\left(s, \bm{X}_s^{\prime}\right) d s+\int_0^{t \wedge \tau^{\prime}} \sigma\left(s, \bm{X}_s^{\prime}\right) d \bm{W}_s
+        \end{equation*}
+        Let
+        \begin{equation*}
+            \rho_N:=\inf \left\{t \geq 0:\left\|X_t\right\| \geq N\right\}, \quad \rho_N^{\prime}:=\inf \left\{t \geq 0:\left\|X_t^{\prime}\right\| \geq N\right\}.
+        \end{equation*}
+        Then on $\bb{t < \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}$, both satisfies the original SDE. Define
+        \begin{equation*}
+            \bm{Y}_t:=\bm{X}_{t \wedge \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}-\bm{X}_{t \wedge \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}^{\prime},
+        \end{equation*}
+        and so 
+        \begin{equation*}
+            \bm{Y}_t=\int_0^{t \wedge \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}\left[b\left(s, \bm{X}_s\right)-b\left(s, \bm{X}_s^{\prime}\right)\right] d s+\int_0^{t \wedge \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}\left[\sigma\left(s, \bm{X}_s\right)-\sigma\left(s, \bm{X}_s^{\prime}\right)\right] d \bm{W}_s
+        \end{equation*}
+        By similar reasoning, for $f(t) \defeq \mathbb{E}\left(\sup _{0 \leq u \leq t}\left\|\bm{Y}_u\right\|^2\right)$,
+        \begin{equation*}
+            f(t) \leq K \int_0^tf(s)ds.
+        \end{equation*}
+        Because $f(t) \geq 0$ and $f(0) = 0$, $f(t) \equiv 0$, i.e.,
+        \begin{equation*}
+            \mathbb{E}\left(\sup _{0 \leq u \leq t}\left\|\bm{Y}_u\right\|^2\right) = 0~\quad~ \bm{Y}_t = 0,
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \bm{X}_{t \wedge \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}=\bm{X}_{t \wedge \rho_N \wedge \rho_N^{\prime} \wedge \tau \wedge \tau^{\prime}}^{\prime}
+        \end{equation*}
+        Then as $N \sto \infty$,
+        \begin{equation*}
+            \bm{X}_t=\bm{X}_t^{\prime} \quad \forall~ t<\tau \wedge \tau^{\prime}.
+        \end{equation*}
+        Finally, we can show $\tau^{\prime} \leq \tau$. By continuity on $[0,\tau^\prime(\omega)]$ a.e.,
+        \begin{equation*}
+            \sup _{0 \leq s \leq \tau^{\prime}(\omega)}\left\|\bm{X}_s^{\prime}(\omega)\right\|<N .
+        \end{equation*}
+        Then by the uniqueness of solution,
+        \begin{equation*}
+            \bm{X}_t^{\prime}(\omega)=\bm{X}_t^N(\omega) \quad \forall~ t \leq \tau^{\prime}(\omega) .
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \sup _{0 \leq s \leq \tau^{\prime}(\omega)}\left\|\bm{X}_s^N(\omega)\right\|<N,
+        \end{equation*}
+        which implies that $ \tau(\omega) \geq \tau_N(\omega) > \tau^\prime(\omega)$ a.e.. \qedhere
+    \end{itemize}
+\end{proof}
+\begin{rmk}
+    Note that on our construction, we only care about the definition of $\bm{X}$ on $\bb{t < \tau}$. For $t \geq \tau$, we can extend it by adding a cemetery state $\Delta = \infty$,
+    \begin{equation*}
+        \tilde{\bm{X}}_t = \begin{cases}
+            \bm{X}_t,& t < \tau \\
+            \Delta,& t \geq \tau.
+        \end{cases}
+    \end{equation*}
+    Therefore, we consider solution valued on $\R^n \cup {\infty}$, moreover, it is continuous by definition of $\tau$.
+\end{rmk}
+
+Moreover, a solution of SDE is a Markov process
+
+\begin{thm}[Markov Property]
+    Assume $b,\sigma$ are locally Lipschitz continuous. And $\bm{X}$ is a solution up to $\tau$. Let $f \colon \R^n \sto \R$ be a bounded Borel function. Then for any $t,s \geq 0$, we have
+    \begin{equation*}
+        \E_x\bj{f(\bm{X}_{t+s}) \mid \mathcal{F}^B_t} = \E_{\bm{X}_t}[f(\bm{X}_s)],
+    \end{equation*}
+    on $\bb{t < \tau}$.
+\end{thm}
+
+\begin{thm}[Strong Markov Property]
+    Assume $b,\sigma$ are locally Lipschitz continuous. And $\bm{X}$ is a solution up to $\tau$. Let $f \colon \R^n \sto \R$ be a bounded Borel function and $T < \infty$ be a stopping time w.s.t. $\mathbb{F}^B$. Then
+    \begin{equation*}
+        \E_x\bj{f(\bm{X}_{T+s}) \mid \mathcal{F}^B_T} = \E_{\bm{X}_T}[f(\bm{X}_s)],
+    \end{equation*}
+    on $\bb{T < \tau}$.
+\end{thm}
+
+\section{Weak Solution}
 
 \begin{defn}
     Given SDE,
@@ -258,7 +569,7 @@ for two problems:
         \begin{enumerate}[label=(\roman*)]
             \item $\bm{X}$ is adapted to $\mathbb{F}^W = (\mathcal{F}^W_t)_{t \geq 0}$,
             \item $\Pb(\bm{X}_0 = \bm{Z}) = 1$,
-            \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)} ds < \infty} = 1$, for all $i,j$,
+            \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)}^2 ds < \infty} = 1$, for all $i,j$,
             \item $\bm{X}$ satisfies the integral version
             \begin{equation*}
                 \bm{X}_t = \bm{X}_0 + \int_0^tb(s,\bm{X}_s)ds+\int_0^t\sigma(s,\bm{X}_s)d\bm{W}_s.
@@ -271,7 +582,7 @@ for two problems:
             \item $\mathbb{F}$ is a filtration on $(\Omega,\mathcal{F},\mathbb{P})$ with the usual condition,
             \item $\bm{X}$ is a continuous $\mathbb{F}$-adapted process,
             \item $\bm{W} = (\bm{W}_t,\mathcal{F}_t)$ is a Brownian motion,
-            \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)} ds < \infty} = 1$, for all $i,j$,
+            \item $\Pb\bc{\int_0^T \abs{b_i(s,\bm{X}_s)} + \abs{\sigma_{ij}(s,\bm{X}_s)}^2 ds < \infty} = 1$, for all $i,j$,
             \item $\bm{X}$ satisfies the integral version
             \begin{equation*}
                 \bm{X}_t = \bm{X}_0 + \int_0^tb(s,\bm{X}_s)ds+\int_0^t\sigma(s,\bm{X}_s)d\bm{W}_s.
@@ -316,6 +627,26 @@ for two problems:
     \end{equation*}
 \end{exam}
 
+\begin{defn}
+    For a given SDE,
+    \begin{equation*}
+        d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t, \quad \bm{X}_0 \sim \mu,
+    \end{equation*}
+    \begin{itemize}
+        \item Weak uniqueness means that any two weak solutions has the same law.
+        \item Pathwise uniqueness means that when fix $(\Omega,\mathcal{F},\mathbb{P}), \mathbb{F}=(\mathcal{F}_t)$, Brownian motion $\bm{W} = (\bm{W}_t,\mathcal{F}_t)$, and $\bm{X}_0$, two solutions are indistinguishable, i.e. strong uniqueness.
+    \end{itemize}
+\end{defn}
+
+\begin{thm}[Yamada–Watanabe]
+    If both weak existence and pathwise uniqueness hold, then weak uniqueness also holds.
+\end{thm}
+\begin{cor}
+    If $b,\sigma$ are locally Lipschitz continuous, then the solution is weakly unique.
+\end{cor}
+
+
+
 \section{Feynman-Kac Formula}
 
 \begin{thm}[Feynman-Kac Formula]
@@ -359,4 +690,240 @@ for two problems:
     \end{equation*}
     with terminal $h(T,x) = f(x)$.
 \end{thm}
+
+\section{Discretization}
+
+\paragraph{Euler–Maruyama Algorithm.} For a given SDE,
+\begin{equation*}
+    d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t, \quad t \in [0,T],\quad \bm{X}_0 = \bm{Z},
+\end{equation*}
+with globally Lipschitz continuous $b,\sigma$. Let $h = T/N$ for a large $N \in \N$ and $t_k = kh$ for $k = 0,1,\cdots,N$. Construction $\{\bm{X}^h_k\}_{k=0}^N$ by setting $\bm{X}^h_0 = \bm{Z} \in L^2$ and
+\begin{equation*}
+    \bm{X}^h_{k+1} = \bm{X}^h_k + b(t_k,\bm{X}^h_k)h + \sigma(t_k,\bm{X}^h_k)\Delta \bm{W}_k.
+\end{equation*}
+Note that $\Delta \bm{W}_k$ is replaced by $\sqrt{h}\bm{\xi}$ for $\bm{\xi} \sim \mathcal{N}(0,I)$ in practice.
+\begin{thm}[Strong Convergence of EM]
+    Using notations as above, there exists a constant $C>0$ such that
+    \begin{equation*}
+        \bc{\E\bj{\max_{0\leq k \leq N}\norm{\bm{X}_{t_k} - \bm{X}^h_k}^2}}^{1/2} \leq Ch^{1/2}.
+    \end{equation*}
+\end{thm}
+\begin{proof}
+    First, from the proof of the existence and uniqueness of solution, we have
+    \begin{equation*}
+        \sup_{0 \leq t \leq T}\E\bj{\norm{\bm{X}_t}^2} < \infty,\quad \max_{0\leq k \leq N} \E\bj{\norm{\bm{X}^h_{k}}^2} < \infty.
+    \end{equation*}
+    More, by the similar reasoning, there exists $C_1$ such for $s \in [t_k,t_{k+1}]$,
+    \begin{equation*}
+        \E\bj{\norm{\bm{X}_s - \bm{X}_{t_k}}^2} \leq C_1h,
+    \end{equation*}
+    when $h$ is small.
+
+    Let $\bm{e}_k \defeq \bm{X}_{t_k} - \bm{X}^h_{k}$. Note that
+    \begin{equation*}
+        \bm{X}_{t_{k+1}}=\bm{X}_{t_k}+\int_{t_k}^{t_{k+1}} b\left(s,\bm{X}_s\right) d s+\int_{t_k}^{t_{k+1}} \sigma\left(s,\bm{X}_s\right) d \bm{W}_s
+    \end{equation*}
+    and $\bm{X}^h_{k+1} = \bm{X}^h_k + b(t_k,\bm{X}^h_k)h + \sigma(t_k,\bm{X}^h_k)\Delta \bm{W}_k$. Therefore, $\bm{e}_{k+1} = \bm{e}_k + \bm{A}_k + \bm{M}_k$, where
+    \begin{align*}
+        \bm{A}_k & :=\int_{t_k}^{t_{k+1}}\left(b\left(s,\bm{X}_s\right)-b\left(t_k,\bm{X}_k^h\right)\right) d s \\
+        \bm{M}_k & :=\int_{t_k}^{t_{k+1}}\left(\sigma\left(s,\bm{X}_s\right)-\sigma\left(t_k,\bm{X}_k^h\right)\right) d \bm{W}_s.
+    \end{align*}
+    Therefore, by $K$-Lipschitz continuity,
+    \begin{align*}
+        \E\bj{\norm{\bm{A}_k}^2} &= \E\bj{\norm{\int_{t_k}^{t_{k+1}}\left(b\left(s,\bm{X}_s\right)-b\left(t_k,\bm{X}_k^h\right)\right) d s }^2} \\
+        &\leq K^2\E\bj{\bc{\int_{t_k}^{t_{k+1}} \norm{\bm{X}_s - \bm{X}_h^k} ds}^2} \\
+        &\leq K^2h\int_{t_k}^{t_{k+1}} \E\bj{\norm{\bm{X}_s - \bm{X}_h^k}^2} ds \\
+        &\leq K^2h\int_{t_k}^{t_{k+1}} \E\bj{\norm{\bm{X}_s - \bm{X}_{t_k}}^2} + \E\bj{\norm{\bm{e}_k}^2} ds \\
+        &\leq K^2h^2(C_1h + \E\bj{\norm{\bm{e}_k}^2}),
+    \end{align*}
+    and similarly,
+    \begin{equation*}
+        \E\bj{\norm{\bm{M}_2}^2} = \int_{t_k}^{t_{k+1}} \E\norm{\sigma\left(s,\bm{X}_s\right)-\sigma\left(t_k,\bm{X}_k^h\right)}^2 ds \leq K^2h(C_1h + \E\bj{\norm{\bm{e}_k}^2}),
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+        \E\bj{\norm{\bm{e}_{k+1}}^2} &\leq 3\bc{\E\bj{\norm{\bm{e}_k}^2} + \E\bj{\norm{\bm{A}_k}^2} +\E\bj{\norm{\bm{M}_k}^2}} \\
+        &\leq 3(1 + C_2h)\E\bj{\norm{\bm{e}_k}^2} + C_3h^2,
+    \end{align*}
+    with $\E\bj{\norm{\bm{e}_{0}}^2} = 0$. By discrete Gr\"onwall,
+    \begin{equation*}
+        \E\bj{\norm{\bm{e}_k}^2} \leq C_3h^2\sum_{j=0}^{k-1}(1+C_2h)^{k-1-j} \leq C_3h^2\frac{(1+C_2h)^k-1}{(1+C_2h)-1} \leq Ch. \qedhere
+    \end{equation*}
+\end{proof}
+
+\paragraph{Weak Convergence.} For a given SDE,
+\begin{equation*}
+    d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t,
+\end{equation*}
+we construct a discrete $(\bm{X}^h_k)_{k=0}^N$ with $h = T /N < 1$ and $t_k = kh$, which is said a weak approximation if 
+\begin{equation*}
+    \E[\varphi(\bm{X}^h_N)] \sto \E[\varphi(\bm{X}_T)].
+\end{equation*}
+
+Consider the following example. Let $b(t,x) = \mu(x)$ and $\sigma(t,x) = \sigma(x)$. Assume there exists a family of probability measures $\bb{\nu_x}_{x\in \R^d}$ such that
+\begin{equation*}
+    \mu(x) = \E_{\bm{Y} \sim \nu_x}[\bm{Y}],\quad \sigma(x)\sigma(x)^\top = \op{Cov}_{\bm{Y} \sim \nu_x}[\bm{Y}].
+\end{equation*}
+Let $(P_t)_{t \in [0,T]}$ be the corresponding semigroup. Note that the corresponding generator is given by
+\begin{equation*}
+    Af(x) = \sum_i \mu_i(x) \frac{\partial f}{\partial x^i}(x) + \frac{1}{2}\sum_{i,j}a_{ij}(x)\frac{\partial^2 f}{\partial x^i\partial x^j}(x) = \inn{\mu,\nabla f} + \frac{1}{2}a : D^2\varphi,
+\end{equation*}
+where $a(x) = \sigma(x)\sigma(x)^\top$; see in the next chapter.
+
+We construct $\bm{X}^h_k$ by the following rule: first, drawing $\bm{V}_k$ such that
+\begin{equation*}
+    \bm{V}_k \mid \bm{X}^h_k = x ~\sim~\nu_x,
+\end{equation*}
+and then updating
+\begin{equation*}
+    \bm{X}^h_{k+1} = \bm{X}^h_k + \mu(\bm{X}^h_k)h + \sqrt{h}(\bm{V}_k - \mu(\bm{X}^h_k)).
+\end{equation*}
+Let $(R^h_k)_{k=0}^N$ be the corresponding semigroup.
+
+\begin{thm}\label{thm:weakconv}
+    Using notations as above, assume $\mu_i,\sigma_{ij} \in C^3_b(\R^n)$ and $a(x)$ is uniformly elliptic and regular enough. Further assume that $\sup_x\E_{\bm{Y} \sim \nu_x}\bj{\norm{\bm{Y}}^3}  < \infty$. Then there exists a $C_T > 0$ such that
+    \begin{equation*}
+        \norm{R^h_Nf - P_Tf}_\infty \leq C_Th^{1/2},\quad \forall~f \in C^3_b(\R^n)
+    \end{equation*}
+\end{thm}
+\begin{lem}\label{lem:onesteptrans}
+    Let $S_h = R^h_1$. For any $\varphi \in C^3_b$, 
+    \begin{equation*}
+        \sup_x\left|\left(S_h \varphi\right)(x)-\varphi(x)-h(A \varphi)(x)\right| \leq C h^{3 / 2}.
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Fix $x \in \R^n$. Let $\eta_x = V - \mu(x)$ for $V \sim \nu_x$. Then by definition,
+    \begin{equation*}
+        \mathbb{E}\left[\eta_x\right]=0, \quad \mathbb{E}\left[\eta_x \eta_x^{\top}\right]=a(x), \quad \mathbb{E}\left[\left|\eta_x\right|^3\right] \leq C .
+    \end{equation*}
+    Let
+    \begin{equation*}
+        \Delta:=\Delta(x, h):=\mu(x) h+\sqrt{h} \eta_x .
+    \end{equation*}
+    We have
+    \begin{equation*}
+        \left(S_h \varphi\right)(x)=\mathbb{E}[\varphi(x+\Delta)] .
+    \end{equation*}
+    (because $\E[\varphi(X,Y) \mid X = x] = \E[\varphi(x,Z)]$ for $Z \sim Y \mid X=x$). By Taylor expansion,
+    \begin{equation*}
+        \varphi(x+\Delta)=\varphi(x)+\nabla \varphi(x) \cdot \Delta+\frac{1}{2} \Delta^{\top} D^2 \varphi(x) \Delta+R(x, \Delta),
+    \end{equation*}
+    where
+    \begin{equation*}
+        |R(x, \Delta)| \leq C_{\varphi}|\Delta|^3,
+    \end{equation*}
+    by $\sup_x \abs{D^3\varphi(x)} < C_{\varphi}$. Therefore,
+    \begin{equation*}
+        \left(S_h \varphi\right)(x)-\varphi(x)=\nabla \varphi(x) \cdot \mathbb{E}[\Delta]+\frac{1}{2} \mathbb{E}\left[\Delta^{\top} D^2 \varphi(x) \Delta\right]+\mathbb{E}[R(x, \Delta)].
+    \end{equation*}
+    For the three terms on the RHS,
+    \begin{itemize}
+        \item $\mathbb{E}[\Delta]=\mu(x) h+\sqrt{h} \mathbb{E}\left[\eta_x\right]=\mu(x) h $.
+        \item because $\mathbb{E}\left[\Delta \Delta^{\top}\right]= h a(x)+h^2 \mu(x) \mu(x)^{\top}$,
+        \begin{equation*}
+            \frac{1}{2} \mathbb{E}\left[\Delta^{\top} D^2 \varphi(x) \Delta\right]=\frac{1}{2}\left(h a(x)+h^2 \mu \mu^{\top}\right): D^2 \varphi(x)=\frac{1}{2} h a(x): D^2 \varphi(x)+O\left(h^2\right)
+        \end{equation*}
+        because $D^2\varphi$ is uniformly bounded.
+
+        \item by $|a+b|^3 \leq C_1\left(|a|^3+|b|^3\right)$,
+        \begin{equation*}
+            |\Delta|^3 \leq C\left(h^3|\mu(x)|^3+h^{3 / 2}\left|\eta_x\right|^3\right) .
+        \end{equation*}
+        Since $\mu$ and $\E[\left|\eta_x\right|^3]$ are uniformly bounded,
+        \begin{equation*}
+            \mathbb{E}|\Delta|^3 \leq C_2\left(h^3+h^{3 / 2}\right) \leq C_3 h^{3 / 2} .
+        \end{equation*}
+        for $h < 1$.
+    \end{itemize}
+    Then we have
+    \begin{equation*}
+        \left(S_h \varphi\right)(x)-\varphi(x)=h(A \varphi)(x)+O\left(h^2\right)+O\left(h^{3 / 2}\right). \qedhere
+    \end{equation*}
+\end{proof}
+\begin{lem}\label{lem:discreteu}
+    Fix $f \in C^3_b(\R^n)$. Let $u(t,x) = \E[f(X_{T-t}) \colon X_0 = x] = P_{T-t}f(x)$ and $u_k(x) = u(t_k,x)$. There exists a $C^\prime$ such that
+    \begin{equation*}
+        \sup_x\left|u_k(x)-u_{k+1}(x)-h A u_{k+1}(x)\right| \leq C^\prime h^2 .
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    Note that by the backward Kolmogorov equation
+    \begin{equation*}
+        \partial_tu(t,x) + Au(t,x) = 0,\quad u(T,x) = f(x).
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        u_k(x)-u_{k+1}(x)=\int_{t_k}^{t_{k+1}} A u(s, x) d s,
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        u_k(x)-u_{k+1}(x)-h A u_{k+1}(x)=\int_{t_k}^{t_{k+1}}\left(A u(s, x)-A u\left(t_{k+1}, x\right)\right) d s.
+    \end{equation*}
+    Moreover, our ``regular enough'' for $a$ means that $u \in C_b^{1,3}([0,T] \times \R^n)$, so
+    \begin{equation*}
+        \left|A u(s, x)-A u\left(t_{k+1}, x\right)\right| \leq C_4\left|s-t_{k+1}\right|
+    \end{equation*}
+    by the boundedness of $\mu,\sigma$. Therefore,
+    \begin{equation*}
+        \abs{u_k(x)-u_{k+1}(x)-h A u_{k+1}(x)} \leq \int_{t_k}^{t_{k+1}} C_4\left|s-t_{k+1}\right| d s \leq C^\prime h^2. \qedhere
+    \end{equation*}
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{thm:weakconv}]
+    Fix $f \in C^3_b(\R^n)$. Let $u(t,x) = \E[f(X_{T-t}) \colon X_0 = x] = P_{T-t}f(x)$ and $u_k = u(t_k,\cdot)$. We need to measure $\norm{R^h_Nf - u(0,\cdot)}$.
+    \begin{itemize}
+        \item First, let
+        \begin{equation*}
+            \delta_k(x):=\left(S_h u_{k+1}\right)(x)-u_k(x) .
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \delta_k(x)=\left(S_h u_{k+1}(x)-u_{k+1}(x)-h A u_{k+1}(x)\right)+\left(u_{k+1}(x)+h A u_{k+1}(x)-u_k(x)\right) .
+        \end{equation*}
+        For the first term, by Lemma \ref{lem:onesteptrans},
+        \begin{equation*}
+            \left|S_h u_{k+1}(x)-u_{k+1}(x)-h A u_{k+1}(x)\right| \leq C h^{3 / 2} .
+        \end{equation*}
+        By Lemma \ref{lem:discreteu},
+        \begin{equation*}
+            \left|u_{k+1}(x)+h A u_{k+1}(x)-u_k(x)\right| \leq C^\prime h^2 .
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \left|\delta_k(x)\right| \leq C_5 h^{3 / 2} \quad \Longrightarrow \quad\left\|\delta_k\right\|_{\infty} \leq C_5 h^{3 / 2} .
+        \end{equation*}
+
+        \item Note that $u(T,x) = f(x)$ and $R^h_Nf(x) = \E\bj{f(\bm{X}^h_N) \mid X_0 = x} = \E_x[u(T,\bm{X}^h_N)]$. So
+        \begin{equation*}
+            R_N^h f(x)-P_T f(x)=\mathbb{E}_x\left[u\left(T, \bm{X}_N^h\right)-u(0, x)\right]=\sum_{k=0}^{N-1} \mathbb{E}_x\left[u\left(t_{k+1}, \bm{X}_{k+1}^h\right)-u\left(t_k, \bm{X}_k^h\right)\right] .
+        \end{equation*}
+        For each $k$, we have
+        \begin{equation*}
+            \mathbb{E}_x\left[u\left(t_{k+1}, \bm{X}_{k+1}^h\right)-u\left(t_k, \bm{X}_k^h\right)\right]=\mathbb{E}_x\left[\mathbb{E}\left[u_{k+1}\left(\bm{X}_{k+1}^h\right)-u_k\left(\bm{X}_k^h\right) \mid \bm{X}_k^h\right]\right].
+        \end{equation*}
+        Because 
+        \begin{equation*}
+            \mathbb{E}\left[u_{k+1}\left(\bm{X}_{k+1}^h\right) \mid \bm{X}_k^h=y\right]=\left(S_h u_{k+1}\right)(y),
+        \end{equation*}
+        we get
+        \begin{equation*}
+            \mathbb{E}_x\left[u\left(t_{k+1}, \bm{X}_{k+1}^h\right)-u\left(t_k, \bm{X}_k^h\right)\right]=\mathbb{E}_x\left[\delta_k\left(\bm{X}_k^h\right)\right],
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \left\|R_N^h f-P_T f\right\|_{\infty}=\sup _x\left|\sum_{k=0}^{N-1} \mathbb{E}_x\left[\delta_k\left(\bm{X}_k^h\right)\right]\right| \leq \sum_{k=0}^{N-1} \sup _x\left|\mathbb{E}_x\left[\delta_k\left(\bm{X}_k^h\right)\right]\right| .
+        \end{equation*}
+        Moreover, since $\left|\mathbb{E}_x\left[\delta_k\left(\bm{X}_k^h\right)\right]\right| \leq\left\|\delta_k\right\|_{\infty}$,
+        \begin{equation*}
+            \left\|R_N^h f-P_T f\right\|_{\infty} \leq \sum_{k=0}^{N-1}\left\|\delta_k\right\|_{\infty} \leq \sum_{k=0}^{N-1} C_5 h^{3 / 2}=N C_5 h^{3 / 2}=\frac{T}{h} C_5 h^{3 / 2}=C_T h^{1 / 2} . \qedhere
+        \end{equation*}
+    \end{itemize}
+\end{proof}
+
+
+
+
+
+
+
 
