@@ -920,10 +920,293 @@ Let $(R^h_k)_{k=0}^N$ be the corresponding semigroup.
     \end{itemize}
 \end{proof}
 
+\section{Diffusion Process}
+
+In the following, we do not distinguish vector-valued $X$ and scale-valued $X$.
+
+We mainly consider the time-homogeneous case, i.e.,
+\begin{equation*}\label{eq:diffusion}
+    dX_t = b(X_t)dt + \sigma(X_t)dB_t,
+\end{equation*}
+where $X_t \in \R^n$, $b\colon \R^{n} \sto \R^n$, $\sigma \colon \R^{n} \sto \R^{n\times m}$ are time-independent, and $B = (B_t)_{t \geq 0}$ be a $m$-dimensional Brownian motion. Any process $X = (X_t)_{t}$ satisfies (\ref{eq:diffusion}) is called a (It\^o) diffusion. We further assume $b,\sigma$ are locally Lipschitz continuous, which implies that a solution $X$ to (\ref{eq:diffusion}) is a Markov process satisfying the strong Markov property. 
+
+\paragraph{Semigroup.} So it has the corresponding transition semigroup $(Q_t)_{t \geq 0}$, i.e.,
+\begin{equation*}
+    Q_tg(x) = \E_x[g(X_t)\mathbb{I}_{\bb{t < \tau(x)}}] = \E[g(X_t)\mathbb{I}_{\bb{t < \tau(x)}} \mid X_0 = x],\quad \forall~g \in \mathcal{B}_b(\R^n)
+\end{equation*}
+Note that if for the globally Lipschitz continuous case, $(Q_t)_{t \geq 0}$ is a true Markov semigroup. But for the locally Lipschitz continuous case, $(Q_t)_{t \geq 0}$ is a sub-Markov semigroup, i.e, $Q_t \colon \mathcal{B}_b(\R^n) \sto \mathcal{B}_b(\R^n)$ is a linear contraction, positive preserving operator with $Q_tQ_s = Q_{t+s}$, and
+\begin{equation*}
+    0 < Q_t\mathds{1}(x) = \Pb_x(t < \tau(x)) \leq 1
+\end{equation*}
+instead of $= 1$. But if we consider $\R^n \cup \bb{\infty}$ and extend the solution $\tilde{X}_t$ valued on $\R^n \cup \bb{\infty}$, then define
+\begin{equation*}
+    \tilde{Q}_t\tilde{g}(x) = \E_x[\tilde{g}(\tilde{X}_t)],\quad \tilde{g} \in \mathcal{B}_b(\R^n \cup \bb{\infty}),
+\end{equation*}
+and so such $(\tilde{Q}_t)_{t \geq 0}$ is a true Markov semigroup. Moreover, for $g \in \mathcal{B}_b(\R^n)$, we can extend $g$ to $\tilde{g} \mathcal{B}_b(\R^n \cup \bb{\infty})$ by define $\tilde{g}(\infty) = 0$. Then
+\begin{equation*}
+    Q_tg = \tilde{Q}_t\tilde{g}.
+\end{equation*}
+
+Furthermore, for any $x$, define
+\begin{equation*}
+    p_t(x,A) = \Pb_x\bc{X^x_t \in A,~t < \tau(x)},\quad \forall~A \in \mathcal{B}(\R^n),
+\end{equation*}
+which is a transition kernel because $x \mapsto p_t(x,A)$ is Borel measurable. Then we have for all $g \in \mathcal{B}_b(\R^n)$
+\begin{equation*}
+    Q_tg(x) = \E_x[g(X_t)\mathbb{I}_{\bb{t < \tau(x)}}] = \int g(y) p_t(x,dy).
+\end{equation*}
+\begin{rmk}
+    Similarly, by introducing $\infty$ and $\tilde{X}_t$, the definition is as usual,
+    \begin{equation*}
+        \tilde{p}_t(x, A):=\mathbb{P}_x\left(\tilde{X}_t \in A\right),
+    \end{equation*}
+    a proper Markov kernel defined on $\R^n \cup \bb{\infty}$.
+\end{rmk}
+
+Note that, for locally Lipschitz continuous case, $Q_t$ does not satisfy the Jensen's inequality, unlike the global Lipschitz case, but for $1 \leq p < \infty$, we still have
+\begin{equation*}
+    \abs{Q_t f}^p \leq Q_t \abs{f}^p.
+\end{equation*}
+\begin{proof}
+    Let
+    \begin{equation*}
+        m_t(x) = p_t(x,\R^n) = \Pb_x\bc{X^x_t \in \R^n,~t < \tau(x)} < 1,\quad \text{and}\quad \pi_x(dy) = \frac{p_t(x,dy)}{m_t(x)}.
+    \end{equation*}
+    So $\pi_x$ is a probability measure, which implies that
+    \begin{equation*}
+        \left|\int f \pi_x\right|^p \leq \int|f|^p \pi_x
+    \end{equation*}
+    by Jensen's inequality. Note that $P_t f(x)=\int f(y) p_t(x, d y)=m_t(x) \int f \pi_x(d y)$. Therefore,
+    \begin{align*}
+        \left|Q_t f(x)\right|^p &=m_t(x)^p\left|\int f \pi_x\right|^p \\
+        &\leq m_t(x)^p \int|f|^p \pi_x=m_t(x)^{p-1} \int|f|^p p_t(x, d y) \\
+        &\leq \int|f|^p p_t(x, d y).\qedhere
+    \end{align*}
+\end{proof}
 
 
+\paragraph{Generator.} We can also define the generator
+\begin{equation*}
+    Lg(x) = \lim_{t \downarrow 0} \frac{Q_tg(x) - g(x)}{t},
+\end{equation*}
+for
+\begin{equation*}
+    g \in \mathcal{D}(L) \defeq \bb{g\in \mathcal{B}_b(\R^n) \colon~\exists~f \in \mathcal{B}_b(\R^n), \lim_{t \downarrow 0} \norm{\frac{Q_tg(x) - g(x)}{t} - f}_\infty = 0}.
+\end{equation*}
+Such $L$ can be extended by solving the martingale problem, for
+\begin{equation*}
+    f \in D(L)\subset \mathcal{B}_b(\R^n)~\Leftrightarrow~ f(X^x_t) - f(x) - \int_0^t g(X^x_s)ds,~\text{ a local martingale }
+\end{equation*}
+for some measurable $g$ with
+\begin{equation*}
+    \int_0^t \abs{g(X^x_s)}ds <\infty,\quad a.e. \text{ on }\bb{t < \tau(x)},\quad \forall~x,~t
+\end{equation*} 
+First, $g$ is unique up to in the sense that if $g_1,g_2$ satisfy above, then
+\begin{equation*}
+    g_1(X^x_t) = g_2(X^x_t),\quad \forall~ \text{ Lebesgue }a.e. - t \geq 0,
+\end{equation*}
+by differentiating $\int_0^t(g_1(X^x_s) - g_2(X^x_s))ds = 0$. And it is independent of the choice of $X_0$. If in $C(\R^n)$, $g$ is unique up to pointwise, i.e., $g_1(x) = g_2(x)$, because the differentiating exits at each $t$ and we can choose $X^x_0 = x$.
 
+\begin{thm}
+    If $b$ and $\sigma$ are globally Lipschitz in $x$, then $(Q_t)_{t \geq 0}$ is a Feller-Dynkin semigroup.
+\end{thm}
+\begin{proof}
+    For
+    \begin{equation*}
+        X_t^x = x + \int_0^t \sigma\left(X_s^x\right) \mathrm{d} B_s+\int_0^t b\left(X_s^x\right) \mathrm{d} s,
+    \end{equation*}
+    by the global Lipschitz of $b,\sigma$ and similar reasoning as in the proof of the existence and uniqueness of the solution, we have
+    \begin{equation*}
+        \E\bj{\norm{X_t^x-x}^2} \leq C(t + t^2),
+    \end{equation*}
+    for some $C$. By Markov's inequality,
+    \begin{equation*}
+        \sup _{x \in \mathbb{R}^d} P\left(\left \Vert X_t^x-x\right \Vert >R\right) \underset{R \rightarrow \infty}{\longrightarrow} 0 .
+    \end{equation*}
+    Moreover, writting
+    \begin{equation*}
+        \left|Q_t f(x)\right|=\left|\E\left[f\left(X_t^x\right)\right]\right| \leq\left|\E\left[f\left(X_t^x\right) \mathbf{1}_{\left\{\left \Vert X_t^x-x\right \Vert  \leq A\right\}}\right]\right|+\|f\| P\left(\left\Vert X_t^x-x\right\Vert >R\right),
+    \end{equation*}
+    Since $f \in C_0$, $f(x) \sto 0$ as $x \sto \infty$. So
+    \begin{equation*}
+        \limsup _{x \rightarrow \infty}\left|Q_t f(x)\right| \leq\|f\| \sup _{x \in \mathbb{R}^d} P\left(\left\Vert X_t^x-x\right\Vert >R\right).
+    \end{equation*}
+    As $R \sto \infty$, $\limsup _{x \rightarrow \infty}\left|Q_t f(x)\right| = 0$, and so $Q_tf \in C_0$.
 
+    Similarly, for any $\varepsilon > 0$,
+    \begin{equation*}
+        \sup _{x \in \mathbb{R}^d}\left|E\left[f\left(X_t^x\right)\right]-f(x)\right| \leq \sup _{x, y,\Vert x-y\Vert  \leq \varepsilon}|f(x)-f(y)|+2\|f\| \sup _{x} P\left(\left\Vert X_t^x-x\right\Vert >\varepsilon\right) .
+    \end{equation*}
+    As above, by Markov's inequality,
+    \begin{equation*}
+        \sup _{x } P\left(\left\Vert X_t^x-x\right\Vert >\varepsilon\right) \underset{t \rightarrow 0}{\longrightarrow} 0.
+    \end{equation*}
+    Therefore, by continuity for $f$,
+    \begin{align*}
+        \limsup _{t \rightarrow 0}\left\|Q_t f-f\right\|&=\limsup _{t \rightarrow 0}\left(\sup _{x}\left|E\left[f\left(X_t^x\right)\right]-f(x)\right|\right) \\
+        &\leq \sup _{x, y,\Vert x-y\Vert  \leq \varepsilon}|f(x)-f(y)| \sto 0
+    \end{align*}
+    as $\varepsilon \sto 0$. \qedhere
+\end{proof}
+\begin{rmk}
+    For global Lipschitz case, because $Q$ is Feller-Dynkin, the definition of generator coincides with the usual definition on $C_0$.
+\end{rmk}
+\begin{rmk}
+    If $b$ and $\sigma$ are only locally Lipschitz, because of the explosion time, we cannot guarantee $Q_t f$ in $C_0$ for $f \in C_0$.
+\end{rmk}
 
+Note that by It\^o formula, for any $f \in C_c^2(\R^n)$
+\begin{align*}
+    f(X_t) &= f(X_0) + \sum_{i=1}^n\int_0^t \frac{\partial f}{\partial x_i}dX^i_s + \frac{1}{2} \sum_{i,j=1}^n \int_0^t\frac{\partial^2 f}{\partial x_i \partial x_j}d[X^i,X^j]_s \\
+    &= f(X_0) + \sum_{i=1}^n\int_0^t b^i\frac{\partial f}{\partial x_i}ds + \sum_{i,j=1}^n\int_0^t \sigma_{ij} \frac{\partial f}{\partial x_i}dB^j_s \\
+    &\quad + \frac{1}{2} \sum_{i,j=1}^n \int_0^t (\sigma \sigma^\top)_{ij} \frac{\partial^2 f}{\partial x_i \partial x_j} dt \\
+    &= f(X_0) + \int_0^t \bc{ \sum_{i=1}^n b^i\frac{\partial f}{\partial x_i} + \frac{1}{2} \sum_{i,j=1}^n (\sigma \sigma^\top)_{ij} \frac{\partial^2 f}{\partial x_i \partial x_j} }ds + \sum_{i,j=1}^n\int_0^t \sigma_{ij} \frac{\partial f}{\partial x_i}dB^j_s,
+\end{align*}
+because
+\begin{equation*}
+    d[X^i,X^j]_s = \bc{\sum_k \sigma_{ik}dB^k}\bc{\sum_\ell \sigma_{j\ell}dB^\ell} = (\sigma \sigma^\top)_{ij}dt.
+\end{equation*}
+This implies the following theorem.
 
+\begin{thm}
+    If $f \in C_c^2(\R^n)$, then $f \in \mathcal{D}(L)$ and
+    \begin{equation*}
+        Lf(x) = \sum_i b_i(x) \frac{\partial f}{\partial x_i}+\frac{1}{2} \sum_{i, j}\left(\sigma \sigma^\top\right)_{i, j}(x) \frac{\partial^2 f}{\partial x_i \partial x_j},
+    \end{equation*}
+    where $L$ is the generator of Markov process $X$.
+\end{thm}
 
+\noindent For $f \in C_c^2(\R^n)$, we have
+\begin{equation*}
+    f(X_t) = f(X_0) + \int_0^t Lf(X_s)ds + \int_0^t \nabla f(X_s)^\top \sigma (X_s) dB_s.
+\end{equation*}
+So
+\begin{equation*}
+    M_t = f(X_t) - \int_0^t Lf(X_s)ds
+\end{equation*}
+is a martingale, which is a particular case of Theorem \ref{thm:martingale_markov}. Note that here $X_0$ is not fixed to a point. Moreover, if $f \in C^2$, then we just know $(M_t)_{t \geq 0}$ is a local martingale.
+
+\begin{thm}[Dynkin's formula]
+    If $f \in C_c^2(\R^n)$ and $\tau$ is a stopping time with $\E_x[\tau] < \infty$, then
+    \begin{equation*}
+        \E_x\bj{f(X_\tau)} = f(x) + \E_x\bj{\int_0^\tau Lf(X_s)ds}.
+    \end{equation*}
+\end{thm}
+
+\begin{exam}[Bessel Process]
+    Let $B$ be a $m$-dimensional standard Brownian motion. Consider
+    \begin{equation*}
+        R_t = \norm{B_t} = \sqrt{(B^1_t)^2 + \cdots + (B^m_t)^2},
+    \end{equation*}
+    the Bessel process. Then we know
+    \begin{equation*}
+        dR_t = \frac{n-1}{2R_t} + \sum_{i=1}^m \frac{B^i}{R_t}dB^i.
+    \end{equation*}
+    Let
+    \begin{equation*}
+        \tilde{B}_t =  \sum_{i=1}^m \int_0^t \frac{B^i_s}{\norm{B_s}}dB^i_s.
+    \end{equation*}
+    Then by L\'evy's theorem, $\tilde{B} = (\tilde{B}_t)_{t \geq 0}$ is a $1$-dimensional Brownian motion. Therefore,
+    \begin{equation*}
+        dR_t = \frac{n-1}{2R_t}dt + d\tilde{B}_t.
+    \end{equation*}
+    So by the uniqueness of weak solution, $R=(R_t)_{t \geq 0}$ is also an It\^o diffusion with generator
+    \begin{equation*}
+        Lf(x) = \frac{1}{2}f^{\prime\prime}(x) + \frac{n-1}{2x}f^\prime(x).
+    \end{equation*} 
+\end{exam}
+
+\begin{exam}
+    Let $U \in C^1(\R^n)$ and 
+    \begin{equation*}
+        L = \Delta \cdot + \inn{\nabla U,\nabla \cdot}
+    \end{equation*}
+    on $C^\infty_c(\R^n)$. Then by the divergence theorem,
+    \begin{equation*}
+        \mu(dx) = e^{U(x)}dx
+    \end{equation*}
+    is symmetric for $L$. Moreover, $L$ is essentially self-adjoint on $L^2(\R^n,\mu)$.
+\end{exam}
+
+\paragraph{Invariant Measure.} For the semigroup $P_t$ induced by a solution of SDE with locally Lipschitz continuous coefficient, a measure $\mu$ is invariant if
+\begin{equation*}
+    \int Q_tf d\mu = \int f d\mu,
+\end{equation*}
+for all bounded measurable function $f$, which is equivalent to $\int Q_tf d\mu = \int f d\mu$ for all $f \in C_c^\infty$, since on a locally compact Hausdorff space, Radon measures are uniquely determined by their integrals against $C_c$. Because $C_c^\infty \subset D(L)$, it is equivalent to
+\begin{equation*}
+    \int Lf d\mu = 0,\quad \forall~f \in C_c^\infty(\R^n).
+\end{equation*}
+Moreover, $\mu$ is called sub-invariant if 
+\begin{equation*}
+    \int Q_tf d\mu \leq \int f d\mu,
+\end{equation*}
+for all bounded measurable function $f$. Note that, if $\mu$ is sub-invariant, the by above $\abs{Q_t f}^p \leq Q_t \abs{f}^p$, for any $f \in \mathcal{B}_b \cap L^p(\mu)$,
+\begin{equation*}
+    \int \abs{Q_t f}^p d\mu \leq \norm{f}_p^p < \infty,
+\end{equation*}
+i.e., $Q_t f \in \mathcal{B}_b \cap L^p(\mu)$, because $\mathcal{B}_b \cap L^p(\mu) \subset L^p(\mu)$ dense, so
+\begin{equation*}
+    Q_t \colon  L^p(\mu) \sto  L^p(\mu)
+\end{equation*}
+a contraction, for all $1 \leq p \leq \infty$.
+
+A measure $\mu$ is called symmetric to $Q_t$ if for any $f,g \in \mathcal{B}_b(\R^n)$,
+\begin{equation*}
+    \int f Q_t g d\mu = \int g Q_tfd\mu.
+\end{equation*}
+In kernel representation,
+\begin{equation*}
+    \mu(dx)p_t(x,dy) = \mu(dy)p_t(dx,y).
+\end{equation*}
+It is obvious that $\mu$ is sub-invariant, so $Q_t \colon L^2(\mu) \sto L^2(\mu)$ is self-adjoint. On the other hand, because $C_c^\infty \subset L^2(\mu)$ is dense, $\mu$ is symmetric if and only if
+\begin{equation*}
+    \int f Q_t g d\mu = \int g Q_tfd\mu,\quad \forall~f,g \in C_c^\infty,
+\end{equation*}
+so it is equivalent to
+\begin{equation*}
+    \int f L g d\mu = \int g Lfd\mu,\quad \forall~f,g \in C_c^\infty.
+\end{equation*}
+Note that because $P_t \colon L^2(\mu) \sto L^2(\mu)$ is a contractive semigroup that satisfies
+\begin{equation*}
+    \lim_{t \sto 0} \norm{Q_tf - f}_2 = 0, \quad \forall~f \in L^2(\mu),
+\end{equation*}
+by the continuity of $X_t$ and DCT, the Hille–Yosida theory provides a generator $A$ with $D(A)$ that is self-adjoint on $L^2(\mu)$ and
+\begin{equation*}
+    Q_t = e^{tA}.
+\end{equation*}
+By above, it is obvious that $L \subset A$ when setting considering $D(L) = C_c^\infty$. So $A$ is a self-adjoint extension of $L$. For $L$, we can consider its Friedrichs extension $A_F$, $A = A_F$ by the construction. Moreover, if $L$ is essentially self-adjoint on $C_c^\infty(M)$ w.s.t. $\mu$, it has only one self-adjoint extension that is $A = A_F$. On the other hand, we can consider the martingale extension $\mathcal{L}$ on $L^2(\mu)$ similar as above, that is, $f \in D(\mathcal{L})$ if $f \in L^2(\mu)$ and there exists a $g \in L^2(\mu)$ such that for any $x$
+\begin{equation*}
+    f(X^x_t) - f(x) - \int_0^t g(X^x_s)ds
+\end{equation*}
+is a local martingale, then $g \defeq \mathcal{L}f$. Note that $A = \mathcal{L}$, because $A \subset \mathcal{L}$ is directly by Dynkin's formula, and $\mathcal{L} \subset A$ is by taking expectation, which implies that
+\begin{equation*}
+    Q_tf(x) - f(x) = \int_0^t Q_sg(x)ds~\Rightarrow~\lim_{t \sto 0} \frac{Q_tf(x) - f(x)}{t} = g(x).
+\end{equation*}
+
+\paragraph{Weak uniqueness.} On $\mathbb{R}^n$ (a Riemannian manifold $M$), when given a smooth second order elliptic, but not necessarily nondegenerate, diﬀerential operator L, an $\mathrm{F}_*$-adapted stochastic process $X: \Omega \rightarrow W(\mathbb{R}^n \cup \{\infty\})$ defined on a filtered probability space ($\Omega, \mathrm{F}_*, \mathbb{P}$ ) is called a diffusion process generated by $L$ if $X$ is an $\R^n \cup \{\infty\}$-valued $\mathrm{F}_*$ semimartingale up to stopping time $e(X)$ and
+$$
+M^f(X)_t=f\left(X_t\right)-f\left(X_0\right)-\int_0^t L f\left(X_s\right) d s, \quad 0 \leq t<e(X),
+$$
+and if $X_0 \sim \mu$, then $\mathbb{P}_\mu = X_{\#}\mathbb{P}$ is called a $L$-diffusion measure on $W(\R^n \cup \{\infty\})$. For such $L$ and given $\mu$, $\mathbb{P}_\mu$ uniquely exits (\cite{hsu2002stochastic}).
+
+For a given diffusion process
+\begin{equation*}
+    dX_t = \mu(X_t)dt + \sigma(X_t)dB_t,
+\end{equation*}
+we know its solution is an $L$-diffusion process with
+\begin{equation*}
+    Lf = \sum_i \mu_i(x) \frac{\partial f}{\partial x^i}(x) + \frac{1}{2}\sum_{i,j}a_{ij}(x)\frac{\partial^2 f}{\partial x^i\partial x^j}(x).
+\end{equation*}
+Conversely, for a given $L$,
+\begin{equation*}
+    L = \sum_i \mu_i(x) \frac{\partial}{\partial x^i} + \frac{1}{2}\sum_{i,j}a_{ij}(x)\frac{\partial^2}{\partial x^i\partial x^j},
+\end{equation*}
+and $X$ is a semimartingale on a probability space $(\Omega,\mathbb{P},\mathrm{F}_*)$ satisfying that  
+$$
+    M^f(X)_t=f\left(X_t\right)-f\left(X_0\right)-\int_0^t L f\left(X_s\right) d s, \quad 0 \leq t<e(X),
+$$
+is a local martingale for any $f \in C^\infty(M)$, then $X$ is a solution of 
+\begin{equation*}
+    dX_t = \mu(X_t)dt + \sigma(X_t)dB_t,
+\end{equation*}
+for $\sigma = a^{1/2}$ and some Brownian motion $B$.
