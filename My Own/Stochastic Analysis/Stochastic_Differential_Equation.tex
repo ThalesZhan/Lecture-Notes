@@ -697,7 +697,7 @@ Moreover, a solution of SDE is a Markov process
 \begin{equation*}
     d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t, \quad t \in [0,T],\quad \bm{X}_0 = \bm{Z},
 \end{equation*}
-with globally Lipschitz continuous $b,\sigma$. Let $h = T/N$ for a large $N \in \N$ and $t_k = kh$ for $k = 0,1,\cdots,N$. Construction $\{\bm{X}^h_k\}_{k=0}^N$ by setting $\bm{X}^h_0 = \bm{Z} \in L^2$ and
+with globally Lipschitz continuous $b,\sigma$, and we always assume $\bm{W}$ is independent of $\bm{Z}$. Let $h = T/N$ for a large $N \in \N$ and $t_k = kh$ for $k = 0,1,\cdots,N$. Construction $\{\bm{X}^h_k\}_{k=0}^N$ by setting $\bm{X}^h_0 = \bm{Z} \in L^2$ and
 \begin{equation*}
     \bm{X}^h_{k+1} = \bm{X}^h_k + b(t_k,\bm{X}^h_k)h + \sigma(t_k,\bm{X}^h_k)\Delta \bm{W}_k.
 \end{equation*}
@@ -738,18 +738,85 @@ Note that $\Delta \bm{W}_k$ is replaced by $\sqrt{h}\bm{\xi}$ for $\bm{\xi} \sim
     \end{align*}
     and similarly,
     \begin{equation*}
-        \E\bj{\norm{\bm{M}_2}^2} = \int_{t_k}^{t_{k+1}} \E\norm{\sigma\left(s,\bm{X}_s\right)-\sigma\left(t_k,\bm{X}_k^h\right)}^2 ds \leq K^2h(C_1h + \E\bj{\norm{\bm{e}_k}^2}),
+        \E\bj{\norm{\bm{M}_k}^2} = \int_{t_k}^{t_{k+1}} \E\norm{\sigma\left(s,\bm{X}_s\right)-\sigma\left(t_k,\bm{X}_k^h\right)}^2 ds \leq K^2h(C_1h + \E\bj{\norm{\bm{e}_k}^2}),
     \end{equation*}
-    Therefore,
+    Writing $\bm{e}_{k+1} = \bm{e}_k + \bm{A}_k + \bm{M}_k$, so
     \begin{align*}
-        \E\bj{\norm{\bm{e}_{k+1}}^2} &\leq 3\bc{\E\bj{\norm{\bm{e}_k}^2} + \E\bj{\norm{\bm{A}_k}^2} +\E\bj{\norm{\bm{M}_k}^2}} \\
-        &\leq 3(1 + C_2h)\E\bj{\norm{\bm{e}_k}^2} + C_3h^2,
+        \E\bj{\norm{\bm{e}_{k+1}}^2} &= \E\bj{\norm{\bm{e}_{k}}^2} + \E\bj{\norm{\bm{A}_{k}}^2} + \E\bj{\norm{\bm{M}_{k}}^2} \\
+        &\quad + 2\bc{\E\bj{\inn{\bm{e}_k,\bm{A}_k}} + \E\bj{\inn{\bm{e}_k,\bm{M}_k}} + \E\bj{\inn{\bm{M}_k,\bm{A}_k}}}
     \end{align*}
-    with $\E\bj{\norm{\bm{e}_{0}}^2} = 0$. By discrete Gr\"onwall,
+    \begin{itemize}
+        \item For $\E\bj{\inn{\bm{e}_k,\bm{M}_k}}$, let $\mathbb{F} = (\mathcal{F}_t)$ be $\mathcal{F}_t = \sigma(\bm{X}_0,\bm{W}_s \colon s \leq t)$. Then we know $X^h_k,X_{t_k}$ are $\mathcal{F}_{t_k}$-measurable and so is $\bm{e}_k$. Moreover, because $\bm{W}$ is independent of $\bm{X}_0$, $\bm{W}$ is a Brownian motion w.s.t. $\mathbb{F}$, which implies that
+        \begin{equation*}
+            \E\bj{\bm{M}_k \mid \mathcal{F}_{t_k}} = \E\bj{ \int_{t_k}^{t_{k+1}}\left(\sigma\left(s,\bm{X}_s\right)-\sigma\left(t_k,\bm{X}_k^h\right)\right) d \bm{W}_s \mid \mathcal{F}_{t_k}} = 0.
+        \end{equation*}
+         So
+        \begin{align*}
+            \E\bj{\inn{\bm{e}_k,\bm{M}_k}} & = \E\bj{\E\bj{\inn{\bm{e}_k,\bm{M}_k}} \mid \mathcal{F}_{t_k}} \\
+            &= \E\bj{ \inn{ \bm{e}_k, \E\bj{ \bm{M}_k \mid \mathcal{F}_{t_k} } } } = 0
+        \end{align*}
+
+        \item For $\E\bj{\inn{\bm{M}_k,\bm{A}_k}}$, by $2ab \leq a^2 + b^2$,
+        \begin{equation*}
+            2\abs{\E\bj{\inn{\bm{M}_k,\bm{A}_k}}} \leq 2\bc{\E\bj{\norm{\bm{A}_k}^2}}^{1/2}\bc{\E\bj{\norm{\bm{M}_k}^2}}^{1/2} \leq \E\bj{\norm{\bm{A}_k}^2} + \E\bj{\norm{\bm{M}_k}^2}.
+        \end{equation*}
+
+        \item For $\E\bj{\inn{\bm{e}_k,\bm{A}_k}}$,
+        \begin{equation*}
+            2\abs{\E\bj{\inn{\bm{e}_k,\bm{A}_k}}} \leq 2\bc{\E\bj{\norm{\bm{e}_k}^2}}^{1/2}\bc{\E\bj{\norm{\bm{A}_k}^2}}^{1/2} \leq \varepsilon\E\bj{\norm{\bm{e}_k}^2} +\frac{1}{\varepsilon} \E\bj{\norm{\bm{A}_k}^2},
+        \end{equation*}
+        for any $\varepsilon > 0$. In particular, choose $\varepsilon = h$,
+        \begin{equation*}
+            2\abs{\E\bj{\inn{\bm{e}_k,\bm{A}_k}}} \leq h\E\bj{\norm{\bm{e}_k}^2} +\frac{1}{h} \E\bj{\norm{\bm{A}_k}^2}.
+        \end{equation*}
+    \end{itemize}
+    Finally, combining this with $\E\bj{\norm{e_0}^2} = 0$, we have
+    \begin{align*}
+        \E\bj{\norm{\bm{e}_{k+1}}^2} &\leq \bc{1 + h}\E\bj{\norm{\bm{e}_{k}}^2} + \bc{2 + \frac{1}{h}}\E\bj{\norm{\bm{A}_{k}}^2} + 2\E\bj{\norm{\bm{M}_{k}}^2} \\
+        &\leq \bc{1 + h}\E\bj{\norm{\bm{e}_{k}}^2} + \bc{2K^2h^2 + K^2h}(C_1h + \E\bj{\norm{\bm{e}_k}^2}) + 2 K^2h(C_1h + \E\bj{\norm{\bm{e}_k}^2}) \\
+        &\leq \bc{1 + C_2h}E\bj{\norm{\bm{e}_{k}}^2} + C_3h^2
+    \end{align*}
+    By discrete Gr\"onwall's inequality,
     \begin{equation*}
         \E\bj{\norm{\bm{e}_k}^2} \leq C_3h^2\sum_{j=0}^{k-1}(1+C_2h)^{k-1-j} \leq C_3h^2\frac{(1+C_2h)^k-1}{(1+C_2h)-1} \leq Ch. \qedhere
     \end{equation*}
 \end{proof}
+\begin{rmk}
+    For the discrete Gr\"onwall's inequality, if 
+    \begin{equation*}
+        u_{k+1} \leq (a + bh)u_k + ch^2,\quad u_0 = 0,
+    \end{equation*}
+    where $a,b,c > 0$, then we have
+    \begin{equation*}
+        u_k \leq  \alpha_h^k u_0+c h^2 \sum_{j=0}^{k-1} \alpha_h^j = c h^2 \sum_{j=0}^{k-1} \alpha_h^j,\quad \alpha_h \defeq a + bh.
+    \end{equation*}
+    \begin{itemize}
+        \item For $a < 1$, for small enough $h$, we can have $\alpha_h = a + bh < 1$. So
+        \begin{equation*}
+            \sum_{j=0}^{k-1} \alpha_h^j \leq \frac{1}{1-\alpha_h} \leq c^\prime,
+        \end{equation*}
+        as $h \sto 0$. It follows that
+        \begin{equation*}
+            u_k \leq c c^\prime h^2 = \mathcal{O}(h^2),
+        \end{equation*}
+        as $h \sto 0$.
+
+        \item For $a = 1$, as above
+        \begin{equation*}
+            u_k \leq ch\bc{(1+bh)^k - 1}.
+        \end{equation*}
+        Because $kh = t_k$ and $bh > 0$,
+        \begin{equation*}
+            (1+b h)^k \leq e^{b h k}=e^{b t_k} \leq e^{b T}.
+        \end{equation*}
+        So
+        \begin{equation*}
+            u_k \leq (e^{bT} - 1)ch = \mathcal{O}(h).
+        \end{equation*}
+
+        \item For $a > 1$, then we cannot get the convergence.
+    \end{itemize}
+\end{rmk}
 
 \paragraph{Weak Convergence.} For a given SDE,
 \begin{equation*}

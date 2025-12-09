@@ -33,7 +33,7 @@ in the sense of on $L^2(dm)$. Also,
 \begin{equation*}
     d\mu = e^{-U}dm,
 \end{equation*}
-is the invariant measure of such diffusion process, which is also symmetric for $L$. Note that $L$ is essentially self-adjoint on $C_c(M)$ w.s.t. $\mu$. Therefore, it has a unique self-adjoint extension $L$ on $L^2(\mu,M)$. Let
+is the invariant measure of such diffusion process, which is also symmetric for $L$. Note that $L$ is essentially self-adjoint on $C^\infty_c(M)$ w.s.t. $\mu$. Therefore, it has a unique self-adjoint extension $L$ on $L^2(\mu,M)$. Let
 \begin{equation*}
     P_t = e^{-tL}
 \end{equation*}
@@ -75,7 +75,11 @@ Therefore, $L \subset A$. By the essential self-adjointness of $L$, $L = A$, whi
     \end{equation*}
     called the forward Kolmogorov equation/Fokker-Planck equation, where $L^*$ acts on $\nu$ by
     \begin{equation*}
-        \int_M f d(L^*\nu) = \int_M Lf d\nu.
+        \int_M f d(L^*\nu) = \int_M Lf d\nu,\quad \forall~f \in \mathcal{D}(L).
+    \end{equation*}
+    Note that $L^*\nu$ may not be a measure. Note that $\mu$ is an invariant measure if and only if $L^*\mu = 0$, i.e.,
+    \begin{equation*}
+        \int_M Lf d\mu = 0,\quad \forall~f \in C_c^\infty(M).
     \end{equation*}
 \end{rmk}
 
@@ -184,12 +188,732 @@ we can have
     It needs techniques from the optimal transport theory, like $W_2$-geodesic convexity, et. al., or it can be obtained by directly calculating from the SDE.
 \end{rmk}
 
+\section{Time-reversal Process}
+
+This section is based on results in \cite{de2022riemannian}. Let $(M,g)$ be a compact Riemannian manifold (without boundary) with Levi-Civita connection $\nabla$ and canonical volume measure $dm$ and the corresponding probability measure $dp_{\op{ref}} = dm / m(M)$. In be following, we consider a more general equation.
+\begin{equation*}
+    dX_t = b(X_t)dt + dB^M_t,\quad t \in [0,T]
+\end{equation*}
+where $b \in \Gamma(TM)$, $B^M$ is a Brownian motion on $M$. The main goal of this section is to consider its time-reversal process $Y_t = X_{T-t}$. It can show that \begin{equation*}
+    dY_t = (-b(Y_t) + \nabla \log p_{T-t}(Y_t))dt + dB^M_t,
+\end{equation*}
+where $X_t \sim \mu_t$ with $d\mu_t = p_t dp_{\op{ref}}$. It is equivalent to prove that for any $f \in C^\infty(M)$,
+\begin{equation*}
+    M^{Y,f}_t \defeq f(Y_t) - f(Y_0) - \int_0^t \inn{-b(Y_s) + \nabla \log p_{T-s}(Y_s),\nabla f(Y_s)} + \frac{1}{2}\Delta_Mf(Y_s)ds
+\end{equation*}
+is a martingale, by the weak uniqueness of Martingale problem. Furthermore, it suffices to show that for any $g \in C^\infty(M)$ and any $t \geq s \in [0,T]$,
+\begin{equation*}
+    \E\bj{g(Y_s)(f(Y_t)-f(Y_s))} = \E\bj{g(Y_s)\int_s^t\tilde{\mathcal{A}}_sf(Y_s)ds},
+\end{equation*}
+where
+\begin{equation*}
+    \tilde{\mathcal{A}}_tf = \inn{-b + \nabla \log p_{T-t}, \nabla f} + \frac{1}{2}\Delta_M f.
+\end{equation*}
+Note that for $t \geq s \in [0,T]$
+\begin{align*}
+    \E\bj{g(Y_s)(f(Y_t)-f(Y_s))} &= \E\bj{g(X_{T-s})(f(X_{T-t})-f(X_{T-s}))} \\
+    &= \E\bj{\E[g(X_{T-s}) \mid X_{T-t}]f(X_{T-t})} - \E[g(X_{T-s})f(X_{T-s})] \\
+    &= \E\bj{v(T-t,X_{T-t})f(X_{T-t})}- \E\bj{v(T-s,X_{T-s})f(X_{T-s})},
+\end{align*}
+where $v \colon [0,T-s] \times M \sto \R$ is given by
+\begin{equation*}
+    v(u,x) = \E[g(X_{T-s}) \mid X_u = x] = P_{T-s-u}g(x),
+\end{equation*}
+where $P_t$ is the semigroup associated with $X_t$. Assume $v$ is regular enough. So it satisfies the backward Kolmogorov equation
+\begin{equation*}
+    \partial_u v(u,x) = -\mathcal{A}v(u,x).
+\end{equation*}
+Let $h \colon [0,T-s] \times M \sto \R$ be defined as
+\begin{equation*}
+    h(u,x) = v(u,x)f(x).
+\end{equation*}
+Note that by It\^o's formula, because $\mathcal{A}$ is the generator for $X$,
+\begin{equation*}
+     M^{X,h}_t = h(t,X_t) - h(0,X_0) - \int_0^t (\partial_u + \mathcal{A})h(u,X_u)du
+\end{equation*}
+is martingale. It implies that
+\begin{equation*}
+    \E\bj{v(T-t,X_{T-t})f(X_{T-t})}- \E\bj{v(T-s,X_{T-s})f(X_{T-s})} = \int_{T-s}^{T-t}\E\bj{(\partial_u + \mathcal{A})h(u,X_u)}du.
+\end{equation*}
+To calculate it, first, we have
+\begin{align*}
+    \partial_u h(u, x)+\mathcal{A} h(u, x)&=f(x) \partial_u v(u, x)+f(x) \mathcal{A} v(u, x)+v(u, x) \mathcal{A} f(x)+\langle\nabla f(x), \nabla v(u, x)\rangle \\
+    &=v(u, x) \mathcal{A} f(x)+\langle\nabla f(x), \nabla v(u, x)\rangle,
+\end{align*}
+because $\Delta_M(fg) = f \Delta_Mg+g\Delta_Mf + 2\inn{\nabla f, \nabla g}$ by $\op{div}(fX) = \inn{\nabla f, X}+f\op{div}X$. By the divergence theorem,
+\begin{equation*}
+    \E\bj{\langle\nabla f(X_u), \nabla v(u, X_u)\rangle} = -\mathbb{E}\left[v\left(u, X_u\right) \Delta_M f\left(X_u\right)\right]-\mathbb{E}\left[v\left(u, X_u\right)\left\langle\nabla f\left(X_u\right), \nabla \log p_u\left(X_u\right)\right\rangle\right] .
+\end{equation*}
+Therefore, it implies that
+\begin{align*}
+    \mathbb{E}\left[(\partial_u +\mathcal{A})h\left(u, X_u\right)\right] &= \mathbb{E}\left[v\left(u, X_u\right)\left(\left\langle b\left(X_u\right)-\nabla \log p_u\left(X_u\right), \nabla f\left(X_u\right)\right\rangle-\frac{1}{2} \Delta_{M} f\left(X_u\right)\right)\right] \\
+    &= -\mathbb{E}\left[v\left(u, X_u\right) \tilde{\mathcal{A}}_{T-u}f\left(X_u\right)\right].
+\end{align*}
+Therefore, we have
+\begin{align*}
+    \E\bj{g(Y_s)(f(Y_t)-f(Y_s))} &= \int_{T-t}^{T-s} \mathbb{E}\left[v\left(u, X_u\right) \tilde{\mathcal{A}}_{T-u}f\left(X_u\right)\right] du \\
+    &=\int_{T-t}^{T-s} \mathbb{E}\left[\E\bj{g(X_{T-s}) \mid X_u} \tilde{\mathcal{A}}_{T-u}f\left(X_u\right)\right] du \\
+    &=\int_{T-t}^{T-s} \mathbb{E}\left[\E\bj{g(X_{T-s})\tilde{\mathcal{A}}_{T-u}f\left(X_u\right) \mid X_u} \right] du \\
+    &= \int_{T-t}^{T-s} \E\bj{g(X_{T-s})\tilde{\mathcal{A}}_{T-u}f\left(X_u\right) } du \\
+    &= \E\bj{g(Y_s)\int_{s}^{t}\tilde{\mathcal{A}}_{u}f\left(Y_u\right) du}.
+\end{align*}
+
+\paragraph{Integration by Parts.} Let $(\mathsf{X},\mathcal{X})$ be a polished space. Let $\Pb$ be a probability measure on $\Omega = C([0,T],\mathsf{X})$ equipping with canonical measurable sets. Let $X$ be the canonical process valued on $\mathcal{X}$ defined on $\Omega$, i.e., $X \colon C([0,T],\mathsf{X}) \sto \mathsf{X}$,
+\begin{equation*}
+    X_t(\omega) \defeq \omega_t,
+\end{equation*}
+and $\mathbb{F}^X = (\mathcal{F}_t)_{t \in [0,T]}$ with $\mathcal{F}_t = \sigma(X_s \colon s \in [0,t])$. For any $t \in [0,T]$, $\Pb_t \defeq (X_t)_{\#}\Pb$ and more general, $\Pb_{\mathcal{T}} = (X_{\mathcal{T}})_{\#}\Pb$.
+
+Let $M = (M_t)_{t \in [0,T]}$ be a $\mathsf{X}$-valued and $\mathbb{F}^X$-adapted process on $\Omega$, which is called a $\Pb$-local martingale if it is a local martingale w.s.t. $\mathbb{F}^X$. 
+
+For such $\Pb$, it can define the extended generator $\bar{\mathcal{A}}_\Pb$ (No Markov in advance). For a function,
+\begin{equation*}
+    u \colon [0,T] \times \mathsf{X} \sto \R
+\end{equation*}
+if there exists a $\mathsf{X}$-valued process $A = (A_t)_{t \in[0,T]}$ on $\Omega$ such that
+\begin{enumerate}[label=(\alph{*})]
+    \item $A$ is $\mathbb{F}^X$-adapted,
+    \item $\int_0^T \abs{A_s} ds < \infty$ $\Pb$-a.e.,
+    \item $M = (M_t)_{t \in [0,T]}$ defined as
+    \begin{equation*}
+        M_t = u(t,X_t) - u(0,X_0) - \int_0^tA_sds,
+    \end{equation*}
+    is a $\Pb$-local martingale.
+\end{enumerate}
+Note that if $A$ exists, then it is unique, because
+\begin{equation*}
+    \int_0^t A_s - B_s ds \text{ a local martingale }\quad \Rightarrow \quad A_t = B_t
+\end{equation*}
+$dt \otimes \Pb$-a.e.. Moreover, because $A$ is $\left(\sigma\left(X_{[0, t]}\right) ; 0 \leq t \leq T\right)$-adapted, i.e., $A_t$ is $\sigma(Y)$-measurable, for $Y = X_{[0,t]}$, $A_t = A_t(Y) = A_t(X_{[0,t]})$. Then we say $u \in \mathcal{D}(\bar{\mathcal{A}}_\Pb)$ and 
+\begin{equation*}
+    A_t \eqdef \bar{\mathcal{A}}_\Pb u(t, X_{[0,t]}).
+\end{equation*}
+Let $(u,v)$ be $u,v \colon [0,T] \times \mathsf{X} \sto \R$ such that $u,v,uv \in \mathcal{D}(\bar{\mathcal{A}}_\Pb)$. For $(u,v)$, define the carr\'e du champ $\bar{\Upsilon}_{\mathbb{P}}$
+\begin{equation*}
+    \bar{\Upsilon}_{\mathbb{P}} = \bar{\mathcal{A}}_\Pb(uv) - u\bar{\mathcal{A}}_\Pb(v) - v\bar{\mathcal{A}}_\Pb(u).
+\end{equation*}
+Assume there exists an algebra $\mathcal{U}_\Pb \subset \mathcal{D}(\bar{\mathcal{A}}_\Pb) \cap C_b(X)$. Let
+\begin{equation*}
+    \mathcal{U}_{\mathbb{P}, 2}=\left\{u \in \mathcal{U}_{\mathbb{P}}: \bar{\mathcal{A}}_\Pb u \in \mathrm{~L}^2(\mathbb{P}), \bar{\Upsilon}_{\mathbb{P}}(u, u) \in \mathrm{L}^1(\mathbb{P})\right\} .
+\end{equation*}
+
+If $\Pb$ is Markov, it has the usual operator $\mathcal{A}_\Pb u \colon [0,T] \times \mathsf{X} \sto \R$. We can see
+\begin{equation*}
+    \bar{\mathcal{A}}_\Pb u(t, X_{[0,t]}) =  \mathcal{A}_\Pb u(t,X_t)
+\end{equation*}
+For $\Pb$, let $R\Pb$ be the distribution of the inverse process of $X$, i.e., $t \mapsto X_{T - t}$. If $\Pb$ is Markov, then $R\Pb$ is also a Markov. In the following, we only consider the Markov case. For $u \colon \mathsf{X} \sto \R$ and $u \in \mathcal{D}(\mathcal{A}_{\Pb})$, we denote
+\begin{equation*}
+    \mathcal{A}_{\Pb}u(t,x) \eqdef \mathcal{A}_{\Pb,t}u(x).
+\end{equation*}
+For Markov case, we use $\mathcal{U}_\Pb$, $\mathcal{U}_{\mathbb{P}, 2}$ denotes time-independent $u$ such that the conditions are satisfied for all $t \in [0,T]$.
+
+\begin{thm}[Theorem 3.17,~\cite{cattiaux2023time}]
+    Let $u,v \in \mathcal{U}_{\mathbb{P}, 2}$.
+    \begin{enumerate}[label=(\alph{*})]
+        \item If the following holds,
+        \begin{enumerate}[label=(\roman*)]
+            \item $(t,x) \mapsto \Upsilon_{\Pb,t}(u,v)(x)$ is continuous.
+            \item $\mathcal{U}_{\mathbb{P}, 2}$ determines the weak convergence of Borel measures on $\mathcal{X}$.
+            \item the linear map
+            \begin{equation*}
+                v \in \clo{\mathcal{U}}_{2,\Pb} \sto \E\bj{\int_0^T \Upsilon_{\Pb,t}(u,v_t)(X_t)dt}
+            \end{equation*}
+            determines a finite measure on $[0,T] \times \mathsf{X}$, where
+            \begin{equation*}
+                \clo{\mathcal{U}}_{2,\Pb} = \bb{v \in C([0,T] \times \mathsf{X},\R) \colon v(t,\cdot) \in \mathcal{U}_{\mathbb{P}, 2},~\forall~t \in [0,T]}.
+            \end{equation*}
+        \end{enumerate}
+        then $u \in \mathcal{D}(\mathcal{A}_{R(\Pb)})$ and $\mathcal{A}_{R(\Pb)} u \in \mathrm{L}^1(\Pb)$. 
+
+        \item If $u \in \mathcal{D}(\mathcal{A}_{R(\Pb)})$ and $\mathcal{A}_{R(\Pb)} u \in \mathrm{L}^1(\Pb)$, then for a.e. $t \in [0,T]$,
+        \begin{equation*}
+            \E\bj{\bc{\mathcal{A}_{\Pb,t} u(X_t) + \mathcal{A}_{R(\Pb),T-t}u(X_t)}v(X_t) + \Upsilon_{\Pb,t}(u,u)(X_t)} = 0.
+        \end{equation*}
+    \end{enumerate}
+\end{thm}
+ 
+\paragraph{Girsanov Theory on Compact Riemannian Manifolds.} Let $(M,g)$ be a compact Riemannian manifold and isometrically and properly embedding in $\R^p$.
+
+\begin{thm}
+    Let $\mathbb{Q}$ be the path measure of a Brownian motion on $M$. Let $\Pb$ be a Markov path measure on $C([0,T],M)$ such that $\op{KL}(\Pb ~\Vert~ \mathbb{Q} ) < \infty$. Then there exists a time-dependent vector field $\beta$ such that $\Pb$ satisfies the martingale problem for generator $\mathcal{A}$, where for $t \in [0,T]$, $u \in C^2(M)$, and $x \in M$,
+    \begin{equation*}
+        \mathcal{A}(t,u)(x) = \inn{\beta(t,x),\nabla u(x)} + \frac{1}{2}\Delta_Mu(x),
+    \end{equation*}
+    In addition, we have 
+    \begin{equation*}
+        \op{KL}(\Pb ~\Vert~ \mathbb{Q} ) = \op{KL}(\Pb_0 ~\Vert~ \mathbb{Q}_0 ) + \frac{1}{2}\int_0^T \E\bj{\norm{\beta(t,X_t)}^2}dt.
+    \end{equation*}
+\end{thm}
+\begin{rmk}
+    For Euclidean case, if $\mathbb{P} \ll \mathbb{Q}$, then for $X \sim \Pb$, we can find an Euclidean Brownian motion $W$ such that
+    \begin{equation*}
+        dX_t = v(t,X_t)dt + dW_t,
+    \end{equation*}
+    which implies that the generator
+    \begin{equation*}
+        \mathcal{A}_t = \inn{v,\nabla \cdot} + \frac{1}{2} \Delta \cdot.
+    \end{equation*}
+    Moreover, by Girsanov's theorem,
+    \begin{equation*}
+        \op{KL}(\Pb ~\Vert~ \mathbb{Q} ) = \op{KL}(\Pb_0 ~\Vert~ \mathbb{Q}_0 ) + \frac{1}{2}\int_0^T \E\bj{\norm{v(t,X_t)}^2}dt.
+    \end{equation*}
+\end{rmk}
+\begin{proof}
+    By embedding, if let $B_t^M$ be a Brownian motion on $M$, we have
+    \begin{equation*}
+        dB_t^M = P_i(B^M_t) \circ dB^i_t = P(B^M_t) \circ dB_t,
+    \end{equation*}
+    for the orthogonal projection $P$ and an Euclidean Brownian motion $B$. Note that
+    \begin{equation*}
+        dB_t^M = \bar{b}(B^M_t)dt +  P(B^M_t) dB_t,
+    \end{equation*} 
+    where $\bar{b}$ satisfies $P(x)\bar{b}(x) = 0$ for all $x \in M$. It implies that
+    \begin{equation*}
+        \frac{1}{2}\Delta_Mu(x) = \inn{\clo{\nabla} \bar{u}(x),\clo{\nabla} \bar{v}(x)} + \frac{1}{2}\inn{P(x),\clo{\nabla}^2 \bar{u}(x)},
+    \end{equation*}
+    for any $u,v \in C_c^2(M)$, where $\bar{u},\bar{v} \in C_c^2(\R^p)$ be their extensions. Because $\mathbb{Q}$ is the distribution of $B^M$, which can be viewed on $\R^p$, by uniqueness condition and finite entropy, there exists $\bar{\beta} \colon [0,T] \times \R^p \sto \R^p$ such that
+    \begin{equation*}
+        \op{KL}(\mathbb{P} ~\Vert~ \mathbb{Q})=\op{KL}\left(\mathbb{P}_0 ~\Vert~ \mathbb{Q}_0\right)+\frac{1}{2} \int_0^T \mathbb{E}\left[\left\|P\left(X_t\right) \bar{\beta}\left(t, X_t\right)\right\|^2\right] d t ,
+    \end{equation*}
+    and $\Pb$ satisfies the martingale problem for $\bar{A} \colon [0,T] \times C^2_c(\R^p) \sto \R$ with
+    \begin{equation*}
+        \bar{\mathcal{A}}(t, \bar{u})(x)=\langle\bar{b}(x)+ P(x) \bar{\beta}(t, x), \clo{\nabla} \bar{u}(x)\rangle+\frac{1}{2}\left\langle P(x), \clo{\nabla}^2 \bar{u}(x)\right\rangle .
+    \end{equation*}
+    Let $\beta = P\bar{\beta}$. Note that for any $u \in C_c^2(M)$, if $\bar{u}$ is a extension of $u$ constant-along-normals, then for any $X \in \Gamma(TM)$,
+    \begin{equation*}
+        \nabla^2 u(X,Y) = \clo{\nabla}^2\bar{u}(X,Y).
+    \end{equation*}
+    By $\Delta_M u = \sum_\alpha\nabla^2 u(P_\alpha,P_\alpha)$,
+    \begin{align*}
+        \sum_\alpha\nabla^2 u(P_\alpha,P_\alpha) &= \sum_\alpha\clo{\nabla}^2 \bar{u}(P_\alpha,P_\alpha) \\
+        &= \sum_\alpha P_\alpha^iP_\alpha^j \frac{\partial^2 \bar{u}}{\partial x^i \partial x^j} \\
+        &= \sum_{i,j}P_i^j \frac{\partial^2 \bar{u}}{\partial x^i \partial x^j} \\
+        &= \inn{P,\clo{\nabla}^2 \bar{u}}
+    \end{align*}
+    because $P = P^2$. Moreover, $P(x)\bar{b}(x) = 0$ implies that $\bar{b} \in \Gamma(NM)$, which follows that $\inn{\bar{b}(x),\clo{\nabla} \bar{u}} = 0$. So
+    \begin{align*}
+        \bar{\mathcal{A}}(t, \bar{u})(x)&=\langle\bar{b}(x)+ P(x) \bar{\beta}(t, x), \clo{\nabla} \bar{u}(x)\rangle+\frac{1}{2}\left\langle P(x), \clo{\nabla}^2 \bar{u}(x)\right\rangle \\
+        &=\langle\beta(t, x), \nabla u(x)\rangle+\frac{1}{2} \Delta_M u. \qedhere
+    \end{align*}
+    In particular, when viewing $\Pb$ as a process on $M$, it satisfies the martingale problem with generator $\mathcal{A} \colon [0,T] \times C_c^2(M) \times M \sto \R$ given by
+    \begin{equation*}
+        \mathcal{A}(t,u)(x) = \langle\beta(t, x), \nabla u(x)\rangle+\frac{1}{2} \Delta_M u(x). 
+    \end{equation*}
+\end{proof}
+
+
+\begin{cor}
+    Let $\Pb^1,\Pb^2$ be two Markov path measures on $C([0,T],M)$ with $\Pb^1_0 = \Pb^2_0$, associating with SDE
+    \begin{equation*}
+        dX^i_t = b_i(t,X^i_t)dt + dB^M_t.
+    \end{equation*}
+    Then we have
+    \begin{equation*}
+        \op{KL}(\Pb^1 ~\Vert~ \Pb^2) = \frac{1}{2}\int_0^T\E\bj{\norm{b_1(t,X^1_t) - b_2(t,X^2_t)}^2}dt.
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    Let $M$ be a compact manifold isometrically embedded in $\R^p$ such that $M \subset B(0,R)$. Let $\varphi \in C^\infty(\R^p)$ such that $\varphi|_{\clo{B(0,R)}} = 1$ and $\varphi(x) = 0$ for $\abs{x} \geq R+1$. Let $\bar{b}_i \in C_c^2([0,T] \times \R^p,\R^b)$ be the extension of $b_i(t,x)$. Consider
+    \begin{align*}
+        d \bar{X}_t^i&= \varphi\left(\bar{X}_t^i\right)\bc{\bar{b}^i\left(t, \bar{X}_t^i\right)dt + dB^M_t} \\
+        &=\varphi\left(\bar{X}_t^i\right)\left\{\mathrm{P}\left(\bar{X}_t^i\right) \bar{b}^i\left(t, \bar{X}_t^i\right)+\bar{b}\left(\bar{X}_t\right)\right\} d t+\varphi\left(\bar{X}_t^i\right) \mathrm{P}\left(\bar{X}_t^i\right) \mathrm{dB}_t.
+    \end{align*}
+    So for any $x \in M$, $f \in C^2_c(M)$ with extension $\bar{f} \in C_c^2(\R^p)$,
+    \begin{align*}
+        \bar{\mathcal{A}}_t^i(\bar{f})(x) & =\left\langle\bar{b}^i(t, x)+\bar{b}(x), \nabla \bar{f}(x)\right\rangle+\frac{1}{2}\left\langle\mathrm{P}(x), \nabla^2 \bar{f}(x)\right\rangle \\
+        & =\left\langle b^i(t, x), \nabla f(x)\right\rangle+\frac{1}{2} \Delta_{M} f(x) .
+    \end{align*}
+    It follows that $\bar{X}^i$ viewing as a process on $M$ has the same generator as $X^i$. So $\bar{X}^i$ has the distribution $\Pb^i$. Moreover, denote $\Pb^i$ as $\bar{\Pb}^i$ when it is viewed as $\R^p$-process. Note that because the
+    \begin{equation*}
+        \varphi(x) = 0,~\forall~\norm{x} \geq R+1
+    \end{equation*}
+    the global Lipschitz condition of SDE $\bar{X}^i$ is satisfied. Moreover, by the compactness,
+    \begin{align*}
+        \left(d \bar{\mathbb{P}}^1 / d \bar{\mathbb{P}}^2\right) & \left(\left(\bar{{X}}_t^1\right)_{t \in[0, T]}\right)=\exp \left[\int_0^T\left\langle\bar{b}^1\left(t, \bar{{X}}_t^1\right)-\bar{b}^2\left(t, \bar{{X}}_t^1\right), \mathrm{P}\left(\bar{{X}}_t^1\right) d \bar{{X}}_t^1\right\rangle\right. \\
+        & \left.-\frac{1}{2} \int_0^T\left\langle\bar{b}^1\left(t, \bar{{X}}_t^1\right)-\bar{b}^2\left(t, \bar{{X}}_t^1\right), \mathrm{P}\left(\bar{{X}}_t^1\right)\left(\bar{b}^1\left(t, \bar{{X}}_t^1\right)+\bar{b}^2\left(t, \bar{{X}}_t^1\right)\right)\right\rangle d t\right]\\
+        &= \exp \left[\frac{1}{2} \int_0^T\left\|\bar{b}^1\left(t, \overline{{X}}_t^1\right)-\bar{b}^2\left(t, \overline{{X}}_t^1\right)\right\|^2 \mathrm{~d} t+\int_0^T\left\langle\bar{b}^1\left(t, \overline{{X}}_t^1\right)-\bar{b}^2\left(t, \overline{{X}}_t^1\right), \mathrm{P}\left(\overline{{X}}_t^1\right) \mathrm{d} {B}_t\right\rangle\right] .
+    \end{align*}
+    It follows that
+    \begin{equation*}
+        \op{KL}\left(\overline{\mathbb{P}}^1 ~\Vert~ \overline{\mathbb{P}}^2\right)=\frac{1}{2} \int_0^T \mathbb{E}\left[\left\|b^1\left(t, {X}_t^1\right)-b^2\left(t, {X}_t^1\right)\right\|^2\right] d t.\qedhere
+    \end{equation*}
+\end{proof}
+
+\paragraph{Proof of Time-reversal Formula.}
+
+\begin{cor}
+    Let $\mathbb{Q}$ be the path measure of a Brownian motion on $M$ with $\mathbb{Q}_0 = p_{\op{ref}}$ and $\mathbb{P}$ be a path measure on $C([0,T],M)$ with $\op{KL}(\Pb ~\Vert~\mathbb{Q}) < \infty$. Then, there exist two time-dependent vector fields $\beta_\Pb$ and $\beta_{R(\Pb)}$ such that $\Pb$ and $R(\Pb)$ satisfy martingale problem associated with $\mathcal{A}_\Pb$ and $\mathcal{A}_{R(\Pb)}$,
+    \begin{align*}
+        & \mathcal{A}_{\mathbb{P}}(t, u)(x)=\left\langle\beta_{\mathbb{P}}(t, x), \nabla u(x)\right\rangle+\frac{1}{2} \Delta_{M} u(x), \\
+        & \mathcal{A}_{R(\mathbb{P})}(t, u)(x)=\left\langle\beta_{R(\mathbb{P})}(t, x), \nabla u(x)\right\rangle+\frac{1}{2} \Delta_{M} u(x) .
+    \end{align*}
+    Finally, we have that
+    \begin{equation*}
+        \int_0^T \mathbb{E}\left[\left\|\beta_{\mathbb{P}}\left(t, {X}_t\right)\right\|^2\right] \mathrm{d} t+\int_0^T \mathbb{E}\left[\left\|\beta_{R(\mathbb{P})}\left(t, {X}_{T-t}\right)\right\|^2\right] \mathrm{d} t<+\infty,
+    \end{equation*}
+    for $X \sim \Pb$.
+\end{cor}
+\begin{proof}
+    Just applying above theorem with
+    \begin{equation*}
+        \op{KL}(\Pb ~\Vert~ \mathbb{Q}) = \op{KL}(R(\Pb) ~\Vert~ R(\mathbb{Q})) = \op{KL}(R(\Pb) ~\Vert~ \mathbb{Q}) <\infty. \qedhere
+    \end{equation*}
+\end{proof}
+
+Then by above the Integral by parts, for any $u,v \in C_c^\infty(M)$,
+\begin{equation*}
+    \mathbb{E}\left[v\left({X}_t\right)\left(\left\langle\beta_{\mathbb{P}}\left(t, {X}_t\right)+\beta_{R(\mathbb{P})}\left(T-t, {X}_t\right), \nabla u\left({X}_t\right)\right\rangle+\Delta_{M} u\left({X}_t\right)\right)+\left\langle\nabla u\left({X}_t\right), \nabla v\left({X}_t\right)\right\rangle\right]=0 .
+\end{equation*}
+It follows that
+\begin{align*}
+    &\int_{M}\left\{\left\langle\beta_{R(\mathbb{P})}(T-t, x), \nabla u(x)\right\rangle+\langle b(x), \nabla u(x)\rangle\right\} v(x) p_t(x) d p_{\text {ref }}(x) \\
+    &\quad= \int_M \inn{\nabla \log p_t(x),\nabla u(x)}v(x)p_t(x)dp_{\text {ref }}(x).
+\end{align*}
+Therefore,
+\begin{equation*}
+    \left\langle\beta_{R(\mathbb{P})}(T-t, x), \nabla u(x)\right\rangle = \inn{\nabla \log p_t(x),\nabla u(x)}.
+\end{equation*}
+
+
+\section{Discretization}
+
+Let $(M,g)$ be a complete Riemannian manifold and $B^M$ be a Brownian motion on it. Consider the SDE, 
+$$ 
+dX_t = v(X_t)dt + dB^M_t,~t \in [0,T],\quad X_0 = Z
+$$ 
+We always assume $B^M$ is independent of $Z$. Fix $h = T/N$ for some $N \in \N$. Let $t_k = kh$. Constructing process $X^h_k$ by 
+$$
+X^h_{k+1} = \exp_{X^h_k}(hv(X^h_k) + \sqrt{h}\xi), 
+$$
+where $\exp$ is the exponential map, and $\xi$ is a standard Gaussian standard Gaussian with respect to any orthonormal basis of $T_xM$. In the following, we study the convergence of $(X^h_k)_{k=0}^N$.
+
+\paragraph{Weak convergence.} Assume $M$ has bounded geometry, that is,
+        \begin{equation*}
+            \op{inj}(M) \geq \iota > 0,\quad \sup_{x \in M} \abs{\nabla^k R(x)} < \infty,~\forall~k,
+        \end{equation*}
+        where $R$ is the Riemannian curvature. Let $(R_t)_{t \in [0,T]}$ be the semigroup of $X_t$ and $(R^h_k)_{k=0}^N$ be the semigroup of $X^h_k$. Assume that $v \in C^3_b(TM)$. Then for any $f \in C_b^3(M)$, we have
+\begin{equation*}
+    \norm{R_Tf - R_N^h f}_\infty \leq Ch.
+\end{equation*}
+\begin{proof}
+    First, for $X_t$, the generator $L$ is
+    \begin{equation*}
+        Lf = \inn{v,\nabla f} + \frac{1}{2}\Delta_M f,\quad \forall~ f \in C_b^3(M),
+    \end{equation*}
+    and $R_T = (R_h)^N$. For $X^h_k$, let $R^h = R_1^h$. Then $R^h_N = (R^h)^N$.
+    
+    \vspace{0.5em}
+    \textbf{Step 1.} Check: For any $f \in C^3_b(M)$, we have
+    \begin{equation*}
+        R^hf(x) = f(x) + hLf(x) + \mathcal{O}(h^{3/2}).
+    \end{equation*}
+    To prove that, first fix $X^h_0 = x$ with $x \in M$ and $f \in C_c^\infty(M)$. We can choose $0 < \rho \leq \iota$ (note that $\rho$ independent of $x$) such that
+    \begin{equation*}
+        \exp_x \colon B(0,\rho) \subset T_xM \rightarrow B(x,\rho) \subset M
+    \end{equation*}
+    is a diffeomorphism, moreover, we choose the normal coordinate on $T_xM$. Let
+    \begin{equation*}
+        Z_h(x) \defeq hv(x) + \sqrt{h}\xi,
+    \end{equation*}
+    so that
+    \begin{equation*}
+        X_1^h = \exp_x(Z_h(x)).
+    \end{equation*}
+    Define
+    \begin{equation*}
+        \varphi_x(z) \defeq f(\exp_x(z)),\quad \forall~ z \in B(0,\rho).
+    \end{equation*}
+    Because $f \in C_b^3(M)$ and $M$ has bounded geometry, 
+    \begin{equation*}
+        \sup _{x \in M} \sup _{|z| \leq \rho} \sum_{|\alpha| \leq 3}\left|\partial_z^\alpha \varphi_x(z)\right|<\infty
+    \end{equation*}
+    Note that
+    \begin{equation*}
+        R^hf(x) = \E\bj{f(X_1^h) \mid X_0^h = x} = \E\bj{\varphi_x(Z_h(x))}
+    \end{equation*}
+    \begin{enumerate}[label=\Roman{*}.]
+        \item Fix $h_0 > 0$ sufficiently small such that
+        \begin{equation*}
+            h_0 \sup _x\|v(x)\| \leq \frac{\rho}{4}.
+        \end{equation*}
+        Then for $0 < h < h_0$, if $\abs{\xi} < {\rho}/{(2 \sqrt{h})}$, then
+        \begin{equation*}
+            \left|Z_h(x)\right| \leq h\|v(x)\|+\sqrt{h}|\xi| \leq \frac{\rho}{4}+\frac{\rho}{2}<\rho.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            A_h:=\left\{|\xi| \leq {\rho}/{(2 \sqrt{h})}\right\} \subset \bb{Z_h(x) \in B(0,\rho)}.
+        \end{equation*}
+        Moreover, because $\xi$ is Gaussian, then
+        \begin{equation*}
+            \Pb(A^c_h) = \Pb \bc{|\xi| > {\rho}/{(2 \sqrt{h})}} \leq c_1 e^{-c_2/h},
+        \end{equation*}
+        for some $c_1,c_2 > 0$. Writing
+        \begin{equation*}
+            R^h f(x)=\mathbb{E}\left[\varphi_x\left(Z_h(x)\right) \mathbb{I}_{A_h}\right]+\mathbb{E}\left[f\left(\exp _x\left(Z_h(x)\right)\right) \mathbb{I}_{A_h^c}\right] .
+        \end{equation*}
+        Then for the second term,
+        \begin{equation*}
+            \abs{\mathbb{E}\left[f\left(\exp _x\left(Z_h(x)\right)\right) \mathbb{I}_{A_h^c}\right]} \leq \norm{f}_\infty \Pb(A^c_h) \leq \norm{f}_\infty c_1 e^{-c_2/h} \leq \mathcal{O}(h^2).
+        \end{equation*}
+        So the main goal is to bound the first term.
+
+        \item For $z \in B(0,\rho)$, by Taylor expansion
+        \begin{equation*}
+            \varphi_x(z)=  \varphi_x(0)+D \varphi_x(0)[z]+\frac{1}{2} D^2 \varphi_x(0)[z, z]  +R_3(x,z),
+        \end{equation*}
+        where
+        \begin{equation*}
+            R_3(x,z)=\frac{1}{6} \sum_{i, j, k} \partial_{i j k} \varphi_x(\theta z) z_i z_j z_k,
+        \end{equation*}
+        for some $\theta=\theta(x, z) \in(0,1)$. For $R_4$, it has
+        \begin{equation*}
+            \left|R_3(x, z)\right| \leq C_f|z|^3, \quad \forall~|z| \leq \rho .
+        \end{equation*}
+        for some $C_f > 0$ (independent of $x$).
+
+        For $z = Z_h(x)$, writing
+        \begin{align*}
+            \mathbb{E}\left[\varphi_x\left(Z_h(x)\right) 1_{A_h}\right]= & \varphi_x(0) \mathbb{P}\left(A_h\right)+\mathbb{E}\left[D \varphi_x(0)\left[Z_h\right] 1_{A_h}\right] \\
+            & +\frac{1}{2} \mathbb{E}\left[D^2 \varphi_x(0)\left[Z_h, Z_h\right] 1_{A_h}\right] \\
+            & +\mathbb{E}\left[R_3(x,Z_h(x)) 1_{A_h}\right] 
+        \end{align*}
+        Next, consider these terms respectively.
+        \begin{enumerate}[label=(\alph{*})]
+            \item First, because
+            \begin{equation*}
+                \Pb(A_h) = 1 - \Pb(A_h^c) = 1 + \mathcal{O}\bc{e^{-c_1/h}},
+            \end{equation*}
+            the zero-order term can be bounded by
+            \begin{equation*}
+                \varphi_x(0) = \varphi_x(0) \mathbb{P}\left(A_h\right)=f(x)+\mathcal{O}\left(e^{-c_2 / h}\right) .
+            \end{equation*}
+            \item For the first-order term, we first recall that $Z_h(x)=h v(x)+\sqrt{h} \xi$ and $\E[\xi] = 0$. Because
+            \begin{equation*}
+               \norm{\mathbb{E}\left[Z_h(x) 1_{A^c_h}\right]} \leq \left(\mathbb{E}\left|Z_h(x)\right|^2\right)^{1 / 2}\left(\mathbb{P}\left(A_h^c\right)\right)^{1 / 2} \leq \mathcal{O}\left(e^{-c_3 / h}\right),
+            \end{equation*}
+            we have
+            \begin{align*}
+                \mathbb{E}\left[Z_h(x) 1_{A_h}\right] &= \mathbb{E}\left[Z_h(x)\right] - \mathbb{E}\left[Z_h(x) 1_{A^c_h}\right] \\
+                &=\mathbb{E}\left[Z_h(x)\right]+\mathcal{O}\left(e^{-c_3 / h}\right) \\
+                &=h v(x)+\mathcal{O}\left(e^{-c_3 / h}\right).
+            \end{align*}
+            Then we get
+            \begin{equation*}
+                \mathbb{E}\left[D \varphi_x(0)\left[Z_h\right] 1_{A_h}\right]=D \varphi_x(0)[h v(x)]+\mathcal{O}\left(e^{-c_2 / h}\right).
+            \end{equation*}
+            Because $\varphi_x(z) = f(\exp_x(z))$,
+            \begin{equation*}
+                D \varphi_x(0)[h v(x)] = h\inn{\nabla f(x), v(x)}.
+            \end{equation*}
+            So
+            \begin{equation*}
+                \mathbb{E}\left[D \varphi_x(0)\left[Z_h\right] 1_{A_h}\right]= h\inn{\nabla f(x), v(x)} + \mathcal{O}\left(e^{-c_2 / h}\right).
+            \end{equation*}
+
+            \item For the second-order term, first, we have
+            \begin{equation*}
+                D ^2\varphi_x(0)[z,z] = \nabla^2f(x)(z,z) = z^\top H_x z,
+            \end{equation*}
+            where $H_x = \nabla^2f(x)$ in matrix expression under the normal coordinate. Moreover, because $\xi \in \mathcal{N}(0,I)$,
+            \begin{align*}
+                \mathbb{E}\left[Z_h Z_h^{\top} 1_{A_h}\right] & =\mathbb{E}\left[Z_h Z_h^{\top}\right]+\mathcal{O}\left(e^{-c_2 / h}\right) \\
+                & =\mathbb{E}\left[(h v+\sqrt{h} \xi)(h v+\sqrt{h} \xi)^{\top}\right]+\mathcal{O}\left(e^{-c_2 / h}\right) \\
+                & =h^2 v v^{\top}+h \mathbb{E}\left[\xi \xi^{\top}\right]+\mathcal{O}\left(e^{-c_2 / h}\right) \\
+                & =h \operatorname{Id}+h^2 v v^{\top}+\mathcal{O}\left(e^{-c_2 / h}\right) .
+            \end{align*}
+            So it implies that
+            \begin{align*}
+                \frac{1}{2} \mathbb{E}\left[D^2 \varphi_x(0)\left[Z_h, Z_h\right] 1_{A_h}\right] & =\frac{1}{2} \mathbb{E}\left[\operatorname{tr}\left(H_x Z_h Z_h^{\top}\right) 1_{A_h}\right] \\
+                & =\frac{1}{2} \operatorname{tr}\left(H_x \mathbb{E}\left[Z_h Z_h^{\top} 1_{A_h}\right]\right) \\
+                & =\frac{1}{2} h \operatorname{tr}\left(H_x\right)+\mathcal{O}\left(h^2\right)+\mathcal{O}\left(e^{-c_2 / h}\right) \\
+                & =\frac{1}{2} h \Delta_M f(x)+\mathcal{O}\left(h^2\right) .
+            \end{align*}
+
+            \item For the remainder term, because $Z_h(x) = hv(x) + \sqrt{h}\xi$ with $\xi \sim \mathcal{N}(0,I)$,
+            \begin{equation*}
+                \E\bj{\norm{Z_h}^3} = \mathcal{O}(h^{3/2}).
+            \end{equation*}
+            Therefore,
+            \begin{equation*}
+                \left\|\mathbb{E}\left[R_3\left(x, Z_h(x)\right) 1_{A_h}\right]\right\| \leq C_f \mathbb{E}\bj{\left\|Z_h\right\|^3}=\mathcal{O}\left(h^{3/2}\right) .
+            \end{equation*}
+        \end{enumerate}
+
+        Combining these results, we have
+        \begin{equation*}
+            R^hf(x) = f(x) + hLf(x) + \mathcal{O}(h^{3/2}),
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \left\|R^h f-f-h L f\right\|_{\infty} \leq C_1 h^{3/2}.
+        \end{equation*}
+    \end{enumerate}
+
+    \vspace{0.5em}
+    \textbf{Step 2.} Check:
+    \begin{equation*}
+        \left\|R_h f-f-h L f\right\|_{\infty} \leq C_2 h^2.
+    \end{equation*}
+    Let $u(t,x) = R_tf(x)$. The by the backward Kolmogorov equation,
+    \begin{equation*}
+        \partial_t u_t = Lu_t,\quad u_0(x) = f(x).
+    \end{equation*}
+    By the smoothness and boundedness, one can show that $u_t \in C^3_b(M)$ and 
+    \begin{equation}\label{eq:bound_parabolic}
+        \sup _{0 \leq t \leq T}\left\|\nabla^\alpha u_t\right\|_{\infty} \leq C_3,\quad \forall~\abs{\alpha} \leq 3.
+    \end{equation}
+    In particular, $\norm{L^2 u_t}_\infty \leq C_3$.By
+    \begin{equation*}
+        u_h(x)-f(x)=\int_0^h \partial_t u_s(x) d s=\int_0^h L u_s(x) d s,
+    \end{equation*}
+    we get
+    \begin{equation*}
+        Lu_s(x)-Lf(x)=\int_0^s \partial_t Lu_r(x) d r=\int_0^s L^2 u_r(x) d r.
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+        u_h(x) & =f(x)+h L f(x)+\int_0^h \int_0^s L^2 u_r(x) d r d s \\
+        & =f(x)+h L f(x)+\beta_h(x)
+    \end{align*}
+    with
+    \begin{equation*}
+        \left|\beta_h(x)\right| \leq \int_0^h \int_0^s\left\|L^2 u_r\right\|_{\infty} d r d s \leq C_3 \int_0^h \int_0^s d r d s=\frac{1}{2} C_3 h^2.
+    \end{equation*}
+    It follows that
+    \begin{equation*}
+        \left\|R_h f-f-h L f\right\|_{\infty} \leq C_2 h^2.
+    \end{equation*}
+
+    \vspace{0.5em}
+    \textbf{Step 3.} By Step 1 and Step 2, for all $f \in C_c^\infty$,
+    \begin{align*}
+        \left\|R^h f-R_h f\right\|_{\infty} & \leq\left\|R^h f-f-h L f\right\|_{\infty}+\left\|R_h f-f-h L f\right\|_{\infty} \\
+        & \leq C_1 h^{3/2}+C_2 h^2 \leq C_4h^{3/2}.
+    \end{align*}
+    Globally, note that $R_T = (R_h)^N$ and $R^h_N = (R^h)^N$. Writing
+    \begin{equation*}
+        \left(R^h\right)^N-\left(R_h\right)^N=\sum_{k=0}^{N-1}\left(R^h\right)^{N-1-k}\left(R^h-R_h\right)\left(R_h\right)^k .
+    \end{equation*}
+    Because $R^h$ and $R_h$ are Markov, they are contractions. So
+    \begin{align*}
+        \left\|\left(R^h\right)^N f-\left(R_h\right)^N f\right\|_{\infty} \leq \sum_{k=0}^{N-1} \sup _x\left|\left(R^h-R_h\right)g_k(x)\right|,
+    \end{align*}
+    where by (\ref{eq:bound_parabolic})
+    \begin{equation*}
+        g_k(x) = \left(R_h^k f\right)(x) = \left(R_{kh} f\right)(x) \in C_b^3(M).
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+        \left\|\left(R^h\right)^N f-\left(R_h\right)^N f\right\|_{\infty} &\leq \sum_{k=0}^{N-1} \left\|R^h g_k-R_h g_k\right\|_{\infty} \\
+        &\leq \sum_{k=0}^{N-1} C_4h^{3/2} = C_4Nh^{3/2} = \frac{T}{h}C_4h^{3/2} = C_Th^{1/2}. \qedhere
+    \end{align*}
+\end{proof}
+\begin{rmk}
+    Above proof can be extended to time-inhomogeneous case
+    \begin{equation*}
+        dX_t = v(t,X_t)dt + g(t)dB^M_t.
+    \end{equation*} 
+\end{rmk}
+
+\paragraph{Strong convergence.} Assume $M \subset \R^n$ properly and isometrically embedded and assume the second fundamental form is uniformly bounded, i.e.,
+\begin{equation*}
+    \sup_{x \in M} \norm{\mathrm{II}_x}_{\op{op}},~ \norm{\nabla\mathrm{II}_x}_{\op{op}} < \infty.
+\end{equation*} 
+Assume $v \in C^1_b(M)$ and $X_0 \in L^2$. Let $d$ be the Riemannian distance. We can show that
+\begin{equation*}
+    \mathbb{E}\left[\max _{0 \leq k \leq N} d\left(X_{t_k}, X_k^h\right)^2\right] \leq C h
+\end{equation*}
+\begin{proof}
+    Note that
+    \begin{equation*}
+        \exp_x(v) = x + v + \frac{1}{2}\mathrm{II}_x(v,v) + \mathcal{O}(\norm{v}^3),
+    \end{equation*}
+    where $\mathrm{II}_x$ is the second form. To prove that, first let $\gamma(t) = \exp_x(tv)$ in $\R^n$, which is also a geodesic in $M$. Then it has 
+    \begin{equation*}
+        \gamma^\prime(0) = \dot{\gamma}(t) = v
+    \end{equation*}
+    and 
+    \begin{equation*}
+        \gamma^{\prime\prime}(t) = \nabla_{\dot{\gamma}(t)} \dot{\gamma}(t) + \mathrm{II}_x(\dot{\gamma}(t),\dot{\gamma}(t)) = \mathrm{II}(\dot{\gamma}(t),\dot{\gamma}(t)),
+    \end{equation*}
+    because $\nabla_{\dot{\gamma}(t)} \dot{\gamma}(t)$. Therefore, above can be got by applying the Euclidean Taylor expansion.
+
+    \vspace{0.5em}
+    \textbf{Step 1.} Euclidean EM discretization: Let $\Pi(x) \colon \R^n \sto \R^n$ be the orthogonal projection onto $T_xM$. Then we can choose
+    \begin{equation*}
+        dB^M_t = \Pi \circ dW_t,
+    \end{equation*}
+    where $W$ is a standard $\R^n$-Brownian motion that is also independent of $X_0$. Then
+    \begin{equation}\label{eq:eucl_ext_diff}
+        dX_t = v(X_t)dt + \Pi(X_t) \circ dW_t = \tilde{a}(X_t) dt + \Pi(X_t)dW_t,
+    \end{equation}
+    as an Euclidean SDE, where
+    \begin{equation*}
+        \tilde{a}(x) = v(x) + A(x),\quad A^j(x) = \frac{1}{2} \sum_{\alpha = 1}^n \Pi_{\alpha}(x)\bc{\Pi_{j\alpha}(x)},
+    \end{equation*}
+    for $\Pi(x) = (\Pi_{j\alpha}(x))$ when fixing the standard basis $\bb{e_1,\cdots, e_n}$ in $\R^n$. Moreover, for
+    \begin{equation*}
+        \Pi_\alpha(x) = \Pi(x)e_\alpha \in T_x M,
+    \end{equation*}
+    we have
+    \begin{equation*}
+        \Pi_{j\alpha}(x) = \Pi_\alpha (x^j)(x),
+    \end{equation*}
+    where $x^j \colon M \sto \R$ is the $j$-th component of the canonical embedding $x \colon M \hookrightarrow \R^n$.
+    
+    \vspace{0.25em}
+    \textbf{Claim:} If $\bb{E_i(x)}_{i=1}^d$ is an orthonormal frame of $T_xM \subset \R^n$, then we have
+    \begin{equation*}
+        A(x) = \frac{1}{2} \sum_{i=1}^d \mathrm{II}_x(E_i(x),E_i(x)).
+    \end{equation*}
+    To prove that, first, by
+    \begin{equation*}
+        \Delta_Mx^j = \sum_{\alpha = 1}^N\Pi_\alpha (\Pi_\alpha(x^j)) = \sum_{\alpha = 1}^N\Pi_\alpha (\Pi_{j\alpha}),
+    \end{equation*}
+    we have
+    \begin{equation*}
+        A^j(x) = \frac{1}{2}\Delta_Mx^j(x).
+    \end{equation*}
+    On the other hand, we know
+    \begin{equation*}
+        \Delta_Mx^j(x) = \sum_{i=1}^d\mathrm{II}^j_x(E_i(x),E_i(x)).
+    \end{equation*}
+
+    For Euclidean SDE (\ref{eq:eucl_ext_diff}), we consider the Euclidean EM algorithm. Let $t_k=k h, N h=T, \Delta W_k=W_{t_{k+1}}-W_{t_k}$, and define
+    \begin{equation*}
+        Y_{k+1}^h=Y_k^h+\tilde{a}\left(Y_k^h\right) h+\Pi\left(Y_k^h\right) \Delta W_k, \quad Y_0^h=X_0.
+    \end{equation*}
+    Because $A(x)$ is uniformly bounded and $v \in C_b^1$, $\tilde{a}$ is globally Lipschitz. For $\Pi$, note that $\Pi$ is in fact smooth so it is locally Lipschitz continuous. Moreover, because $\mathrm{II}$ is uniformly bounded, by Lemma \ref{lem:bound_secform_boun_proj}, $\Pi$ is globally Lipschitz. Combining these with $X_0 \in L^2$, we have
+    \begin{equation*}
+        \mathbb{E}\left[\max _{0 \leq k \leq N}\left\|X_{t_k}-Y_k^h\right\|^2\right] \leq C_T h.
+    \end{equation*}
+    Moreover, let
+    \begin{equation*}
+        \Phi^E_h(x,z) = x + \tilde{a}(x)h + \Pi(x)z.
+    \end{equation*}
+    So
+    \begin{equation*}
+        Y_{k+1}^h = \Phi^E_h(Y_k^h,\Delta W_k)
+    \end{equation*}
+    
+    \vspace{0.5em}
+    \textbf{Step 2.} Geometric EM discretization: For
+    \begin{equation*}
+        X_{k+1}^h=\exp _{X_k^h}\left(h v\left(X_k^h\right)+\sqrt{h} \xi_{k+1}\right)
+    \end{equation*}
+    with $\xi_{k+1}$ a standard Gaussian on $T_xM$. WTLG, assume
+    \begin{equation*}
+        \xi_{k+1}:=\frac{1}{\sqrt{h}} \Pi\left(X_k^h\right) \Delta W_k,\quad \Delta W_k = W_{t_{k+1}} - W_{t_k},
+    \end{equation*}
+    where $W$ is the Brownian motion in (\ref{eq:eucl_ext_diff}). So the geometric EM is
+    \begin{equation*}
+        X_{k+1}^h=\exp _{X_k^h}\left(h v\left(X_k^h\right)+\Pi\left(X_k^h\right) \Delta W_k\right).
+    \end{equation*}
+    Let
+    \begin{equation*}
+        \Phi^G_h(x,z) = \exp_x(hv(x) + \Pi(x)z),
+    \end{equation*}
+    i.e., we have
+    \begin{equation*}
+        X_{k+1}^h= \Phi^G_h(X_k^h,\Delta W_k).
+    \end{equation*}
+
+    Moreover, by the Taylor expansion of the exponential map, for $u = hv(x) + \Pi(x)z$,
+    \begin{equation*}
+        \Phi^G_h(x,z) = x + hv(x) + \Pi(x)z + \frac{1}{2}\mathrm{II}_x(u,u) + R_3(x,u).
+    \end{equation*}
+    Because $\norm{\nabla\mathrm{II}}_{\op{op}} < \infty$ ($\gamma^{\prime\prime\prime} = D/dt \nabla\mathrm{II}(\dot{\gamma},\dot{\gamma})$),
+    \begin{align*}
+        \norm{R_3(x,u)} \leq C_1\norm{u}^3,
+    \end{align*}
+    where $C_1$ is independent of $x$.
+
+    \vspace{0.25em}
+    \textbf{Claim:} For $z \sim \mathcal{N}(0,hI_n)$, we have
+    \begin{equation*}
+        \E\bj{\mathrm{II}_x(\Pi(x)z,\Pi(x)z)} = 2hA(x).
+    \end{equation*}
+    For
+    \begin{equation*}
+        \Pi(x)z = \sum_{i=1}^d \zeta_i E_i(x),\quad \zeta_i = \inn{z,E_i(x)},
+    \end{equation*}
+    then $\zeta = (\zeta_1,\cdots,\zeta_d)$ is a Gaussian with
+    \begin{equation*}
+        \mathbb{E}\left[\zeta_i \zeta_j\right]=\mathbb{E}\left[\left\langle z, E_i\right\rangle\left\langle z, E_j\right\rangle\right]=E_i^{\top} \mathbb{E}\left[z z^{\top}\right] E_j=E_i^{\top}\left(h I_N\right) E_j=h \delta_{i j},
+    \end{equation*}
+    i.e., $\zeta \sim \mathcal{N}(0,hI_d)$. Because $\mathrm{II}_x$ is bilinear,
+    \begin{equation}\label{eq:bound_2ndform_guass}
+        \mathrm{II}_x(\Pi(x)z,\Pi(x)z) = \sum_{i,j=1}^d \zeta_i\zeta_j \mathrm{II}_x(E_i,E_j).
+    \end{equation}
+    Therefore,
+    \begin{align*}
+        \E\bj{\mathrm{II}_x(\Pi(x)z,\Pi(x)z)} &= \sum_{i,j=1}^d \E\bj{\zeta_i\zeta_j} \mathrm{II}_x(E_i,E_j) \\
+        &= h \sum_{i=1}^d \mathrm{II}_x(E_i,E_i)= 2hA(x).
+    \end{align*}
+
+    Therefore, for $u = hv(x) + \Pi(x)z$ and $z = \Delta W_k \sim \mathcal{N}(0,hI_n)$,
+    \begin{equation*}
+        \E\bj{\mathrm{II}_x(u,u)} = \E\bj{\mathrm{II}_x(\Pi(x)z,\Pi(x)z)} + h^2\mathrm{II}_x(v,v) = 2hA(x) + \mathcal{O}(h^2).
+    \end{equation*}
+    It follows that
+    \begin{align*}
+        \mathbb{E}\left[\Phi_h^G(x, \Delta W_k)\right] & =x+ h v(x)+h A(x)+\mathcal{O}(h^2) \\
+        & =x + \tilde{a}(x) h+\mathcal{O}(h^2).
+    \end{align*}
+    Note that by (\ref{eq:bound_2ndform_guass}), we also have
+    \begin{equation*}
+        \E\bj{\norm{\mathrm{II}_x(\Pi(x)z,\Pi(x)z)}^2} = \mathcal{O}(h^2),
+    \end{equation*}
+    because the second form is uniformly bounded.
 
 
 
 
 
 
+
+\end{proof}
+\begin{rmk}
+    A direct result of $A(x) = \frac{1}{2} \sum_{i} \mathrm{II}_x(E_i(x),E_i(x)) \in N_xM$ is when viewing (\ref{eq:eucl_ext_diff}) as an Euclidean SDE with generator $\tilde{L}$,
+    \begin{equation*}
+        \tilde{L}|_M = L.
+    \end{equation*}
+    For any $f \in C^\infty(M)$, let $\tilde{f} \in C^\infty(\R^n)$ be a normal extension, which means that
+    \begin{equation*}
+        \clo{\nabla}\tilde{f}(x) = \nabla f(x),\quad \forall~x \in M,
+    \end{equation*}
+    and for all $x \in M$ and $X,Y \in T_xM$,
+    \begin{equation*}
+        \clo{\nabla}^2\tilde{f}(x)(X,Y) = \nabla f(x)(X,Y).
+    \end{equation*}
+    First, we have
+    \begin{equation*}
+        \tilde{L}\tilde{f}(x) = \inn{\clo{\nabla}\tilde{f}(x),\tilde{a}} + \frac{1}{2}\op{tr}\bc{\Pi(x)\Pi(x)^\top \clo{\nabla}^2\tilde{f}(x)}.
+    \end{equation*}
+    For the first term, because $A(x) \in N_xM$,
+    \begin{equation*}
+        \inn{\clo{\nabla}\tilde{f}(x),\tilde{a}} = \inn{\nabla f(x),v}.
+    \end{equation*}
+    For the second term, because $\Pi(x)$ is an orthogonal projection, we have
+    \begin{equation*}
+        \Pi(x)\Pi(x)^\top = \Pi(x) = \sum_{i=1}^d E_i(x) \otimes E_i(x).
+    \end{equation*}
+    Therefore,
+    \begin{align*}
+        \op{tr}\bc{\Pi(x)\Pi(x)^\top \clo{\nabla}^2\tilde{f}(x)} &= \sum_{i=1}^d \clo{\nabla}^2\tilde{f}(x)(E_i(x), E_i(x)) \\
+        &= \sum_{i=1}^d \nabla^2 f(x)(E_i(x), E_i(x)) \\
+        &= \Delta_M f(x).
+    \end{align*}
+    So
+    \begin{equation*}
+        \tilde{L}\tilde{f}(x) = \inn{\nabla f(x),v} + \frac{1}{2}\Delta_M f(x) = L f(x).
+    \end{equation*}
+\end{rmk}
+
+\begin{lem}\label{lem:bound_secform_boun_proj}
+    
+\end{lem}
 
 
 
