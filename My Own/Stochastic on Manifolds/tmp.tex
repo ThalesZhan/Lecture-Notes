@@ -716,15 +716,17 @@ where $\exp$ is the exponential map, and $\xi$ is a standard Gaussian standard G
     \end{equation*} 
 \end{rmk}
 
-\paragraph{Strong convergence.} Assume $M \subset \R^n$ properly and isometrically embedded and assume the second fundamental form is uniformly bounded, i.e.,
+\paragraph{Strong convergence.} Let $M$ be a complete Riemannian manifold and it is properly and isometrically embedded in $\R^n$. Assume that
+\begin{enumerate}[label=(\Roman*)]
+    \item~
+\end{enumerate}
+Then we have the strong convergence of geometric EM algorithm, i.e.,
 \begin{equation*}
-    \sup_{x \in M} \norm{\mathrm{II}_x}_{\op{op}},~ \norm{\nabla\mathrm{II}_x}_{\op{op}} < \infty.
-\end{equation*} 
-Assume $v \in C^1_b(M)$ and $X_0 \in L^2$. Let $d$ be the Riemannian distance. We can show that
-\begin{equation*}
-    \mathbb{E}\left[\max _{0 \leq k \leq N} d\left(X_{t_k}, X_k^h\right)^2\right] \leq C h
+    \mathbb{E}\left[\max _{0 \leq k \leq N} \left\|X_{t_k}- X_k^h\right\|^2\right] \leq C h
 \end{equation*}
 \begin{proof}
+    The proof needs following steps.
+
     Note that
     \begin{equation*}
         \exp_x(v) = x + v + \frac{1}{2}\mathrm{II}_x(v,v) + \mathcal{O}(\norm{v}^3),
@@ -867,13 +869,179 @@ Assume $v \in C^1_b(M)$ and $X_0 \in L^2$. Let $d$ be the Riemannian distance. W
     \end{equation*}
     because the second form is uniformly bounded.
 
+    \vspace{0.5em}
+    \textbf{Step 3.} Local difference: For $\Phi^E_h, \Phi^G_h$ defined as above, we have
+    \begin{equation*}
+        \Phi_h^G(x, z)-\Phi_h^E(x, z) = -hA(x) + \frac{1}{2}\Pi_x(u,u) + R_3(x,u).
+    \end{equation*}
+    Let
+    \begin{equation*}
+        \Delta_h(x) = \Phi_h^G(x, \Delta W_k)-\Phi_h^E(x, \Delta W_k) = Q_h(x) + R_3(x,u),
+    \end{equation*}
+    where
+    \begin{equation*}
+        Q_h(x) \defeq \frac{1}{2}\Pi_x(u,u) - hA(x),\quad u = hv(x) + \Pi(x)\Delta W_k.
+    \end{equation*}
+    Writing
+    \begin{align*}
+        Q_h(x) & =\frac{1}{2} \mathrm{II}_x(u, u)-h A(x) \\
+        & =\bc{\frac{1}{2} \mathrm{II}_x(\Pi \Delta W_k, \Pi \Delta W_k)-h A(x)}+\frac{1}{2} \mathrm{II}_x(h v, h v)+\mathrm{II}_x(h v, \Pi \Delta W_k) \\
+        & = T_1 + T_2 + T_3.
+    \end{align*}
+    Before continuing, let's recall that for $u = hv(x) + \Pi(x)\Delta W_k$, by the boundedness of $v$ and $\E[\norm{\Delta W_k}^p] = \mathcal{O}(h^{p/2})$, we have
+    \begin{equation*}
+        \mathbb{E}\bj{\norm{u}^3}=\mathcal{O}(h^{3/2}), \quad \mathbb{E}\bj{\norm{u}^4}=\mathcal{O}\left(h^2\right), \quad \mathbb{E}\bj{\norm{u}^6}=\mathcal{O}\left(h^3\right) .
+    \end{equation*}
+    \begin{itemize}
+        \item First momentum: For $T_1$, by above, we have $\E[T_1] = 0$. It is obvious that $\norm{\E[T_2]} = \mathcal{O}(h^2)$ and $\E[T_3] = 0$. So 
+        \begin{equation*}
+            \norm{\E\bj{Q_h(x)}} = \mathcal{O}(h^2).
+        \end{equation*}
+        For $R_3$,
+        \begin{equation*}
+            \norm{R_3} \leq C_1\norm{u}^3~\Rightarrow~ \norm{\E[R_3]} \leq \E\bj{\norm{R_3}} \leq C_1 \E\bj{\norm{u}^3} = \mathcal{O}(h^{3/2}).
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \norm{\E\bj{\Delta_h(x)}} \leq  \norm{\E\bj{Q_h(x)}} + \norm{\E\bj{R_3}} \leq \mathcal{O}(h^{3/2}).
+        \end{equation*}
 
+        \item Second momentum: By above, because of the boundedness of second fundamental, we have
+        \begin{equation*}
+            \E\bj{\norm{T_1}^2} =\mathcal{O}(h^2),\quad  \E\bj{\norm{T_2}^2} =\mathcal{O}(h^4),\quad  \E\bj{\norm{T_3}^2} =\mathcal{O}(h^3),
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \E\bj{\norm{Q_h(x)}^2} \leq \mathcal{O}(h^2).
+        \end{equation*}
+        And
+        \begin{equation*}
+            \norm{R_3} \leq C_1\norm{u}^3~\Rightarrow~ \E\bj{\norm{R_3}^2} \leq C^2_1\E\bj{\norm{u}^6} = \mathcal{O}(h^3).
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \E\bj{\norm{\Delta_h(x)}^2} = \mathcal{O}(h^2)
+        \end{equation*}
+    \end{itemize}   
 
+    \vspace{0.5em}
+    \textbf{Step 4.} Global difference: Let $e_k = X^h_k - Y^h_k$. Note that
+    \begin{equation*}
+        X_{k+1}^h=\Phi_h^G\left(X_k^h, \Delta W_k\right), \quad Y_{k+1}^h=\Phi_h^E\left(Y_k^h, \Delta W_k\right),
+    \end{equation*}
+    where $\Delta W_k = W_{t_{k+1}} - W_{t_k}$. Therefore,
+    \begin{align*}
+        e_{k+1} &= \Phi_h^G\left(X_k^h, \Delta W_k\right) - \Phi_h^E\left(Y_k^h, \Delta W_k\right) \\
+        &= \bc{\Phi_h^E\left(X_k^h, \Delta W_k\right) - \Phi_h^E\left(Y_k^h, \Delta W_k\right)} + \bc{\Phi_h^G\left(X_k^h, \Delta W_k\right) - \Phi_h^E\left(X_k^h, \Delta W_k\right)} \\
+        &= G_k + D_k,
+    \end{align*}
+    where
+    \begin{equation*}
+        G_k = \Phi_h^E\left(X_k^h, \Delta W_k\right) - \Phi_h^E\left(Y_k^h, \Delta W_k\right),\quad D_k = \Delta_h(X_k^h).
+    \end{equation*}
+    Let $\mathbb{F}_t = \sigma(X_0,W_s \colon s\leq t)$. Therefore, $X^h_k,Y^h_k$ are $\mathcal{F}_{t_k} \eqdef \mathcal{F}_k$-measurable. Moreover, because $W$ is independent of $X_0$, $W$ is also a Brownian motion w.s.t. $(\mathcal{F}_t)$. So
+    \begin{equation*}
+        \E\bj{\norm{e_{k+1}}^2 \mid \mathcal{F}_k} = \E\bj{\norm{G_k}^2 \mid \mathcal{F}_k} + \E\bj{ \inn{G_k,D_k} \mid \mathcal{F}_k} + \E\bj{\norm{D_k}^2 \mid \mathcal{F}_k}.
+    \end{equation*}
+    For these three terms, let's analyze them separably.
+    \begin{itemize}
+        \item For $G_k$, first note that
+        \begin{equation*}
+            G_k = e_k + h(\tilde{a}(X^h_k) - \tilde{a}(Y^h_k)) + (\Pi(X^h_k) - \Pi(Y^h_k))\Delta W_k.
+        \end{equation*}
+        So we have
+        \begin{equation*}
+            \E\bj{G_k \mid \mathcal{F}_k} = e_k + h(\tilde{a}(X^h_k) - \tilde{a}(Y^h_k)).
+        \end{equation*}
+        Then by global Lipschitz continuity of $\tilde{a}$, we have
+        \begin{equation*}
+            \norm{\E\bj{G_k \mid \mathcal{F}_k}} \leq (1 + L_1h)\norm{e_k}.
+        \end{equation*}
+        On the other hand, by the global Lipschitz continuity of $\Pi$,
+        \begin{equation*}
+            G_k - \E\bj{G_k \mid \mathcal{F}_k} =  (\Pi(X^h_k) - \Pi(Y^h_k))\Delta W_k~\Rightarrow~ \E\bj{\norm{G_k - \E\bj{G_k \mid \mathcal{F}_k}}^2 \mid \mathcal{F}_k} \leq L_2h \norm{e_k}^2.
+        \end{equation*}
+        Therefore, 
+        \begin{align*}
+            \E\bj{\norm{G_k}^2 \mid \mathcal{F}_k} &= \norm{\E\bj{G_k \mid \mathcal{F}_k}}^2 + \E\bj{\norm{G_k - \E\bj{G_k \mid \mathcal{F}_k}}^2 \mid \mathcal{F}_k} \\
+            &\leq (1 + C_2h) \norm{e_k}^2
+        \end{align*}
 
+        \item For $D_k$,
+        \begin{equation*}
+            \mu_k \defeq \E\bj{D_k \mid \mathcal{F}_k} = \E\bj{\Delta_h(x)}_{x = X^h_k}.
+        \end{equation*}
+        Therefore, by above step, we have
+        \begin{equation*}
+            \norm{\mu_k} \leq C_3h^{3/2},
+        \end{equation*}
+        and
+        \begin{equation*}
+            \E\bj{\norm{D_k}^2 \mid \mathcal{F}_k} = \E\bj{\norm{\Delta_h(x)}^2}_{x = X^h_k} \leq \mathcal{O}(h^2).
+        \end{equation*}
+        Moreover, let $\widetilde{D}_k \defeq D_k - \mu_k$, so $\E\bj{\widetilde{D}_k \mid \mathcal{F}_k} = 0$ and
+        \begin{equation*}
+            \E\bj{\|\widetilde{D}_k\|^2 \mid \mathcal{F}_k} \leq C_4 h^2
+        \end{equation*}
 
+        \item For the cross term, by $D_k = \mu_k + \widetilde{D}_k$ and $\mu_k$ $\mathcal{F}_k$-measurable,
+        \begin{equation*}
+            \mathbb{E}\left[\left\langle G_k, D_k\right\rangle \mid \mathcal{F}_k\right]=\left\langle\mathbb{E}\left[G_k \mid \mathcal{F}_k\right], \mu_k\right\rangle+\mathbb{E}\left[\left\langle G_k, \widetilde{D}_k\right\rangle \mid \mathcal{F}_k\right] .
+        \end{equation*}
+        For the first term, by above, we have
+        \begin{equation*}
+            \abs{\left\langle\mathbb{E}\left[G_k \mid \mathcal{F}_k\right], \mu_k\right\rangle} \leq \norm{\mathbb{E}\left[G_k \mid \mathcal{F}_k\right]}\norm{\mu_k} \leq C_3(1+L_1h)h^{3/2}\norm{e_k}.
+        \end{equation*}
+        Moreover, by $2ab \leq \varepsilon a^2 + (1/\varepsilon)b^2$ and setting $\varepsilon=h$,
+        \begin{equation*}
+            h^{3/2}\norm{e_k} \leq \frac{1}{2}\bc{h\norm{e_k}^2 + h^2}.
+        \end{equation*}
+        So
+        \begin{equation*}
+            \abs{\left\langle\mathbb{E}\left[G_k \mid \mathcal{F}_k\right], \mu_k\right\rangle} \leq C_5h \norm{e_k}^2 +  \mathcal{O}(h^2).
+        \end{equation*}
+        For the second term, first, because $\E[\widetilde{D}_k \mid \mathcal{F}_k] = 0$,
+        \begin{equation*}
+            \mathbb{E}\left[\left\langle G_k, \widetilde{D}_k\right\rangle \mid \mathcal{F}_k\right]=\mathbb{E}\left[\left\langle G_k-\mathbb{E}\left[G_k \mid \mathcal{F}_k\right], \widetilde{D}_k\right\rangle \mid \mathcal{F}_k\right].
+        \end{equation*}
+        Then by the conditional CBS inequality,
+        \begin{equation*}
+            \left|\mathbb{E}\left[\left\langle G_k, \widetilde{D}_k\right\rangle \mid \mathcal{F}_k\right]\right| \leq \sqrt{\mathbb{E}\left[\left\|G_k-\mathbb{E}\left[G_k \mid \mathcal{F}_k\right]\right\|^2 \mid \mathcal{F}_k\right]} \sqrt{\mathbb{E}[\|\widetilde{D}_k\|^2 \mid \mathcal{F}_k]}.
+        \end{equation*}
+        By above, 
+        \begin{equation*}
+            \mathbb{E}\left[\left\|G_k-\mathbb{E}\left[G_k \mid \mathcal{F}_k\right]\right\|^2 \mid \mathcal{F}_k\right] \leq L_2 h \norm{e_k}^2,\quad \mathbb{E}[\|\widetilde{D}_k\|^2 \mid \mathcal{F}_k]\leq C_4h^2.
+        \end{equation*}
+        So
+        \begin{equation*}
+            \left|\mathbb{E}\left[\left\langle G_k, \widetilde{D}_k\right\rangle \mid \mathcal{F}_k\right]\right| \leq \sqrt{L_2C_4} h^{3/2}\norm{e_k} \leq C_6h \norm{e_k}^2 + \mathcal{O}(h^2).
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \abs{\mathbb{E}\left[\left\langle G_k, D_k\right\rangle \mid \mathcal{F}_k\right]} \leq (C_5+C_6)h \norm{e_k}^2 + C_7h^2.
+        \end{equation*}
+    \end{itemize}
+    Therefore, we have
+    \begin{equation*}
+        \E\bj{\norm{e_{k+1}}^2 \mid \mathcal{F}_k} \leq (1 + C_\alpha h)\norm{e_k}^2 + C_\beta h^2,
+    \end{equation*}
+    which implies that
+    \begin{equation*}
+        \E\bj{\norm{e_{k+1}}^2} \leq (1 + C_\alpha h)\E\bj{\norm{e_k}^2} + C_\beta h^2.
+    \end{equation*}
+    Then by the discrete Gr\"onwall's inequality,
+    \begin{equation*}
+        \E\bj{\max_{0\leq k \leq N} \norm{X_k^h-Y_k^h}^2} \leq C_T^\prime h.
+    \end{equation*}    
 
-
+    \vspace{0.5em}
+    \textbf{Step 5.} Final step: Combining all, 
+    \begin{align*}
+        \E\bj{\max_{0\leq k \leq N} \norm{X_{t_k}-Y_k^h}^2} &\leq 2\E\bj{\max_{0\leq k \leq N} \norm{X_{t_k}-Y_k^h}^2} + 2\E\bj{\max_{0\leq k \leq N} \norm{X_k^h-Y_k^h}^2} \\
+        &\leq Ch. \qedhere
+    \end{align*}
 \end{proof}
+
 \begin{rmk}
     A direct result of $A(x) = \frac{1}{2} \sum_{i} \mathrm{II}_x(E_i(x),E_i(x)) \in N_xM$ is when viewing (\ref{eq:eucl_ext_diff}) as an Euclidean SDE with generator $\tilde{L}$,
     \begin{equation*}
@@ -911,18 +1079,202 @@ Assume $v \in C^1_b(M)$ and $X_0 \in L^2$. Let $d$ be the Riemannian distance. W
     \end{equation*}
 \end{rmk}
 
-\begin{lem}\label{lem:bound_secform_boun_proj}
-    
+\begin{lem}\label{lem:diff_of_pi}
+    Let $M \subset \R^n$ be a Riemannian submanifold. Let $V \subset \R^n$ be a tubular neighborhood of $M$ with the canonical projection $\pi \colon V \sto M \subset \R^n$. Then for any $y \in V$, $D\pi(y) \colon \R^n \sto \R^n$ with
+    \begin{equation*}
+        \ker D\pi(y) = N_{\pi(y)} M,\quad \Img D\pi(y) = T_{\pi(y)}M.
+    \end{equation*}
 \end{lem}
+\begin{proof}
+    First, we know that for any $x \in M$,
+    \begin{equation*}
+        \pi^{-1}(x) = \bb{x+v \colon \norm{v} \text{ is small. }} = (x + N_xM) \cap V.
+    \end{equation*}
+
+    For any $y \in V$, let $x = \pi(y)$, i.e., $y \in \pi^{-1}(x)$.
+    \begin{itemize}
+        \item $N_xM \subset \ker D\pi(y)$: Let $w \in N_xM$ and choose $\gamma(t) = y + tw$. Since $y \in \pi^{-1}(x) = (x + N_xM) \cap V$,
+        \begin{equation*}
+            \gamma(t) = y + tw = x + (v + tw) \in x + N_xM,
+        \end{equation*}
+        which implies that $\pi(\gamma(t)) \equiv x$. Then
+        \begin{equation*}
+            D\pi(y)[w] = \lv{\frac{d}{dt}}_{t = 0}\pi(\gamma(t)) = 0.
+        \end{equation*}
+        So $N_xM \subset \ker D\pi(y)$.
+
+        \item $T_xM = \Img D\pi(y)$: First, because $\pi \colon V \sto M$, it obviously $\Img D\pi(y) \subset T_xM$. Conversely, let $F \colon U \sto V$ be the tubular neighborhood diffeomorphism, where
+        \begin{equation*}
+            U = \bb{(x,v) \colon x\in M,\quad v \in N_xM \text{ with } \norm{v} \leq \varepsilon(x)} \subset NM,
+        \end{equation*}
+        i.e, $F(x,v) = x+v$. Let $pr \colon U \sto M$ by $pr(x,v) = x$. Then $\pi = pr \circ F^{-1} \colon V \sto M$. So
+        \begin{equation*}
+            D\pi(y) = Dpr(x,v) \circ D(F^{-1})(y)
+        \end{equation*}
+        Note that $D(F^{-1})(y)$ is an isomorphism. So $\op{rank} D\pi(y) = \op{rank} Dpr(x,v)$. For $pr$, note that
+        \begin{equation*}
+            Dpr(x,v) \colon T_{(x,v)}(NM) \cong T_xM \otimes N_xM \sto T_xM
+        \end{equation*}
+        is a surjection. So
+        \begin{equation*}
+            \op{rank} D\pi(y) = \op{rank} Dpr(x,v) = \op{dim} (T_xM),
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            T_xM = \Img D\pi(y).
+        \end{equation*}
+
+        \item $N_xM = \ker D\pi(y)$: It is just by
+        \begin{equation*}
+            \op{dim}(\ker D\pi(y)) = n - \op{dim} D\pi(y) = n - \op{dim} (T_xM) = \op{dim} (N_xM). \qedhere
+        \end{equation*}
+    \end{itemize}
+\end{proof}
+
+
+\begin{cor}\label{cor:proj_by_pi}
+    Let $M \subset \R^n$ be a Riemannian submanifold. Let $V \subset \R^n$ be a tubular neighborhood of $M$ with the canonical projection $\pi \colon V \sto M \subset \R^n$. Then for any $x \in M$, $D\pi(x) \colon \R^n \sto \R^n$ is the orthogonal projection from $\R^n$ onto $T_xM$.
+\end{cor}
+\begin{proof}
+    Fix $x \in M$. For any $v \in T_xM \subset \R^n$, let $c \colon (-\varepsilon,\varepsilon) \sto M$ be a curve with $c(0) = x$ and $\dot{c}(0) = v$. Because $\pi |_M = \op{id}_M$, $\pi(c(t)) = c(t)$. It follows that
+    \begin{equation*}
+        D\pi(x)[v] = \lv{\frac{d}{dt}}_{t = 0} \pi(c(t)) = \lv{\frac{d}{dt}}_{t = 0} c(t) = v.
+    \end{equation*}
+    So $D\pi(x) \colon \R^n = T_xM \otimes N_xM \sto \R^n$ is identity on $T_xM$. By Lemma \ref{lem:diff_of_pi}, $D\pi(x)$ is an orthogonal projection.
+\end{proof}
+
+
+\begin{lem}\label{lem:bound_secform_boun_proj}
+    Assume $M \subset \R^n$ properly and isometrically embedded and assume the second fundamental form is uniformly bounded, i.e.,
+    \begin{equation*}
+        \sup_{x \in M} \norm{\mathrm{II}_x}_{\op{op}}< \infty.
+    \end{equation*}
+    Then we have
+    \begin{equation*}
+       \sup_{x \in M}\norm{\nabla \Pi(x)}_{\op{op}} < \infty ,\quad \sup_{x \in M}\sup_{v \in T_xM, \norm{v} = 1}\norm{\clo{\nabla}_v\Pi(x)}_{\op{op}} < \infty
+    \end{equation*}
+\end{lem}
+\begin{proof}
+    We need to prove for the following separated steps.
+    \begin{itemize}
+        \item \textbf{Shape operator:} For any $\eta \in \Gamma(NM)$, consider the shape operator $s_\eta \colon \Gamma(TM) \sto \Gamma(TM)$ as
+        \begin{equation*}
+            \inn{s_\eta(X),Y} = \inn{\mathrm{II}(X,Y),\eta},\quad X,Y \in \Gamma(TM).
+        \end{equation*}
+        Because the second fundamental form is uniformly bounded, i.e.,
+        \begin{equation*}
+            \sup_{x \in M} \sup_{\norm{X},\norm{Y} = 1} \norm{\mathrm{II}_x(X,Y)} \leq C < \infty,
+        \end{equation*}
+        we have
+        \begin{equation*}
+            \norm{s_\eta}_{\op{op}} \leq C\norm{\eta},
+        \end{equation*}
+
+        \item \textbf{Intrinsic Derivative:} For any $w \in \R^N$, $\Pi(x)w \in T_xM$, and by smoothness, we have $\Pi w \in \Gamma(TM)$, i.e, $\Pi \in \Gamma(M,\op{Hom}(\R^N,TM))$. Therefore, we define $\nabla_X\Pi \in \Gamma(M,\op{Hom}(\R^N,TM))$ as
+        \begin{equation*}
+            (\nabla_X\Pi)(x)w \defeq \nabla_X\bc{\Pi(x)w},\quad \forall~ x \in M.
+        \end{equation*}
+        Note that for $w \in \R^N$,
+        \begin{equation*}
+            w = w(x)^\top + w(x)^\perp,
+        \end{equation*}
+        where
+        \begin{equation*}
+            w(x)^\top = \Pi(x)w \in T_xM,\quad w(x)^\perp = w - w(x)^\top \in N_xM.
+        \end{equation*}
+        Because $w$ is constant on $\R^N$,
+        \begin{equation*}
+            0 = \clo{\nabla}_X w =  \clo{\nabla}_X w^\top  + \clo{\nabla}_X w^\perp.
+        \end{equation*}
+        For $\clo{\nabla}_X w^\top$, we know
+        \begin{equation*}
+            \clo{\nabla}_X w^\top = \nabla_X w^\top + \mathrm{II}(w^\top,X).
+        \end{equation*}
+        For $w^\perp \in \Gamma(NM)$, by Weingarten equation $(\clo{\nabla}_X w^\perp)^\top = - s_{w^\perp}(X)$, we have
+        \begin{equation*}
+            \clo{\nabla}_X w^\perp = -s_{w^\perp}(X) + \nabla_X^\perp w^\perp.
+        \end{equation*}
+        Therefore, 
+        \begin{equation*}
+            \nabla_X w^\top -s_{w^\perp}(X) = - \bc{\nabla_X^\perp w^\perp + \mathrm{II}(w^\top,X)}.
+        \end{equation*}
+        Note that RHS $\in \Gamma(TM)$ and LHS $\in \Gamma(NM)$. So they are both $0$, i.e.,
+        \begin{equation*}
+            (\nabla_X\Pi)w= \nabla_X\bc{\Pi w} = \nabla_X w^\top = s_{w^\perp}(X).
+        \end{equation*}
+        By the boundedness of $s$, we have
+        \begin{equation*}
+            \norm{(\nabla_X\Pi)(x)w} = \norm{s_{w^\perp(x)}(X)} \leq \norm{s_{w^\perp(x)}}_{\op{op}}\norm{X} \leq C\norm{w^\perp(x)}\norm{X},
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \norm{\nabla_X \Pi(x)}_{\op{op}} = \sup_{\norm{w} = 1}\norm{(\nabla_X\Pi)(x)w} \leq C\norm{X}~\Rightarrow~\norm{\nabla \Pi(x)}_{\op{op}} < C
+        \end{equation*}
+        Note that $C$ is independent of $x \in M$.
+
+        \item \textbf{Extrinsic Derivative:} For any $x\in M$, $v \in T_xM$ with $\norm{v} = 1$, and $w \in \R^n$ with $\norm{w} = 1$,
+        \begin{equation*}
+            \clo{\nabla}_{v}(\Pi(x)w) = \nabla_{v}(\Pi(x)w) + \mathrm{II}(\Pi(x)w,v).
+        \end{equation*}
+        So
+        \begin{equation*}
+            \norm{\clo{\nabla}_{v}(\Pi(x)w)} \leq \norm{\nabla_{v}(\Pi(x)w)} + \norm{\mathrm{II}(\Pi(x)w,v)} \leq 2C,
+        \end{equation*}
+        which implies that
+        \begin{equation*}
+            \sup_{x \in M}\sup_{v \in T_xM, \norm{v} = 1}\norm{\clo{\nabla}_v\Pi(x)}_{\op{op}} < \infty. \qedhere
+        \end{equation*}
+    \end{itemize}
+\end{proof}
 
 
 
+\begin{cor}\label{cor:lipsch_intrin_proj}
+    Under same assumptions as Lemma \ref{lem:bound_secform_boun_proj}, the orthogonal projection $\Pi$ is globally Lipschitz continuous w.s.t. $d_M$ on $M$, i.e., there exists some $L > 0$ such that
+    \begin{equation*}
+        \norm{\Pi(x) - \Pi(y)}_{\op{op}} \leq L d_M(x,y),\quad \forall~x,y \in M
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    For any $x,y \in M$, by the completeness, let $\gamma \colon [0,\ell] \sto M$ be the minimizing unit geodesic from $x$ to $y$, i.e.,
+    \begin{equation*}
+        \gamma(0) = x,\quad \gamma(\ell) = y,\quad\norm{\dot{\gamma}(t)} \equiv 1,
+    \end{equation*}
+    and $d_M(x,y) = \ell$. Let $F(t) \defeq \Pi(\gamma(t))$. When viewing $\Pi \colon \R^N \sto \R^N$ as a matrix and $\gamma(t) \in \R^N$
+    \begin{equation*}
+        \frac{d}{dt}F(t) = \clo{\nabla}_{\dot{\gamma}(t)}\Pi(\gamma(t)).
+    \end{equation*}
+    By Lemma \ref{lem:bound_secform_boun_proj},
+    \begin{equation*}
+        \norm{\frac{d}{dt}F(t)}_{\op{op}} = \norm{\clo{\nabla}_{\dot{\gamma}(t)}\Pi(\gamma(t))}_{\op{op}} \leq 2C.
+    \end{equation*}
+    It implies that
+    \begin{align*}
+        \norm{\Pi(x) - \Pi(y)}_{\op{op}} &= \norm{F(\ell) - F(0)}_{\op{op}} \\
+        &= \norm{\int_0^\ell  \frac{d}{dt}F(t) dt}_{\op{op}} \leq \int_0^\ell  \norm{\frac{d}{dt}F(t)}_{\op{op}} dt \leq 2C d_M(x,y). \qedhere
+    \end{align*}
+\end{proof}
 
-
-
-
-
-
+\begin{cor}\label{cor:bound_ext_deriv_vec}
+    Under same assumptions as Lemma \ref{lem:bound_secform_boun_proj}, for $v \in \Gamma(TM)$ satisfying
+    \begin{equation*}
+        \sup_{x \in M} \norm{v(x)} <\infty,\quad \sup_{x \in M} \sup_{\norm{X} = 1} \norm{\nabla_X v(x)} < \infty
+    \end{equation*}
+    we have
+    \begin{equation*}
+        \sup_{x \in M} \sup_{X \in T_xM,\norm{X} = 1} \norm{\clo{\nabla}_Xv(x)} < \infty.
+    \end{equation*}
+\end{cor}
+\begin{proof}
+    For any $x \in M$, and $X \in T_xM$ with $\norm{X} = 1$,
+    \begin{equation*}
+        \clo{\nabla}_Xv = \nabla_Xv + \mathrm{II}(X,v).
+    \end{equation*}
+    So
+    \begin{equation*}
+        \sup_{x \in M} \sup_{\norm{X} = 1} \norm{\clo{\nabla}_Xv(x)} \leq \sup_{x \in M} \sup_{\norm{X} = 1} \norm{\nabla_X v(x)} + C\sup_{x \in M} \norm{v(x)} < \infty. \qedhere
+    \end{equation*}
+\end{proof}
 
 
 
