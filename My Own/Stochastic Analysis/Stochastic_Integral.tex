@@ -130,7 +130,7 @@ Let $\mathcal{M}_0^2 \subset \mathcal{M}^2$ be all $X \in \mathcal{M}^2$ with $X
     \begin{enumerate}[label=(\roman*)]
     	\item Note that $\inn{M,M}_t = \inn{M}_t$.
     	\item By definition, it is not hard to see $MN - \inn{M,N}$ is a martingale.
-    	\item If $M,N \in M^{2,loc}$ right-continuous, then there exists a unique increasing right-continuous predictable process $\inn{M}$ and there exists a unique increasing right-continuous predictable process $\inn{M,N}$ of bounded variation such that
+    	\item If $M,N \in M^{2,loc}$ right-continuous, then there exists a unique increasing right-continuous predictable process $\inn{M}$ and there exists a unique right-continuous predictable process $\inn{M,N}$ of bounded variation such that
     	\begin{equation*}
     		M^2- \inn{M},\quad MN - \inn{M,N},
     	\end{equation*}
@@ -444,7 +444,7 @@ where $h^i$ is bounded and $\mathcal{F}_{t_i}$-measurable.
 
         \item For a stopping time $T$,
         \begin{equation*}
-            \int_0^{t \wedge T} H_u dM_u = \int_0^{t} H_u \mathbb{I}_{[0,T]} dM_u = \int_0^{t} H_u dM_{u \wedge T}.
+            \int_0^{t \wedge T} H_u dM_u = \int_0^{t} H_u \mathbb{I}_{\llbracket 0,T \rrbracket} dM_u = \int_0^{t} H_u dM_{u \wedge T}.
         \end{equation*}
 
         \item For stopping times $S \leq T$,
@@ -457,11 +457,11 @@ where $h^i$ is bounded and $\mathcal{F}_{t_i}$-measurable.
         \end{equation*}
         Moreover, it follows that
         \begin{equation*}
-            \inn{\int_0^\cdot H_udM_u,\int_0^\cdot K_u dN_u}_t = \E\bj{\int_0^t H_uK_u d\inn{M,N}_u}.
+            \inn{\int_0^\cdot H_udM_u,\int_0^\cdot K_u dN_u}_t = \int_0^t H_uK_u d\inn{M,N}_u
         \end{equation*}
         In particular,
         \begin{equation*}
-            \inn{\int_0^\cdot H_udM_u,N}_t = \E\bj{\int_0^t H_u d\inn{M,N}_u}.
+            \inn{\int_0^\cdot H_udM_u,N}_t = \int_0^t H_u d\inn{M,N}_u
         \end{equation*}
 
         \item If $G \in \mathcal{L}^*\bc{ \int_0^\cdot H_u dM_u }$, then $GH \in \mathcal{L}^*(M)$ and
@@ -867,7 +867,7 @@ $Z =(Z_t)_{t \geq 0}$ is a continuous local martingale.
     then $Z$ is a martingale.
 \end{prop}
 \begin{rmk}
-    Note that by Jensen's inequality, if $X$ satisfies Novikov condition, it is in $\mathcal{L}^*(W)$.
+    Note that by Jensen's inequality, if $X$ satisfies Novikov condition, it is in $\mathcal{L}^*(W)$. In fact, Novikov Condition is equivalent to $\E[Z_t] = 1$ for all $t$.
 \end{rmk}
 
 \noindent Define $\tilde{\Pb}_t$ on $\mathcal{F}_t$ by,
@@ -945,6 +945,37 @@ $Z =(Z_t)_{t \geq 0}$ is a continuous local martingale.
         \E\bj{Y_TZ_T \mid \mathcal{F}_s} = Y_sZ_s.
     \end{equation*}
 \end{rmk}
+
+
+When considering continuous process $X = (X_t)_{[t \in [0,T]]}$ on some probability space equipping with $\Pb$, it is equivalent to consider its distribution $\Pb_X = X_{\#}\Pb$ on canonical path space $C([0,T],\R^n)$. The Girsanov theorem can be applied on $C([0,T],\R^n)$; see \cite{liptser2013statistics}. But it only considers fixed $X_0 = 0$. For general $X_0$, it can be extended.
+\begin{prop}
+    Let $X,Y$ be two continuous processes on probability space equipping with $\Pb$. Let $\Pb_X = X_{\#}\Pb$ and $\Pb_Y = Y_{\#}\Pb$ on $C([0,T],\R^n)$ be their distributions and assume $\Pb_X \ll \Pb_Y$. Moreover, let $\Pb_X^0,\Pb_Y^0$ be the corresponding distributions with fixing $X_0 = 0$. Let $\Pb_0 = (X_0)_{\#}\Pb, \mathbb{Q}_0 = (Y_0)_{\#}\Pb$ on $\R^n$. Then
+    \begin{equation*}
+        \frac{d\Pb_X}{d\Pb_Y}(\omega) = \frac{d\Pb_0}{d\mathbb{Q}_0}(\omega(0))\cdot \frac{d\Pb^0_X}{d\Pb^0_Y}(\omega).
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    Let $\Pb^x_X = X^x_{\#}\Pb$ and $\Pb^x_Y = Y^x_{\#}\Pb$. Let
+    \begin{equation*}
+        \frac{d\Pb^0_X}{d\Pb^0_Y}(\omega) = K(\omega),\quad L(x)\frac{d\Pb_0}{d\mathbb{Q}_0}(x).
+    \end{equation*}
+    Then for 
+    \begin{equation*}
+        R(\omega) = \frac{d\Pb_0}{d\mathbb{Q}_0}(\omega(0))\cdot \frac{d\Pb^0_X}{d\Pb^0_Y}(\omega),
+    \end{equation*}
+    we have
+    \begin{align*}
+        \int_A R(\omega) \mathbb{P}_Y(d \omega) & =\int_{\mathbb{R}^n} \int_A L(\omega(0)) K(\omega) \mathbb{P}_Y^x(d \omega) \mathbb{Q}_0(d x) \\
+        & =\int_{\mathbb{R}^n} L(x) \int_A K(\omega) \mathbb{P}_Y^x(d \omega) \mathbb{Q}_0(d x) \quad\left(\text { since } \omega(0)=x \mathbb{P}_Y^x \text {-a.s. }\right) \\
+        & =\int_{\mathbb{R}^n} L(x) \mathbb{P}_X^x(A) \mathbb{Q}_0(d x) \quad\left(\text { because } K={d \mathbb{P}_X^x}/{d \mathbb{P}_Y^x}\right) \\
+        & =\int_{\mathbb{R}^n} \mathbb{P}_X^x(A) \mathbb{P}_0(d x) \quad\left(\text { since } L=d \mathbb{P}_0 / d \mathbb{Q}_0\right) \\
+        & =\mathbb{P}_X(A).
+    \end{align*}
+    Therefore,
+    \begin{equation*}
+        \frac{d\Pb_X}{d\Pb_Y}(\omega) = \frac{d\Pb_0}{d\mathbb{Q}_0}(\omega(0))\cdot \frac{d\Pb^0_X}{d\Pb^0_Y}(\omega). \qedhere
+    \end{equation*}
+\end{proof}
 
 \section{Local Times}
 
@@ -1065,8 +1096,26 @@ Therefore, as $\varepsilon \sto 0$, we get the Tanaka formula,
 
 
 
-
-
+\begin{comment}
+\begin{rmk}
+    Note that the definition of $X = (X_t)_{0 \leq t \leq \tau}$ is a progressively measurable map
+    \begin{equation*}
+        X \colon \llbracket 0, \tau \rrbracket \sto \R^N
+    \end{equation*}
+    defined on the stochastic interval
+    \begin{equation*}
+        \llbracket 0, \tau \rrbracket=\{(\omega, t): 0 \leq t \leq \tau(\omega)\} \subset \Omega \times \mathbb{R}_{+}.
+    \end{equation*}
+    It is different from the stopping process. More precisely, let $Y = (Y_t)_{t \geq 0}$ and $Y^\tau = (Y_{t \wedge \tau})_{t \geq 0}$ be its stopping process. Then $Z = (Y_t)_{t \in \llbracket 0, \tau \rrbracket}$ is 
+    \begin{equation*}
+        Z = Y|_{\llbracket 0, \tau \rrbracket} \colon \R^N.
+    \end{equation*}
+    On $\bb{t \leq \tau}$, $Z$ has the same information as $Y^\tau$, i.e. on $\llbracket 0, \tau \rrbracket$, they can be same. Moreover, for integration
+    \begin{equation*}
+        \int_0^\tau H_s dM_s \defeq \int_0^\infty \mathbb{I}_{\llbracket 0, \tau \rrbracket} H_s dM_s = \lim_{t \sto \infty} \int_0^{t \wedge \tau}H_s dM_s
+    \end{equation*}
+\end{rmk}
+\end{comment}
 
 
 

@@ -718,7 +718,19 @@ where $\exp$ is the exponential map, and $\xi$ is a standard Gaussian standard G
 
 \paragraph{Strong convergence.} Let $M$ be a complete Riemannian manifold and it is properly and isometrically embedded in $\R^n$. Assume that
 \begin{enumerate}[label=(\Roman*)]
-    \item~
+    \item\label{assum:conv_gem_1} the second fundamental form and its derivative are uniformly bounded, i.e.,
+    \begin{equation*}
+        \sup_{x \in M} \norm{\mathrm{II}_x}_{\op{op}} < \infty,~ \sup_{x \in M}\norm{\nabla\mathrm{II}_x}_{\op{op}} < \infty.
+    \end{equation*}
+    \item\label{assum:conv_gem_2} there exists a tubular neighborhood $V \subset \R^n$ of $M$, together with the canonical projection $\pi \colon V \sto M \subset \R^n$ such that
+    \begin{equation*}
+        \sup_{y \in V} \norm{D\pi(y)}_{\op{op}} < \infty.
+    \end{equation*}
+    \item\label{assum:conv_gem_3} $v \in \Gamma(TM)$ satisfies
+    \begin{equation*}
+        \sup_{x \in M} \norm{v(x)} < \infty,\quad \sup_{x \in M} \sup_{\norm{X} = 1} \norm{\nabla_X v(x)} < \infty.
+    \end{equation*}
+    \item\label{assum:conv_gem_4} $X_0 \in L^2$.
 \end{enumerate}
 Then we have the strong convergence of geometric EM algorithm, i.e.,
 \begin{equation*}
@@ -727,22 +739,8 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
 \begin{proof}
     The proof needs following steps.
 
-    Note that
-    \begin{equation*}
-        \exp_x(v) = x + v + \frac{1}{2}\mathrm{II}_x(v,v) + \mathcal{O}(\norm{v}^3),
-    \end{equation*}
-    where $\mathrm{II}_x$ is the second form. To prove that, first let $\gamma(t) = \exp_x(tv)$ in $\R^n$, which is also a geodesic in $M$. Then it has 
-    \begin{equation*}
-        \gamma^\prime(0) = \dot{\gamma}(t) = v
-    \end{equation*}
-    and 
-    \begin{equation*}
-        \gamma^{\prime\prime}(t) = \nabla_{\dot{\gamma}(t)} \dot{\gamma}(t) + \mathrm{II}_x(\dot{\gamma}(t),\dot{\gamma}(t)) = \mathrm{II}(\dot{\gamma}(t),\dot{\gamma}(t)),
-    \end{equation*}
-    because $\nabla_{\dot{\gamma}(t)} \dot{\gamma}(t)$. Therefore, above can be got by applying the Euclidean Taylor expansion.
-
     \vspace{0.5em}
-    \textbf{Step 1.} Euclidean EM discretization: Let $\Pi(x) \colon \R^n \sto \R^n$ be the orthogonal projection onto $T_xM$. Then we can choose
+    \textbf{Step 1.} SDE on Euclidean: For $\pi \colon V \sto M$, by Corollary \ref{cor:proj_by_pi}, $\Pi(x) \defeq D\pi(x) \colon \R^n \sto \R^n$ for $x \in M$ is the orthogonal projection onto $T_xM$. Then we can choose
     \begin{equation*}
         dB^M_t = \Pi \circ dW_t,
     \end{equation*}
@@ -782,13 +780,88 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
         \Delta_Mx^j(x) = \sum_{i=1}^d\mathrm{II}^j_x(E_i(x),E_i(x)).
     \end{equation*}
 
-    For Euclidean SDE (\ref{eq:eucl_ext_diff}), we consider the Euclidean EM algorithm. Let $t_k=k h, N h=T, \Delta W_k=W_{t_{k+1}}-W_{t_k}$, and define
+    \vspace{0.5em}
+    \textbf{Step 2.} Extension on $\R^n$: Because $v,A$ and $\Pi$ are only make sense on $M$, we cannot deal with (\ref{eq:eucl_ext_diff}) as the usual SDE on $\R^n$. So we need to extend it on $\R^n$ with well-posed properties. First, because $M$ is closed, it can choose a smaller open $U$ such that $M \subset U \subset V$. Then it can choose a bump function $\chi \colon \R^n \sto [0,1]$ such that $\chi|_{\bar{U}} = 1$, $\chi_{\R^n \backslash V} = 0$, and $\norm{D\chi} \leq C_\chi < \infty$. 
+    \begin{itemize}
+        \item Extending $\Pi$: Let
+        \begin{equation*}
+            \tilde{\Pi}(y) = \chi(y) \Pi(\pi(y)),\quad \forall ~ y \in \R^n.
+        \end{equation*}
+        Next, we need to guarantee the global Lipschitz continuity of $\tilde{\Pi}$. By Lemma \ref{lem:bound_secform_boun_proj} with Assumption \ref{assum:conv_gem_1},
+        \begin{equation*}
+            \sup_{x \in M}\norm{D\Pi(x)[v]}_{\op{op}} = \sup_{x\in M} \norm{\clo{\nabla}_v\Pi(x)}_{\op{op}} < C_\Pi\norm{v},\quad \forall~x \in M,~\forall v \in T_xM.
+        \end{equation*}
+        Then, for any $y \in \R^n$ and $w \in \R^n$, we have
+        \begin{align*}
+            \norm{D\tilde{\Pi}(y)[w]} &= \norm{\Pi(\pi(y))D\chi(y)[w] + \chi(y) D \Pi(\pi(y))[D\pi(y)[w]] } \\
+            &\leq C_\chi \norm{w} + C_\Pi C_\pi\norm{w},
+        \end{align*}
+        because $D\pi(y)[w] \in T_{\pi(y)}M$ and by Assumption \ref{assum:conv_gem_2}, $\norm{D\pi(y)} \leq C_\pi < \infty$. Therefore,
+        \begin{equation*}
+            \sup_{y \in \R^n} \norm{D\tilde{\Pi}(y)}_{\op{op}} \leq L_\Pi \defeq C_\chi + C_\Pi C_\pi,
+        \end{equation*}
+        i.e., $\tilde{\Pi}$ is globally Lipschitz continuous,
+        \begin{equation*}
+            \norm{\tilde{\Pi}(y_1) - \tilde{\Pi}(y_2)}_{\op{op}} \leq L_\Pi \norm{y_1 - y_2},\quad \forall~y_1,y_2 \in \R^n.
+        \end{equation*}
+        In the following, we denote $\tilde{\Pi}$ by $\Pi$ for convenience.
+
+        \item Extending $v$: For $v$ satisfying Assumption \ref{assum:conv_gem_3}, by Corollary \ref{cor:bound_ext_deriv_vec},
+        \begin{equation*}
+            \sup_{x \in M} \norm{Dv(x)[u]} =\sup_{x \in M} \norm{\clo{\nabla}_uv(x)} < C_v\norm{u},\quad \forall~u \in T_xM.
+        \end{equation*}
+        Similarly, let
+        \begin{equation*}
+            \tilde{v}(y) = \chi(y) v(\pi(y)),\quad \forall ~ y \in \R^n.
+        \end{equation*}
+        Then for any $y \in \R^n$ and $w \in \R^n$,
+        \begin{align*}
+            \norm{D\tilde{v}(y)[w]} &= \norm{v(\pi(y))D\chi(y)[w] + \chi(y) D v(\pi(y))[D\pi(y)[w]] } \\
+            &\leq C_\chi C_v^\prime \norm{w} + C_v C_\pi\norm{w},
+        \end{align*}
+        because $\sup_{x \in M} \norm{v(x)} \leq C_v^\prime$ of Assumption \ref{assum:conv_gem_3}. It follows that $\tilde{v}$ is globally Lipschitz continuous,
+        \begin{equation*}
+            \sup_{y\in \R^n} \norm{D\tilde{v}(y)}_{\op{op}} \leq L_v \defeq C_\chi C_v^\prime + C_v C_\pi,
+        \end{equation*}
+        i.e.,
+        \begin{equation*}
+            \norm{\tilde{v}(y_1) - \tilde{v}(y_2)} \leq L_v \norm{y_1 - y_2},\quad \forall ~ y_1,y_2 \in \R^n.
+        \end{equation*}
+        We also do not distinguish $v$ and $\tilde{v}$.
+
+        \item Extending $A$: by above, we have known
+        \begin{equation*}
+            A(x) = \sum_{i = 1}^d \mathrm{II}_x(E_i(x),E_i(x)) \in N_xM,\quad \forall~ x \in M.
+        \end{equation*}
+        Moreover, we let $\bb{E_1,\cdots,E_d}$ be geodesic at $x$, i.e., $\nabla_{E_i}E_j(x) = 0$. Then from the proof of Lemma \ref{lem:taylo_exp_bounded} with Assumption \ref{assum:conv_gem_1}, and by $\bb{E_1,\cdots,E_d}$ geodesic, i.e., $\nabla_vE_i = 0$, we have
+        \begin{equation*}
+            \sup_x \norm{DA(x)[u]} = \sup_{x \in M} \norm{\clo{\nabla}_u A(x)} \leq C_A \norm{u},\quad \forall~ u\in T_xM.
+        \end{equation*}
+        Let
+        \begin{equation*}
+            \tilde{A}(y) = \chi(y) A(\pi(y)),\quad \forall ~ y \in \R^n.
+        \end{equation*}
+        Then for any $y \in \R^n$ and $w \in \R^n$,
+        \begin{align*}
+            \norm{\tilde{A}(y)[w]} &= \norm{A(\pi(y))D\chi(y)[w] + \chi(y) D A(\pi(y))[D\pi(y)[w]]} \\
+            &\leq C_{\mathrm{II}}C_\chi \norm{w} + C_AC_\pi \norm{w}
+        \end{align*}
+        Therefore, $\tilde{A}$ is globally Lipschitz continuous. In the following, we also denote $\tilde{A}$ by $A$.
+    \end{itemize}
+    Then for such extended $v,A$, and $\Pi$, we get SDE (\ref{eq:eucl_ext_diff}) defined on Euclidean space with globally Lipschitz continuous coefficients.
+
+    \vspace{0.5em}
+    \textbf{Step 3.} Euclidean EM discretization: We can consider the Euclidean EM algorithm. Let $t_k=k h, N h=T, \Delta W_k=W_{t_{k+1}}-W_{t_k}$, and define
     \begin{equation*}
         Y_{k+1}^h=Y_k^h+\tilde{a}\left(Y_k^h\right) h+\Pi\left(Y_k^h\right) \Delta W_k, \quad Y_0^h=X_0.
     \end{equation*}
-    Because $A(x)$ is uniformly bounded and $v \in C_b^1$, $\tilde{a}$ is globally Lipschitz. For $\Pi$, note that $\Pi$ is in fact smooth so it is locally Lipschitz continuous. Moreover, because $\mathrm{II}$ is uniformly bounded, by Lemma \ref{lem:bound_secform_boun_proj}, $\Pi$ is globally Lipschitz. Combining these with $X_0 \in L^2$, we have
+    By the global Lipschitz continuity of $\tilde{a}$, and Assumption \ref{assum:conv_gem_4} of $X_0 \in L^2$, we have
     \begin{equation*}
         \mathbb{E}\left[\max _{0 \leq k \leq N}\left\|X_{t_k}-Y_k^h\right\|^2\right] \leq C_T h.
+    \end{equation*}
+    So the next goal is to bound
+    \begin{equation*}
+        \mathbb{E}\left[\max _{0 \leq k \leq N}\left\|X_{k}^h-Y_k^h\right\|^2\right].
     \end{equation*}
     Moreover, let
     \begin{equation*}
@@ -799,8 +872,8 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
         Y_{k+1}^h = \Phi^E_h(Y_k^h,\Delta W_k)
     \end{equation*}
     
-    \vspace{0.5em}
-    \textbf{Step 2.} Geometric EM discretization: For
+     \vspace{0.5em}
+    \textbf{Step 4.} Geometric EM discretization: For
     \begin{equation*}
         X_{k+1}^h=\exp _{X_k^h}\left(h v\left(X_k^h\right)+\sqrt{h} \xi_{k+1}\right)
     \end{equation*}
@@ -821,11 +894,11 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
         X_{k+1}^h= \Phi^G_h(X_k^h,\Delta W_k).
     \end{equation*}
 
-    Moreover, by the Taylor expansion of the exponential map, for $u = hv(x) + \Pi(x)z$,
+    Moreover, by Lemma \ref{lem:taylo_exp_bounded}, for $u = hv(x) + \Pi(x)z$,
     \begin{equation*}
-        \Phi^G_h(x,z) = x + hv(x) + \Pi(x)z + \frac{1}{2}\mathrm{II}_x(u,u) + R_3(x,u).
+        \Phi^G_h(x,z) = x + hv(x) + \Pi(x)z + \frac{1}{2}\mathrm{II}_x(u,u) + R_3(x,u),
     \end{equation*}
-    Because $\norm{\nabla\mathrm{II}}_{\op{op}} < \infty$ ($\gamma^{\prime\prime\prime} = D/dt \nabla\mathrm{II}(\dot{\gamma},\dot{\gamma})$),
+    where
     \begin{align*}
         \norm{R_3(x,u)} \leq C_1\norm{u}^3,
     \end{align*}
@@ -863,14 +936,13 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
         \mathbb{E}\left[\Phi_h^G(x, \Delta W_k)\right] & =x+ h v(x)+h A(x)+\mathcal{O}(h^2) \\
         & =x + \tilde{a}(x) h+\mathcal{O}(h^2).
     \end{align*}
-    Note that by (\ref{eq:bound_2ndform_guass}), we also have
+    Note that by (\ref{eq:bound_2ndform_guass}) and Assumption \ref{assum:conv_gem_1}, we also have
     \begin{equation*}
-        \E\bj{\norm{\mathrm{II}_x(\Pi(x)z,\Pi(x)z)}^2} = \mathcal{O}(h^2),
+        \E\bj{\norm{\mathrm{II}_x(\Pi(x)z,\Pi(x)z)}^2} = \mathcal{O}(h^2).
     \end{equation*}
-    because the second form is uniformly bounded.
 
     \vspace{0.5em}
-    \textbf{Step 3.} Local difference: For $\Phi^E_h, \Phi^G_h$ defined as above, we have
+    \textbf{Step 5.} Local difference: For $\Phi^E_h, \Phi^G_h$ defined as above, we have
     \begin{equation*}
         \Phi_h^G(x, z)-\Phi_h^E(x, z) = -hA(x) + \frac{1}{2}\Pi_x(u,u) + R_3(x,u).
     \end{equation*}
@@ -925,7 +997,7 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
     \end{itemize}   
 
     \vspace{0.5em}
-    \textbf{Step 4.} Global difference: Let $e_k = X^h_k - Y^h_k$. Note that
+    \textbf{Step 6.} Global difference: Let $e_k = X^h_k - Y^h_k$. Note that
     \begin{equation*}
         X_{k+1}^h=\Phi_h^G\left(X_k^h, \Delta W_k\right), \quad Y_{k+1}^h=\Phi_h^E\left(Y_k^h, \Delta W_k\right),
     \end{equation*}
@@ -1077,6 +1149,28 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
     \begin{equation*}
         \tilde{L}\tilde{f}(x) = \inn{\nabla f(x),v} + \frac{1}{2}\Delta_M f(x) = L f(x).
     \end{equation*}
+\end{rmk}
+
+\begin{rmk}
+    If $M$ is compact, then after embedding $M \subset \R^n$, it is a compact set. Then Assumptions \ref{assum:conv_gem_1}-\ref{assum:conv_gem_4} are automatically satisfied:
+    \begin{itemize}
+        \item Because the second fundamental form $\mathrm{II}$ and vector field $v$ are smooth on $M$, a compact Riemannian manifold, Assumptions \ref{assum:conv_gem_1} and \ref{assum:conv_gem_3} are obviously true.
+        \item Since $X_0$ is valued on $M$ a compact set, $\norm{X_0} \leq \op{diam}(M) < \infty$. So it is obvious that $X_0 \in L^2$.
+        \item For compact $M$, it has the uniform tubular neighborhood, i.e., there exists a $r_0 > 0$ such that
+        \begin{equation*}
+            U_{r_0} = \bb{y \in \R^n \colon d(y,M) < r_0}
+        \end{equation*}
+        is a tubular neighborhood of $M$. Moreover, because $M$ is compact, then for $M \subset V \subset U_{r_0}$, $\clo{V} \subset U_{r_0}$ is also compact. By the smoothness of $\pi$, if we choose $V$ as the new tubular neighborhood, Assumption \ref{assum:conv_gem_2} obviously true on $V$.
+    \end{itemize}
+    Therefore, above result is automatically valid in compact case.
+\end{rmk}
+
+\begin{rmk}
+    Above analysis can be easily extended to time-inhomogeneous case with $v = v(t,x)$ with an additional assumption of
+    \begin{equation*}
+        \norm{v(t,x) - v(s,y)} \leq C(1 + \norm{x})\abs{t-s}^{1/2},
+    \end{equation*}
+    because this condition can be easily extended to Euclidean case such that the Euclidean EM converges, while the comparing of $X^h_k$ and $Y^h_k$ is not changed.
 \end{rmk}
 
 \begin{lem}\label{lem:diff_of_pi}
@@ -1277,6 +1371,79 @@ Then we have the strong convergence of geometric EM algorithm, i.e.,
 \end{proof}
 
 
+\begin{lem}\label{lem:taylo_exp_bounded}
+    Let $M$ be a Riemannian submanifold isometrically embedded in $\R^n$ such that the second fundamental form and its derivative are uniformly bounded, i.e.,
+    \begin{equation*}
+        \sup_{x \in M} \norm{\mathrm{II}_x}_{\op{op}} < \infty,~ \norm{\nabla\mathrm{II}_x}_{\op{op}} < \infty.
+    \end{equation*}
+    Then its exponential map has
+    \begin{equation*}
+        \exp_x(u) = x + u + \frac{1}{2}\mathrm{II}_x(u,u) + R_3(x,u),\quad \forall~ x \in M,~u \in T_xM
+    \end{equation*}
+    where
+    \begin{equation*}
+        \norm{R_3(x,u)} \leq C \norm{u}^3,
+    \end{equation*}
+    for some $C > 0$ independent of $x$.
+\end{lem}
+\begin{rmk}
+    Note that for any $X,Y,Z \in \Gamma(TM)$, $\mathrm{II}(X,Y) \in \Gamma(NM)$ and
+    \begin{equation*}
+        (\nabla_X \mathrm{II})(Y,Z) \defeq \nabla_X^\perp\bc{\mathrm{II}(Y,Z)} - \mathrm{II}(\nabla_XY,Z) - \mathrm{II}(Y,\nabla_XZ),
+    \end{equation*}
+    where $\nabla_X^\perp N = (\clo{\nabla}_XN)^\perp$ for $N \in \Gamma(TM)$.
+\end{rmk}
+\begin{proof}
+    Fix $x \in M$ and $u \in T_xM$. Let $\gamma \colon [0,1] \sto M$ be the geodesic such that $\gamma(0) = x$ and $\dot{\gamma}(0) = u$. Note that $\gamma \subset \R^n$. Then
+    \begin{equation*}
+        \gamma^{\prime}(t) = \dot{\gamma}(t),
+    \end{equation*}
+    and
+    \begin{equation*}
+        \gamma^{\prime\prime}(t) = \clo{\nabla}_{\gamma^\prime(t)}\gamma^\prime(t) = \nabla_{\dot{\gamma}(t)}\dot{\gamma}(t) + \mathrm{II}(\dot{\gamma}(t),\dot{\gamma}(t)) = \mathrm{II}(\dot{\gamma}(t),\dot{\gamma}(t)).
+    \end{equation*}
+    Then by the Euclidean Taylor formula for $\gamma(t)$,
+    \begin{align*}
+        \gamma(1) &= \gamma(0) + \gamma^{\prime}(0) + \frac{1}{2}\gamma^{\prime\prime}(0) + \int_0^1\frac{(1-t)^2}{2} \gamma^{(3)}(t) \dx{t} \\
+        &= x + u + \frac{1}{2}\mathrm{II}(u,u) + R_3(x,u),
+    \end{align*}
+    where
+    \begin{equation*}
+        R_3(x,u) = \int_0^1\frac{(1-t)^2}{2} \gamma^{(3)}(t) \dx{t}.
+    \end{equation*}
+    For $\gamma^{(3)}(t)$,
+    \begin{equation*}
+        \gamma^{(3)}(t) = \clo{\nabla}_{\gamma^\prime(t)}\gamma^{\prime\prime}(t) = \clo{\nabla}_{\dot{\gamma}(t)} \mathrm{II}(\dot{\gamma}(t),\dot{\gamma}(t)).
+    \end{equation*}
+    Let $X = \dot{\gamma}(t)$ and $S_N(X)$ be the Weingarten map. Then by the Weingarten formula,
+    \begin{equation*}
+        \clo{\nabla}_{X} \mathrm{II}(X,X) = -S_{\mathrm{\mathrm{II}(X,X)}}(X) + \nabla_X^\perp \mathrm{II}(X,X).
+    \end{equation*}
+    \begin{itemize}
+        \item For the first term, because $\sup_{x \in M}\norm{\mathrm{II}_x}_{\op{op}} \leq C_1 < \infty$, similarly as the proof in Lemma \ref{lem:bound_secform_boun_proj},
+        \begin{equation*}
+            \norm{S_{\mathrm{\mathrm{II}(X,X)}}(X)} \leq C_1^2\norm{X}^3 = C_1^2\norm{u}^3,
+        \end{equation*}
+        because $\norm{\dot{\gamma}(t)} \equiv \norm{\dot{\gamma}(0)}$.
 
+        \item For the second term, by the definition
+        \begin{align*}
+            \nabla_X^{\perp} \mathrm{II}(X, X)&=\left(\nabla_X \mathrm{II}\right)(X, X)+\mathrm{II}\left(\nabla_X X, X\right)+\mathrm{II}\left(X, \nabla_X X\right) \\
+            &=\left(\nabla_X \mathrm{II}\right)(X, X),
+        \end{align*}
+        because $\nabla_XX = 0$ for $X = \dot{\gamma}(t)$. Then by $\norm{\nabla\mathrm{II}_x}_{\op{op}} \leq C_2 < \infty$,
+        \begin{equation*}
+            \norm{\nabla_X^{\perp} \mathrm{II}(X, X)} \leq C_2 \norm{X}^3 = C_2 \norm{u}^3.
+        \end{equation*}
+    \end{itemize}
+    Therefore,
+    \begin{equation*}
+        \norm{\gamma^{(3)}(t)} \leq (C_1^2 + C_2)\norm{u}^3.
+    \end{equation*}
+    It implies that
+    \begin{equation*}
+        \norm{R_3(x,u)} \leq \frac{C_1^2 + C_2}{6}\norm{u}^3. \qedhere
+    \end{equation*}
+\end{proof}
 
 

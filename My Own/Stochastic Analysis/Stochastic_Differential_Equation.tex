@@ -697,7 +697,11 @@ Moreover, a solution of SDE is a Markov process
 \begin{equation*}
     d\bm{X}_t = b(t,\bm{X}_t)dt+\sigma(t,\bm{X}_t)d\bm{W}_t, \quad t \in [0,T],\quad \bm{X}_0 = \bm{Z},
 \end{equation*}
-with globally Lipschitz continuous $b,\sigma$, and we always assume $\bm{W}$ is independent of $\bm{Z}$. Let $h = T/N$ for a large $N \in \N$ and $t_k = kh$ for $k = 0,1,\cdots,N$. Construction $\{\bm{X}^h_k\}_{k=0}^N$ by setting $\bm{X}^h_0 = \bm{Z} \in L^2$ and
+with globally Lipschitz continuous $b,\sigma$, and we always assume $\bm{W}$ is independent of $\bm{Z}$. Moreover, assume
+\begin{equation*}
+    \norm{b(t,\bm{x}) - b(s,\bm{x})} + \norm{\sigma(t,\bm{x}) - \sigma(s,\bm{x})}_{\op{F}} \leq L(1 + \norm{\bm{x}})\abs{s - t}^{1/2}.
+\end{equation*}
+Let $h = T/N$ for a large $N \in \N$ and $t_k = kh$ for $k = 0,1,\cdots,N$. Construction $\{\bm{X}^h_k\}_{k=0}^N$ by setting $\bm{X}^h_0 = \bm{Z} \in L^2$ and
 \begin{equation*}
     \bm{X}^h_{k+1} = \bm{X}^h_k + b(t_k,\bm{X}^h_k)h + \sigma(t_k,\bm{X}^h_k)\Delta \bm{W}_k.
 \end{equation*}
@@ -709,9 +713,9 @@ Note that $\Delta \bm{W}_k$ is replaced by $\sqrt{h}\bm{\xi}$ for $\bm{\xi} \sim
     \end{equation*}
 \end{thm}
 \begin{proof}
-    First, from the proof of the existence and uniqueness of solution, we have
+    First, from the proof of the existence and uniqueness of solution, we have for all $p \geq 1$,
     \begin{equation*}
-        \sup_{0 \leq t \leq T}\E\bj{\norm{\bm{X}_t}^2} < \infty,\quad \max_{0\leq k \leq N} \E\bj{\norm{\bm{X}^h_{k}}^2} < \infty.
+        \sup_{0 \leq t \leq T}\E\bj{\norm{\bm{X}_t}^p} < \infty,\quad \max_{0\leq k \leq N} \E\bj{\norm{\bm{X}^h_{k}}^p} < \infty.
     \end{equation*}
     More, by the similar reasoning, there exists $C_1$ such for $s \in [t_k,t_{k+1}]$,
     \begin{equation*}
@@ -731,9 +735,11 @@ Note that $\Delta \bm{W}_k$ is replaced by $\sqrt{h}\bm{\xi}$ for $\bm{\xi} \sim
     Therefore, by $K$-Lipschitz continuity,
     \begin{align*}
         \E\bj{\norm{\bm{A}_k}^2} &= \E\bj{\norm{\int_{t_k}^{t_{k+1}}\left(b\left(s,\bm{X}_s\right)-b\left(t_k,\bm{X}_k^h\right)\right) d s }^2} \\
-        &\leq K^2\E\bj{\bc{\int_{t_k}^{t_{k+1}} \norm{\bm{X}_s - \bm{X}_h^k} ds}^2} \\
-        &\leq K^2h\int_{t_k}^{t_{k+1}} \E\bj{\norm{\bm{X}_s - \bm{X}_h^k}^2} ds \\
-        &\leq K^2h\int_{t_k}^{t_{k+1}} \E\bj{\norm{\bm{X}_s - \bm{X}_{t_k}}^2} + \E\bj{\norm{\bm{e}_k}^2} ds \\
+        &\leq \E\bj{\bc{\int_{t_k}^{t_{k+1}}\norm{\left(b\left(s,\bm{X}_s\right)-b\left(t_k,\bm{X}_k^h\right)\right)} d s}^2}\\
+        &\leq \E\bj{\bc{\int_{t_k}^{t_{k+1}}\norm{\left(b\left(s,\bm{X}_s\right)-b\left(s,\bm{X}_k^h\right)\right)} +\norm{\left(b\left(s,\bm{X}_k^h\right)-b\left(t_k,\bm{X}_k^h\right)\right)} d s}^2}\\\
+        &\leq K^2\E\bj{\bc{\int_{t_k}^{t_{k+1}} \norm{\bm{X}_s - \bm{X}_h^k} ds}^2} + L^2\E\bj{\bc{\int_{t_k}^{t_{k+1}} (1+\norm{\bm{X}^h_k})(s - t_k)^{1/2} ds}^2}\\
+        &\leq K^2h\int_{t_k}^{t_{k+1}} \E\bj{\norm{\bm{X}_s - \bm{X}_h^k}^2} ds + L^2h \int_{t_k}^{t_{k+1}} \E\bj{\bc{1+\norm{\bm{X}^h_k}}^2}(s - t_k) ds\\
+        &\leq K^2h\int_{t_k}^{t_{k+1}} \E\bj{\norm{\bm{X}_s - \bm{X}_{t_k}}^2} + \E\bj{\norm{\bm{e}_k}^2} ds + L^2Ch^3 \\
         &\leq K^2h^2(C_1h + \E\bj{\norm{\bm{e}_k}^2}),
     \end{align*}
     and similarly,

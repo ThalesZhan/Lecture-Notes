@@ -281,9 +281,9 @@ Fix a filtration $\mathbb{F} = (\mathcal{F}_t)_{t \geq 0}$.
 \begin{rmk}
     For stopping times $S \leq T$, it can define the stochastic interval
     \begin{equation*}
-        (S,T] \defeq \bb{(t,\omega) \in [0,\infty] \times \Omega \colon S(\omega) < t \leq T(\omega)},
+        \rrbracket S,T\rrbracket \defeq \bb{(t,\omega) \in [0,\infty] \times \Omega \colon S(\omega) < t \leq T(\omega)},
     \end{equation*}
-    so is similarly $[S,T],(S,T)$.
+    so is similarly $\llbracket S,T \rrbracket,\rrbracket S,T \llbracket$.
 \end{rmk}
 
 \begin{prop}
@@ -560,10 +560,11 @@ Fix a filtration $(\mathcal{F}_t)_{t \geq 0}$.
             \Pb\bc{\sup_{s \in [0,t]} \abs{X_s} > \lambda} \leq \frac{1}{\lambda} \E[\abs{X_t}].
         \end{equation*}
 
-        \item Doob's inequality: For any $p > 1$ and $t > 0$,
+        \item Doob's inequality: Further assume $X$ is a martingale. For any $p > 1$ and $t > 0$,
         \begin{equation*}
             \E\bj{\sup_{s \in [0,t]} \abs{X_s}^p} \leq \bc{\frac{p}{1 - p}}^p \E\bj{\abs{X_t}^p}.
         \end{equation*}
+        Note that this inequality is only useful for $\E\bj{\abs{X_t}^p} < \infty$.
     \end{enumerate}
 \end{thm}
 \begin{proof}
@@ -614,6 +615,7 @@ Fix a filtration $(\mathcal{F}_t)_{t \geq 0}$.
         \end{equation*}
     \end{proof}
 \end{rmk}
+
 
 \section{Path Regularity}
 
@@ -848,6 +850,7 @@ Fix a filtration $(\mathcal{F}_t)_{t \geq 0}$.
         X_T(\omega) \defeq \mathbb{I}_{T(\omega) < \infty} X_{T(\omega)}(\omega) + \mathbb{I}_{T(\omega) = \infty}X_\infty(\omega).
     \end{equation*}
 \end{rmk}
+
 
 \section{Optional Stopping Time}
 

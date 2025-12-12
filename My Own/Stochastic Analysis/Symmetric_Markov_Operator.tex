@@ -948,7 +948,7 @@ Note that for $(4)$, it is called a local $\op{LSI}$. As $t \sto \infty$, by erg
     \begin{equation*}
         \operatorname{Ent}_\mu\left(P_t f\right) \leq e^{-2 t / C} \operatorname{Ent}_\mu(f)
     \end{equation*}
-    for every $t \geq 0$ and every $f \in L^{\mu}$ with finite entropy.
+    for every $t \geq 0$ and every $f \in L^1\bc{\mu}$ with finite entropy.
 \end{prop}
 \begin{proof}
     It suffices to consider $f \in \mathcal{A}$ with finite entropy. Define
@@ -1064,7 +1064,7 @@ Locally, $\Gamma(f,g) = g^{ij}\partial_if \partial_j g$, which obviously a diffu
 \begin{equation*}
     Lg = \Delta g - \inn{\nabla W,\nabla g},\quad \forall~ g \in C^\infty(M),
 \end{equation*}
-because by the convergence theorem
+because by the convergence theorem,
 \begin{equation*}
     \int_M f L g d \mu=-\int_M \Gamma(f, g) d \mu.
 \end{equation*}
@@ -1073,6 +1073,23 @@ Moreover,
    \abs{\mathcal{E}(f,g)} = \abs{\int_M \Gamma(f,g) d\mu} \leq \norm{Lf}_{L^2(\mu)}\norm{g}_{L^2(\mu)},
 \end{equation*}
 which implies that $\mathcal{E}$ is closable. So it is a Dirichlet form.
+\begin{rmk}
+    For $L$, we can similarly consider the $L^*$ acting on probability measure on $M$. If $d\nu = pdV$, then by definition of $L^*\nu$,
+    \begin{equation*}
+        d(L^*\nu) = (L^*p)dV,
+    \end{equation*}
+    where on the right hand side $L^*p$ coincide with the adjoint of $L$ on $L^2(dV)$. Assume $p \in C^\infty$. Then for any $g \in C^\infty$,
+    \begin{align*}
+        \int_M gd(L^*\nu) &= \int_M g (L^*p) dV = \int_M (Lg)pdV \\
+        &= \int_M p\Delta g dV - \int_M \inn{\nabla W, p\nabla g}dV\\
+        &= \int_M g\Delta p dV + \int_M pg\Delta W + \int_M \inn{\nabla W, \nabla p}gdV,\\
+        &= \int_M (\Delta p + \op{div} (p \nabla W))gdV.
+    \end{align*}
+    because $\op{div}(f\nabla W) = \inn{\nabla W, \nabla f} + f\Delta W$. Therefore,
+    \begin{equation*}
+        L^*p = \Delta p + \op{div} (p \nabla W).
+    \end{equation*}
+\end{rmk}
 
 \begin{thm}[Parabolic regularity theorem]
     Suppose that $u \colon M \times \R \sto \R$ is a bounded solution to
